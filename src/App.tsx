@@ -8,6 +8,7 @@ import { SubjectAreaRankingPage } from './pages/SubjectAreaRankingPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { VocationalTestPage } from './pages/VocationalTestPage'
 import { GpaCalculatorPage } from './pages/GpaCalculatorPage'
+import { DestinationFinderPage } from './pages/DestinationFinderPage'
 import { useLocation } from './router/navigation'
 
 /*
@@ -33,6 +34,7 @@ function Routes() {
   if (path === '/ranking') return <RankingPage />
   if (path === '/teste-vocacional') return <VocationalTestPage />
   if (path === '/calculadora-gpa') return <GpaCalculatorPage />
+  if (path === '/descobridor-de-destinos') return <DestinationFinderPage />
   if (path === '/rankings/artes-humanidades') return <SubjectAreaRankingPage key="arts-humanities" areaKey="arts-humanities" />
   if (path === '/rankings/engenharia-tecnologia') return <SubjectAreaRankingPage key="engineering-technology" areaKey="engineering-technology" />
   if (path === '/rankings/ciencias-da-vida-medicina') return <SubjectAreaRankingPage key="life-sciences-medicine" areaKey="life-sciences-medicine" />

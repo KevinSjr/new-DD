@@ -30,7 +30,7 @@ const TOOLS: Tool[] = [
   { title: 'Simulador de entrevista', icon: 'mic', tone: 'coral', tag: SOON, description: 'Ensaie as perguntas mais comuns de bolsas e universidades antes do dia.' },
   { title: 'Guia de países', icon: 'map', tone: 'sky', href: '/#paises', tag: 'Só a Alemanha por enquanto', description: 'Custo de vida, clima, trabalho e tudo o que muda quando você chega.' },
   { title: 'Buscador de bolsas', icon: 'search', tone: 'mint', tag: SOON, description: 'Filtre oportunidades por país, curso e perfil e acompanhe os prazos.' },
-  { title: 'Descobridor de destinos', icon: 'globe', tone: 'lilac', tag: SOON, description: 'Responda a um teste rápido e descubra qual país combina com você.' },
+  { title: 'Descobridor de destinos', icon: 'globe', tone: 'lilac', href: '/descobridor-de-destinos', tag: 'Exploração disponível', description: 'Compare 25 destinos pelas suas preferências de região, idioma e clima.' },
   { title: 'Match de bolsas e universidades', icon: 'sparkles', tone: 'sun', tag: SOON, description: 'Cruze seu perfil com bolsas e universidades e veja as melhores combinações.' },
 ]
 
@@ -55,7 +55,8 @@ export function Tools() {
           <h2 id="ferramentas-titulo">Nove ferramentas, uma só jornada</h2>
           <p>
             Comece pelos seus interesses e avance para a pesquisa de áreas e destinos. Hoje, você já
-            pode usar o questionário exploratório, a calculadora de GPA, consultar os rankings e conhecer o guia da Alemanha.
+            pode usar o questionário exploratório, o descobridor de destinos, a calculadora de GPA,
+            consultar os rankings e conhecer o guia da Alemanha.
           </p>
         </div>
         <ul className="tools__grid">
