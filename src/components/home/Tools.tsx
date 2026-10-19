@@ -23,7 +23,7 @@ type Tool = {
 const SOON = 'Em breve'
 
 const TOOLS: Tool[] = [
-  { title: 'Calculadora de GPA', icon: 'calculator', tone: 'sky', tag: SOON, description: 'Converta suas notas do sistema brasileiro para a escala usada lá fora.' },
+  { title: 'Calculadora de GPA', icon: 'calculator', tone: 'sky', href: '/calculadora-gpa', tag: 'Calculadora disponível', description: 'Estime seu GPA a partir da média ou das disciplinas e compare três métodos.' },
   { title: 'Simulador prático', icon: 'clipboard', tone: 'mint', tag: SOON, description: 'Treine com provas de proficiência e testes de admissão, com correção na hora.' },
   { title: 'Teste vocacional', icon: 'compass', tone: 'lilac', href: '/teste-vocacional', tag: 'Questionário disponível', description: 'Explore seus interesses em 60 atividades e encontre caminhos para investigar, sem rótulos definitivos.' },
   { title: 'Rankings', icon: 'trophy', tone: 'sun', href: '/rankings', tag: 'Seis listas disponíveis', description: 'Compare universidades no ranking geral ou explore as cinco áreas de estudo do QS by Subject 2026.' },
@@ -55,7 +55,7 @@ export function Tools() {
           <h2 id="ferramentas-titulo">Nove ferramentas, uma só jornada</h2>
           <p>
             Comece pelos seus interesses e avance para a pesquisa de áreas e destinos. Hoje, você já
-            pode usar o questionário exploratório, consultar os rankings e conhecer o guia da Alemanha.
+            pode usar o questionário exploratório, a calculadora de GPA, consultar os rankings e conhecer o guia da Alemanha.
           </p>
         </div>
         <ul className="tools__grid">

@@ -1,0 +1,61 @@
+.gpa-page { padding: var(--space-6) 0 var(--space-9); color: var(--color-ink); }
+.gpa-page__back { color: var(--color-primary-ink); font-size: var(--text-sm); }
+.gpa-page__hero { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); padding: var(--space-7) 0; }
+.gpa-page__eyebrow { color: var(--color-primary-ink); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: var(--text-xs); }
+.gpa-page__hero h1 { margin: var(--space-2) 0; font-size: clamp(2rem, 6vw, var(--text-4xl)); line-height: var(--leading-tight); }
+.gpa-page__hero p:not(.gpa-page__eyebrow) { max-width: 42rem; color: var(--color-ink-muted); }
+.gpa-page__hero-badge { flex: none; background: var(--color-accent-soft); border: 2px solid var(--color-accent); border-radius: var(--radius-lg); padding: var(--space-5); font-size: var(--text-xl); font-weight: 700; }
+.gpa-page__hero-badge span { color: var(--color-primary-ink); }
+.gpa-page__layout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(17rem, 1fr); gap: var(--space-5); align-items: start; }
+.gpa-panel, .gpa-results { background: var(--color-surface); border: 2px solid var(--color-border); border-radius: var(--radius-lg); padding: clamp(1.25rem, 3vw, 2rem); box-shadow: var(--shadow-soft); }
+.gpa-panel h2, .gpa-results h2 { margin: 0 0 var(--space-2); font-size: var(--text-xl); }
+.gpa-panel__intro, .gpa-guidance p, .gpa-results p { color: var(--color-ink-muted); }
+.gpa-guidance p { line-height: var(--leading-normal); }
+.gpa-mode, .gpa-options, .gpa-methods { border: 0; padding: 0; margin: var(--space-5) 0; }
+.gpa-mode legend, .gpa-options legend, .gpa-methods legend { font-weight: 700; margin-bottom: var(--space-3); }
+.gpa-mode label { display: block; padding: var(--space-3); margin-bottom: var(--space-2); background: var(--color-bg); border-radius: var(--radius-sm); cursor: pointer; }
+.gpa-page input[type='radio'] { accent-color: var(--color-primary-ink); width: 1.1rem; height: 1.1rem; vertical-align: middle; }
+.gpa-field { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.gpa-field label { font-size: var(--text-sm); font-weight: 700; }
+.gpa-field label span, .gpa-field small, .gpa-method small { font-weight: 500; color: var(--color-ink-muted); }
+.gpa-field input { width: 100%; min-width: 0; padding: .7rem .8rem; border: 2px solid var(--color-border-input); border-radius: var(--radius-sm); font: inherit; color: var(--color-ink); }
+.gpa-page :is(input, button, a):focus-visible { outline: 3px solid var(--color-primary); outline-offset: 3px; }
+.gpa-courses h3 { font-size: var(--text-lg); margin: var(--space-6) 0 var(--space-3); }
+.gpa-course { border: 2px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-4); margin-bottom: var(--space-3); }
+.gpa-course__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3); }
+.gpa-course__fields { display: grid; grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+.gpa-options__choices { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.gpa-options__choices label { cursor: pointer; }
+.gpa-options .gpa-field { max-width: 16rem; margin-top: var(--space-3); }
+.gpa-link-button, .gpa-add { border: 0; background: none; color: var(--color-primary-ink); text-decoration: underline; font: inherit; font-weight: 700; cursor: pointer; }
+.gpa-add { padding: var(--space-2) 0; }
+.gpa-note { background: var(--color-warning-soft); color: var(--color-warning-text) !important; border-radius: var(--radius-sm); padding: var(--space-3); font-size: var(--text-sm); }
+.gpa-method { display: block; border: 2px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--space-3); margin-bottom: var(--space-2); cursor: pointer; }
+.gpa-method--selected { border-color: var(--color-primary); background: var(--color-primary-soft); }
+.gpa-method small { display: block; margin: var(--space-1) 0 0 1.5rem; line-height: 1.4; }
+.gpa-error { background: var(--color-danger-soft); color: var(--color-danger-ink); padding: var(--space-3); border-radius: var(--radius-sm); }
+.gpa-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
+.gpa-actions button { font: inherit; font-weight: 700; cursor: pointer; padding: .75rem 1.25rem; border-radius: var(--radius-sm); }
+.gpa-primary { color: white; background: var(--color-primary); border: 2px solid var(--color-primary-dark); }
+.gpa-secondary { color: var(--color-primary-ink); background: white; border: 2px solid var(--color-primary-ink); }
+.gpa-results { margin-top: var(--space-5); }
+.gpa-results:empty { display: none; }
+.gpa-results__heading { display: flex; align-items: center; gap: var(--space-3); }
+.gpa-score { background: var(--color-primary-soft); border-radius: var(--radius-md); padding: var(--space-5); margin: var(--space-4) 0; }
+.gpa-score strong { font-size: clamp(2rem, 7vw, 3.5rem); line-height: 1; }
+.gpa-score strong span { font-size: var(--text-lg); }
+.gpa-score p { margin-bottom: 0; }
+.gpa-score small { display: block; }
+.gpa-source a { color: var(--color-primary-ink); overflow-wrap: anywhere; }
+.gpa-empty { padding: var(--space-4); background: var(--color-warning-soft); border-radius: var(--radius-sm); }
+.gpa-table-wrap { overflow-x: auto; margin: var(--space-5) 0; }
+.gpa-table-wrap table { border-collapse: collapse; width: 100%; min-width: 38rem; text-align: left; }
+.gpa-table-wrap caption { text-align: left; font-weight: 700; margin-bottom: var(--space-2); }
+.gpa-table-wrap th, .gpa-table-wrap td { padding: .7rem; border-bottom: 1px solid var(--color-border); }
+.gpa-table-wrap thead { background: var(--color-bg); }
+.gpa-comparison { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3); margin: var(--space-4) 0; }
+.gpa-comparison__item { display: flex; flex-direction: column; gap: var(--space-2); border: 2px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--space-4); }
+.gpa-comparison__item--active { border-color: var(--color-primary); }
+.gpa-comparison__item span { font-size: var(--text-xl); font-weight: 700; }
+@media (max-width: 63.99em) { .gpa-page__layout { grid-template-columns: 1fr; } .gpa-guidance { order: -1; } }
+@media (max-width: 47.99em) { .gpa-page__hero-badge { display: none; } .gpa-course__fields, .gpa-comparison { grid-template-columns: 1fr; } }
