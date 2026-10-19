@@ -1,0 +1,360 @@
+/* ==========================================================================
+   Trilha compacta (micro tarefa 1.3) — mesma estrutura da referência:
+   "telefone" com painel fixo no topo, faixas coloridas por etapa e nuvens ligadas por linha.
+   ========================================================================== */
+
+.trail {
+  padding: var(--space-8) 0;
+}
+
+.trail__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.trail__intro {
+  min-width: 0;
+  max-width: 34rem;
+}
+
+.trail__intro h2 {
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+}
+
+.trail__lead {
+  margin-top: var(--space-3);
+  font-size: 1.05rem;
+  color: var(--color-ink-muted);
+}
+
+/* Demonstração: contorno tracejado + texto */
+.trail__demo {
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border: var(--border-width) dashed var(--color-border-input);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+}
+
+/* ---------- "Telefone" ---------- */
+
+.trail__phone {
+  width: 100%;
+  max-width: 26rem;
+  margin-inline: auto;
+  padding: 0 var(--space-5) var(--space-5);
+  border: var(--border-width) solid var(--color-border);
+  border-bottom-width: var(--depth);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+/* Painel fixo no topo enquanto a trilha rola (só em telas altas; em telas baixas ocuparia muito espaço) */
+.trail__hud {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin-inline: calc(var(--space-5) * -1);
+  padding: var(--space-3) var(--space-5);
+  border-bottom: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: var(--color-surface);
+  font-weight: var(--weight-bold);
+}
+
+@media (min-height: 40em) {
+  .trail__hud {
+    position: sticky;
+    top: var(--header-height);
+    z-index: 5;
+  }
+}
+
+.trail__hud-text {
+  flex: 0 1 auto;
+  min-width: 0;
+  color: var(--color-primary-ink);
+}
+
+.trail__hud-bar {
+  display: block;
+  flex: 1 1 5rem;
+  height: 0.75rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-border);
+  overflow: hidden;
+}
+
+.trail__hud-bar u {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--color-mint);
+  transition: width 0.5s var(--ease-out);
+}
+
+.trail__stages {
+  padding-top: var(--space-5);
+}
+
+/* ---------- Faixas de etapa ---------- */
+
+.trail__banner {
+  padding: 0.875rem 1.125rem;
+  border-radius: var(--radius-md);
+  background: var(--banner-bg);
+  color: #fff;
+  box-shadow: 0 var(--depth) 0 rgb(0 0 0 / 0.18);
+}
+
+.trail__banner h3 {
+  font-size: 1.15rem;
+  line-height: 1.2;
+}
+
+.trail__banner p {
+  font-size: 0.9rem;
+}
+
+.trail__banner--sky {
+  --banner-bg: var(--color-primary);
+}
+
+.trail__banner--lilac {
+  --banner-bg: var(--color-lilac-dark);
+}
+
+.trail__banner--mint {
+  --banner-bg: var(--color-success-ink);
+}
+
+/* ---------- Passos ---------- */
+
+.trail__steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.trail__step {
+  --node-w: 6rem;
+  --node-h: 5.125rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 9rem;
+  padding-top: 2.75rem;
+}
+
+.trail__stage + .trail__stage {
+  margin-top: var(--space-4);
+}
+
+.trail__step:last-child {
+  min-height: 0;
+  padding-bottom: var(--space-2);
+}
+
+/* Linha pontilhada, do centro de um passo ao centro do seguinte */
+.trail__link {
+  position: absolute;
+  top: calc(2.75rem + var(--node-h) / 2);
+  left: 50%;
+  width: min(20rem, 100%);
+  height: 100%;
+  transform: translateX(-50%);
+  overflow: visible;
+  pointer-events: none;
+}
+
+.trail__link path {
+  fill: none;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.trail__link-base {
+  stroke: var(--color-border-strong);
+  stroke-width: 5;
+  stroke-dasharray: 0.004 0.03;
+}
+
+.trail__link-fill {
+  stroke: var(--color-mint);
+  stroke-width: 5;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0; /* a ponta arredondada de um traço de tamanho zero apareceria como um ponto */
+  transition: stroke-dashoffset 0.6s var(--ease-out);
+}
+
+.trail__link.is-done .trail__link-fill {
+  stroke-dashoffset: 0;
+  opacity: 1;
+}
+
+/* ---------- Nuvem (passo) ---------- */
+
+.trail__node {
+  position: relative;
+  z-index: 1;
+  width: var(--node-w);
+  height: var(--node-h);
+  transform: translateX(var(--x, 0));
+}
+
+.trail__cloud {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.trail__cloud-fill {
+  fill: var(--n-fill);
+}
+
+.trail__cloud-shade {
+  fill: var(--n-shade);
+}
+
+.trail__node-ico {
+  position: absolute;
+  inset: 0 0 0.625rem;
+  display: grid;
+  place-items: center;
+  color: var(--n-ink);
+}
+
+.trail__node[data-state='done'] {
+  --n-fill: var(--color-mint);
+  --n-shade: var(--color-mint-dark);
+  --n-ink: var(--color-ink);
+}
+
+.trail__node[data-state='current'] {
+  --n-fill: var(--color-primary);
+  --n-shade: var(--color-primary-dark);
+  --n-ink: #fff;
+}
+
+.trail__node[data-state='locked'] {
+  --n-fill: var(--color-border);
+  --n-shade: var(--color-border-strong);
+  --n-ink: var(--color-ink-soft);
+}
+
+.trail__bubble {
+  position: absolute;
+  top: -2.375rem;
+  left: 50%;
+  z-index: 2;
+  padding: 0.3rem 0.875rem;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: 0.875rem;
+  background: var(--color-surface);
+  box-shadow: 0 3px 0 var(--color-border-strong);
+  font-size: 0.78rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-primary-ink);
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+.trail__label {
+  position: relative;
+  z-index: 1;
+  max-width: 9rem;
+  margin-top: var(--space-1);
+  padding: 0 0.375rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  font-size: 0.8rem;
+  font-weight: var(--weight-bold);
+  line-height: 1.2;
+  text-align: center;
+  color: var(--color-ink-muted);
+  transform: translateX(var(--x, 0));
+}
+
+.trail__node[data-state='locked'] ~ .trail__label {
+  color: var(--color-ink-soft);
+}
+
+/* ---------- Fim da trilha ---------- */
+
+.trail__end {
+  display: grid;
+  place-items: center;
+  /* altura reservada (duas linhas): o texto muda ao completar e a página não pode "pular" */
+  min-height: 4.25rem;
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  text-align: center;
+  color: var(--color-ink-muted);
+}
+
+.trail__end.is-on {
+  background: var(--color-mint-soft);
+  color: var(--color-success-ink);
+}
+
+/* ---------- Movimento (só para quem não pediu menos movimento) ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .trail__node[data-state='done'] {
+    animation: trail-pop 0.6s;
+  }
+
+  .trail__bubble {
+    animation: trail-bob 2s ease-in-out infinite;
+  }
+
+  .trail__end.is-on {
+    animation: trail-pop 0.6s;
+  }
+
+  @keyframes trail-pop {
+    40% {
+      transform: translateX(var(--x, 0)) scale(1.18) rotate(-4deg);
+    }
+  }
+
+  @keyframes trail-bob {
+    50% {
+      transform: translateX(-50%) translateY(-6px);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trail__link-fill,
+  .trail__hud-bar u {
+    transition: none;
+  }
+}
+
+/* ---------- Telas largas: texto à esquerda, "telefone" à direita ---------- */
+
+@media (min-width: 64em) {
+  .trail__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 26rem);
+    gap: var(--space-7);
+  }
+
+  .trail__intro {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-6));
+  }
+}

@@ -1,0 +1,209 @@
+/* ==========================================================================
+   Passaportes de países (micro tarefa 1.5) — bilhetes da referência.
+   ========================================================================== */
+
+.passports {
+  padding: 5rem 0;
+}
+
+.passports__head {
+  max-width: 60ch;
+  margin-bottom: var(--space-6);
+}
+
+.passports__head h2 {
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+}
+
+.passports__head p {
+  margin-top: var(--space-3);
+  font-size: 1.05rem;
+  color: var(--color-ink-muted);
+}
+
+.passports__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.625rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.passports__grid > li {
+  min-width: 0;
+}
+
+.passports__more {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-6);
+}
+
+/* ---------- Bilhete ---------- */
+
+.ticket {
+  --stub: min(7.25rem, 36%); /* largura do canhoto (encolhe com texto ampliado); os recortes ficam na divisa */
+  --t-bg: var(--color-primary);
+  --t-depth: var(--color-primary-dark);
+  --t-fg: #fff;
+  display: block;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+  filter: drop-shadow(0 var(--depth) 0 var(--t-depth));
+}
+
+.ticket--sun {
+  --t-bg: var(--color-accent);
+  --t-depth: var(--color-accent-dark);
+  --t-fg: var(--color-ink);
+}
+
+.ticket--mint {
+  --t-bg: var(--color-mint);
+  --t-depth: var(--color-mint-dark);
+  --t-fg: var(--color-ink);
+}
+
+.ticket--coral {
+  --t-bg: var(--color-coral);
+  --t-depth: var(--color-coral-dark);
+  --t-fg: var(--color-ink);
+}
+
+.ticket--lilac {
+  --t-bg: var(--color-lilac-dark);
+  --t-depth: var(--color-lilac-dark);
+  --t-fg: #fff;
+}
+
+.ticket__body {
+  display: grid;
+  grid-template-columns: var(--stub) minmax(0, 1fr);
+  height: 100%;
+  border-radius: 1.375rem;
+  background: var(--color-surface);
+  overflow: hidden;
+  -webkit-mask:
+    radial-gradient(circle 12px at var(--stub) 0, #0000 98%, #000),
+    radial-gradient(circle 12px at var(--stub) 100%, #0000 98%, #000);
+  -webkit-mask-composite: source-in;
+  mask:
+    radial-gradient(circle 12px at var(--stub) 0, #0000 98%, #000),
+    radial-gradient(circle 12px at var(--stub) 100%, #0000 98%, #000);
+  mask-composite: intersect;
+}
+
+.ticket__stub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: var(--space-4) var(--space-2);
+  border-right: 3px dotted rgb(255 255 255 / 0.7);
+  background: var(--t-bg);
+  color: var(--t-fg);
+}
+
+.ticket__stub small {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.1em;
+}
+
+.ticket__stub b {
+  font-size: 1.9rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.ticket__main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  min-width: 0;
+  padding: 1.125rem var(--space-5);
+  color: var(--color-ink);
+}
+
+.ticket__main strong {
+  font-size: 1.2rem;
+  line-height: 1.15;
+}
+
+.ticket__main > span:not(.ticket__tag) {
+  font-size: 0.85rem;
+  line-height: 1.3;
+  color: var(--color-ink-muted);
+}
+
+.ticket__main > span:not(.ticket__tag) small {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+/* Estado: contorno tracejado = ainda não existe; sólido = disponível */
+.ticket__tag {
+  padding: 0.125rem 0.75rem;
+  border: var(--border-width) dashed var(--color-border-input);
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.ticket__tag--open {
+  border-style: solid;
+  border-color: var(--color-primary-ink);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-ink);
+}
+
+.ticket__barcode {
+  display: block;
+  align-self: stretch;
+  height: 1.25rem;
+  margin-top: auto;
+  border-radius: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--color-ink) 0 2px,
+    var(--color-surface) 2px 5px,
+    var(--color-ink) 5px 6px,
+    var(--color-surface) 6px 10px,
+    var(--color-ink) 10px 13px,
+    var(--color-surface) 13px 16px
+  );
+  opacity: 0.75;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ticket--link {
+    transition: transform 0.12s var(--ease-out);
+  }
+
+  .ticket--link:hover {
+    transform: translateY(-3px);
+  }
+}
+
+@media (min-width: 40em) {
+  .passports__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 62.5em) {
+  .passports__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

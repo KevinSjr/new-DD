@@ -1,0 +1,51 @@
+.rankings-hub { padding-bottom: var(--space-8); }
+
+.rankings-hub__hero {
+  margin-inline: var(--gutter);
+  padding-block: var(--space-8);
+  border-radius: var(--radius-xl);
+  background: var(--color-night);
+  color: var(--color-on-night);
+}
+
+.rankings-hub__hero .ranking-page__eyebrow { color: var(--color-accent); }
+.rankings-hub__hero h1 { max-width: 18ch; margin-block: var(--space-3); font-size: clamp(2.2rem, 6vw, var(--text-4xl)); }
+.rankings-hub__hero p:last-child { max-width: 57ch; color: var(--color-on-night-muted); }
+
+.rankings-hub__body { display: grid; gap: var(--space-7); padding-top: var(--space-7); }
+.rankings-hub__section-heading { margin-bottom: var(--space-5); }
+.rankings-hub__section-heading h2 { margin-block: var(--space-2); font-size: var(--text-2xl); }
+.rankings-hub__section-heading p:last-child { max-width: 60ch; color: var(--color-ink-muted); }
+
+.rankings-hub__choice {
+  display: grid;
+  gap: var(--space-4);
+  align-items: center;
+  padding: var(--space-5);
+  border: var(--border-width) solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-soft);
+  text-decoration: none;
+  transition: border-color var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out);
+}
+
+.rankings-hub__choice:hover { border-color: var(--color-primary); box-shadow: var(--shadow-lift); }
+.rankings-hub__choice:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+.rankings-hub__choice--subject { background: var(--color-accent-soft); }
+.rankings-hub__available { display: grid; gap: var(--space-4); }
+.rankings-hub__icon { display: grid; place-items: center; width: 3.5rem; height: 3.5rem; border-radius: var(--radius-md); background: var(--color-primary-soft); color: var(--color-primary-ink); }
+.rankings-hub__choice--subject .rankings-hub__icon { background: var(--color-accent); color: var(--color-ink); }
+.rankings-hub__choice-content { display: grid; gap: var(--space-2); }
+.rankings-hub__choice-content strong { font-size: var(--text-xl); }
+.rankings-hub__choice-content span { color: var(--color-ink-muted); }
+.rankings-hub__action { color: var(--color-primary-ink); font-weight: var(--weight-bold); }
+
+@media (min-width: 48em) {
+  .rankings-hub__choice { grid-template-columns: auto minmax(0, 1fr) auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rankings-hub__choice { transition: none; }
+}

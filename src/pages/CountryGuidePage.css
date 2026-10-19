@@ -1,0 +1,289 @@
+/* ==========================================================================
+   Template de guia de país (micro tarefa 2.1)
+   Celular: tudo empilhado, com o índice no topo. Desktop (64em+): índice fixo à esquerda.
+   ========================================================================== */
+
+.guide {
+  padding-block: var(--space-6) var(--space-8);
+}
+
+/* ---------- Trilha de navegação ---------- */
+
+.guide__breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+}
+
+.guide__breadcrumb li + li::before {
+  content: '/';
+  margin-right: var(--space-2);
+  color: var(--color-border-input);
+}
+
+.guide__breadcrumb [aria-current='page'] {
+  color: var(--color-ink);
+  font-weight: var(--weight-bold);
+}
+
+/* ---------- Cabeçalho ---------- */
+
+.guide__header {
+  margin-top: var(--space-6);
+}
+
+.guide__eyebrow {
+  margin-bottom: var(--space-2);
+  color: var(--color-primary-ink);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-extrabold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.guide__title {
+  font-size: var(--text-3xl);
+}
+
+.guide__status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+}
+
+.guide__pill {
+  padding: var(--space-1) var(--space-3);
+  border: var(--border-width) dashed var(--color-warning-text);
+  border-radius: var(--radius-pill);
+  background: var(--color-warning-soft);
+  color: var(--color-warning-text);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-extrabold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.guide__summary {
+  max-width: 40rem;
+  margin-top: var(--space-4);
+  font-size: var(--text-lg);
+  color: var(--color-ink-muted);
+}
+
+/* ---------- Avisos ---------- */
+
+.guide__notice {
+  max-width: 48rem;
+  margin-top: var(--space-6);
+  padding: var(--space-4) var(--space-5);
+  border-left: 4px solid var(--color-accent);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  background: var(--color-surface);
+  font-size: var(--text-sm);
+}
+
+.guide__empty-all {
+  max-width: 48rem;
+  margin-top: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  border: var(--border-width) dashed var(--color-border-input);
+  border-radius: var(--radius-md);
+  color: var(--color-ink-muted);
+}
+
+/* ---------- Layout ---------- */
+
+.guide__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+  margin-top: var(--space-7);
+}
+
+.guide__toc {
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--color-primary-soft);
+}
+
+.guide__toc-title {
+  margin-bottom: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-extrabold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.guide__toc ul {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.guide__toc a {
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+  font-weight: var(--weight-bold);
+}
+
+/* ---------- Temas ---------- */
+
+.guide__topics {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-7);
+}
+
+.guide-topic {
+  padding-top: var(--space-5);
+  border-top: var(--border-width) solid var(--color-border-strong);
+}
+
+.guide-topic__title {
+  font-size: var(--text-xl);
+}
+
+.guide-topic__empty {
+  margin-top: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  border: var(--border-width) dashed var(--color-border-input);
+  border-radius: var(--radius-md);
+}
+
+.guide-topic__hint {
+  margin-top: var(--space-2);
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+}
+
+.guide-topic__facts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---------- Informações ---------- */
+
+.guide-fact {
+  padding: var(--space-4) var(--space-5);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.guide-fact__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-3);
+}
+
+.guide-fact__label {
+  font-size: var(--text-base);
+}
+
+.guide-fact__value {
+  margin-top: var(--space-2);
+}
+
+.guide-fact__items {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-1);
+  margin: var(--space-3) 0 0;
+  padding-left: var(--space-5);
+}
+
+.guide-fact__meta,
+.guide-fact__note,
+.guide-fact__source {
+  margin-top: var(--space-2);
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+}
+
+.guide-fact__source {
+  padding-top: var(--space-2);
+  border-top: var(--border-width) solid var(--color-border);
+}
+
+.guide-fact__stale {
+  display: inline-block;
+  color: var(--color-warning-text);
+  font-weight: var(--weight-bold);
+}
+
+/* ---------- Fontes oficiais ---------- */
+
+.guide-links {
+  margin-top: var(--space-8);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--color-primary-soft);
+}
+
+.guide-links__list {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.guide-links__list a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  font-weight: var(--weight-bold);
+}
+
+.guide-links__note {
+  margin-top: var(--space-3);
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+}
+
+/* ---------- Telas maiores ---------- */
+
+@media (min-width: 48em) {
+  .guide__title {
+    font-size: var(--text-4xl);
+  }
+}
+
+@media (min-width: 64em) {
+  .guide {
+    padding-block: var(--space-7) var(--space-9);
+  }
+
+  .guide__layout {
+    grid-template-columns: 14rem minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+}
+
+/* O índice só acompanha a rolagem se couber na tela */
+@media (min-width: 64em) and (min-height: 36em) {
+  .guide__toc {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-5));
+  }
+}

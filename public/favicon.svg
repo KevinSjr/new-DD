@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Day Dreaming">
+  <g fill="#56afd8">
+    <circle cx="20" cy="38" r="12"/><circle cx="33" cy="28" r="16"/><circle cx="46" cy="37" r="12"/>
+    <rect x="10" y="36" width="44" height="16" rx="8"/>
+  </g>
+  <polygon fill="#fed53e" stroke="#fed53e" stroke-width="1.6" stroke-linejoin="round" points="34.00,21.50 36.59,27.44 43.04,28.06 38.18,32.36 39.58,38.69 34.00,35.40 28.42,38.69 29.82,32.36 24.96,28.06 31.41,27.44"/>
+</svg>

@@ -1,0 +1,132 @@
+/* ==========================================================================
+   Rodapé (micro tarefa 1.9) — fundo escuro, como a seção de gamificação.
+   Celular: blocos empilhados. Desktop (64em+): marca, navegação e privacidade em colunas.
+   ========================================================================== */
+
+.site-footer {
+  padding-top: var(--space-8);
+  background: var(--color-night);
+  color: var(--color-on-night);
+  font-size: var(--text-sm);
+}
+
+.site-footer :focus-visible {
+  outline-color: var(--brand-star);
+}
+
+.site-footer a {
+  color: var(--color-on-night);
+}
+
+.site-footer__grid {
+  display: grid;
+  gap: var(--space-7);
+}
+
+/* ---------- Marca ---------- */
+
+.site-footer__brand {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+  justify-items: start;
+  max-width: 24rem;
+  color: var(--color-on-night-muted);
+}
+
+.site-footer__status {
+  color: var(--color-on-night);
+  font-weight: var(--weight-bold);
+}
+
+/* ---------- Títulos das colunas ---------- */
+
+.site-footer__title {
+  margin-bottom: var(--space-3);
+  color: var(--brand-star);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-extrabold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ---------- Navegação ---------- */
+
+.site-footer__links {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer__links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem; /* alvo de toque confortável */
+  font-weight: var(--weight-semibold);
+}
+
+/* ---------- Privacidade ---------- */
+
+.site-footer__privacy {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+  color: var(--color-on-night-muted);
+}
+
+.site-footer__privacy .site-footer__title {
+  margin-bottom: 0;
+}
+
+.site-footer__privacy strong {
+  color: var(--color-on-night);
+}
+
+.site-footer__tag {
+  justify-self: start;
+  padding: var(--space-1) var(--space-3);
+  border: var(--border-width) dashed var(--color-on-night-muted);
+  border-radius: var(--radius-pill);
+  color: var(--color-on-night);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-extrabold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ---------- Barra inferior ---------- */
+
+.site-footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-7);
+  padding-block: var(--space-5);
+  border-top: var(--border-width) solid var(--color-night-border);
+  color: var(--color-on-night-muted);
+}
+
+.site-footer__bottom a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  font-weight: var(--weight-bold);
+}
+
+/* ---------- Telas maiores ---------- */
+
+@media (min-width: 64em) {
+  .site-footer {
+    padding-top: var(--space-9);
+  }
+
+  .site-footer__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr) minmax(0, 1.4fr);
+    gap: var(--space-8);
+  }
+}

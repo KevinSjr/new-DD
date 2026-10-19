@@ -1,0 +1,239 @@
+/* ==========================================================================
+   Seção de confiança (micro tarefa 1.8)
+   Celular: tudo empilhado. Desktop (64em+): regras à esquerda, cartão de
+   estrutura à direita, e etiquetas em quatro colunas.
+   ========================================================================== */
+
+.trust {
+  padding-block: var(--space-8);
+  background: var(--color-surface);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+/* ---------- Cabeçalho ---------- */
+
+.trust__header {
+  max-width: 44rem;
+}
+
+.trust__eyebrow {
+  margin-bottom: var(--space-3);
+  color: var(--color-primary-ink);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-extrabold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.trust__title {
+  font-size: var(--text-xl);
+  text-wrap: balance;
+}
+
+.trust__lead {
+  margin-top: var(--space-4);
+  color: var(--color-ink-muted);
+  font-size: var(--text-lg);
+}
+
+.trust__subtitle {
+  margin-bottom: var(--space-4);
+  font-size: var(--text-lg);
+}
+
+.trust__subtitle--labels {
+  margin-top: var(--space-8);
+}
+
+/* ---------- Layout: regras + cartão ---------- */
+
+.trust__layout {
+  display: grid;
+  gap: var(--space-7);
+  margin-top: var(--space-7);
+}
+
+.trust__rules {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: regra;
+}
+
+.trust__rule {
+  position: relative;
+  display: grid;
+  gap: var(--space-1);
+  padding-left: calc(2.25rem + var(--space-3));
+  counter-increment: regra;
+}
+
+.trust__rule::before {
+  content: counter(regra);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-ink);
+  font-weight: var(--weight-extrabold);
+}
+
+.trust__rule strong {
+  font-weight: var(--weight-extrabold);
+}
+
+.trust__rule span {
+  color: var(--color-ink-muted);
+}
+
+/* ---------- Cartão de estrutura (sem dados reais) ---------- */
+
+.trust__card {
+  align-self: start;
+  padding: var(--space-5);
+  border: var(--border-width) dashed var(--color-border-input);
+  border-radius: var(--radius-xl);
+  background: var(--color-bg);
+}
+
+.trust__card-tag {
+  display: inline-block;
+  margin-bottom: var(--space-3);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: var(--color-ink);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-extrabold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.trust__card-title {
+  font-size: var(--text-lg);
+}
+
+.trust__anatomy {
+  margin: var(--space-4) 0 0;
+}
+
+.trust__anatomy-row {
+  padding-block: var(--space-3);
+  border-top: var(--border-width) solid var(--color-border);
+}
+
+.trust__anatomy dt {
+  font-weight: var(--weight-extrabold);
+}
+
+.trust__anatomy dd {
+  margin: 0;
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+}
+
+/* ---------- Etiquetas ---------- */
+
+.trust__labels {
+  display: grid;
+  gap: var(--space-5);
+  margin: 0;
+}
+
+.trust__label dd {
+  margin: var(--space-2) 0 0;
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+}
+
+/* O texto da etiqueta é o que identifica o tipo; a cor e o contorno são reforço */
+.trust__badge {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  border: var(--border-width) solid currentColor;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-extrabold);
+}
+
+.trust__badge--confirmed {
+  background: var(--color-success-soft);
+  color: var(--color-success-ink);
+}
+
+.trust__badge--estimate {
+  background: var(--color-warning-soft);
+  color: var(--color-warning-text);
+}
+
+.trust__badge--guide {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-ink);
+}
+
+.trust__badge--demo {
+  background: transparent;
+  border-style: dashed;
+  color: var(--color-ink);
+}
+
+/* ---------- Limite e próximo passo ---------- */
+
+.trust__limit {
+  max-width: 48rem;
+  margin-top: var(--space-7);
+  padding: var(--space-4) var(--space-5);
+  border-left: 4px solid var(--color-accent);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  background: var(--color-bg);
+  font-size: var(--text-sm);
+}
+
+.trust__next {
+  margin-top: var(--space-5);
+  color: var(--color-ink-muted);
+}
+
+.trust__next a {
+  font-weight: var(--weight-bold);
+}
+
+/* ---------- Telas maiores ---------- */
+
+@media (min-width: 48em) {
+  .trust__title {
+    font-size: var(--text-2xl);
+  }
+
+  .trust__labels {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5) var(--space-6);
+  }
+}
+
+@media (min-width: 64em) {
+  .trust {
+    padding-block: var(--space-9);
+  }
+
+  .trust__layout {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: var(--space-8);
+  }
+
+  .trust__card {
+    padding: var(--space-6);
+  }
+
+  .trust__labels {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+  }
+}

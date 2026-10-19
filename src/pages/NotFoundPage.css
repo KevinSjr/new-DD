@@ -1,0 +1,30 @@
+.not-found {
+  padding-block: var(--space-8);
+}
+
+.not-found__box {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-4);
+  max-width: 40rem;
+  margin-inline: 0;
+  min-height: 50vh;
+  align-content: center;
+}
+
+.not-found__eyebrow {
+  color: var(--color-primary-ink);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-extrabold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.not-found__title {
+  font-size: var(--text-2xl);
+}
+
+.not-found__text {
+  color: var(--color-ink-muted);
+  font-size: var(--text-lg);
+}

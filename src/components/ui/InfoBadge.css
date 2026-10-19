@@ -1,0 +1,32 @@
+.info-badge {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  border: var(--border-width) solid currentColor;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-extrabold);
+  /* Em zoom alto o selo pode quebrar em duas linhas em vez de estourar a tela */
+  max-width: 100%;
+  line-height: var(--leading-snug);
+}
+
+.info-badge--confirmed {
+  background: var(--color-success-soft);
+  color: var(--color-success-ink);
+}
+
+.info-badge--estimate {
+  background: var(--color-warning-soft);
+  color: var(--color-warning-text);
+}
+
+.info-badge--guide {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-ink);
+}
+
+.info-badge--demo {
+  background: transparent;
+  border-style: dashed;
+  color: var(--color-ink);
+}

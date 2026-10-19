@@ -1,0 +1,23 @@
+# QS World University Rankings 2027 — extração local
+
+`public/data/qs-world-university-rankings-2027-top1000.json` contém as primeiras 1.000 instituições, pela coluna `Index`, da planilha QS 2027 versão 1.3 fornecida pelo usuário. O arquivo faz parte dos dados publicáveis do site e deve ser versionado. A página `/ranking` o carrega; sem ele, exibe um erro claro em vez de inventar resultados.
+
+Cada registro contém `index` (ordem na planilha), `rank` (posição ou faixa exatamente como exibida, em texto), `university`, `location` (somente o país/território da planilha), `region` (região da planilha) e `overall_score` (número ou `null` quando a QS apresenta `-`). Empates compartilham o mesmo `rank`; não foram resolvidos artificialmente.
+
+Fonte: [QS World University Rankings 2027](https://www.topuniversities.com/world-university-rankings). Source: QS Quacquarelli Symonds (www.topuniversities.com). Copyright © 2026 QS Quacquarelli Symonds Ltd. A publicação destes dados foi autorizada pelo responsável pelo projeto. Mantenha a atribuição, os termos aplicáveis e a comparação com o site e o resumo de correções da QS antes de embasar decisões.
+
+Para regenerar o JSON a partir da planilha original em `Downloads`, execute `python scripts/extract_qs_2027.py` com `openpyxl` instalado. Também é possível passar `--source` e `--output` para outros caminhos.
+
+## QS World University Rankings by Subject 2026 — áreas de estudo
+
+`public/data/qs-subject-rankings-2026-arts-humanities.json` contém os 553 registros da aba `Arts & Humanities` da planilha QS by Subject 2026 versão 1.4 fornecida pelo usuário. A rota `/rankings/artes-humanidades` mostra a posição da área ampla, instituição, país/território e pontuação; ela não combina nem substitui os rankings das 13 disciplinas listadas na página. Há 152 registros sem pontuação exibida; posições empatadas e faixas foram mantidas como na fonte. Os pesos metodológicos da aba também foram preservados no JSON.
+
+`public/data/qs-subject-rankings-2026-engineering-technology.json` contém os 556 registros da aba `Engineering & Technology` da planilha de mesmo título, versão 1.4 (`_20.xlsx`). Há 154 registros sem pontuação publicada. A rota `/rankings/engenharia-tecnologia` usa a mesma tabela e os filtros da área de Artes, mas com os dados e pesos metodológicos próprios de Engenharia e Tecnologia. As oito disciplinas listadas têm links externos para os rankings específicos da QS; seus dados não foram incorporados ao site.
+
+`public/data/qs-subject-rankings-2026-life-sciences-medicine.json` contém os 550 registros da aba `Life Sciences & Medicine` da planilha versão 1.4 (`_21.xlsx`). Há 149 registros sem pontuação exibida. A rota `/rankings/ciencias-da-vida-medicina` usa os dados e pesos metodológicos próprios desta área. As nove disciplinas estão traduzidas e levam às listas específicas no site da QS; o site não hospeda essas listas individuais.
+
+`public/data/qs-subject-rankings-2026-natural-sciences.json` contém os 554 registros da aba `Natural Sciences` da planilha versão 1.4 (`_17.xlsx`). Há 152 registros sem pontuação exibida. A rota `/rankings/ciencias-naturais` preserva a posição, a pontuação e os pesos metodológicos desta área. As nove disciplinas estão traduzidas e apontam para as listas específicas da QS.
+
+`public/data/qs-subject-rankings-2026-social-sciences-management.json` contém os 550 registros da aba `Social Sciences & Management` da planilha versão 1.4 (`_18.xlsx`). Há 151 registros sem pontuação exibida. A rota `/rankings/ciencias-sociais-administracao` preserva posição, pontuação e pesos metodológicos. As 16 disciplinas têm nomes em português e links para as listas específicas da QS.
+
+Para regenerar e conferir, use `python scripts/extract_qs_subjects_2026.py --area <área>` e depois `--verify` com a mesma área. As áreas aceitas são `arts-humanities`, `engineering-technology`, `life-sciences-medicine`, `natural-sciences` e `social-sciences-management`. É necessário `openpyxl`. Os cinco JSONs de áreas também devem ser versionados e publicados. Consulte as páginas oficiais de [Artes e Humanidades](https://www.topuniversities.com/university-subject-rankings/arts-humanities), [Engenharia e Tecnologia](https://www.topuniversities.com/university-subject-rankings/engineering-technology), [Ciências da Vida e Medicina](https://www.topuniversities.com/university-subject-rankings/life-sciences-medicine), [Ciências Naturais](https://www.topuniversities.com/university-subject-rankings/natural-sciences) e [Ciências Sociais e Administração](https://www.topuniversities.com/university-subject-rankings/social-sciences-management) e seus resumos de correções ao atualizar as listas.

@@ -1,0 +1,3887 @@
+{
+  "edition": 2026,
+  "area": "Arts & Humanities",
+  "source_file": "QS World University Rankings by Subject 2026 - Public Results v1.4 (qs.com)_19.xlsx",
+  "source_url": "https://www.topuniversities.com/university-subject-rankings/arts-humanities",
+  "count": 553,
+  "methodology_weights": {
+    "academic": 0.6,
+    "employer": 0.2,
+    "citations_per_paper": 0.075,
+    "h_index": 0.075,
+    "international_research_network": 0.05
+  },
+  "universities": [
+    {
+      "index": 1,
+      "rank": "1",
+      "university": "University of Oxford",
+      "location": "United Kingdom",
+      "score": 97.8
+    },
+    {
+      "index": 2,
+      "rank": "2",
+      "university": "Harvard University",
+      "location": "United States of America",
+      "score": 97.7
+    },
+    {
+      "index": 3,
+      "rank": "3",
+      "university": "University of Cambridge",
+      "location": "United Kingdom",
+      "score": 96.7
+    },
+    {
+      "index": 4,
+      "rank": "4",
+      "university": "Stanford University",
+      "location": "United States of America",
+      "score": 93.1
+    },
+    {
+      "index": 5,
+      "rank": "5",
+      "university": "Yale University",
+      "location": "United States of America",
+      "score": 91.2
+    },
+    {
+      "index": 6,
+      "rank": "6",
+      "university": "Columbia University",
+      "location": "United States of America",
+      "score": 91.1
+    },
+    {
+      "index": 7,
+      "rank": "7",
+      "university": "University of California, Berkeley (UCB)",
+      "location": "United States of America",
+      "score": 91
+    },
+    {
+      "index": 8,
+      "rank": "8",
+      "university": "UCL",
+      "location": "United Kingdom",
+      "score": 90.7
+    },
+    {
+      "index": 9,
+      "rank": "9",
+      "university": "The University of Edinburgh",
+      "location": "United Kingdom",
+      "score": 90.4
+    },
+    {
+      "index": 10,
+      "rank": "10",
+      "university": "New York University (NYU)",
+      "location": "United States of America",
+      "score": 89.2
+    },
+    {
+      "index": 11,
+      "rank": "11",
+      "university": "University of California, Los Angeles (UCLA)",
+      "location": "United States of America",
+      "score": 88.9
+    },
+    {
+      "index": 12,
+      "rank": "12",
+      "university": "Princeton University",
+      "location": "United States of America",
+      "score": 88.5
+    },
+    {
+      "index": 13,
+      "rank": "13",
+      "university": "Massachusetts Institute of Technology (MIT)",
+      "location": "United States of America",
+      "score": 87.8
+    },
+    {
+      "index": 14,
+      "rank": "14",
+      "university": "University of Toronto",
+      "location": "Canada",
+      "score": 87.7
+    },
+    {
+      "index": 15,
+      "rank": "15",
+      "university": "University of Chicago",
+      "location": "United States of America",
+      "score": 86.8
+    },
+    {
+      "index": 16,
+      "rank": "16",
+      "university": "The University of Melbourne",
+      "location": "Australia",
+      "score": 86.3
+    },
+    {
+      "index": 17,
+      "rank": "17",
+      "university": "National University of Singapore (NUS)",
+      "location": "Singapore",
+      "score": 86.2
+    },
+    {
+      "index": 18,
+      "rank": "18",
+      "university": "Université Paris 1 Panthéon-Sorbonne",
+      "location": "France",
+      "score": 86.1
+    },
+    {
+      "index": 19,
+      "rank": "19",
+      "university": "The University of Hong Kong",
+      "location": "Hong Kong SAR, China",
+      "score": 85.7
+    },
+    {
+      "index": 20,
+      "rank": "20",
+      "university": "Universidad Nacional Autónoma de México  (UNAM)",
+      "location": "Mexico",
+      "score": 85.1
+    },
+    {
+      "index": 21,
+      "rank": "21",
+      "university": "Peking University",
+      "location": "China (Mainland)",
+      "score": 85
+    },
+    {
+      "index": 22,
+      "rank": "21",
+      "university": "King's College London",
+      "location": "United Kingdom",
+      "score": 85
+    },
+    {
+      "index": 23,
+      "rank": "23",
+      "university": "University of British Columbia",
+      "location": "Canada",
+      "score": 83.9
+    },
+    {
+      "index": 24,
+      "rank": "24",
+      "university": "Humboldt-Universität zu Berlin",
+      "location": "Germany",
+      "score": 83.4
+    },
+    {
+      "index": 25,
+      "rank": "24",
+      "university": "Universidad de Buenos Aires (UBA)",
+      "location": "Argentina",
+      "score": 83.4
+    },
+    {
+      "index": 26,
+      "rank": "26",
+      "university": "Pontificia Universidad Católica de Chile (UC)",
+      "location": "Chile",
+      "score": 83.2
+    },
+    {
+      "index": 27,
+      "rank": "27",
+      "university": "Tsinghua University",
+      "location": "China (Mainland)",
+      "score": 83.1
+    },
+    {
+      "index": 28,
+      "rank": "28",
+      "university": "The University of Tokyo",
+      "location": "Japan",
+      "score": 83
+    },
+    {
+      "index": 29,
+      "rank": "28",
+      "university": "The University of Sydney",
+      "location": "Australia",
+      "score": 83
+    },
+    {
+      "index": 30,
+      "rank": "30",
+      "university": "Freie Universitaet Berlin",
+      "location": "Germany",
+      "score": 82.8
+    },
+    {
+      "index": 31,
+      "rank": "31",
+      "university": "Durham University",
+      "location": "United Kingdom",
+      "score": 82.7
+    },
+    {
+      "index": 32,
+      "rank": "31",
+      "university": "Australian National University (ANU)",
+      "location": "Australia",
+      "score": 82.7
+    },
+    {
+      "index": 33,
+      "rank": "31",
+      "university": "Sorbonne University",
+      "location": "France",
+      "score": 82.7
+    },
+    {
+      "index": 34,
+      "rank": "34",
+      "university": "University of Amsterdam",
+      "location": "Netherlands",
+      "score": 82.3
+    },
+    {
+      "index": 35,
+      "rank": "35",
+      "university": "University of Pennsylvania",
+      "location": "United States of America",
+      "score": 81.5
+    },
+    {
+      "index": 36,
+      "rank": "35",
+      "university": "Ludwig-Maximilians-Universität München",
+      "location": "Germany",
+      "score": 81.5
+    },
+    {
+      "index": 37,
+      "rank": "35",
+      "university": "McGill University",
+      "location": "Canada",
+      "score": 81.5
+    },
+    {
+      "index": 38,
+      "rank": "38",
+      "university": "Cornell University",
+      "location": "United States of America",
+      "score": 81.3
+    },
+    {
+      "index": 39,
+      "rank": "39",
+      "university": "The University of Manchester",
+      "location": "United Kingdom",
+      "score": 81.2
+    },
+    {
+      "index": 40,
+      "rank": "40",
+      "university": "The Chinese University of Hong Kong (CUHK)",
+      "location": "Hong Kong SAR, China",
+      "score": 81
+    },
+    {
+      "index": 41,
+      "rank": "40",
+      "university": "Nanyang Technological University, Singapore (NTU Singapore)",
+      "location": "Singapore",
+      "score": 81
+    },
+    {
+      "index": 42,
+      "rank": "42",
+      "university": "Leiden University",
+      "location": "Netherlands",
+      "score": 80.8
+    },
+    {
+      "index": 43,
+      "rank": "42",
+      "university": "Sapienza University of Rome",
+      "location": "Italy",
+      "score": 80.8
+    },
+    {
+      "index": 44,
+      "rank": "44",
+      "university": "University of Michigan-Ann Arbor",
+      "location": "United States of America",
+      "score": 80.6
+    },
+    {
+      "index": 45,
+      "rank": "45",
+      "university": "The London School of Economics and Political Science (LSE)",
+      "location": "United Kingdom",
+      "score": 80.5
+    },
+    {
+      "index": 46,
+      "rank": "46",
+      "university": "University of St Andrews",
+      "location": "United Kingdom",
+      "score": 79.9
+    },
+    {
+      "index": 47,
+      "rank": "47",
+      "university": "The University of Auckland",
+      "location": "New Zealand",
+      "score": 79.4
+    },
+    {
+      "index": 48,
+      "rank": "47",
+      "university": "KU Leuven",
+      "location": "Belgium",
+      "score": 79.4
+    },
+    {
+      "index": 49,
+      "rank": "49",
+      "university": "Alma Mater Studiorum - Università di Bologna",
+      "location": "Italy",
+      "score": 79.3
+    },
+    {
+      "index": 50,
+      "rank": "50",
+      "university": "University of York",
+      "location": "United Kingdom",
+      "score": 79.1
+    },
+    {
+      "index": 51,
+      "rank": "50",
+      "university": "Fudan University",
+      "location": "China (Mainland)",
+      "score": 79.1
+    },
+    {
+      "index": 52,
+      "rank": "50",
+      "university": "Trinity College Dublin, The University of Dublin",
+      "location": "Ireland",
+      "score": 79.1
+    },
+    {
+      "index": 53,
+      "rank": "53",
+      "university": "University of Leeds",
+      "location": "United Kingdom",
+      "score": 79
+    },
+    {
+      "index": 54,
+      "rank": "54",
+      "university": "University of Vienna",
+      "location": "Austria",
+      "score": 78.9
+    },
+    {
+      "index": 55,
+      "rank": "55",
+      "university": "Monash University",
+      "location": "Australia",
+      "score": 78.8
+    },
+    {
+      "index": 56,
+      "rank": "55",
+      "university": "University of Texas at Austin",
+      "location": "United States of America",
+      "score": 78.8
+    },
+    {
+      "index": 57,
+      "rank": "55",
+      "university": "Kyoto University",
+      "location": "Japan",
+      "score": 78.8
+    },
+    {
+      "index": 58,
+      "rank": "58",
+      "university": "Brown University",
+      "location": "United States of America",
+      "score": 78.7
+    },
+    {
+      "index": 59,
+      "rank": "59",
+      "university": "Seoul National University",
+      "location": "Republic of Korea",
+      "score": 78.5
+    },
+    {
+      "index": 60,
+      "rank": "60",
+      "university": "The University of Warwick",
+      "location": "United Kingdom",
+      "score": 78.4
+    },
+    {
+      "index": 61,
+      "rank": "61",
+      "university": "Waseda University",
+      "location": "Japan",
+      "score": 78.2
+    },
+    {
+      "index": 62,
+      "rank": "61",
+      "university": "Delft University of Technology",
+      "location": "Netherlands",
+      "score": 78.2
+    },
+    {
+      "index": 63,
+      "rank": "63",
+      "university": "Duke University",
+      "location": "United States of America",
+      "score": 78.1
+    },
+    {
+      "index": 64,
+      "rank": "63",
+      "university": "National Taiwan University (NTU)",
+      "location": "Taiwan",
+      "score": 78.1
+    },
+    {
+      "index": 65,
+      "rank": "65",
+      "university": "Politecnico di Milano",
+      "location": "Italy",
+      "score": 78
+    },
+    {
+      "index": 66,
+      "rank": "66",
+      "university": "The University of New South Wales (UNSW Sydney)",
+      "location": "Australia",
+      "score": 77.9
+    },
+    {
+      "index": 67,
+      "rank": "66",
+      "university": "University of Glasgow",
+      "location": "United Kingdom",
+      "score": 77.9
+    },
+    {
+      "index": 68,
+      "rank": "68",
+      "university": "Universität Heidelberg",
+      "location": "Germany",
+      "score": 77.6
+    },
+    {
+      "index": 69,
+      "rank": "69",
+      "university": "Universidade de São Paulo",
+      "location": "Brazil",
+      "score": 77.5
+    },
+    {
+      "index": 70,
+      "rank": "70",
+      "university": "Complutense University of Madrid",
+      "location": "Spain",
+      "score": 77.4
+    },
+    {
+      "index": 71,
+      "rank": "71",
+      "university": "RMIT University",
+      "location": "Australia",
+      "score": 77.2
+    },
+    {
+      "index": 72,
+      "rank": "72",
+      "university": "The Hong Kong Polytechnic University",
+      "location": "Hong Kong SAR, China",
+      "score": 77
+    },
+    {
+      "index": 73,
+      "rank": "73",
+      "university": "University of Bristol",
+      "location": "United Kingdom",
+      "score": 76.9
+    },
+    {
+      "index": 74,
+      "rank": "74",
+      "university": "The University of Sheffield",
+      "location": "United Kingdom",
+      "score": 76.7
+    },
+    {
+      "index": 75,
+      "rank": "75",
+      "university": "Yonsei University",
+      "location": "Republic of Korea",
+      "score": 76.6
+    },
+    {
+      "index": 76,
+      "rank": "76",
+      "university": "University of Birmingham",
+      "location": "United Kingdom",
+      "score": 76.5
+    },
+    {
+      "index": 77,
+      "rank": "76",
+      "university": "University of Exeter",
+      "location": "United Kingdom",
+      "score": 76.5
+    },
+    {
+      "index": 78,
+      "rank": "78",
+      "university": "Universidad de Chile",
+      "location": "Chile",
+      "score": 76.3
+    },
+    {
+      "index": 79,
+      "rank": "79",
+      "university": "The University of Queensland",
+      "location": "Australia",
+      "score": 76.1
+    },
+    {
+      "index": 80,
+      "rank": "80",
+      "university": "Universidad de los Andes",
+      "location": "Colombia",
+      "score": 76
+    },
+    {
+      "index": 81,
+      "rank": "81",
+      "university": "University College Dublin",
+      "location": "Ireland",
+      "score": 75.9
+    },
+    {
+      "index": 82,
+      "rank": "82",
+      "university": "University of Southern California",
+      "location": "United States of America",
+      "score": 75.7
+    },
+    {
+      "index": 83,
+      "rank": "83",
+      "university": "University of Copenhagen",
+      "location": "Denmark",
+      "score": 75.6
+    },
+    {
+      "index": 84,
+      "rank": "83",
+      "university": "City University of Hong Kong (CityUHK)",
+      "location": "Hong Kong SAR, China",
+      "score": 75.6
+    },
+    {
+      "index": 85,
+      "rank": "83",
+      "university": "Lancaster University",
+      "location": "United Kingdom",
+      "score": 75.6
+    },
+    {
+      "index": 86,
+      "rank": "86",
+      "university": "Carnegie Mellon University",
+      "location": "United States of America",
+      "score": 75.5
+    },
+    {
+      "index": 87,
+      "rank": "87",
+      "university": "Universitat de Barcelona",
+      "location": "Spain",
+      "score": 75.3
+    },
+    {
+      "index": 88,
+      "rank": "88",
+      "university": "SOAS University of London",
+      "location": "United Kingdom",
+      "score": 75.2
+    },
+    {
+      "index": 89,
+      "rank": "88",
+      "university": "Eberhard Karls Universität Tübingen",
+      "location": "Germany",
+      "score": 75.2
+    },
+    {
+      "index": 90,
+      "rank": "88",
+      "university": "Tongji University",
+      "location": "China (Mainland)",
+      "score": 75.2
+    },
+    {
+      "index": 91,
+      "rank": "91",
+      "university": "Université PSL",
+      "location": "France",
+      "score": 75.1
+    },
+    {
+      "index": 92,
+      "rank": "91",
+      "university": "The New School, New York City and Paris",
+      "location": "United States of America",
+      "score": 75.1
+    },
+    {
+      "index": 93,
+      "rank": "91",
+      "university": "Universiti Malaya (UM)",
+      "location": "Malaysia",
+      "score": 75.1
+    },
+    {
+      "index": 94,
+      "rank": "94",
+      "university": "University of the Arts London",
+      "location": "United Kingdom",
+      "score": 75
+    },
+    {
+      "index": 95,
+      "rank": "95",
+      "university": "Pontificia Universidad Catolica del Peru (PUCP)",
+      "location": "Peru",
+      "score": 74.7
+    },
+    {
+      "index": 96,
+      "rank": "96",
+      "university": "Pontificia Universidad Javeriana",
+      "location": "Colombia",
+      "score": 74.6
+    },
+    {
+      "index": 97,
+      "rank": "96",
+      "university": "Korea University",
+      "location": "Republic of Korea",
+      "score": 74.6
+    },
+    {
+      "index": 98,
+      "rank": "98",
+      "university": "Boston University",
+      "location": "United States of America",
+      "score": 74.5
+    },
+    {
+      "index": 99,
+      "rank": "99",
+      "university": "Queen Mary University of London",
+      "location": "United Kingdom",
+      "score": 74.4
+    },
+    {
+      "index": 100,
+      "rank": "100",
+      "university": "Universidad Nacional de Colombia",
+      "location": "Colombia",
+      "score": 74.3
+    },
+    {
+      "index": 101,
+      "rank": "101",
+      "university": "Utrecht University",
+      "location": "Netherlands",
+      "score": 74.1
+    },
+    {
+      "index": 102,
+      "rank": "102",
+      "university": "Victoria University of Wellington",
+      "location": "New Zealand",
+      "score": 73.9
+    },
+    {
+      "index": 103,
+      "rank": "102",
+      "university": "Georgetown University",
+      "location": "United States of America",
+      "score": 73.9
+    },
+    {
+      "index": 104,
+      "rank": "102",
+      "university": "Newcastle University",
+      "location": "United Kingdom",
+      "score": 73.9
+    },
+    {
+      "index": 105,
+      "rank": "105",
+      "university": "Johns Hopkins University",
+      "location": "United States of America",
+      "score": 73.8
+    },
+    {
+      "index": 106,
+      "rank": "106",
+      "university": "Zhejiang University",
+      "location": "China (Mainland)",
+      "score": 73.6
+    },
+    {
+      "index": 107,
+      "rank": "106",
+      "university": "Pennsylvania State University",
+      "location": "United States of America",
+      "score": 73.6
+    },
+    {
+      "index": 108,
+      "rank": "106",
+      "university": "University of Nottingham",
+      "location": "United Kingdom",
+      "score": 73.6
+    },
+    {
+      "index": 109,
+      "rank": "106",
+      "university": "University of Helsinki",
+      "location": "Finland",
+      "score": 73.6
+    },
+    {
+      "index": 110,
+      "rank": "106",
+      "university": "Aalto University",
+      "location": "Finland",
+      "score": 73.6
+    },
+    {
+      "index": 111,
+      "rank": "111",
+      "university": "Northwestern University",
+      "location": "United States of America",
+      "score": 73.5
+    },
+    {
+      "index": 112,
+      "rank": "112",
+      "university": "Universitat Autònoma de Barcelona",
+      "location": "Spain",
+      "score": 73.1
+    },
+    {
+      "index": 113,
+      "rank": "112",
+      "university": "Macquarie University (Sydney, Australia)",
+      "location": "Australia",
+      "score": 73.1
+    },
+    {
+      "index": 114,
+      "rank": "114",
+      "university": "University of Zurich",
+      "location": "Switzerland",
+      "score": 73
+    },
+    {
+      "index": 115,
+      "rank": "114",
+      "university": "Charles University",
+      "location": "Czechia",
+      "score": 73
+    },
+    {
+      "index": 116,
+      "rank": "114",
+      "university": "Aarhus University",
+      "location": "Denmark",
+      "score": 73
+    },
+    {
+      "index": 117,
+      "rank": "117",
+      "university": "University of Granada",
+      "location": "Spain",
+      "score": 72.9
+    },
+    {
+      "index": 118,
+      "rank": "118",
+      "university": "Universidad Autónoma de Madrid",
+      "location": "Spain",
+      "score": 72.8
+    },
+    {
+      "index": 119,
+      "rank": "118",
+      "university": "Chulalongkorn University",
+      "location": "Thailand",
+      "score": 72.8
+    },
+    {
+      "index": 120,
+      "rank": "120",
+      "university": "Cardiff University",
+      "location": "United Kingdom",
+      "score": 72.7
+    },
+    {
+      "index": 121,
+      "rank": "120",
+      "university": "University of Oslo",
+      "location": "Norway",
+      "score": 72.7
+    },
+    {
+      "index": 122,
+      "rank": "122",
+      "university": "Royal College of Art",
+      "location": "United Kingdom",
+      "score": 72.6
+    },
+    {
+      "index": 123,
+      "rank": "122",
+      "university": "Goldsmiths, University of London",
+      "location": "United Kingdom",
+      "score": 72.6
+    },
+    {
+      "index": 124,
+      "rank": "124",
+      "university": "University of Warsaw",
+      "location": "Poland",
+      "score": 72.5
+    },
+    {
+      "index": 125,
+      "rank": "124",
+      "university": "University of Geneva",
+      "location": "Switzerland",
+      "score": 72.5
+    },
+    {
+      "index": 126,
+      "rank": "126",
+      "university": "University of Illinois Urbana-Champaign",
+      "location": "United States of America",
+      "score": 72.3
+    },
+    {
+      "index": 127,
+      "rank": "126",
+      "university": "Lomonosov Moscow State University",
+      "location": "Russian Federation",
+      "score": 72.3
+    },
+    {
+      "index": 128,
+      "rank": "128",
+      "university": "Université catholique de Louvain (UCLouvain)",
+      "location": "Belgium",
+      "score": 72.2
+    },
+    {
+      "index": 129,
+      "rank": "128",
+      "university": "Ca' Foscari University of Venice",
+      "location": "Italy",
+      "score": 72.2
+    },
+    {
+      "index": 130,
+      "rank": "128",
+      "university": "Nanjing University",
+      "location": "China (Mainland)",
+      "score": 72.2
+    },
+    {
+      "index": 131,
+      "rank": "131",
+      "university": "Adelaide University",
+      "location": "Australia",
+      "score": 72.1
+    },
+    {
+      "index": 132,
+      "rank": "131",
+      "university": "University of California, San Diego (UCSD)",
+      "location": "United States of America",
+      "score": 72.1
+    },
+    {
+      "index": 133,
+      "rank": "133",
+      "university": "Beijing Normal University",
+      "location": "China (Mainland)",
+      "score": 72
+    },
+    {
+      "index": 134,
+      "rank": "134",
+      "university": "University of Washington",
+      "location": "United States of America",
+      "score": 71.9
+    },
+    {
+      "index": 135,
+      "rank": "134",
+      "university": "Universidade Federal do Rio de Janeiro",
+      "location": "Brazil",
+      "score": 71.9
+    },
+    {
+      "index": 136,
+      "rank": "136",
+      "university": "Indiana University Bloomington",
+      "location": "United States of America",
+      "score": 71.8
+    },
+    {
+      "index": 137,
+      "rank": "136",
+      "university": "Shanghai Jiao Tong University",
+      "location": "China (Mainland)",
+      "score": 71.8
+    },
+    {
+      "index": 138,
+      "rank": "138",
+      "university": "Lund University",
+      "location": "Sweden",
+      "score": 71.6
+    },
+    {
+      "index": 139,
+      "rank": "138",
+      "university": "Universität Hamburg",
+      "location": "Germany",
+      "score": 71.6
+    },
+    {
+      "index": 140,
+      "rank": "138",
+      "university": "Università di Padova",
+      "location": "Italy",
+      "score": 71.6
+    },
+    {
+      "index": 141,
+      "rank": "141",
+      "university": "University of Notre Dame",
+      "location": "United States of America",
+      "score": 71.5
+    },
+    {
+      "index": 142,
+      "rank": "141",
+      "university": "Ghent University",
+      "location": "Belgium",
+      "score": 71.5
+    },
+    {
+      "index": 143,
+      "rank": "141",
+      "university": "University of Salamanca",
+      "location": "Spain",
+      "score": 71.5
+    },
+    {
+      "index": 144,
+      "rank": "144",
+      "university": "Stockholm University",
+      "location": "Sweden",
+      "score": 71.4
+    },
+    {
+      "index": 145,
+      "rank": "144",
+      "university": "University of Reading",
+      "location": "United Kingdom",
+      "score": 71.4
+    },
+    {
+      "index": 146,
+      "rank": "146",
+      "university": "University of Cologne",
+      "location": "Germany",
+      "score": 71.3
+    },
+    {
+      "index": 147,
+      "rank": "146",
+      "university": "Keio University",
+      "location": "Japan",
+      "score": 71.3
+    },
+    {
+      "index": 148,
+      "rank": "146",
+      "university": "Renmin (People's) University of China",
+      "location": "China (Mainland)",
+      "score": 71.3
+    },
+    {
+      "index": 149,
+      "rank": "=146",
+      "university": "University of Liverpool",
+      "location": "United Kingdom",
+      "score": 71.3
+    },
+    {
+      "index": 150,
+      "rank": "149",
+      "university": "University of Virginia",
+      "location": "United States of America",
+      "score": 71
+    },
+    {
+      "index": 151,
+      "rank": "149",
+      "university": "University of Groningen",
+      "location": "Netherlands",
+      "score": 71
+    },
+    {
+      "index": 152,
+      "rank": "149",
+      "university": "Albert-Ludwigs-Universitaet Freiburg",
+      "location": "Germany",
+      "score": 71
+    },
+    {
+      "index": 153,
+      "rank": "149",
+      "university": "Tecnológico de Monterrey",
+      "location": "Mexico",
+      "score": 71
+    },
+    {
+      "index": 154,
+      "rank": "153",
+      "university": "Arizona State University",
+      "location": "United States of America",
+      "score": 70.9
+    },
+    {
+      "index": 155,
+      "rank": "154",
+      "university": "Universidade Estadual de Campinas (Unicamp)",
+      "location": "Brazil",
+      "score": 70.6
+    },
+    {
+      "index": 156,
+      "rank": "154",
+      "university": "Queen's University Belfast",
+      "location": "United Kingdom",
+      "score": 70.6
+    },
+    {
+      "index": 157,
+      "rank": "156",
+      "university": "Ecole des Hautes Etudes en Sciences Sociales",
+      "location": "France",
+      "score": 70.5
+    },
+    {
+      "index": 158,
+      "rank": "157",
+      "university": "UCSI University",
+      "location": "Malaysia",
+      "score": 70.4
+    },
+    {
+      "index": 159,
+      "rank": "158",
+      "university": "The Ohio State University",
+      "location": "United States of America",
+      "score": 70.1
+    },
+    {
+      "index": 160,
+      "rank": "158",
+      "university": "Université de Montréal",
+      "location": "Canada",
+      "score": 70.1
+    },
+    {
+      "index": 161,
+      "rank": "160",
+      "university": "York University",
+      "location": "Canada",
+      "score": 69.9
+    },
+    {
+      "index": 162,
+      "rank": "160",
+      "university": "University of Milan",
+      "location": "Italy",
+      "score": 69.9
+    },
+    {
+      "index": 163,
+      "rank": "162",
+      "university": "Jagiellonian University",
+      "location": "Poland",
+      "score": 69.8
+    },
+    {
+      "index": 164,
+      "rank": "162",
+      "university": "University of Wisconsin-Madison",
+      "location": "United States of America",
+      "score": 69.8
+    },
+    {
+      "index": 165,
+      "rank": "162",
+      "university": "Università Cattolica del Sacro Cuore",
+      "location": "Italy",
+      "score": 69.8
+    },
+    {
+      "index": 166,
+      "rank": "165",
+      "university": "National Taiwan Normal University (NTNU)",
+      "location": "Taiwan",
+      "score": 69.7
+    },
+    {
+      "index": 167,
+      "rank": "165",
+      "university": "Queen's University at Kingston",
+      "location": "Canada",
+      "score": 69.7
+    },
+    {
+      "index": 168,
+      "rank": "167",
+      "university": "University of Southampton",
+      "location": "United Kingdom",
+      "score": 69.6
+    },
+    {
+      "index": 169,
+      "rank": "168",
+      "university": "Uppsala University",
+      "location": "Sweden",
+      "score": 69.5
+    },
+    {
+      "index": 170,
+      "rank": "168",
+      "university": "University of Alberta",
+      "location": "Canada",
+      "score": 69.5
+    },
+    {
+      "index": 171,
+      "rank": "168",
+      "university": "Universitas Indonesia",
+      "location": "Indonesia",
+      "score": 69.5
+    },
+    {
+      "index": 172,
+      "rank": "168",
+      "university": "Goethe-University Frankfurt am Main",
+      "location": "Germany",
+      "score": 69.5
+    },
+    {
+      "index": 173,
+      "rank": "172",
+      "university": "University of Massachusetts Amherst",
+      "location": "United States of America",
+      "score": 69.4
+    },
+    {
+      "index": 174,
+      "rank": "172",
+      "university": "Hong Kong Baptist University",
+      "location": "Hong Kong SAR, China",
+      "score": 69.4
+    },
+    {
+      "index": 175,
+      "rank": "172",
+      "university": "Concordia University",
+      "location": "Canada",
+      "score": 69.4
+    },
+    {
+      "index": 176,
+      "rank": "175",
+      "university": "Rutgers University–New Brunswick",
+      "location": "United States of America",
+      "score": 69.3
+    },
+    {
+      "index": 177,
+      "rank": "176",
+      "university": "Oxford Brookes University",
+      "location": "United Kingdom",
+      "score": 69.1
+    },
+    {
+      "index": 178,
+      "rank": "176",
+      "university": "University of North Carolina at Chapel Hill",
+      "location": "United States of America",
+      "score": 69.1
+    },
+    {
+      "index": 179,
+      "rank": "176",
+      "university": "Universitat Pompeu Fabra (Barcelona)",
+      "location": "Spain",
+      "score": 69.1
+    },
+    {
+      "index": 180,
+      "rank": "179",
+      "university": "University of Technology Sydney",
+      "location": "Australia",
+      "score": 69
+    },
+    {
+      "index": 181,
+      "rank": "179",
+      "university": "University of Sussex",
+      "location": "United Kingdom",
+      "score": 69
+    },
+    {
+      "index": 182,
+      "rank": "181",
+      "university": "Universiti Sains Malaysia (USM)",
+      "location": "Malaysia",
+      "score": 68.9
+    },
+    {
+      "index": 183,
+      "rank": "181",
+      "university": "The University of Osaka",
+      "location": "Japan",
+      "score": 68.9
+    },
+    {
+      "index": 184,
+      "rank": "183",
+      "university": "University of Pittsburgh",
+      "location": "United States of America",
+      "score": 68.8
+    },
+    {
+      "index": 185,
+      "rank": "183",
+      "university": "Universidad Nacional de La Plata (UNLP)",
+      "location": "Argentina",
+      "score": 68.8
+    },
+    {
+      "index": 186,
+      "rank": "185",
+      "university": "Universidad de Sevilla",
+      "location": "Spain",
+      "score": 68.7
+    },
+    {
+      "index": 187,
+      "rank": "185",
+      "university": "Royal Holloway, University of London",
+      "location": "United Kingdom",
+      "score": 68.7
+    },
+    {
+      "index": 188,
+      "rank": "185",
+      "university": "University of Lisbon",
+      "location": "Portugal",
+      "score": 68.7
+    },
+    {
+      "index": 189,
+      "rank": "185",
+      "university": "The University of Arizona",
+      "location": "United States of America",
+      "score": 68.7
+    },
+    {
+      "index": 190,
+      "rank": "189",
+      "university": "Gadjah Mada University",
+      "location": "Indonesia",
+      "score": 68.5
+    },
+    {
+      "index": 191,
+      "rank": "190",
+      "university": "City University of New York",
+      "location": "United States of America",
+      "score": 68.4
+    },
+    {
+      "index": 192,
+      "rank": "191",
+      "university": "University of Otago",
+      "location": "New Zealand",
+      "score": 68.3
+    },
+    {
+      "index": 193,
+      "rank": "191",
+      "university": "University of Florence",
+      "location": "Italy",
+      "score": 68.3
+    },
+    {
+      "index": 194,
+      "rank": "193",
+      "university": "Hanyang University",
+      "location": "Republic of Korea",
+      "score": 68.2
+    },
+    {
+      "index": 195,
+      "rank": "193",
+      "university": "Loughborough University",
+      "location": "United Kingdom",
+      "score": 68.2
+    },
+    {
+      "index": 196,
+      "rank": "193",
+      "university": "The University of Western Australia",
+      "location": "Australia",
+      "score": 68.2
+    },
+    {
+      "index": 197,
+      "rank": "196",
+      "university": "Central European University",
+      "location": "Austria",
+      "score": 68.1
+    },
+    {
+      "index": 198,
+      "rank": "196",
+      "university": "Michigan State University",
+      "location": "United States of America",
+      "score": 68.1
+    },
+    {
+      "index": 199,
+      "rank": "198",
+      "university": "University of Maryland, College Park",
+      "location": "United States of America",
+      "score": 68
+    },
+    {
+      "index": 200,
+      "rank": "198",
+      "university": "Aix-Marseille University",
+      "location": "France",
+      "score": 68
+    },
+    {
+      "index": 201,
+      "rank": "198",
+      "university": "Birkbeck, University of London",
+      "location": "United Kingdom",
+      "score": 68
+    },
+    {
+      "index": 202,
+      "rank": "201",
+      "university": "Boston College",
+      "location": "United States of America",
+      "score": 67.8
+    },
+    {
+      "index": 203,
+      "rank": "201",
+      "university": "University of Göttingen",
+      "location": "Germany",
+      "score": 67.8
+    },
+    {
+      "index": 204,
+      "rank": "203",
+      "university": "Sun Yat-sen University",
+      "location": "China (Mainland)",
+      "score": 67.7
+    },
+    {
+      "index": 205,
+      "rank": "204",
+      "university": "University of California, Santa Barbara (UCSB)",
+      "location": "United States of America",
+      "score": 67.6
+    },
+    {
+      "index": 206,
+      "rank": "204",
+      "university": "University of Naples - Federico II",
+      "location": "Italy",
+      "score": 67.6
+    },
+    {
+      "index": 207,
+      "rank": "206",
+      "university": "Rhode Island School of Design (RISD)",
+      "location": "United States of America",
+      "score": 67.4
+    },
+    {
+      "index": 208,
+      "rank": "206",
+      "university": "HSE University",
+      "location": "Russian Federation",
+      "score": 67.4
+    },
+    {
+      "index": 209,
+      "rank": "206",
+      "university": "Rheinische Friedrich-Wilhelms-Universität Bonn",
+      "location": "Germany",
+      "score": 67.4
+    },
+    {
+      "index": 210,
+      "rank": "206",
+      "university": "National Chengchi University",
+      "location": "Taiwan",
+      "score": 67.4
+    },
+    {
+      "index": 211,
+      "rank": "210",
+      "university": "National Cheng Kung University (NCKU)",
+      "location": "Taiwan",
+      "score": 67.3
+    },
+    {
+      "index": 212,
+      "rank": "210",
+      "university": "University of Turin",
+      "location": "Italy",
+      "score": 67.3
+    },
+    {
+      "index": 213,
+      "rank": "212",
+      "university": "Pratt Institute",
+      "location": "United States of America",
+      "score": 67.2
+    },
+    {
+      "index": 214,
+      "rank": "212",
+      "university": "Universiti Kebangsaan Malaysia (UKM)",
+      "location": "Malaysia",
+      "score": 67.2
+    },
+    {
+      "index": 215,
+      "rank": "212",
+      "university": "University of Navarra",
+      "location": "Spain",
+      "score": 67.2
+    },
+    {
+      "index": 216,
+      "rank": "212",
+      "university": "Western University",
+      "location": "Canada",
+      "score": 67.2
+    },
+    {
+      "index": 217,
+      "rank": "216",
+      "university": "University College Cork",
+      "location": "Ireland",
+      "score": 67.1
+    },
+    {
+      "index": 218,
+      "rank": "216",
+      "university": "El Colegio de México, A.C.",
+      "location": "Mexico",
+      "score": 67.1
+    },
+    {
+      "index": 219,
+      "rank": "218",
+      "university": "HUFS - Hankuk (Korea) University of Foreign Studies",
+      "location": "Republic of Korea",
+      "score": 67
+    },
+    {
+      "index": 220,
+      "rank": "218",
+      "university": "Wuhan University",
+      "location": "China (Mainland)",
+      "score": 67
+    },
+    {
+      "index": 221,
+      "rank": "220",
+      "university": "University of California, Irvine",
+      "location": "United States of America",
+      "score": 66.9
+    },
+    {
+      "index": 222,
+      "rank": "221",
+      "university": "Taylor's University",
+      "location": "Malaysia",
+      "score": 66.7
+    },
+    {
+      "index": 223,
+      "rank": "221",
+      "university": "University of Bath",
+      "location": "United Kingdom",
+      "score": 66.7
+    },
+    {
+      "index": 224,
+      "rank": "221",
+      "university": "Politecnico di Torino",
+      "location": "Italy",
+      "score": 66.7
+    },
+    {
+      "index": 225,
+      "rank": "221",
+      "university": "Università degli studi Roma Tre",
+      "location": "Italy",
+      "score": 66.7
+    },
+    {
+      "index": 226,
+      "rank": "225",
+      "university": "Johannes Gutenberg Universität Mainz",
+      "location": "Germany",
+      "score": 66.6
+    },
+    {
+      "index": 227,
+      "rank": "225",
+      "university": "Al-Farabi Kazakh National University",
+      "location": "Kazakhstan",
+      "score": 66.6
+    },
+    {
+      "index": 228,
+      "rank": "227",
+      "university": "University of Antwerp",
+      "location": "Belgium",
+      "score": 66.5
+    },
+    {
+      "index": 229,
+      "rank": "227",
+      "university": "Universidad de Santiago de Chile (USACH)",
+      "location": "Chile",
+      "score": 66.5
+    },
+    {
+      "index": 230,
+      "rank": "229",
+      "university": "Radboud University",
+      "location": "Netherlands",
+      "score": 66.4
+    },
+    {
+      "index": 231,
+      "rank": "230",
+      "university": "University of Galway",
+      "location": "Ireland",
+      "score": 66.3
+    },
+    {
+      "index": 232,
+      "rank": "231",
+      "university": "American University of Beirut (AUB)",
+      "location": "Lebanon",
+      "score": 66.2
+    },
+    {
+      "index": 233,
+      "rank": "231",
+      "university": "University of Münster",
+      "location": "Germany",
+      "score": 66.2
+    },
+    {
+      "index": 234,
+      "rank": "231",
+      "university": "Université Sorbonne Nouvelle Paris 3",
+      "location": "France",
+      "score": 66.2
+    },
+    {
+      "index": 235,
+      "rank": "231",
+      "university": "Tohoku University",
+      "location": "Japan",
+      "score": 66.2
+    },
+    {
+      "index": 236,
+      "rank": "231",
+      "university": "Cairo University",
+      "location": "Egypt",
+      "score": 66.2
+    },
+    {
+      "index": 237,
+      "rank": "231",
+      "university": "University of Delhi",
+      "location": "India",
+      "score": 66.2
+    },
+    {
+      "index": 238,
+      "rank": "237",
+      "university": "Adam Mickiewicz University, Poznań",
+      "location": "Poland",
+      "score": 66.1
+    },
+    {
+      "index": 239,
+      "rank": "237",
+      "university": "University of Cape Town",
+      "location": "South Africa",
+      "score": 66.1
+    },
+    {
+      "index": 240,
+      "rank": "237",
+      "university": "Massey University",
+      "location": "New Zealand",
+      "score": 66.1
+    },
+    {
+      "index": 241,
+      "rank": "237",
+      "university": "Scuola Normale Superiore",
+      "location": "Italy",
+      "score": 66.1
+    },
+    {
+      "index": 242,
+      "rank": "237",
+      "university": "University of Pisa",
+      "location": "Italy",
+      "score": 66.1
+    },
+    {
+      "index": 243,
+      "rank": "242",
+      "university": "Middle East Technical University",
+      "location": "Türkiye",
+      "score": 66
+    },
+    {
+      "index": 244,
+      "rank": "242",
+      "university": "RUDN University",
+      "location": "Russian Federation",
+      "score": 66
+    },
+    {
+      "index": 245,
+      "rank": "242",
+      "university": "Sungkyunkwan University (SKKU)",
+      "location": "Republic of Korea",
+      "score": 66
+    },
+    {
+      "index": 246,
+      "rank": "242",
+      "university": "University of Wollongong",
+      "location": "Australia",
+      "score": 66
+    },
+    {
+      "index": 247,
+      "rank": "246",
+      "university": "Griffith University",
+      "location": "Australia",
+      "score": 65.9
+    },
+    {
+      "index": 248,
+      "rank": "246",
+      "university": "University of Leicester",
+      "location": "United Kingdom",
+      "score": 65.9
+    },
+    {
+      "index": 249,
+      "rank": "248",
+      "university": "Universidade Nova de Lisboa",
+      "location": "Portugal",
+      "score": 65.8
+    },
+    {
+      "index": 250,
+      "rank": "248",
+      "university": "Universidad Nacional de Córdoba - UNC",
+      "location": "Argentina",
+      "score": 65.8
+    },
+    {
+      "index": 251,
+      "rank": "248",
+      "university": "University of Minnesota (System)",
+      "location": "United States of America",
+      "score": 65.8
+    },
+    {
+      "index": 252,
+      "rank": "251",
+      "university": "Simon Fraser University",
+      "location": "Canada",
+      "score": 65.7
+    },
+    {
+      "index": 253,
+      "rank": "252",
+      "university": "Universiti Putra Malaysia (UPM)",
+      "location": "Malaysia",
+      "score": 65.6
+    },
+    {
+      "index": 254,
+      "rank": "253",
+      "university": "Emory University",
+      "location": "United States of America",
+      "score": 65.5
+    },
+    {
+      "index": 255,
+      "rank": "253",
+      "university": "Vrije Universiteit Amsterdam",
+      "location": "Netherlands",
+      "score": 65.5
+    },
+    {
+      "index": 256,
+      "rank": "253",
+      "university": "University of Florida",
+      "location": "United States of America",
+      "score": 65.5
+    },
+    {
+      "index": 257,
+      "rank": "253",
+      "university": "University of Jordan",
+      "location": "Jordan",
+      "score": 65.5
+    },
+    {
+      "index": 258,
+      "rank": "257",
+      "university": "Karl-Franzens-Universitaet Graz",
+      "location": "Austria",
+      "score": 65.4
+    },
+    {
+      "index": 259,
+      "rank": "257",
+      "university": "University of the Philippines",
+      "location": "Philippines",
+      "score": 65.4
+    },
+    {
+      "index": 260,
+      "rank": "257",
+      "university": "Universiti Teknologi Malaysia",
+      "location": "Malaysia",
+      "score": 65.4
+    },
+    {
+      "index": 261,
+      "rank": "260",
+      "university": "Jawaharlal Nehru University",
+      "location": "India",
+      "score": 65.3
+    },
+    {
+      "index": 262,
+      "rank": "260",
+      "university": "Tel Aviv University",
+      "location": "Israel",
+      "score": 65.3
+    },
+    {
+      "index": 263,
+      "rank": "260",
+      "university": "Van Lang University",
+      "location": "Viet Nam",
+      "score": 65.3
+    },
+    {
+      "index": 264,
+      "rank": "260",
+      "university": "University of Kent",
+      "location": "United Kingdom",
+      "score": 65.3
+    },
+    {
+      "index": 265,
+      "rank": "260",
+      "university": "Université Paris-Nanterre",
+      "location": "France",
+      "score": 65.3
+    },
+    {
+      "index": 266,
+      "rank": "265",
+      "university": "Universität  Leipzig",
+      "location": "Germany",
+      "score": 65.2
+    },
+    {
+      "index": 267,
+      "rank": "265",
+      "university": "The Hebrew University of Jerusalem",
+      "location": "Israel",
+      "score": 65.2
+    },
+    {
+      "index": 268,
+      "rank": "265",
+      "university": "University of Bern",
+      "location": "Switzerland",
+      "score": 65.2
+    },
+    {
+      "index": 269,
+      "rank": "265",
+      "university": "Queensland University of Technology (QUT)",
+      "location": "Australia",
+      "score": 65.2
+    },
+    {
+      "index": 270,
+      "rank": "265",
+      "university": "Universite libre de Bruxelles",
+      "location": "Belgium",
+      "score": 65.2
+    },
+    {
+      "index": 271,
+      "rank": "265",
+      "university": "Deakin University",
+      "location": "Australia",
+      "score": 65.2
+    },
+    {
+      "index": 272,
+      "rank": "265",
+      "university": "Dartmouth College",
+      "location": "United States of America",
+      "score": 65.2
+    },
+    {
+      "index": 273,
+      "rank": "265",
+      "university": "Sciences Po",
+      "location": "France",
+      "score": 65.2
+    },
+    {
+      "index": 274,
+      "rank": "265",
+      "university": "Saint Petersburg State University",
+      "location": "Russian Federation",
+      "score": 65.2
+    },
+    {
+      "index": 275,
+      "rank": "274",
+      "university": "University of Bergen",
+      "location": "Norway",
+      "score": 65.1
+    },
+    {
+      "index": 276,
+      "rank": "274",
+      "university": "Thammasat University",
+      "location": "Thailand",
+      "score": 65.1
+    },
+    {
+      "index": 277,
+      "rank": "274",
+      "university": "Sichuan University",
+      "location": "China (Mainland)",
+      "score": 65.1
+    },
+    {
+      "index": 278,
+      "rank": "277",
+      "university": "University of Basel",
+      "location": "Switzerland",
+      "score": 65
+    },
+    {
+      "index": 279,
+      "rank": "277",
+      "university": "Ewha Womans University",
+      "location": "Republic of Korea",
+      "score": 65
+    },
+    {
+      "index": 280,
+      "rank": "279",
+      "university": "University of East Anglia (UEA)",
+      "location": "United Kingdom",
+      "score": 64.9
+    },
+    {
+      "index": 281,
+      "rank": "279",
+      "university": "Istanbul University",
+      "location": "Türkiye",
+      "score": 64.9
+    },
+    {
+      "index": 282,
+      "rank": "279",
+      "university": "University of Aberdeen",
+      "location": "United Kingdom",
+      "score": 64.9
+    },
+    {
+      "index": 283,
+      "rank": "279",
+      "university": "Université Lumière Lyon 2",
+      "location": "France",
+      "score": 64.9
+    },
+    {
+      "index": 284,
+      "rank": "283",
+      "university": "University of California, Davis",
+      "location": "United States of America",
+      "score": 64.8
+    },
+    {
+      "index": 285,
+      "rank": "284",
+      "university": "University of Canterbury | Te Whare Wānanga o Waitaha",
+      "location": "New Zealand",
+      "score": 64.7
+    },
+    {
+      "index": 286,
+      "rank": "284",
+      "university": "National Tsing Hua University - NTHU",
+      "location": "Taiwan",
+      "score": 64.7
+    },
+    {
+      "index": 287,
+      "rank": "284",
+      "university": "University of Gothenburg",
+      "location": "Sweden",
+      "score": 64.7
+    },
+    {
+      "index": 288,
+      "rank": "284",
+      "university": "Université Grenoble Alpes",
+      "location": "France",
+      "score": 64.7
+    },
+    {
+      "index": 289,
+      "rank": "284",
+      "university": "Istanbul Technical University",
+      "location": "Türkiye",
+      "score": 64.7
+    },
+    {
+      "index": 290,
+      "rank": "289",
+      "university": "Southeast University",
+      "location": "China (Mainland)",
+      "score": 64.6
+    },
+    {
+      "index": 291,
+      "rank": "289",
+      "university": "Kyung Hee University",
+      "location": "Republic of Korea",
+      "score": 64.6
+    },
+    {
+      "index": 292,
+      "rank": "289",
+      "university": "Rice University",
+      "location": "United States of America",
+      "score": 64.6
+    },
+    {
+      "index": 293,
+      "rank": "289",
+      "university": "L.N. Gumilyov Eurasian National University (ENU)",
+      "location": "Kazakhstan",
+      "score": 64.6
+    },
+    {
+      "index": 294,
+      "rank": "289",
+      "university": "Aristotle University of Thessaloniki",
+      "location": "Greece",
+      "score": 64.6
+    },
+    {
+      "index": 295,
+      "rank": "289",
+      "university": "University of Illinois Chicago (UIC)",
+      "location": "United States of America",
+      "score": 64.6
+    },
+    {
+      "index": 296,
+      "rank": "289",
+      "university": "University of Coimbra",
+      "location": "Portugal",
+      "score": 64.6
+    },
+    {
+      "index": 297,
+      "rank": "289",
+      "university": "Universitat de Valencia",
+      "location": "Spain",
+      "score": 64.6
+    },
+    {
+      "index": 298,
+      "rank": "297",
+      "university": "Washington University in St. Louis",
+      "location": "United States of America",
+      "score": 64.5
+    },
+    {
+      "index": 299,
+      "rank": "297",
+      "university": "Dublin City University",
+      "location": "Ireland",
+      "score": 64.5
+    },
+    {
+      "index": 300,
+      "rank": "297",
+      "university": "Pontificia Universidad Católica de Valparaíso",
+      "location": "Chile",
+      "score": 64.5
+    },
+    {
+      "index": 301,
+      "rank": "297",
+      "university": "Ruhr-Universität Bochum",
+      "location": "Germany",
+      "score": 64.5
+    },
+    {
+      "index": 302,
+      "rank": "301",
+      "university": "Université de Strasbourg",
+      "location": "France",
+      "score": 64.4
+    },
+    {
+      "index": 303,
+      "rank": "301",
+      "university": "Western Sydney University",
+      "location": "Australia",
+      "score": 64.4
+    },
+    {
+      "index": 304,
+      "rank": "301",
+      "university": "Masaryk University",
+      "location": "Czechia",
+      "score": 64.4
+    },
+    {
+      "index": 305,
+      "rank": "301",
+      "university": "University of Porto",
+      "location": "Portugal",
+      "score": 64.4
+    },
+    {
+      "index": 306,
+      "rank": "305",
+      "university": "The American University in Cairo",
+      "location": "Egypt",
+      "score": 64.3
+    },
+    {
+      "index": 307,
+      "rank": "305",
+      "university": "Hacettepe University",
+      "location": "Türkiye",
+      "score": 64.3
+    },
+    {
+      "index": 308,
+      "rank": "305",
+      "university": "La Trobe University",
+      "location": "Australia",
+      "score": 64.3
+    },
+    {
+      "index": 309,
+      "rank": "305",
+      "university": "Boğaziçi University",
+      "location": "Türkiye",
+      "score": 64.3
+    },
+    {
+      "index": 310,
+      "rank": "305",
+      "university": "George Washington University",
+      "location": "United States of America",
+      "score": 64.3
+    },
+    {
+      "index": 311,
+      "rank": "305",
+      "university": "Eötvös Loránd University",
+      "location": "Hungary",
+      "score": 64.3
+    },
+    {
+      "index": 312,
+      "rank": "305",
+      "university": "Universidad Diego Portales",
+      "location": "Chile",
+      "score": 64.3
+    },
+    {
+      "index": 313,
+      "rank": "312",
+      "university": "Universidad de la República (Udelar)",
+      "location": "Uruguay",
+      "score": 64.2
+    },
+    {
+      "index": 314,
+      "rank": "313",
+      "university": "University of Ottawa",
+      "location": "Canada",
+      "score": 64.1
+    },
+    {
+      "index": 315,
+      "rank": "313",
+      "university": "Xiamen University",
+      "location": "China (Mainland)",
+      "score": 64.1
+    },
+    {
+      "index": 316,
+      "rank": "313",
+      "university": "McMaster University",
+      "location": "Canada",
+      "score": 64.1
+    },
+    {
+      "index": 317,
+      "rank": "316",
+      "university": "Tianjin University",
+      "location": "China (Mainland)",
+      "score": 64
+    },
+    {
+      "index": 318,
+      "rank": "316",
+      "university": "Université de Lille",
+      "location": "France",
+      "score": 64
+    },
+    {
+      "index": 319,
+      "rank": "316",
+      "university": "East China Normal University",
+      "location": "China (Mainland)",
+      "score": 64
+    },
+    {
+      "index": 320,
+      "rank": "319",
+      "university": "King Abdulaziz University (KAU)",
+      "location": "Saudi Arabia",
+      "score": 63.9
+    },
+    {
+      "index": 321,
+      "rank": "320",
+      "university": "Pontifícia Universidade Católica do Rio de Janeiro",
+      "location": "Brazil",
+      "score": 63.8
+    },
+    {
+      "index": 322,
+      "rank": "320",
+      "university": "Kyushu University",
+      "location": "Japan",
+      "score": 63.8
+    },
+    {
+      "index": 323,
+      "rank": "320",
+      "university": "Manchester Metropolitan University",
+      "location": "United Kingdom",
+      "score": 63.8
+    },
+    {
+      "index": 324,
+      "rank": "323",
+      "university": "University of Lausanne",
+      "location": "Switzerland",
+      "score": 63.7
+    },
+    {
+      "index": 325,
+      "rank": "323",
+      "university": "O.P. Jindal Global University (JGU)",
+      "location": "India",
+      "score": 63.7
+    },
+    {
+      "index": 326,
+      "rank": "323",
+      "university": "The Glasgow School of Art",
+      "location": "United Kingdom",
+      "score": 63.7
+    },
+    {
+      "index": 327,
+      "rank": "326",
+      "university": "Université Paris Cité",
+      "location": "France",
+      "score": 63.6
+    },
+    {
+      "index": 328,
+      "rank": "326",
+      "university": "National and Kapodistrian University of Athens",
+      "location": "Greece",
+      "score": 63.6
+    },
+    {
+      "index": 329,
+      "rank": "326",
+      "university": "Beijing Foreign Studies University",
+      "location": "China (Mainland)",
+      "score": 63.6
+    },
+    {
+      "index": 330,
+      "rank": "326",
+      "university": "University of Tartu",
+      "location": "Estonia",
+      "score": 63.6
+    },
+    {
+      "index": 331,
+      "rank": "326",
+      "university": "Universidad Adolfo Ibáñez",
+      "location": "Chile",
+      "score": 63.6
+    },
+    {
+      "index": 332,
+      "rank": "331",
+      "university": "École Normale Supérieure de Lyon",
+      "location": "France",
+      "score": 63.5
+    },
+    {
+      "index": 333,
+      "rank": "331",
+      "university": "University of California, Santa Cruz",
+      "location": "United States of America",
+      "score": 63.5
+    },
+    {
+      "index": 334,
+      "rank": "333",
+      "university": "Ateneo de Manila University",
+      "location": "Philippines",
+      "score": 63.4
+    },
+    {
+      "index": 335,
+      "rank": "333",
+      "university": "Ritsumeikan University",
+      "location": "Japan",
+      "score": 63.4
+    },
+    {
+      "index": 336,
+      "rank": "333",
+      "university": "American University of Sharjah",
+      "location": "United Arab Emirates",
+      "score": 63.4
+    },
+    {
+      "index": 337,
+      "rank": "333",
+      "university": "Georgia Institute of Technology",
+      "location": "United States of America",
+      "score": 63.4
+    },
+    {
+      "index": 338,
+      "rank": "333",
+      "university": "University of Tsukuba",
+      "location": "Japan",
+      "score": 63.4
+    },
+    {
+      "index": 339,
+      "rank": "333",
+      "university": "KFUPM",
+      "location": "Saudi Arabia",
+      "score": 63.4
+    },
+    {
+      "index": 340,
+      "rank": "333",
+      "university": "Curtin University",
+      "location": "Australia",
+      "score": 63.4
+    },
+    {
+      "index": 341,
+      "rank": "340",
+      "university": "University of Limerick",
+      "location": "Ireland",
+      "score": 63.3
+    },
+    {
+      "index": 342,
+      "rank": "340",
+      "university": "Universidad Autónoma Metropolitana (UAM)",
+      "location": "Mexico",
+      "score": 63.3
+    },
+    {
+      "index": 343,
+      "rank": "340",
+      "university": "King Saud University",
+      "location": "Saudi Arabia",
+      "score": 63.3
+    },
+    {
+      "index": 344,
+      "rank": "340",
+      "university": "Erasmus University Rotterdam",
+      "location": "Netherlands",
+      "score": 63.3
+    },
+    {
+      "index": 345,
+      "rank": "344",
+      "university": "Universiti Teknologi MARA - UiTM",
+      "location": "Malaysia",
+      "score": 63.2
+    },
+    {
+      "index": 346,
+      "rank": "345",
+      "university": "Indian Institute of Technology Bombay (IITB)",
+      "location": "India",
+      "score": 63.1
+    },
+    {
+      "index": 347,
+      "rank": "345",
+      "university": "University of Hawaiʻi at Mānoa",
+      "location": "United States of America",
+      "score": 63.1
+    },
+    {
+      "index": 348,
+      "rank": "345",
+      "university": "Universitat Politècnica de Catalunya · BarcelonaTech (UPC)",
+      "location": "Spain",
+      "score": 63.1
+    },
+    {
+      "index": 349,
+      "rank": "345",
+      "university": "Technische Universität Berlin (TU Berlin)",
+      "location": "Germany",
+      "score": 63.1
+    },
+    {
+      "index": 350,
+      "rank": "345",
+      "university": "Nagoya University",
+      "location": "Japan",
+      "score": 63.1
+    },
+    {
+      "index": 351,
+      "rank": "345",
+      "university": "Institut Teknologi Bandung (ITB)",
+      "location": "Indonesia",
+      "score": 63.1
+    },
+    {
+      "index": 352,
+      "rank": "351",
+      "university": "KTH Royal Institute of Technology",
+      "location": "Sweden",
+      "score": 63
+    },
+    {
+      "index": 353,
+      "rank": "352",
+      "university": "Sophia University",
+      "location": "Japan",
+      "score": 62.9
+    },
+    {
+      "index": 354,
+      "rank": "353",
+      "university": "Al-Ahliyya Amman University",
+      "location": "Jordan",
+      "score": 62.8
+    },
+    {
+      "index": 355,
+      "rank": "353",
+      "university": "Shanghai University",
+      "location": "China (Mainland)",
+      "score": 62.8
+    },
+    {
+      "index": 356,
+      "rank": "353",
+      "university": "Federal University of Minas Gerais (UFMG)",
+      "location": "Brazil",
+      "score": 62.8
+    },
+    {
+      "index": 357,
+      "rank": "356",
+      "university": "The University of Newcastle, Australia (UON)",
+      "location": "Australia",
+      "score": 62.7
+    },
+    {
+      "index": 358,
+      "rank": "356",
+      "university": "Mahidol University",
+      "location": "Thailand",
+      "score": 62.7
+    },
+    {
+      "index": 359,
+      "rank": "356",
+      "university": "University of Southern Denmark (SDU)",
+      "location": "Denmark",
+      "score": 62.7
+    },
+    {
+      "index": 360,
+      "rank": "356",
+      "university": "University of Surrey",
+      "location": "United Kingdom",
+      "score": 62.7
+    },
+    {
+      "index": 361,
+      "rank": "360",
+      "university": "University of Calgary",
+      "location": "Canada",
+      "score": 62.6
+    },
+    {
+      "index": 362,
+      "rank": "360",
+      "university": "Eindhoven University of Technology",
+      "location": "Netherlands",
+      "score": 62.6
+    },
+    {
+      "index": 363,
+      "rank": "360",
+      "university": "Abai Kazakh National Pedagogical University (Abai University)",
+      "location": "Kazakhstan",
+      "score": 62.6
+    },
+    {
+      "index": 364,
+      "rank": "363",
+      "university": "American University",
+      "location": "United States of America",
+      "score": 62.5
+    },
+    {
+      "index": 365,
+      "rank": "363",
+      "university": "Universitas Airlangga",
+      "location": "Indonesia",
+      "score": 62.5
+    },
+    {
+      "index": 366,
+      "rank": "365",
+      "university": "Universidad Iberoamericana Ciudad de México - IBERO",
+      "location": "Mexico",
+      "score": 62.4
+    },
+    {
+      "index": 367,
+      "rank": "365",
+      "university": "University of Witwatersrand",
+      "location": "South Africa",
+      "score": 62.4
+    },
+    {
+      "index": 368,
+      "rank": "365",
+      "university": "University of Victoria (UVic)",
+      "location": "Canada",
+      "score": 62.4
+    },
+    {
+      "index": 369,
+      "rank": "365",
+      "university": "De La Salle University",
+      "location": "Philippines",
+      "score": 62.4
+    },
+    {
+      "index": 370,
+      "rank": "365",
+      "university": "University of Huddersfield",
+      "location": "United Kingdom",
+      "score": 62.4
+    },
+    {
+      "index": 371,
+      "rank": "370",
+      "university": "Qatar University",
+      "location": "Qatar",
+      "score": 62.3
+    },
+    {
+      "index": 372,
+      "rank": "370",
+      "university": "University of Sharjah",
+      "location": "United Arab Emirates",
+      "score": 62.3
+    },
+    {
+      "index": 373,
+      "rank": "370",
+      "university": "University of Macau",
+      "location": "Macao SAR, China",
+      "score": 62.3
+    },
+    {
+      "index": 374,
+      "rank": "373",
+      "university": "UNESP",
+      "location": "Brazil",
+      "score": 62.2
+    },
+    {
+      "index": 375,
+      "rank": "373",
+      "university": "Universidad de los Andes - Chile",
+      "location": "Chile",
+      "score": 62.2
+    },
+    {
+      "index": 376,
+      "rank": "373",
+      "university": "Vrije Universiteit Brussel (VUB)",
+      "location": "Belgium",
+      "score": 62.2
+    },
+    {
+      "index": 377,
+      "rank": "373",
+      "university": "University of Rome \"Tor Vergata\"",
+      "location": "Italy",
+      "score": 62.2
+    },
+    {
+      "index": 378,
+      "rank": "373",
+      "university": "Universidad de Antioquia",
+      "location": "Colombia",
+      "score": 62.2
+    },
+    {
+      "index": 379,
+      "rank": "373",
+      "university": "Auckland University of Technology (AUT)",
+      "location": "New Zealand",
+      "score": 62.2
+    },
+    {
+      "index": 380,
+      "rank": "379",
+      "university": "Swansea University",
+      "location": "United Kingdom",
+      "score": 62.1
+    },
+    {
+      "index": 381,
+      "rank": "379",
+      "university": "Università Iuav di Venezia",
+      "location": "Italy",
+      "score": 62.1
+    },
+    {
+      "index": 382,
+      "rank": "379",
+      "university": "Vilnius University",
+      "location": "Lithuania",
+      "score": 62.1
+    },
+    {
+      "index": 383,
+      "rank": "379",
+      "university": "Vanderbilt University",
+      "location": "United States of America",
+      "score": 62.1
+    },
+    {
+      "index": 384,
+      "rank": "383",
+      "university": "Koç University",
+      "location": "Türkiye",
+      "score": 62
+    },
+    {
+      "index": 385,
+      "rank": "383",
+      "university": "University of Bordeaux",
+      "location": "France",
+      "score": 62
+    },
+    {
+      "index": 386,
+      "rank": "383",
+      "university": "Universidade de Santiago de Compostela",
+      "location": "Spain",
+      "score": 62
+    },
+    {
+      "index": 387,
+      "rank": "383",
+      "university": "Kingston University, London",
+      "location": "United Kingdom",
+      "score": 62
+    },
+    {
+      "index": 388,
+      "rank": "387",
+      "university": "University of Oregon",
+      "location": "United States of America",
+      "score": 61.9
+    },
+    {
+      "index": 389,
+      "rank": "387",
+      "university": "Heriot-Watt University",
+      "location": "United Kingdom",
+      "score": 61.9
+    },
+    {
+      "index": 390,
+      "rank": "389",
+      "university": "City St George’s, University of London",
+      "location": "United Kingdom",
+      "score": 61.8
+    },
+    {
+      "index": 391,
+      "rank": "389",
+      "university": "Universidad Nacional Mayor de San Marcos",
+      "location": "Peru",
+      "score": 61.8
+    },
+    {
+      "index": 392,
+      "rank": "391",
+      "university": "United Arab Emirates University",
+      "location": "United Arab Emirates",
+      "score": 61.7
+    },
+    {
+      "index": 393,
+      "rank": "391",
+      "university": "University of Kansas",
+      "location": "United States of America",
+      "score": 61.7
+    },
+    {
+      "index": 394,
+      "rank": "391",
+      "university": "Ankara Üniversitesi",
+      "location": "Türkiye",
+      "score": 61.7
+    },
+    {
+      "index": 395,
+      "rank": "391",
+      "university": "Université Paris-Saclay",
+      "location": "France",
+      "score": 61.7
+    },
+    {
+      "index": 396,
+      "rank": "391",
+      "university": "Texas A&M University",
+      "location": "United States of America",
+      "score": 61.7
+    },
+    {
+      "index": 397,
+      "rank": "396",
+      "university": "University of Rochester",
+      "location": "United States of America",
+      "score": 61.6
+    },
+    {
+      "index": 398,
+      "rank": "396",
+      "university": "Universität Konstanz",
+      "location": "Germany",
+      "score": 61.6
+    },
+    {
+      "index": 399,
+      "rank": "396",
+      "university": "Shandong University",
+      "location": "China (Mainland)",
+      "score": 61.6
+    },
+    {
+      "index": 400,
+      "rank": "396",
+      "university": "University of the Basque Country",
+      "location": "Spain",
+      "score": 61.6
+    },
+    {
+      "index": 401,
+      "rank": "396",
+      "university": "University of Turku",
+      "location": "Finland",
+      "score": 61.6
+    },
+    {
+      "index": 402,
+      "rank": "401-450",
+      "university": "University of Connecticut",
+      "location": "United States of America",
+      "score": null
+    },
+    {
+      "index": 403,
+      "rank": "401-450",
+      "university": "University of Colorado Boulder",
+      "location": "United States of America",
+      "score": null
+    },
+    {
+      "index": 404,
+      "rank": "401-450",
+      "university": "University of Genoa",
+      "location": "Italy",
+      "score": null
+    },
+    {
+      "index": 405,
+      "rank": "401-450",
+      "university": "Lingnan University, Hong Kong",
+      "location": "Hong Kong SAR, China",
+      "score": null
+    },
+    {
+      "index": 406,
+      "rank": "401-450",
+      "university": "University of Waikato",
+      "location": "New Zealand",
+      "score": null
+    },
+    {
+      "index": 407,
+      "rank": "401-450",
+      "university": "Florida State University",
+      "location": "United States of America",
+      "score": null
+    },
+    {
+      "index": 408,
+      "rank": "401-450",
+      "university": "Pontificia Universidad Católica Argentina",
+      "location": "Argentina",
+      "score": null
+    },
+    {
+      "index": 409,
+      "rank": "401-450",
+      "university": "Ural Federal University - UrFU",
+      "location": "Russian Federation",
+      "score": null
+    },
+    {
+      "index": 410,
+      "rank": "401-450",
+      "university": "Universidad de Costa Rica",
+      "location": "Costa Rica",
+      "score": null
+    },
+    {
+      "index": 411,
+      "rank": "401-450",
+      "university": "California Institute of Technology (Caltech)",
+      "location": "United States of America",
+      "score": null
+    },
+    {
+      "index": 412,
+      "rank": "401-450",
+      "university": "Stellenbosch University",
+      "location": "South Africa",
+      "score": null
+    },
+    {
+      "index": 413,
+      "rank": "401-450",
+      "university": "University of Trento",
+      "location": "Italy",
+      "score": null
+    },
+    {
+      "index": 414,
+      "rank": "401-450",
+      "university": "Kazan (Volga region) Federal University",
+      "location": "Russian Federation",
+      "score": null
+    },
+    {
+      "index": 415,
+      "rank": "401-450",
+      "university": "Hokkaido University",
+      "location": "Japan",
+      "score": null
+    },
+    {
+      "index": 416,
+      "rank": "401-450",
+      "university": "Université Bordeaux 3, Michel de Montaigne",
+      "location": "France",
+      "score": null
+    },
+    {
+      "index": 417,
+      "rank": "401-450",
+      "university": "University of Siena",
+      "location": "Italy",
+      "score": null
+    },
+    {
+      "index": 418,
+      "rank": "401-450",
+      "university": "Universidad de Zaragoza",
+      "location": "Spain",
+      "score": null
+    },
+    {
+      "index": 419,
+      "rank": "401-450",
+      "university": "Sogang University",
+      "location": "Republic of Korea",
+      "score": null
+    },
+    {
+      "index": 420,
+      "rank": "401-450",
+      "university": "Universidad de La Sabana",
+      "location": "Colombia",
+      "score": null
+    },
+    {
+      "index": 421,
+      "rank": "401-450",
+      "university": "Université Laval",
+      "location": "Canada",
+      "score": null
+    },
+    {
+      "index": 422,
+      "rank": "401-450",
+      "university": "Yarmouk University",
+      "location": "Jordan",
+      "score": null
+    },
+    {
+      "index": 423,
+      "rank": "401-450",
+      "university": "Nottingham Trent University",
+      "location": "United Kingdom",
+      "score": null
+    },
+    {
+      "index": 424,
+      "rank": "401-450",
+      "university": "Essex, University of",
+      "location": "United Kingdom",
+      "score": null
+    },
+    {
+      "index": 425,
+      "rank": "401-450",
+      "university": "Università degli Studi di Pavia",
+      "location": "Italy",
+      "score": null
+    },
+    {
+      "index": 426,
+      "rank": "401-450",
+      "university": "Purdue University",
+      "location": "United States of America",
+      "score": null
+    },
+    {
+      "index": 427,
+      "rank": "401-450",
+      "university": "The City College of New York",
+      "location": "United States of America",
+      "score": null
+    },
+    {
+      "index": 428,
+      "rank": "401-450",
+      "university": "University of Stirling",
+      "location": "United Kingdom",
+      "score": null
+    },
+    {
+      "index": 429,
+      "rank": "401-450",
+      "university": "Universität Innsbruck",
+      "location": "Austria",
+      "score": null
+    },
+    {
+      "index": 430,
+      "rank": "401-450",
+      "university": "Bilkent University",
+      "location": "Türkiye",
+      "score": null
+    },
+    {
+      "index": 431,
+      "rank": "401-450",
+      "university": "Umea University",
+      "location": "Sweden",
+      "score": null
+    },
+    {
+      "index": 432,
+      "rank": "401-450",
+      "university": "Universidade de Brasília",
+      "location": "Brazil",
+      "score": null
+    },
+    {
+      "index": 433,
+      "rank": "401-450",
+      "university": "Universidade Federal do Rio Grande Do Sul",
+      "location": "Brazil",
+      "score": null
+    },
+    {
+      "index": 434,
+      "rank": "401-450",
+      "university": "University at Buffalo SUNY",
+      "location": "United States of America",
+      "score": null
+    },
+    {
+      "index": 435,
+      "rank": "401-450",
+      "university": "Dalhousie University",
+      "location": "Canada",
+      "score": null
+    },
+    {
+      "index": 436,
+      "rank": "401-450",
+      "university": "Norwegian University of Science And Technology",
+      "location": "Norway",
+      "score": null
+    },
+    {
+      "index": 437,
+      "rank": "401-450",
+      "university": "Universidad de Concepción",
+      "location": "Chile",
+      "score": null
+    },
+    {
+      "index": 438,
+      "rank": "401-450",
+      "university": "Syracuse University",
+      "location": "United States of America",
+      "score": null
+    },
+    {
+      "index": 439,
+      "rank": "401-450",
+      "university": "University of Ljubljana",
+      "location": "Slovenia",
+      "score": null
+    },
+    {
+      "index": 440,
+      "rank": "401-450",
+      "university": "Maynooth University",
+      "location": "Ireland",
+      "score": null
+    },
+    {
+      "index": 441,
+      "rank": "401-450",
+      "university": "International Islamic University Malaysia (IIUM)",
+      "location": "Malaysia",
+      "score": null
+    },
+    {
+      "index": 442,
+      "rank": "401-450",
+      "university": "Nankai University",
+      "location": "China (Mainland)",
+      "score": null
+    },
+    {
+      "index": 443,
+      "rank": "401-450",
+      "university": "Babes-Bolyai University",
+      "location": "Romania",
+      "score": null
+    },
+    {
+      "index": 444,
+      "rank": "401-450",
+      "university": "University of Jyväskylä",
+      "location": "Finland",
+      "score": null
+    },
+    {
+      "index": 445,
+      "rank": "401-450",
+      "university": "MGIMO School of Business and International Proficiency",
+      "location": "Russian Federation",
+      "score": null
+    },
+    {
+      "index": 446,
+      "rank": "401-450",
+      "university": "Friedrich-Alexander-Universität Erlangen-Nürnberg",
+      "location": "Germany",
+      "score": null
+    },
+    {
+      "index": 447,
+      "rank": "401-450",
+      "university": "Bocconi University",
+      "location": "Italy",
+      "score": null
+    },
+    {
+      "index": 448,
+      "rank": "401-450",
+      "university": "Satbayev University",
+      "location": "Kazakhstan",
+      "score": null
+    },
+    {
+      "index": 449,
+      "rank": "401-450",
+      "university": "Shanghai International Studies University",
+      "location": "China (Mainland)",
+      "score": null
+    },
+    {
+      "index": 450,
+      "rank": "401-450",
+      "university": "University of Waterloo",
+      "location": "Canada",
+      "score": null
+    },
+    {
+      "index": 451,
+      "rank": "401-450",
+      "university": "Northumbria University at Newcastle",
+      "location": "United Kingdom",
+      "score": null
+    },
+    {
+      "index": 452,
+      "rank": "401-450",
+      "university": "Université Toulouse - Jean Jaurès",
+      "location": "France",
+      "score": null
+    },
+    {
+      "index": 453,
+      "rank": "401-450",
+      "university": "Christian-Albrechts-University zu Kiel",
+      "location": "Germany",
+      "score": null
+    },
+    {
+      "index": 454,
+      "rank": "401-450",
+      "university": "University of Johannesburg",
+      "location": "South Africa",
+      "score": null
+    },
+    {
+      "index": 455,
+      "rank": "401-450",
+      "university": "University of Iowa",
+      "location": "United States of America",
+      "score": null
+    },
+    {
+      "index": 456,
+      "rank": "401-450",
+      "university": "Chiang Mai University",
+      "location": "Thailand",
+      "score": null
+    },
+    {
+      "index": 457,
+      "rank": "451-500",
+      "university": "Tokyo University of Foreign Studies",
+      "location": "Japan",
+      "score": null
+    },
+    {
+      "index": 458,
+      "rank": "451-500",
+      "university": "Universidad Carlos III de Madrid (UC3M)",
+      "location": "Spain",
+      "score": null
+    },
+    {
+      "index": 459,
+      "rank": "451-500",
+      "university": "University of Miami",
+      "location": "United States of America",
+      "score": null
+    },
+    {
+      "index": 460,
+      "rank": "451-500",
+      "university": "Toronto Metropolitan University (formerly Ryerson University)",
+      "location": "Canada",
+      "score": null
+    },
+    {
+      "index": 461,
+      "rank": "451-500",
+      "university": "Hong Kong Metropolitan University",
+      "location": "Hong Kong SAR, China",
+      "score": null
+    },
+    {
+      "index": 462,
+      "rank": "451-500",
+      "university": "Coventry University",
+      "location": "United Kingdom",
+      "score": null
+    },
+    {
+      "index": 463,
+      "rank": "451-500",
+      "university": "Universidad Anáhuac México",
+      "location": "Mexico",
+      "score": null
+    },
+    {
+      "index": 464,
+      "rank": "451-500",
+      "university": "Maastricht University",
+      "location": "Netherlands",
+      "score": null
+    },
+    {
+      "index": 465,
+      "rank": "451-500",
+      "university": "University of Wroclaw",
+      "location": "Poland",
+      "score": null
+    },
+    {
+      "index": 466,
+      "rank": "451-500",
+      "university": "Universitat Politecnica de Valencia",
+      "location": "Spain",
+      "score": null
+    },
+    {
+      "index": 467,
+      "rank": "451-500",
+      "university": "Gazi Üniversitesi",
+      "location": "Türkiye",
+      "score": null
+    },
+    {
+      "index": 468,
+      "rank": "451-500",
+      "university": "Universidad San Francisco de Quito USFQ",
+      "location": "Ecuador",
+      "score": null
+    },
+    {
+      "index": 469,
+      "rank": "451-500",
+      "university": "Swinburne University of Technology",
+      "location": "Australia",
+      "score": null
+    },
+    {
+      "index": 470,
+      "rank": "451-500",
+      "university": "Institut national des langues et civilisations orientales",
+      "location": "France",
+      "score": null
+    },
+    {
+      "index": 471,
+      "rank": "451-500",
+      "university": "Universidad Alberto Hurtado",
+      "location": "Chile",
+      "score": null
+    },
+    {
+      "index": 472,
+      "rank": "451-500",
+      "university": "Universidad Nacional de Rosario (UNR)",
+      "location": "Argentina",
+      "score": null
+    },
+    {
+      "index": 473,
+      "rank": "451-500",
+      "university": "Australian Catholic University",
+      "location": "Australia",
+      "score": null
+    },
+    {
+      "index": 474,
+      "rank": "451-500",
+      "university": "Pontificia Universidad Católica del Ecuador (PUCE)",
+      "location": "Ecuador",
+      "score": null
+    },
+    {
+      "index": 475,
+      "rank": "451-500",
+      "university": "The University of Georgia",
+      "location": "United States of America",
+      "score": null
+    },
+    {
+      "index": 476,
+      "rank": "451-500",
+      "university": "Chung-Ang University (CAU)",
+      "location": "Republic of Korea",
+      "score": null
+    },
+    {
+      "index": 477,
+      "rank": "451-500",
+      "university": "University of Bucharest",
+      "location": "Romania",
+      "score": null
+    },
+    {
+      "index": 478,
+      "rank": "451-500",
+      "university": "University of Pretoria",
+      "location": "South Africa",
+      "score": null
+    },
+    {
+      "index": 479,
+      "rank": "451-500",
+      "university": "National Yang Ming Chiao Tung University (NYCU Taiwan)",
+      "location": "Taiwan",
+      "score": null
+    },
+    {
+      "index": 480,
+      "rank": "451-500",
+      "university": "Brunel University of London",
+      "location": "United Kingdom",
+      "score": null
+    },
+    {
+      "index": 481,
+      "rank": "451-500",
+      "university": "University of Strathclyde",
+      "location": "United Kingdom",
+      "score": null
+    },
+    {
+      "index": 482,
+      "rank": "451-500",
+      "university": "Universidad de Valladolid",
+      "location": "Spain",
+      "score": null
+    },
+    {
+      "index": 483,
+      "rank": "451-500",
+      "university": "Aalborg University",
+      "location": "Denmark",
+      "score": null
+    },
+    {
+      "index": 484,
+      "rank": "451-500",
+      "university": "Harbin Institute of Technology",
+      "location": "China (Mainland)",
+      "score": null
+    },
+    {
+      "index": 485,
+      "rank": "451-500",
+      "university": "University of Fribourg",
+      "location": "Switzerland",
+      "score": null
+    },
+    {
+      "index": 486,
+      "rank": "451-500",
+      "university": "Hitotsubashi University",
+      "location": "Japan",
+      "score": null
+    },
+    {
+      "index": 487,
+      "rank": "451-500",
+      "university": "Sibelius Academy, University of the Arts Helsinki",
+      "location": "Finland",
+      "score": null
+    },
+    {
+      "index": 488,
+      "rank": "451-500",
+      "university": "Université Jean Moulin Lyon 3",
+      "location": "France",
+      "score": null
+    },
+    {
+      "index": 489,
+      "rank": "451-500",
+      "university": "Universität für Musik und darstellende Kunst Wien",
+      "location": "Austria",
+      "score": null
+    },
+    {
+      "index": 490,
+      "rank": "451-500",
+      "university": "Universidad Andrés Bello",
+      "location": "Chile",
+      "score": null
+    },
+    {
+      "index": 491,
+      "rank": "451-500",
+      "university": "Sultan Qaboos University",
+      "location": "Oman",
+      "score": null
+    },
+    {
+      "index": 492,
+      "rank": "451-500",
+      "university": "Universidad Panamericana (UP)",
+      "location": "Mexico",
+      "score": null
+    },
+    {
+      "index": 493,
+      "rank": "451-500",
+      "university": "University of Haifa",
+      "location": "Israel",
+      "score": null
+    },
+    {
+      "index": 494,
+      "rank": "451-500",
+      "university": "Université du Québec",
+      "location": "Canada",
+      "score": null
+    },
+    {
+      "index": 495,
+      "rank": "451-500",
+      "university": "Beijing Institute of Technology",
+      "location": "China (Mainland)",
+      "score": null
+    },
+    {
+      "index": 496,
+      "rank": "451-500",
+      "university": "Universidad Nacional de Cuyo (UNCUYO)",
+      "location": "Argentina",
+      "score": null
+    },
+    {
+      "index": 497,
+      "rank": "451-500",
+      "university": "Ain Shams University in Cairo (ASU, Cairo)",
+      "location": "Egypt",
+      "score": null
+    },
+    {
+      "index": 498,
+      "rank": "451-500",
+      "university": "University of Westminster",
+      "location": "United Kingdom",
+      "score": null
+    },
+    {
+      "index": 499,
+      "rank": "451-500",
+      "university": "Illinois Institute of Technology",
+      "location": "United States of America",
+      "score": null
+    },
+    {
+      "index": 500,
+      "rank": "451-500",
+      "university": "Bina Nusantara University (BINUS)",
+      "location": "Indonesia",
+      "score": null
+    },
+    {
+      "index": 501,
+      "rank": "451-500",
+      "university": "University of Szeged",
+      "location": "Hungary",
+      "score": null
+    },
+    {
+      "index": 502,
+      "rank": "501-550",
+      "university": "Hongik University",
+      "location": "Republic of Korea",
+      "score": null
+    },
+    {
+      "index": 503,
+      "rank": "501-550",
+      "university": "Palacký University Olomouc",
+      "location": "Czechia",
+      "score": null
+    },
+    {
+      "index": 504,
+      "rank": "501-550",
+      "university": "Beijing Language and Culture University",
+      "location": "China (Mainland)",
+      "score": null
+    },
+    {
+      "index": 505,
+      "rank": "501-550",
+      "university": "Universidad Torcuato Di Tella",
+      "location": "Argentina",
+      "score": null
+    },
+    {
+      "index": 506,
+      "rank": "501-550",
+      "university": "Universidad de Guadalajara (UDG)",
+      "location": "Mexico",
+      "score": null
+    },
+    {
+      "index": 507,
+      "rank": "501-550",
+      "university": "Universität der Künste Berlin",
+      "location": "Germany",
+      "score": null
+    },
+    {
+      "index": 508,
+      "rank": "501-550",
+      "university": "National Taiwan University of Science and Technology (Taiwan Tech)",
+      "location": "Taiwan",
+      "score": null
+    },
+    {
+      "index": 509,
+      "rank": "501-550",
+      "university": "Fordham University",
+      "location": "United States of America",
+      "score": null
+    },
+    {
+      "index": 510,
+      "rank": "501-550",
+      "university": "Universidad de Alcalá (Madrid)",
+      "location": "Spain",
+      "score": null
+    },
+    {
+      "index": 511,
+      "rank": "501-550",
+      "university": "National Sun Yat-sen University (NSYSU)",
+      "location": "Taiwan",
+      "score": null
+    },
+    {
+      "index": 512,
+      "rank": "501-550",
+      "university": "Carleton University",
+      "location": "Canada",
+      "score": null
+    },
+    {
+      "index": 513,
+      "rank": "501-550",
+      "university": "Universiti Utara Malaysia (UUM)",
+      "location": "Malaysia",
+      "score": null
+    },
+    {
+      "index": 514,
+      "rank": "501-550",
+      "university": "Université de Liège",
+      "location": "Belgium",
+      "score": null
+    },
+    {
+      "index": 515,
+      "rank": "501-550",
+      "university": "Georgia State University",
+      "location": "United States of America",
+      "score": null
+    },
+    {
+      "index": 516,
+      "rank": "501-550",
+      "university": "Northern Arizona University",
+      "location": "United States of America",
+      "score": null
+    },
+    {
+      "index": 517,
+      "rank": "501-550",
+      "university": "Universidade Federal de Santa Catarina",
+      "location": "Brazil",
+      "score": null
+    },
+    {
+      "index": 518,
+      "rank": "501-550",
+      "university": "Universität Jena",
+      "location": "Germany",
+      "score": null
+    },
+    {
+      "index": 519,
+      "rank": "501-550",
+      "university": "Florida International University",
+      "location": "United States of America",
+      "score": null
+    },
+    {
+      "index": 520,
+      "rank": "501-550",
+      "university": "Tilburg University",
+      "location": "Netherlands",
+      "score": null
+    },
+    {
+      "index": 521,
+      "rank": "501-550",
+      "university": "The Education University of Hong Kong",
+      "location": "Hong Kong SAR, China",
+      "score": null
+    },
+    {
+      "index": 522,
+      "rank": "501-550",
+      "university": "The Royal Danish Academy of Fine Arts (KADK)",
+      "location": "Denmark",
+      "score": null
+    },
+    {
+      "index": 523,
+      "rank": "501-550",
+      "university": "University of California, Riverside",
+      "location": "United States of America",
+      "score": null
+    },
+    {
+      "index": 524,
+      "rank": "501-550",
+      "university": "Universität Potsdam",
+      "location": "Germany",
+      "score": null
+    },
+    {
+      "index": 525,
+      "rank": "501-550",
+      "university": "Virginia Polytechnic Institute and State University",
+      "location": "United States of America",
+      "score": null
+    },
+    {
+      "index": 526,
+      "rank": "501-550",
+      "university": "University of Tromsø The Arctic University of Norway",
+      "location": "Norway",
+      "score": null
+    },
+    {
+      "index": 527,
+      "rank": "501-550",
+      "university": "Universität Stuttgart",
+      "location": "Germany",
+      "score": null
+    },
+    {
+      "index": 528,
+      "rank": "501-550",
+      "university": "University of Tasmania",
+      "location": "Australia",
+      "score": null
+    },
+    {
+      "index": 529,
+      "rank": "501-550",
+      "university": "Flinders University",
+      "location": "Australia",
+      "score": null
+    },
+    {
+      "index": 530,
+      "rank": "501-550",
+      "university": "Universität Bremen",
+      "location": "Germany",
+      "score": null
+    },
+    {
+      "index": 531,
+      "rank": "501-550",
+      "university": "Vytautas Magnus University",
+      "location": "Lithuania",
+      "score": null
+    },
+    {
+      "index": 532,
+      "rank": "501-550",
+      "university": "Ajman University",
+      "location": "United Arab Emirates",
+      "score": null
+    },
+    {
+      "index": 533,
+      "rank": "501-550",
+      "university": "Tomsk State University",
+      "location": "Russian Federation",
+      "score": null
+    },
+    {
+      "index": 534,
+      "rank": "501-550",
+      "university": "Universidad del Rosario",
+      "location": "Colombia",
+      "score": null
+    },
+    {
+      "index": 535,
+      "rank": "501-550",
+      "university": "Universidad Austral",
+      "location": "Argentina",
+      "score": null
+    },
+    {
+      "index": 536,
+      "rank": "501-550",
+      "university": "University of Belgrade",
+      "location": "Serbia",
+      "score": null
+    },
+    {
+      "index": 537,
+      "rank": "501-550",
+      "university": "Indian Institute of Technology Madras (IITM)",
+      "location": "India",
+      "score": null
+    },
+    {
+      "index": 538,
+      "rank": "501-550",
+      "university": "Universitas Padjadjaran (UNPAD)",
+      "location": "Indonesia",
+      "score": null
+    },
+    {
+      "index": 539,
+      "rank": "501-550",
+      "university": "Academy of Sciences of the Czech Republic",
+      "location": "Czechia",
+      "score": null
+    },
+    {
+      "index": 540,
+      "rank": "501-550",
+      "university": "Tampere University",
+      "location": "Finland",
+      "score": null
+    },
+    {
+      "index": 541,
+      "rank": "501-550",
+      "university": "Viet Nam National University Ho Chi Minh City (VNU-HCM)",
+      "location": "Viet Nam",
+      "score": null
+    },
+    {
+      "index": 542,
+      "rank": "501-550",
+      "university": "Universidade Federal da Bahia",
+      "location": "Brazil",
+      "score": null
+    },
+    {
+      "index": 543,
+      "rank": "501-550",
+      "university": "Sofia University \"St. Kliment Ohridski\"",
+      "location": "Bulgaria",
+      "score": null
+    },
+    {
+      "index": 544,
+      "rank": "501-550",
+      "university": "Diponegoro University",
+      "location": "Indonesia",
+      "score": null
+    },
+    {
+      "index": 545,
+      "rank": "501-550",
+      "university": "Universidad Nacional de San Martn (UNSAM)",
+      "location": "Argentina",
+      "score": null
+    },
+    {
+      "index": 546,
+      "rank": "501-550",
+      "university": "Universitas Sebelas Maret (UNS)",
+      "location": "Indonesia",
+      "score": null
+    },
+    {
+      "index": 547,
+      "rank": "501-550",
+      "university": "Washington State University",
+      "location": "United States of America",
+      "score": null
+    },
+    {
+      "index": 548,
+      "rank": "501-550",
+      "university": "University of Alicante",
+      "location": "Spain",
+      "score": null
+    },
+    {
+      "index": 549,
+      "rank": "501-550",
+      "university": "Xi’an Jiaotong University",
+      "location": "China (Mainland)",
+      "score": null
+    },
+    {
+      "index": 550,
+      "rank": "501-550",
+      "university": "University of Debrecen",
+      "location": "Hungary",
+      "score": null
+    },
+    {
+      "index": 551,
+      "rank": "501-550",
+      "university": "Universidad de Málaga",
+      "location": "Spain",
+      "score": null
+    },
+    {
+      "index": 552,
+      "rank": "501-550",
+      "university": "Huazhong University of Science and Technology",
+      "location": "China (Mainland)",
+      "score": null
+    },
+    {
+      "index": 553,
+      "rank": "501-550",
+      "university": "Savannah College of Art and Design",
+      "location": "United States of America",
+      "score": null
+    }
+  ]
+}

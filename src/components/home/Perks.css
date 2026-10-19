@@ -1,0 +1,101 @@
+/* ==========================================================================
+   Cartões de funcionalidades (micro tarefa 1.2)
+   ========================================================================== */
+
+.perks {
+  padding: 0 0 var(--space-5);
+}
+
+.perks__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.perk {
+  display: flex;
+  gap: 0.875rem;
+  align-items: flex-start;
+  padding: 0.25rem;
+}
+
+.perk > div {
+  min-width: 0;
+}
+
+.perk__title {
+  font-size: 1.05rem;
+}
+
+.perk__text {
+  margin-top: var(--space-1);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--color-ink-muted);
+}
+
+/* Ainda não existe: contorno tracejado + texto */
+.perk__tag {
+  display: inline-block;
+  margin-top: var(--space-2);
+  padding: 0.125rem 0.625rem;
+  border: var(--border-width) dashed var(--color-border-input);
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+/* Ladrilho colorido com base "tátil" */
+.perk__tile {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.9375rem;
+  background: var(--tile-bg);
+  color: var(--tile-fg);
+  box-shadow: 0 4px 0 var(--tile-depth);
+}
+
+.perk__tile--sky {
+  --tile-bg: var(--color-primary);
+  --tile-depth: var(--color-primary-dark);
+  --tile-fg: #fff;
+}
+
+.perk__tile--sun {
+  --tile-bg: var(--color-accent);
+  --tile-depth: var(--color-accent-dark);
+  --tile-fg: var(--color-ink);
+}
+
+.perk__tile--mint {
+  --tile-bg: var(--color-mint);
+  --tile-depth: var(--color-mint-dark);
+  --tile-fg: var(--color-ink);
+}
+
+.perk__tile--lilac {
+  --tile-bg: var(--color-lilac-dark);
+  --tile-depth: var(--color-lilac-dark);
+  --tile-fg: #fff;
+}
+
+@media (min-width: 32.5em) {
+  .perks__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 56.25em) {
+  .perks__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

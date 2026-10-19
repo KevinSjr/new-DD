@@ -1,0 +1,88 @@
+/* ==========================================================================
+   Botão (home v2, micro tarefa 1.1) — estilo "tátil" da referência:
+   base sólida embaixo (--depth) que some ao clicar.
+   ========================================================================== */
+
+.btn {
+  --btn-bg: var(--color-primary);
+  --btn-depth-color: var(--color-primary-dark);
+  --btn-fg: #fff;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 3.125rem;
+  padding: 0 1.625rem;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: var(--weight-bold);
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 var(--depth) 0 var(--btn-depth-color);
+  transition: transform 80ms var(--ease-out), box-shadow 80ms var(--ease-out),
+    filter var(--duration-base) var(--ease-out);
+}
+
+.btn:hover {
+  filter: brightness(1.07);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(var(--depth));
+  box-shadow: 0 0 0 var(--btn-depth-color);
+}
+
+/* ---------- Variantes ---------- */
+
+/* Branco com contorno: o texto usa o azul escuro para manter contraste ≥ 4,5:1 */
+.btn--secondary {
+  --btn-bg: var(--color-surface);
+  --btn-depth-color: var(--color-border-strong);
+  --btn-fg: var(--color-primary-ink);
+  outline: var(--border-width) solid var(--color-border);
+  outline-offset: calc(var(--border-width) * -1);
+}
+
+.btn--accent {
+  --btn-bg: var(--color-accent);
+  --btn-depth-color: var(--color-accent-dark);
+  --btn-fg: var(--color-ink);
+}
+
+.btn--success {
+  --btn-bg: var(--color-mint);
+  --btn-depth-color: var(--color-mint-dark);
+  --btn-fg: var(--color-ink);
+}
+
+/* ---------- Tamanhos ---------- */
+
+.btn--sm {
+  --depth: 4px;
+  min-height: 2.75rem;
+  padding: 0 1.125rem;
+  font-size: 0.8rem;
+}
+
+.btn--lg {
+  min-height: 3.625rem;
+  padding: 0 2.125rem;
+  font-size: 1rem;
+}
+
+.btn:disabled {
+  --btn-bg: #e6e9f5;
+  --btn-depth-color: #cfd4e8;
+  --btn-fg: #6f6d9c;
+  cursor: not-allowed;
+  filter: none;
+}
