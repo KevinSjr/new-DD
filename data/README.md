@@ -1,5 +1,11 @@
 # QS World University Rankings 2027 — extração local
 
+## Scholarship America — catálogo coletado em 20/10/2026
+
+`data/imports/scholarship-america-2026-10-20.json` registra os 320 itens mostrados no [catálogo da Scholarship America](https://scholarshipamerica.org/students/browse-scholarships/) nessa data, obtidos pela API pública do próprio site. Os registros foram importados para `scholarship_america_imports` como **pendentes de revisão**, não para a tabela de bolsas publicadas. O catálogo não possui filtro de nacionalidade brasileira: apenas um registro menciona explicitamente o Brasil nos critérios, o [Pega Scholars Program](https://scholarshipamerica.org/scholarship/pegascholars/), que estava marcado como fechado na coleta. Uma menção ao Brasil não garante elegibilidade individual; a ausência de menção também não descarta automaticamente um programa. Status, datas e requisitos devem ser reconfirmados na página oficial antes da publicação.
+
+Para atualizar: `python scripts/scrape_scholarship_america.py data/imports/scholarship-america-AAAA-MM-DD.json`, depois `npm run db:migrate`, `npm run data:import-scholarship-america -- data/imports/ARQUIVO.json` e `npm run data:verify-scholarship-america -- data/imports/ARQUIVO.json`.
+
 `public/data/qs-world-university-rankings-2027-top1000.json` contém as primeiras 1.000 instituições, pela coluna `Index`, da planilha QS 2027 versão 1.3 fornecida pelo usuário. O arquivo faz parte dos dados publicáveis do site e deve ser versionado. A página `/ranking` o carrega; sem ele, exibe um erro claro em vez de inventar resultados.
 
 Cada registro contém `index` (ordem na planilha), `rank` (posição ou faixa exatamente como exibida, em texto), `university`, `location` (somente o país/território da planilha), `region` (região da planilha) e `overall_score` (número ou `null` quando a QS apresenta `-`). Empates compartilham o mesmo `rank`; não foram resolvidos artificialmente.

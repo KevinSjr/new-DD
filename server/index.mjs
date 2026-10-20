@@ -108,6 +108,28 @@ async function scholarshipLeads(params) {
   return { items: result.rows, total: count.rows[0].total, page, pageSize: 12 }
 }
 
+async function scholarshipAmericaLeads(params) {
+  const q = (params.get('q') || '').trim().slice(0, 100)
+  const brazil = params.get('brazil') || 'all'
+  const status = params.get('status') || 'all'
+  const page = pageNumber(params.get('page'))
+  if (!['all', 'mentioned'].includes(brazil) || !['all', 'open', 'closed'].includes(status)) {
+    throw Object.assign(new Error('Filtro inválido.'), { status: 400 })
+  }
+  const where = `review_status='pending'
+    AND ($1 = '' OR title ILIKE '%' || $1 || '%' OR description_excerpt ILIKE '%' || $1 || '%' OR eligibility_text ILIKE '%' || $1 || '%')
+    AND ($2 = 'all' OR brazil_mentioned)
+    AND ($3 = 'all' OR listing_status = $3)`
+  const values = [q, brazil, status]
+  const count = await database().query(`SELECT count(*)::integer AS total FROM scholarship_america_imports WHERE ${where}`, values)
+  const result = await database().query(`SELECT source_id,source_url,title,description_excerpt,award_amount,
+    listing_status,brazil_mentioned,open_date,close_date,date_timezone,fetched_at
+    FROM scholarship_america_imports WHERE ${where}
+    ORDER BY brazil_mentioned DESC, title COLLATE "C" ASC, source_id ASC LIMIT 12 OFFSET $4`,
+  [...values, (page - 1) * 12])
+  return { items: result.rows, total: count.rows[0].total, page, pageSize: 12 }
+}
+
 async function save(id, data) {
   const client = await database().connect()
   try {
@@ -167,6 +189,7 @@ const server = createServer(async (req, res) => {
     }
     if (req.method === 'GET' && url.pathname === '/api/scholarships') return json(res, 200, await publicScholarships(url.searchParams))
     if (req.method === 'GET' && url.pathname === '/api/scholarship-leads') return json(res, 200, await scholarshipLeads(url.searchParams))
+    if (req.method === 'GET' && url.pathname === '/api/scholarship-america-leads') return json(res, 200, await scholarshipAmericaLeads(url.searchParams))
     if (!url.pathname.startsWith('/api/admin/')) return json(res, 404, { error:'Rota não encontrada.' })
     if (!adminReady) return json(res, 503, { error:'Administração ainda não configurada neste servidor.' })
     if (!originAllowed(req)) return json(res, 403, { error:'Origem não permitida.' })

@@ -14,6 +14,8 @@
     "api:start": "node server/index.mjs",
     "db:migrate": "node --env-file=.env.local scripts/migrate.mjs",
     "data:import-iefa": "node --env-file=.env.local scripts/import_iefa.mjs",
+    "data:import-scholarship-america": "node --env-file=.env.local scripts/import_scholarship_america.mjs",
+    "data:verify-scholarship-america": "node --env-file=.env.local scripts/verify_scholarship_america_import.mjs",
     "data:verify-iefa": "node --env-file=.env.local scripts/verify_iefa_import.mjs",
     "admin:hash": "node scripts/hash_admin_password.mjs",
     "preview": "vite preview"
