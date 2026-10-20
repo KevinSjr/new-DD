@@ -16,6 +16,8 @@
     "data:import-iefa": "node --env-file=.env.local scripts/import_iefa.mjs",
     "data:import-scholarship-america": "node --env-file=.env.local scripts/import_scholarship_america.mjs",
     "data:verify-scholarship-america": "node --env-file=.env.local scripts/verify_scholarship_america_import.mjs",
+    "data:import-study-australia": "node --env-file=.env.local scripts/import_study_australia.mjs",
+    "data:verify-study-australia": "node --env-file=.env.local scripts/verify_study_australia_import.mjs",
     "data:verify-iefa": "node --env-file=.env.local scripts/verify_iefa_import.mjs",
     "admin:hash": "node scripts/hash_admin_password.mjs",
     "preview": "vite preview"

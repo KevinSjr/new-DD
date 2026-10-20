@@ -100,6 +100,7 @@ Antes de alterar arquivos, inspecione o código existente e identifique a stack 
 - Considere entidades para países, instituições, programas, bolsas, requisitos, fontes, prazos e usuários conforme a necessidade.
 - Diferencie oportunidades, instituições e programas.
 - Armazene URLs de fonte e datas de verificação para informações mutáveis.
+- Registros de scraping devem entrar no buscador como **listados no catálogo**, sem fila padrão de "pendente de revisão". Para novas fontes, use `catalog_status = 'listed'` como estado inicial e integre esse estado à busca; mantenha registros rejeitados fora dos resultados. "Listado" não significa edital aberto, dados verificados ou elegibilidade confirmada.
 - Use migrations versionadas para alterações de esquema.
 - Evite exclusões destrutivas sem confirmação e plano de recuperação.
 - Nunca armazene senhas em texto puro; use autenticação e hash adequados, preferencialmente por provedor confiável.

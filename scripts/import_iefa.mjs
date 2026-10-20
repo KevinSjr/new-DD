@@ -25,5 +25,5 @@ try {
     inserted += result.rowCount
   }
   await client.query('COMMIT')
-  console.log(`${inserted} registros IEFA importados/atualizados como pendentes de revisão.`)
+  console.log(`${inserted} registros IEFA importados/atualizados como listados no catálogo.`)
 } catch (error) { await client.query('ROLLBACK'); throw error } finally { client.release(); await database().end() }

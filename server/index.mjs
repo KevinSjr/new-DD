@@ -4,6 +4,7 @@ import { resolve, extname, sep } from 'node:path'
 import { scryptSync, timingSafeEqual } from 'node:crypto'
 import { database } from './db.mjs'
 import { STUDY_LEVELS, validateScholarship } from './validation.mjs'
+import { scholarshipCatalog } from './scholarshipCatalog.mjs'
 
 const port = Number(process.env.API_PORT || 3001)
 const host = process.env.API_HOST || '127.0.0.1'
@@ -95,7 +96,7 @@ async function scholarshipLeads(params) {
   const nationality = params.get('nationality') || 'all'
   const page = pageNumber(params.get('page'))
   if (!['all', 'brazil', 'unrestricted', 'other'].includes(nationality)) throw Object.assign(new Error('Filtro de nacionalidade inválido.'), { status: 400 })
-  const where = `source='iefa' AND review_status='pending'
+  const where = `source='iefa' AND catalog_status='listed'
     AND ($1 = '' OR title ILIKE '%' || $1 || '%' OR field_of_study ILIKE '%' || $1 || '%' OR description_excerpt ILIKE '%' || $1 || '%')
     AND ($2 = 'all' OR ($2 = 'brazil' AND nationality_listing = 'Brazil')
       OR ($2 = 'unrestricted' AND nationality_listing = 'Unrestricted')
@@ -116,7 +117,7 @@ async function scholarshipAmericaLeads(params) {
   if (!['all', 'mentioned'].includes(brazil) || !['all', 'open', 'closed'].includes(status)) {
     throw Object.assign(new Error('Filtro inválido.'), { status: 400 })
   }
-  const where = `review_status='pending'
+  const where = `catalog_status='listed'
     AND ($1 = '' OR title ILIKE '%' || $1 || '%' OR description_excerpt ILIKE '%' || $1 || '%' OR eligibility_text ILIKE '%' || $1 || '%')
     AND ($2 = 'all' OR brazil_mentioned)
     AND ($3 = 'all' OR listing_status = $3)`
@@ -190,6 +191,7 @@ const server = createServer(async (req, res) => {
     if (req.method === 'GET' && url.pathname === '/api/scholarships') return json(res, 200, await publicScholarships(url.searchParams))
     if (req.method === 'GET' && url.pathname === '/api/scholarship-leads') return json(res, 200, await scholarshipLeads(url.searchParams))
     if (req.method === 'GET' && url.pathname === '/api/scholarship-america-leads') return json(res, 200, await scholarshipAmericaLeads(url.searchParams))
+    if (req.method === 'GET' && url.pathname === '/api/scholarship-catalog') return json(res, 200, await scholarshipCatalog(database(), url.searchParams))
     if (!url.pathname.startsWith('/api/admin/')) return json(res, 404, { error:'Rota não encontrada.' })
     if (!adminReady) return json(res, 503, { error:'Administração ainda não configurada neste servidor.' })
     if (!originAllowed(req)) return json(res, 403, { error:'Origem não permitida.' })

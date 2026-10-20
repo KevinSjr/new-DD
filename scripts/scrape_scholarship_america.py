@@ -14,6 +14,7 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 API = "https://scholarshipamerica.org/wp-json/wp/v2/scholarship"
+LEVELS_API = "https://scholarshipamerica.org/wp-json/wp/v2/educational-status?per_page=100"
 CATALOG = "https://scholarshipamerica.org/students/browse-scholarships/"
 PER_PAGE = 100
 SHOWN_TERM = 246
@@ -46,7 +47,7 @@ def flatten(value):
 
 def fetch(page):
     query = urlencode({"listing-status": SHOWN_TERM, "per_page": PER_PAGE, "page": page,
-                       "_fields": "id,link,title,acf,scholarship-status,listing-status"})
+                       "_fields": "id,link,title,acf,scholarship-status,listing-status,educational-status"})
     request = Request(f"{API}?{query}", headers={"User-Agent": "DaydreamingResearch/1.0"})
     with urlopen(request, timeout=90) as response:
         data = json.load(response)
@@ -55,7 +56,17 @@ def fetch(page):
     return total, pages, data
 
 
-def transform(item):
+def fetch_levels():
+    request = Request(LEVELS_API, headers={"User-Agent": "DaydreamingResearch/1.0"})
+    with urlopen(request, timeout=90) as response:
+        terms = json.load(response)
+        total = int(response.headers["X-WP-Total"])
+    if len(terms) != total:
+        raise RuntimeError("A lista de níveis de estudo está incompleta.")
+    return {term["id"]: plain(term["name"]) for term in terms}
+
+
+def transform(item, levels):
     acf = item.get("acf") or {}
     eligibility = plain(" ".join(flatten(acf.get("scholarship_content_eligibility"))))
     open_date = acf.get("scholarship_details_open_date_time") or {}
@@ -69,6 +80,7 @@ def transform(item):
         "description": plain(acf.get("scholarship_details_hero_description")),
         "eligibility": eligibility,
         "award_amount": plain(acf.get("scholarship_details_award_amount")),
+        "study_levels": [levels[term] for term in item.get("educational-status", [])],
         "listing_status": status,
         "open_date": open_date.get("date_time") if isinstance(open_date, dict) else None,
         "close_date": close_date.get("date_time") if isinstance(close_date, dict) else None,
@@ -83,15 +95,16 @@ def main():
     output = Path(sys.argv[1]).resolve()
     if not output.is_relative_to(Path.cwd().resolve()):
         raise SystemExit("O JSON de saída deve ficar dentro do projeto.")
+    levels = fetch_levels()
     total, pages, first = fetch(1)
-    records = {item["id"]: transform(item) for item in first}
+    records = {item["id"]: transform(item, levels) for item in first}
     print(f"Catálogo: {total} registros mostrados em {pages} páginas da API.", flush=True)
     for page in range(2, pages + 1):
         time.sleep(1)
         reported, reported_pages, batch = fetch(page)
         if reported != total or reported_pages != pages:
             raise RuntimeError("O catálogo mudou durante a coleta; nada foi salvo.")
-        records.update((item["id"], transform(item)) for item in batch)
+        records.update((item["id"], transform(item, levels)) for item in batch)
         print(f"Página {page}/{pages}: {len(batch)} registros.", flush=True)
     if len(records) != total or any(not r["title"] or not r["url"].startswith("https://scholarshipamerica.org/scholarship/") for r in records.values()):
         raise RuntimeError("Coleta incompleta ou registro inválido; nada foi salvo.")
