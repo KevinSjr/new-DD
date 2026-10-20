@@ -16,7 +16,7 @@ export function Hero() {
           <h1 id="hero-titulo">Sonhe acordado. Estude lá fora.</h1>
           <p className="hero__lead">
             Descubra, compare e planeje oportunidades de estudo no exterior em um só lugar. Hoje o
-            site já tem o guia da Alemanha e seis rankings para explorar; as outras ferramentas chegam por etapas.
+            site já tem o guia da Alemanha, rankings e um buscador de bolsas com fontes em revisão; as outras ferramentas chegam por etapas.
           </p>
           <div className="hero__actions">
             <Button href="/#trilha" size="lg">

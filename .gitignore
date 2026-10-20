@@ -11,6 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+.env.*
+!.env.example
 
 # Archive of retired files; not needed by the published site.
 backup-unused-2026-10-18.tar.gz

@@ -13,6 +13,7 @@ const NAV_ITEMS = [
   { label: 'Ferramentas', to: '/#ferramentas' },
   { label: 'Países', to: '/#paises' },
   { label: 'Rankings', to: '/rankings' },
+  { label: 'Bolsas', to: '/bolsas' },
 ] as const
 
 export function Header() {
