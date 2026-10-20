@@ -5,7 +5,7 @@ import './ScholarshipSearchPage.css'
 
 type Country = { slug: string; name: string }
 type Scholarship = {
-  source: 'verified' | 'iefa' | 'scholarship_america' | 'study_australia'; source_id: string; title: string;
+  source: 'verified' | 'iefa' | 'scholarship_america' | 'study_australia' | 'daad'; source_id: string; title: string;
   description: string; source_label: string; source_url: string; application_url: string | null;
   observed_at: string; deadline: string | null; amount: string | null; source_status: string;
   brazil_criteria: string; field_of_study: string | null; nationality: string | null;
@@ -34,6 +34,11 @@ const sourceLevelNames: Record<string, string> = {
   Postgraduate: 'Pós-graduação',
   'Secondary schooling': 'Ensino médio',
   'Primary schooling': 'Ensino fundamental',
+  Undergraduates: 'Estudantes de graduação',
+  Graduates: 'Pessoas graduadas',
+  'Doctoral candidates/PhD students': 'Doutorandos',
+  'Postdoctoral researchers': 'Pesquisadores de pós-doutorado',
+  Faculty: 'Docentes',
 }
 const studyLevel = (value: string | null) => value
   ? levelNames[value] || value.split(', ').map(item => sourceLevelNames[item] || item).join(', ')
@@ -41,6 +46,7 @@ const studyLevel = (value: string | null) => value
 const sourceName: Record<Scholarship['source'], string> = {
   verified: 'Verificada', iefa: 'IEFA · catálogo', scholarship_america: 'Scholarship America · catálogo',
   study_australia: 'Study Australia · catálogo',
+  daad: 'Base DAAD · catálogo',
 }
 const observedDate = (value: string) => {
   const date = value.slice(0, 10).split('-')
@@ -112,6 +118,7 @@ export function ScholarshipSearchPage() {
       <div className="sch-search__filters"><label htmlFor="scholarship-country">País<select id="scholarship-country" value={country} onChange={event => { setCountry(event.target.value); setPage(1) }}><option value="">Todos os países</option>{countries.map(item => <option key={item.slug} value={item.slug}>{item.name}</option>)}</select></label></div>
       {country === 'estados-unidos' && <p className="sch-search__country-note">Estados Unidos reúne registros do IEFA que listam esse destino e o catálogo da Scholarship America, sediado nos EUA. Para esta última fonte, a localização do catálogo <strong>não confirma o país onde o estudo ocorrerá</strong>.</p>}
       {country === 'australia' && <p className="sch-search__country-note">Austrália reúne registros do IEFA que listam esse destino e bolsas do Study Australia sem indicação de que possam ser realizadas no exterior. Estar no catálogo ou aceitar estudantes internacionais <strong>não confirma elegibilidade para brasileiros</strong>; confira o edital da instituição.</p>}
+      {country === 'alemanha' && <p className="sch-search__country-note">Alemanha reúne registros do IEFA que listam esse destino e programas da base DAAD. Na base DAAD, o filtro “Country” indica <strong>de onde a pessoa se candidata, não onde estudará</strong>. Por isso, o destino e a elegibilidade devem ser confirmados na página de cada programa.</p>}
       <section className="sch-search__results" aria-labelledby="sch-search-results-title">
         <div className="sch-search__heading"><div><p className="sch-search__eyebrow">Resultados</p><h2 id="sch-search-results-title">Bolsas para explorar</h2></div>
           {!loading && !error && data && <span aria-live="polite">{data.total} {data.total === 1 ? 'resultado' : 'resultados'}</span>}</div>

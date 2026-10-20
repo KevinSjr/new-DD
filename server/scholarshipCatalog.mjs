@@ -82,6 +82,25 @@ const catalog = `WITH catalog AS (
   FROM study_australia_imports a
   WHERE a.catalog_status = 'listed' AND ($2 = '' OR ($2 = 'australia' AND a.tenable_overseas IS NOT TRUE))
 
+  UNION ALL
+
+  SELECT 'daad', d.source_id::text, d.title, left(d.description_excerpt, 420),
+    CASE WHEN d.is_daad THEN 'DAAD' ELSE 'Base DAAD · outra organização' END,
+    d.source_url, NULL, d.fetched_at::text,
+    left(COALESCE(nullif(d.deadline_brazil, ''), nullif(d.deadline_detail, ''),
+      nullif(d.deadline_general, '')), 500),
+    left(nullif(d.amount_detail, ''), 500),
+    'Abertura não verificada; confirme o prazo para seu país',
+    CASE WHEN d.brazil_listed THEN 'Brasil listado como país de candidatura; demais critérios não verificados'
+      ELSE 'Brasil não listado como país de candidatura; consulte o DAAD' END,
+    nullif(d.fields_of_study, ''),
+    CASE WHEN d.brazil_listed THEN 'Brasil no filtro de país de candidatura (não nacionalidade)'
+      ELSE 'Brasil não consta no filtro de país de candidatura' END,
+    NULL, nullif(d.study_levels, ''),
+    'Base DAAD; país de estudo deste programa não confirmado pela listagem'
+  FROM daad_imports d
+  WHERE d.catalog_status = 'listed' AND ($2 = '' OR $2 = 'alemanha')
+
 )`
 
 export async function scholarshipCatalog(pool, params) {
