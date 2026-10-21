@@ -6,6 +6,14 @@ O conteúdo descritivo das bolsas no catálogo (título descritivo, resumo, crit
 
 Os lotes IEFA, Scholarship America, Study Australia e DAAD atualmente importados foram coletados de conteúdo em inglês. Acentos que aparecem em alguns registros pertencem principalmente a nomes próprios e termos citados pela fonte. A interface do buscador continua em português para os usuários brasileiros; esta regra se refere aos dados das oportunidades, não aos rótulos do site.
 
+## Study in Japan — bolsas e redução de mensalidades coletadas em 20/10/2026
+
+`data/imports/study-japan-2026-10-20.json` reúne os **661 resultados únicos** do [buscador oficial Study in Japan](https://www.studyinjapan.go.jp/en/search-for-scholarships/tuition-reduction_search.php?lang=en&offset=0&go=go&limit=25&narabikae=2&school_name=), com link para cada ficha. A coleta percorreu as 27 páginas da listagem inglesa e consultou as fichas individuais para captar tipo de apoio, valor divulgado, nível de estudo, período de candidatura, área e restrições geográficas quando publicados. Duas fichas continham trechos de valor em japonês; eles foram vertidos ao inglês, com o original preservado no JSON e a tradução identificada no buscador. O campo de valor não deve ser interpretado como valor total garantido: a fonte frequentemente informa parcelas mensais, benefícios pontuais ou percentuais de redução. O período divulgado pode não conter ano nem prazo de encerramento exato.
+
+O filtro **Japão** representa a origem e o tema do catálogo; confirme na ficha e no provedor o local de estudo, a edição vigente e a candidatura. As regiões indicadas não comprovam que um cidadão brasileiro seja elegível. Das fichas coletadas, 316 mostram última atualização em 2021, embora permaneçam listadas; listagem não significa inscrição aberta.
+
+Para atualizar: `python scripts/scrape_study_japan.py data/imports/study-japan-AAAA-MM-DD.json`, depois `npm run db:migrate`, `npm run data:import-study-japan -- data/imports/ARQUIVO.json` e `npm run data:verify-study-japan -- data/imports/ARQUIVO.json`. Um arquivo `.partial.json` guarda progresso após interrupções e nunca deve ser importado.
+
 ## CampusBourses — catálogo coletado em 20/10/2026
 
 `data/imports/campusbourses-2026-10-20.json` reúne 378 programas da [base CampusBourses](https://campusbourses.campusfrance.org/#/catalog), pelo endpoint público usado pelo próprio site. A coleta usa a versão inglesa quando existe; para os 20 programas sem essa versão, traduz título, resumo e texto de valor automaticamente para o inglês e preserva os textos originais no JSON. Traduções automáticas são identificadas no buscador e devem ser confirmadas na fonte antes de embasar uma candidatura. O Brasil aparece no filtro de nacionalidade de 18 programas.

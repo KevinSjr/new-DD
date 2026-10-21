@@ -119,6 +119,25 @@ const catalog = `WITH catalog AS (
   FROM campusbourses_imports c
   WHERE c.catalog_status = 'listed' AND ($2 = '' OR $2 = 'franca')
 
+  UNION ALL
+
+  SELECT 'study_japan', j.source_id, j.title, left(j.description_excerpt, 420),
+    CASE WHEN j.translated_note THEN 'Study in Japan · trecho traduzido'
+      ELSE 'Study in Japan · JASSO' END,
+    j.source_url, j.application_url, j.fetched_at::text,
+    left(nullif(j.deadline_text, ''), 500), left(nullif(j.amount_detail, ''), 500),
+    CASE WHEN j.source_updated_at IS NOT NULL THEN
+      'Ficha atualizada em ' || to_char(j.source_updated_at, 'DD/MM/YYYY') || '; abertura não verificada'
+      ELSE 'Abertura não verificada; período divulgado pode ser de edição anterior' END,
+    CASE WHEN j.brazil_mentioned THEN 'Brasil mencionado na ficha; demais critérios não verificados'
+      ELSE 'Brasil não mencionado individualmente; confira as regiões e critérios na fonte' END,
+    nullif(j.fields_of_study, ''),
+    COALESCE(nullif(j.nationality_listing, ''), nullif(j.designated_regions, '')),
+    NULL, nullif(j.study_levels, ''),
+    'Catálogo Study in Japan; instituição e local de estudo sujeitos a confirmação'
+  FROM study_japan_imports j
+  WHERE j.catalog_status = 'listed' AND ($2 = '' OR $2 = 'japao')
+
 )`
 
 export async function scholarshipCatalog(pool, params) {
