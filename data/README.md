@@ -6,6 +6,14 @@ O conteúdo descritivo das bolsas no catálogo (título descritivo, resumo, crit
 
 Os lotes IEFA, Scholarship America, Study Australia e DAAD atualmente importados foram coletados de conteúdo em inglês. Acentos que aparecem em alguns registros pertencem principalmente a nomes próprios e termos citados pela fonte. A interface do buscador continua em português para os usuários brasileiros; esta regra se refere aos dados das oportunidades, não aos rótulos do site.
 
+## Study in Korea — bolsas de universidades coletadas em 21/10/2026
+
+`data/imports/study-korea-2026-10-21.json` reúne as **856 bolsas** da aba Scholarship da [busca oficial Study in Korea](https://www.studyinkorea.go.kr/ko/search_v1.do), distribuídas por 219 universidades. A coleta percorreu as nove páginas da lista e as fichas das universidades para obter, quando publicados, critérios, benefícios e auxílio financeiro. Há texto de benefício/auxílio em 750 fichas; 12 registros precisaram de tradução automática do coreano. O link individual aponta para a ficha da universidade com o identificador da bolsa. O filtro **Coreia do Sul** mostra esses registros.
+
+As quantias são textos fornecidos pelas universidades, podendo ser por semestre, desconto de mensalidade ou auxílio; **não representam necessariamente o valor total da bolsa**. A data “Last update” é atualização da ficha, não prazo de candidatura. O buscador deixa o prazo em branco quando a fonte não o informa. A listagem não comprova inscrição aberta nem elegibilidade para brasileiros; consulte a ficha e a universidade. Dados de bolsas com restrições locais permanecem no catálogo geral sem promessa de elegibilidade. Trechos originalmente em coreano são traduzidos automaticamente para o inglês, com texto original preservado no JSON.
+
+Para atualizar: `python scripts/scrape_study_korea.py data/imports/study-korea-AAAA-MM-DD.json`, depois `npm run db:migrate`, `npm run data:import-study-korea -- data/imports/ARQUIVO.json` e `npm run data:verify-study-korea -- data/imports/ARQUIVO.json`. O arquivo `.partial.json` guarda progresso para retomada e não deve ser importado.
+
 ## ScholarshipChina — listagem de programas coletada em 20/10/2026
 
 `data/imports/scholarship-china-2026-10-20.json` contém os **5.871 programas** da [listagem ScholarshipChina](https://scholarshipchina.com/scholarship?type=1), coletados pelo endpoint público usado pela página. Todos têm link individual, instituição, nível, idioma, entrada, mensalidade regular e após a bolsa, além de prazo divulgado. O filtro **China** mostra esses registros e os resultados IEFA que listam esse destino; no banco local, a consulta retornou 5.876 resultados no total após a importação.

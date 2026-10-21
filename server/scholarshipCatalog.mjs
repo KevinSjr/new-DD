@@ -163,6 +163,24 @@ const catalog = `WITH catalog AS (
   FROM scholarship_china_imports c
   WHERE c.catalog_status = 'listed' AND ($2 = '' OR $2 = 'china')
 
+  UNION ALL
+
+  SELECT 'study_korea', k.source_id, k.title,
+    left(trim(concat_ws(' · ', k.institution, nullif(k.location, ''),
+      nullif(k.listing_eligibility, ''), nullif(k.qualifications, ''))), 420),
+    CASE WHEN k.translation_method = 'machine' THEN 'Study in Korea · tradução automática'
+      ELSE 'Study in Korea' END,
+    k.source_url, NULL, k.fetched_at::text, NULL,
+    left(nullif(concat_ws('; ', nullif(k.benefits, ''), nullif(k.personal_support, '')), ''), 500),
+    CASE WHEN k.source_updated_at IS NOT NULL THEN
+      'Ficha atualizada em ' || to_char(k.source_updated_at, 'DD/MM/YYYY') || '; abertura não verificada'
+      ELSE 'Abertura não verificada; confirme na universidade' END,
+    'Elegibilidade brasileira não confirmada; confira os critérios da instituição',
+    NULL, NULL, 'Korea, South', NULL,
+    'Bolsa vinculada à universidade sul-coreana; condições sujeitas à confirmação'
+  FROM study_korea_imports k
+  WHERE k.catalog_status = 'listed' AND ($2 = '' OR $2 = 'coreia-do-sul')
+
 )`
 
 export async function scholarshipCatalog(pool, params) {

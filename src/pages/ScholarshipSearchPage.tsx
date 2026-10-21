@@ -5,7 +5,7 @@ import './ScholarshipSearchPage.css'
 
 type Country = { slug: string; name: string }
 type Scholarship = {
-  source: 'verified' | 'iefa' | 'scholarship_america' | 'study_australia' | 'daad' | 'campusbourses' | 'study_japan' | 'scholarship_china'; source_id: string; title: string;
+  source: 'verified' | 'iefa' | 'scholarship_america' | 'study_australia' | 'daad' | 'campusbourses' | 'study_japan' | 'scholarship_china' | 'study_korea'; source_id: string; title: string;
   description: string; source_label: string; source_url: string; application_url: string | null;
   observed_at: string; deadline: string | null; amount: string | null; source_status: string;
   brazil_criteria: string; field_of_study: string | null; nationality: string | null;
@@ -50,6 +50,7 @@ const sourceName: Record<Scholarship['source'], string> = {
   campusbourses: 'CampusBourses · catálogo',
   study_japan: 'Study in Japan · catálogo',
   scholarship_china: 'ScholarshipChina · catálogo',
+  study_korea: 'Study in Korea · universidade',
 }
 const observedDate = (value: string) => {
   const date = value.slice(0, 10).split('-')
@@ -122,6 +123,7 @@ export function ScholarshipSearchPage() {
       {country === 'estados-unidos' && <p className="sch-search__country-note">Estados Unidos reúne registros do IEFA que listam esse destino e o catálogo da Scholarship America, sediado nos EUA. Para esta última fonte, a localização do catálogo <strong>não confirma o país onde o estudo ocorrerá</strong>.</p>}
       {country === 'australia' && <p className="sch-search__country-note">Austrália reúne registros do IEFA que listam esse destino e bolsas do Study Australia sem indicação de que possam ser realizadas no exterior. Estar no catálogo ou aceitar estudantes internacionais <strong>não confirma elegibilidade para brasileiros</strong>; confira o edital da instituição.</p>}
       {country === 'alemanha' && <p className="sch-search__country-note">Alemanha reúne registros do IEFA que listam esse destino e programas da base DAAD. Na base DAAD, o filtro “Country” indica <strong>de onde a pessoa se candidata, não onde estudará</strong>. Por isso, o destino e a elegibilidade devem ser confirmados na página de cada programa.</p>}
+      {country === 'coreia-do-sul' && <p className="sch-search__country-note">Coreia do Sul inclui bolsas divulgadas por universidades no Study in Korea. Algumas exigem vínculo ou condições locais; <strong>estar na lista não confirma elegibilidade para brasileiros nem inscrições abertas</strong>. Confira a ficha e a universidade antes de se candidatar.</p>}
       {country === 'china' && <p className="sch-search__country-note">China reúne programas com bolsa listados no ScholarshipChina e registros IEFA que indicam esse destino. O ScholarshipChina é uma plataforma de candidatura, não um edital governamental: <strong>mensalidade reduzida ou zerada não significa bolsa em dinheiro</strong>. A ficha pode cobrar taxas de candidatura e serviço e trazer restrições de nacionalidade. Confira esses custos, as condições, o prazo e a elegibilidade antes de se candidatar.</p>}
       <section className="sch-search__results" aria-labelledby="sch-search-results-title">
         <div className="sch-search__heading"><div><p className="sch-search__eyebrow">Resultados</p><h2 id="sch-search-results-title">Bolsas para explorar</h2></div>
