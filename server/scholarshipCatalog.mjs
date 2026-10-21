@@ -280,6 +280,30 @@ const catalog = `WITH catalog AS (
   FROM efg_denmark_imports e
   WHERE e.catalog_status = 'listed' AND ($2 = '' OR $2 = 'dinamarca')
 
+  UNION ALL
+
+  SELECT 'global_admissions_belgium', g.source_id, g.title,
+    CASE WHEN g.title ILIKE 'Erasmus Mundus%' THEN
+      'Mestrado conjunto Erasmus Mundus; confira em quais países ocorrerão as etapas.'
+      ELSE 'Oportunidade listada para estudantes brasileiros pela Global Admissions.' END,
+    'Global Admissions · Brasil → Bélgica', g.source_url, g.provider_url, g.fetched_at::text,
+    CASE WHEN g.deadline_detail IS NOT NULL THEN left(g.deadline_detail, 220) || ' · confira a edição atual'
+      WHEN g.deadline_listing = 'Rolling' THEN 'Janela variável na listagem; confira o edital'
+      ELSE 'Mês indicado: ' || g.deadline_listing || ' (ano não confirmado)' END,
+    g.coverage_listing,
+    'Listada pela plataforma; abertura e benefícios devem ser confirmados no edital',
+    CASE WHEN g.nationality_detail ILIKE '%Global South%' THEN
+      'Página para brasileiros; confira a lista de países aprovada pelo programa'
+      WHEN g.open_to_all_listing THEN
+      'Página para brasileiros e sem restrição de nacionalidade na listagem; demais critérios não verificados'
+      ELSE 'Página para brasileiros; elegibilidade individual não confirmada' END,
+    NULL, g.nationality_detail, g.destination_listing, g.study_level,
+    CASE WHEN g.title ILIKE 'Erasmus Mundus%' THEN
+      'Bélgica listada pela Global Admissions; mestrados conjuntos podem incluir estudo em outros países'
+      ELSE 'Bélgica listada pela Global Admissions; confira instituição, curso e edital oficiais' END
+  FROM global_admissions_belgium_imports g
+  WHERE g.catalog_status = 'listed' AND ($2 = '' OR $2 = 'belgica')
+
 )`
 
 export async function scholarshipCatalog(pool, params) {
