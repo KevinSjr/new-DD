@@ -30,6 +30,7 @@
     "data:verify-study-korea": "node --env-file=.env.local scripts/verify_study_korea_import.mjs",
     "data:import-spain-administration": "node --env-file=.env.local scripts/import_spain_administration.mjs",
     "data:verify-spain-administration": "node --env-file=.env.local scripts/verify_spain_administration_import.mjs",
+    "data:import-universitaly-maeci": "node --env-file=.env.local scripts/import_universitaly_maeci.mjs",
     "data:verify-iefa": "node --env-file=.env.local scripts/verify_iefa_import.mjs",
     "admin:hash": "node scripts/hash_admin_password.mjs",
     "preview": "vite preview"

@@ -1,0 +1,23 @@
+{
+  "source": "universitaly_maeci",
+  "listing_url": "https://www.universitaly.it/en/borse-studio",
+  "fetched_at": "2026-10-21T18:53:35Z",
+  "reported_total": 1,
+  "records": [
+    {
+      "id": "maeci-2026-2027",
+      "title": "Italian Government Scholarships for Foreign Students and Italians Living Abroad (2026–2027)",
+      "summary": "MAECI scholarships for on-site study, training or research at public or legally recognised private Italian institutions. The call covers Master's, AFAM, PhD, supervised research and intensive Italian language/culture programmes; first-cycle Costruiamo il futuro awards are renewals only.",
+      "source_url": "https://www.esteri.it/wp-content/uploads/2026/03/Bando-26-27-ENG.pdf",
+      "program_url": "https://www.esteri.it/it/servizi-opportunita/opportunita/borse-di-studio/per-cittadini-stranieri/borsestudio_stranieri/",
+      "application_url": "https://studyinitaly.esteri.it/",
+      "eligible_countries_url": "https://www.esteri.it/wp-content/uploads/2026/03/Elenco-dei-paesi-ammissibili-List-of-eligible-countries.pdf",
+      "deadline_date": "2026-03-26",
+      "deadline_timezone": "14:00, Italian time",
+      "amount_regular_eur": 10800,
+      "amount_language_eur": 3600,
+      "study_levels": "Master's, AFAM (first/second cycle), PhD, research, Italian language/culture",
+      "brazil_listed": true
+    }
+  ]
+}

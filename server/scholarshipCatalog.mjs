@@ -199,6 +199,23 @@ const catalog = `WITH catalog AS (
   FROM spain_administration_imports s
   WHERE s.catalog_status = 'listed' AND ($2 = '' OR $2 = 'espanha')
 
+  UNION ALL
+
+  SELECT 'universitaly_maeci', m.source_id, m.title, left(m.summary, 420),
+    'MAECI · linked by Universitaly', m.source_url, m.application_url, m.fetched_at::text,
+    to_char(m.deadline_date, 'DD/MM/YYYY') || ' · ' || m.deadline_timezone,
+    'EUR ' || m.amount_regular_eur::text || ' total for most categories; EUR ' ||
+      m.amount_language_eur::text || ' total for Italian language/culture courses',
+    CASE WHEN m.deadline_date < CURRENT_DATE THEN 'Inscrições encerradas para a edição 2026–2027'
+      ELSE 'Abertura não verificada; confira o edital' END,
+    CASE WHEN m.brazil_listed THEN 'Brasil listado entre os países elegíveis; demais critérios devem ser conferidos'
+      ELSE 'Brasil não listado; confira o edital' END,
+    NULL, CASE WHEN m.brazil_listed THEN 'Brazil (among eligible countries)' ELSE NULL END,
+    'Italy', m.study_levels,
+    'Chamada oficial MAECI vinculada pelo Universitaly; edição e prazo específicos'
+  FROM italy_maeci_imports m
+  WHERE m.catalog_status = 'listed' AND ($2 = '' OR $2 = 'italia')
+
 )`
 
 export async function scholarshipCatalog(pool, params) {

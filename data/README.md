@@ -1,5 +1,13 @@
 # QS World University Rankings 2027 — extração local
 
+## Universitaly / MAECI — Itália, verificação em 21/10/2026
+
+A [página de bolsas do Universitaly](https://www.universitaly.it/en/borse-studio) é um guia, não um catálogo de editais individuais. Sua [página de bolsas das universidades](https://www.universitaly.it/en/borse-studio/atenei) informa ausência de editais em todas as 20 regiões na data da verificação. O mapa de entes regionais é um diretório de instituições, não uma lista de bolsas individuais. Portanto, nenhum desses itens foi fabricado como bolsa.
+
+O guia liga diretamente à [chamada MAECI 2026–2027](https://www.esteri.it/it/servizi-opportunita/opportunita/borse-di-studio/per-cittadini-stranieri/borsestudio_stranieri/). `data/imports/universitaly-maeci-2026-10-21.json` registra esta **única chamada**, baseada no [edital em inglês](https://www.esteri.it/wp-content/uploads/2026/03/Bando-26-27-ENG.pdf) e na [lista oficial de países](https://www.esteri.it/wp-content/uploads/2026/03/Elenco-dei-paesi-ammissibili-List-of-eligible-countries.pdf). O Brasil aparece na lista, mas os demais requisitos individuais permanecem sujeitos ao edital. A candidatura encerrou em **26/03/2026, às 14h no horário italiano**; o registro aparece como fechado, não como bolsa aberta. O valor total é EUR 10.800 para as modalidades principais, ou EUR 3.600 para o curso de idioma/cultura italiana, sujeito às condições do edital. A modalidade de graduação convencional é apenas renovação. Uma edição futura não deve herdar prazo, valor ou elegibilidade automaticamente.
+
+Para reproduzir a importação: `npm run db:migrate` e `npm run data:import-universitaly-maeci -- data/imports/universitaly-maeci-2026-10-21.json`. O arquivo de dados é versionado; o filtro **Itália** também pode reunir resultados IEFA que indiquem explicitamente esse destino.
+
 ## Idioma dos dados de bolsas
 
 O conteúdo descritivo das bolsas no catálogo (título descritivo, resumo, critérios, área, nível, prazo e valor em texto) deve ser armazenado em **inglês**. Em novas coletas, quando a fonte apresentar esses campos em outro idioma, traduza-os para o inglês antes de importar; preserve a redação original no arquivo de coleta ou em campos de proveniência para permitir conferência com a fonte. Não traduza nomes próprios de programas, instituições, pessoas, siglas, URLs, moedas ou valores numéricos. Não infira requisitos ou altere o sentido de prazos e benefícios durante a tradução. Uma tradução não equivale à verificação de elegibilidade ou de abertura da bolsa.
