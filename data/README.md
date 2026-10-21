@@ -6,6 +6,16 @@ O conteúdo descritivo das bolsas no catálogo (título descritivo, resumo, crit
 
 Os lotes IEFA, Scholarship America, Study Australia e DAAD atualmente importados foram coletados de conteúdo em inglês. Acentos que aparecem em alguns registros pertencem principalmente a nomes próprios e termos citados pela fonte. A interface do buscador continua em português para os usuários brasileiros; esta regra se refere aos dados das oportunidades, não aos rótulos do site.
 
+## Administração pública da Espanha — bolsas coletadas em 21/10/2026
+
+`data/imports/spain-scholarships-2026-10-21.json` contém os **67 registros** classificados como `BECAS` na [busca avançada oficial](https://administracion.gob.es/ayudas/buscador-becas-avanzado), coletados pelo mesmo serviço público de resultados da página e conferidos nas fichas individuais. Os textos descritivos em espanhol foram traduzidos automaticamente para o inglês; o original permanece no JSON. A própria [ajuda do buscador](https://administracion.gob.es/en/ayudas/buscador/ayuda) diz que os dados são informativos e recomenda conferir a publicação oficial para evitar erros de transcrição e de prazos.
+
+Há 53 prazos de encerramento válidos informados, dos quais 3 já tinham passado na data da coleta. Uma ficha antiga informa o ano impossível **3017**: o valor original foi preservado, mas não é exibido como prazo futuro. As fichas não trazem um campo estruturado de valor total da bolsa; esse dado permanece desconhecido. Foram preservados 63 links diretos HTTPS para publicações oficiais. Três links de publicação são HTTP e ficam apenas no arquivo de proveniência, não como links de inscrição na interface.
+
+O filtro **Espanha** representa a origem do catálogo governamental, **não** confirma que o estudo ocorra na Espanha nem que brasileiros sejam elegíveis. A categoria `BECAS` inclui bolsas com exigências locais e chamadas antigas; listagem não significa inscrição aberta. Consulte a ficha e o edital vinculados antes de planejar uma candidatura.
+
+Para atualizar: `python scripts/scrape_spain_scholarships.py data/imports/spain-scholarships-AAAA-MM-DD.json`, depois `npm run db:migrate`, `npm run data:import-spain-administration -- data/imports/ARQUIVO.json` e `npm run data:verify-spain-administration -- data/imports/ARQUIVO.json`. O `.partial.json` guarda as fichas originais e traduções intermediárias e não deve ser importado.
+
 ## Study in Korea — bolsas de universidades coletadas em 21/10/2026
 
 `data/imports/study-korea-2026-10-21.json` reúne as **856 bolsas** da aba Scholarship da [busca oficial Study in Korea](https://www.studyinkorea.go.kr/ko/search_v1.do), distribuídas por 219 universidades. A coleta percorreu as nove páginas da lista e as fichas das universidades para obter, quando publicados, critérios, benefícios e auxílio financeiro. Há texto de benefício/auxílio em 750 fichas; 12 registros precisaram de tradução automática do coreano. O link individual aponta para a ficha da universidade com o identificador da bolsa. O filtro **Coreia do Sul** mostra esses registros.

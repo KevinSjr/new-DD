@@ -181,6 +181,24 @@ const catalog = `WITH catalog AS (
   FROM study_korea_imports k
   WHERE k.catalog_status = 'listed' AND ($2 = '' OR $2 = 'coreia-do-sul')
 
+  UNION ALL
+
+  SELECT 'spain_administration', s.source_id, s.title,
+    left(trim(concat_ws(' · ', nullif(s.organization, ''), nullif(s.geographic_scope, ''),
+      nullif(s.beneficiaries, ''))), 420),
+    'Administración.gob.es · tradução automática',
+    s.source_url, s.official_notice_url, s.fetched_at::text,
+    CASE WHEN s.deadline_end IS NOT NULL THEN to_char(s.deadline_end, 'DD/MM/YYYY') ELSE NULL END,
+    left(nullif(s.amount_detail, ''), 500),
+    CASE WHEN s.deadline_invalid THEN 'Prazo inválido na fonte; confira o edital'
+      WHEN s.deadline_end < CURRENT_DATE THEN 'Prazo divulgado já passou; nova edição não confirmada'
+      ELSE 'Abertura não verificada; confira o edital' END,
+    'Elegibilidade brasileira não confirmada; confira os beneficiários e o edital',
+    NULL, NULL, NULL, NULL,
+    'Portal público espanhol; âmbito geográfico não comprova destino do estudo'
+  FROM spain_administration_imports s
+  WHERE s.catalog_status = 'listed' AND ($2 = '' OR $2 = 'espanha')
+
 )`
 
 export async function scholarshipCatalog(pool, params) {
