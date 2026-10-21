@@ -253,6 +253,19 @@ const catalog = `WITH catalog AS (
   FROM study_in_sweden_imports s
   WHERE s.catalog_status = 'listed' AND ($2 = '' OR $2 = 'suecia')
 
+  UNION ALL
+
+  SELECT 'efg_finland', e.source_id::text, e.title, left(e.summary, 420),
+    'European Funding Guide · Finland', e.source_url, e.provider_url, e.fetched_at::text,
+    CASE WHEN e.deadline_date IS NOT NULL THEN to_char(e.deadline_date, 'DD/MM/YYYY') ELSE NULL END,
+    left(e.amount_detail, 500),
+    CASE WHEN e.deadline_date < CURRENT_DATE THEN 'Prazo da edição informada encerrado; próxima edição não verificada'
+      ELSE 'Abertura e prazo atual não verificados' END,
+    e.brazil_criteria, e.field_of_study, e.nationality_listing, e.destinations,
+    e.study_level, e.country_basis
+  FROM efg_finland_imports e
+  WHERE e.catalog_status = 'listed' AND ($2 = '' OR $2 = 'finlandia')
+
 )`
 
 export async function scholarshipCatalog(pool, params) {

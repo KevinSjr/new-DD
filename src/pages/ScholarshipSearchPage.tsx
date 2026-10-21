@@ -5,7 +5,7 @@ import './ScholarshipSearchPage.css'
 
 type Country = { slug: string; name: string }
 type Scholarship = {
-  source: 'verified' | 'iefa' | 'scholarship_america' | 'study_australia' | 'daad' | 'campusbourses' | 'study_japan' | 'scholarship_china' | 'study_korea' | 'spain_administration' | 'universitaly_maeci' | 'swiss_excellence' | 'study_in_sweden'; source_id: string; title: string;
+  source: 'verified' | 'iefa' | 'scholarship_america' | 'study_australia' | 'daad' | 'campusbourses' | 'study_japan' | 'scholarship_china' | 'study_korea' | 'spain_administration' | 'universitaly_maeci' | 'swiss_excellence' | 'study_in_sweden' | 'efg_finland'; source_id: string; title: string;
   description: string; source_label: string; source_url: string; application_url: string | null;
   observed_at: string; deadline: string | null; amount: string | null; source_status: string;
   brazil_criteria: string; field_of_study: string | null; nationality: string | null;
@@ -55,6 +55,7 @@ const sourceName: Record<Scholarship['source'], string> = {
   universitaly_maeci: 'Governo italiano · MAECI',
   swiss_excellence: 'Governo suíço · FCS',
   study_in_sweden: 'Study in Sweden · catálogo',
+  efg_finland: 'European Funding Guide · Finlândia',
 }
 const observedDate = (value: string) => {
   const date = value.slice(0, 10).split('-')
@@ -78,7 +79,7 @@ function ScholarshipCard({ scholarship }: { scholarship: Scholarship }) {
     </dl>
     <p className="sch-search__source">{scholarship.country_basis}. Fonte: {scholarship.source_label} · {scholarship.source === 'verified' ? 'verificada' : 'coletada'} em {observedDate(scholarship.observed_at)}. Confirme prazo e elegibilidade na página original.</p>
     <div className="sch-search__links"><a className="sch-search__action" href={scholarship.source_url} target="_blank" rel="noreferrer">{scholarship.source === 'study_in_sweden' ? 'Ver listagem original' : 'Ver página da bolsa'} <span aria-hidden="true">↗</span></a>
-      {scholarship.application_url && <a className="sch-search__action" href={scholarship.application_url} target="_blank" rel="noreferrer">{scholarship.source === 'spain_administration' ? 'Ver publicação oficial' : scholarship.source === 'study_in_sweden' ? 'Ver página do provedor' : 'Consultar inscrição'} <span aria-hidden="true">↗</span></a>}</div>
+      {scholarship.application_url && <a className="sch-search__action" href={scholarship.application_url} target="_blank" rel="noreferrer">{scholarship.source === 'spain_administration' ? 'Ver publicação oficial' : (scholarship.source === 'study_in_sweden' || scholarship.source === 'efg_finland') ? 'Ver página do provedor' : 'Consultar inscrição'} <span aria-hidden="true">↗</span></a>}</div>
   </li>
 }
 
@@ -132,6 +133,7 @@ export function ScholarshipSearchPage() {
       {country === 'italia' && <p className="sch-search__country-note">Itália inclui uma chamada MAECI 2026–2027 vinculada pelo Universitaly. <strong>O prazo desta edição já terminou</strong>. O Brasil aparece na lista oficial de países, mas a candidatura depende de todos os requisitos do edital; não há nova edição confirmada aqui.</p>}
       {country === 'suica' && <p className="sch-search__country-note">Suíça inclui as modalidades Pesquisa e Doutorado da bolsa federal 2027–2028, listadas para candidaturas do Brasil. <strong>Prazo divulgado: 27/10/2026, às 23h59 no horário suíço.</strong> A quantia divulgada é mensal, não o valor total; é preciso atender aos requisitos e obter apoio de um orientador na Suíça. A modalidade de Artes não consta da lista para o Brasil.</p>}
       {country === 'suecia' && <p className="sch-search__country-note">Suécia reúne registros da listagem Study in Sweden: bolsas universitárias, do Swedish Institute e de outras organizações. Muitos links levam a páginas gerais, e alguns programas externos <strong>não confirmam a Suécia como destino</strong>. A menção ao Brasil ou à categoria “fora da União Europeia” não confirma elegibilidade individual. Prazo, valor e abertura precisam ser conferidos no provedor.</p>}
+      {country === 'finlandia' && <p className="sch-search__country-note">Finlândia inclui cinco fichas públicas da seção de estudos na Finlândia do European Funding Guide. A lista completa anunciada pela fonte exige cadastro e não foi coletada. <strong>Alguns apoios exigem vínculo prévio com instituição finlandesa; um também permite pesquisa fora do país.</strong> A página informa quando a nacionalidade brasileira não basta ou quando um prazo de 2026 já passou.</p>}
       {country === 'china' && <p className="sch-search__country-note">China reúne programas com bolsa listados no ScholarshipChina e registros IEFA que indicam esse destino. O ScholarshipChina é uma plataforma de candidatura, não um edital governamental: <strong>mensalidade reduzida ou zerada não significa bolsa em dinheiro</strong>. A ficha pode cobrar taxas de candidatura e serviço e trazer restrições de nacionalidade. Confira esses custos, as condições, o prazo e a elegibilidade antes de se candidatar.</p>}
       <section className="sch-search__results" aria-labelledby="sch-search-results-title">
         <div className="sch-search__heading"><div><p className="sch-search__eyebrow">Resultados</p><h2 id="sch-search-results-title">Bolsas para explorar</h2></div>

@@ -34,6 +34,7 @@
     "data:import-swiss-excellence": "node --env-file=.env.local scripts/import_swiss_excellence.mjs",
     "data:scrape-study-in-sweden": "node scripts/scrape_study_in_sweden.mjs",
     "data:import-study-in-sweden": "node --env-file=.env.local scripts/import_study_in_sweden.mjs",
+    "data:import-efg-finland": "node --env-file=.env.local scripts/import_efg_finland.mjs",
     "data:verify-iefa": "node --env-file=.env.local scripts/verify_iefa_import.mjs",
     "admin:hash": "node scripts/hash_admin_password.mjs",
     "preview": "vite preview"
