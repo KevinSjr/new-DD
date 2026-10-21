@@ -1,5 +1,19 @@
 # QS World University Rankings 2027 — extração local
 
+## Idioma dos dados de bolsas
+
+O conteúdo descritivo das bolsas no catálogo (título descritivo, resumo, critérios, área, nível, prazo e valor em texto) deve ser armazenado em **inglês**. Em novas coletas, quando a fonte apresentar esses campos em outro idioma, traduza-os para o inglês antes de importar; preserve a redação original no arquivo de coleta ou em campos de proveniência para permitir conferência com a fonte. Não traduza nomes próprios de programas, instituições, pessoas, siglas, URLs, moedas ou valores numéricos. Não infira requisitos ou altere o sentido de prazos e benefícios durante a tradução. Uma tradução não equivale à verificação de elegibilidade ou de abertura da bolsa.
+
+Os lotes IEFA, Scholarship America, Study Australia e DAAD atualmente importados foram coletados de conteúdo em inglês. Acentos que aparecem em alguns registros pertencem principalmente a nomes próprios e termos citados pela fonte. A interface do buscador continua em português para os usuários brasileiros; esta regra se refere aos dados das oportunidades, não aos rótulos do site.
+
+## CampusBourses — catálogo coletado em 20/10/2026
+
+`data/imports/campusbourses-2026-10-20.json` reúne 378 programas da [base CampusBourses](https://campusbourses.campusfrance.org/#/catalog), pelo endpoint público usado pelo próprio site. A coleta usa a versão inglesa quando existe; para os 20 programas sem essa versão, traduz título, resumo e texto de valor automaticamente para o inglês e preserva os textos originais no JSON. Traduções automáticas são identificadas no buscador e devem ser confirmadas na fonte antes de embasar uma candidatura. O Brasil aparece no filtro de nacionalidade de 18 programas.
+
+O filtro **França** identifica a origem do catálogo, não confirma que cada bolsa financie estudos na França. O campo de países da fonte corresponde ao filtro de nacionalidade, não ao destino. Em 20/10/2026, 361 programas exibiam prazo já passado e apenas 17 uma data posterior ou igual; uma bolsa continuar listada não significa que esteja aberta. O buscador marca explicitamente os prazos passados. Valores informados podem descrever parcelas ou benefícios, não necessariamente o valor total da bolsa. A presença do Brasil na listagem tampouco confirma elegibilidade individual.
+
+Para atualizar: `python scripts/scrape_campusbourses.py data/imports/campusbourses-AAAA-MM-DD.json`, depois `npm run db:migrate`, `npm run data:import-campusbourses -- data/imports/ARQUIVO.json` e `npm run data:verify-campusbourses -- data/imports/ARQUIVO.json`. A tradução automática usa um serviço externo; se ele falhar, a coleta é interrompida em vez de importar texto não traduzido como inglês.
+
 ## DAAD — base de bolsas coletada em 20/10/2026
 
 `data/imports/daad-2026-10-20.json` preserva os 148 programas únicos da [base de bolsas DAAD](https://www2.daad.de/deutschland/stipendium/datenbank/en/21148-scholarship-database/) nesta data. A coleta usou os arquivos de dados carregados pela própria página e os links individuais de detalhes. Dos 148 registros, 61 são programas do DAAD e os demais pertencem a outras organizações listadas na base; 81 incluem o Brasil no filtro de **país de candidatura**, 85 trazem informação de valor e 122 trazem alguma orientação de prazo. Dois IDs antigos de países presentes nos programas já não aparecem na lista de opções atual; seus nomes não foram inferidos. Todos foram importados para `daad_imports` como `catalog_status = 'listed'`.

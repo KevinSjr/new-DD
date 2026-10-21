@@ -20,6 +20,8 @@
     "data:verify-study-australia": "node --env-file=.env.local scripts/verify_study_australia_import.mjs",
     "data:import-daad": "node --env-file=.env.local scripts/import_daad.mjs",
     "data:verify-daad": "node --env-file=.env.local scripts/verify_daad_import.mjs",
+    "data:import-campusbourses": "node --env-file=.env.local scripts/import_campusbourses.mjs",
+    "data:verify-campusbourses": "node --env-file=.env.local scripts/verify_campusbourses_import.mjs",
     "data:verify-iefa": "node --env-file=.env.local scripts/verify_iefa_import.mjs",
     "admin:hash": "node scripts/hash_admin_password.mjs",
     "preview": "vite preview"

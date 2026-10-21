@@ -101,6 +101,24 @@ const catalog = `WITH catalog AS (
   FROM daad_imports d
   WHERE d.catalog_status = 'listed' AND ($2 = '' OR $2 = 'alemanha')
 
+  UNION ALL
+
+  SELECT 'campusbourses', c.source_id::text, c.title, left(c.description_excerpt, 420),
+    CASE WHEN c.translation_method = 'machine' THEN 'CampusBourses · tradução automática'
+      ELSE 'CampusBourses' END,
+    c.source_url, NULL, c.fetched_at::text,
+    CASE WHEN c.deadline_date IS NOT NULL THEN to_char(c.deadline_date, 'DD/MM/YYYY') ELSE NULL END,
+    left(nullif(c.amount_detail, ''), 500),
+    CASE WHEN c.deadline_date < CURRENT_DATE THEN 'Prazo informado pela fonte já passou; edição atual não verificada'
+      ELSE 'Abertura não verificada; confira o prazo na fonte' END,
+    CASE WHEN c.brazil_listed THEN 'Brasil listado; demais critérios não verificados'
+      ELSE 'Brasil não listado; elegibilidade não verificada' END,
+    nullif(c.fields_of_study, ''), nullif(c.nationality_listing, ''), NULL,
+    nullif(c.study_levels, ''),
+    'Catálogo CampusBourses; destino de estudo não confirmado individualmente'
+  FROM campusbourses_imports c
+  WHERE c.catalog_status = 'listed' AND ($2 = '' OR $2 = 'franca')
+
 )`
 
 export async function scholarshipCatalog(pool, params) {
