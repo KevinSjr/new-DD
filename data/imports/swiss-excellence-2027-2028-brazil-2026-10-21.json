@@ -1,0 +1,42 @@
+{
+  "source": "swiss_excellence",
+  "listing_url": "https://www.sbfi.admin.ch/en/swiss-government-excellence-scholarships-at-a-glance",
+  "fetched_at": "2026-10-21T19:22:49Z",
+  "reported_total": 2,
+  "records": [
+    {
+      "id": "research-fellowship-2027-2028-brazil",
+      "title": "Swiss Government Excellence Scholarships — Research Fellowship 2027–2028",
+      "summary": "Full-time research in Switzerland for early-career researchers pursuing a PhD outside Switzerland. A Swiss academic supervisor and a detailed research plan are required. A master's degree or equivalent must be completed by 31 July 2027 (30 June 2027 for ETH Zurich). The 2027–2028 country list offers this scholarship type to applicants from Brazil.",
+      "edition": "2027–2028",
+      "source_url": "https://www.sbfi.admin.ch/en/swiss-government-excellence-scholarships-at-a-glance#Research-scholarships",
+      "country_details_url": "https://www.sbfi.admin.ch/dam/en/sd-web/0pLGIOBtvEBW/2026-09-01_Central_and_Latin_America_List_of_countries_and_territories_complete.pdf",
+      "application_url": "https://www.go.eskas.ch/BewerbungServlet?aust_prog=CHECK&identifier=SBFI&kz_bew_art=IN&kz_bew_pers=S&onlyEligibilityCheck=ELIG_CHECK_SUCCESS&sprache=en",
+      "opening_date": "2026-08-20",
+      "deadline_date": "2026-10-27",
+      "deadline_timezone": "23:59 Swiss local time",
+      "amount_monthly_chf": 2450,
+      "duration": "6–12 months; no extension",
+      "study_level": "Doctoral research fellowship",
+      "field_of_study": "All academic fields",
+      "brazil_listed": true
+    },
+    {
+      "id": "phd-2027-2028-brazil",
+      "title": "Swiss Government Excellence Scholarships — PhD Scholarship 2027–2028",
+      "summary": "Full-time PhD research at a Swiss university or recognised research institute. A Swiss academic supervisor, a detailed research plan and a master's degree or equivalent are required. The 2027–2028 country list offers this scholarship type to applicants from Brazil.",
+      "edition": "2027–2028",
+      "source_url": "https://www.sbfi.admin.ch/en/swiss-government-excellence-scholarships-at-a-glance#Research-scholarships",
+      "country_details_url": "https://www.sbfi.admin.ch/dam/en/sd-web/0pLGIOBtvEBW/2026-09-01_Central_and_Latin_America_List_of_countries_and_territories_complete.pdf",
+      "application_url": "https://www.go.eskas.ch/BewerbungServlet?aust_prog=CHECK&identifier=SBFI&kz_bew_art=IN&kz_bew_pers=S&onlyEligibilityCheck=ELIG_CHECK_SUCCESS&sprache=en",
+      "opening_date": "2026-08-20",
+      "deadline_date": "2026-10-27",
+      "deadline_timezone": "23:59 Swiss local time",
+      "amount_monthly_chf": 2450,
+      "duration": "12 months; renewable twice up to 36 months, subject to academic progress",
+      "study_level": "PhD",
+      "field_of_study": "All academic fields",
+      "brazil_listed": true
+    }
+  ]
+}

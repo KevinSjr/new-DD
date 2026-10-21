@@ -216,6 +216,23 @@ const catalog = `WITH catalog AS (
   FROM italy_maeci_imports m
   WHERE m.catalog_status = 'listed' AND ($2 = '' OR $2 = 'italia')
 
+  UNION ALL
+
+  SELECT 'swiss_excellence', s.source_id, s.title, left(s.summary, 420),
+    'Swiss SERI / FCS', s.source_url, s.application_url, s.fetched_at::text,
+    to_char(s.deadline_date, 'DD/MM/YYYY') || ' · ' || s.deadline_timezone,
+    'CHF ' || s.amount_monthly_chf::text || ' per month; ' || s.duration,
+    CASE WHEN s.deadline_date < CURRENT_DATE THEN 'Prazo da edição ' || s.edition || ' encerrado'
+      WHEN s.opening_date <= CURRENT_DATE THEN 'Inscrições abertas segundo o calendário oficial; confirme no portal'
+      ELSE 'Abertura prevista para ' || to_char(s.opening_date, 'DD/MM/YYYY') || '; confirme na fonte' END,
+    CASE WHEN s.brazil_listed THEN 'Modalidade listada para o Brasil; requisitos individuais ainda se aplicam'
+      ELSE 'Modalidade não listada para o Brasil' END,
+    s.field_of_study, CASE WHEN s.brazil_listed THEN 'Brazil' ELSE NULL END,
+    'Switzerland', s.study_level,
+    'Bolsa federal suíça; prazo e tipos disponíveis específicos para candidatos do Brasil'
+  FROM swiss_excellence_imports s
+  WHERE s.catalog_status = 'listed' AND ($2 = '' OR $2 = 'suica')
+
 )`
 
 export async function scholarshipCatalog(pool, params) {

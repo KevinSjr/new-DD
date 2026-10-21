@@ -1,5 +1,13 @@
 # QS World University Rankings 2027 — extração local
 
+## Bolsas de Excelência do Governo Suíço 2027–2028 — Brasil
+
+`data/imports/swiss-excellence-2027-2028-brazil-2026-10-21.json` registra as duas modalidades — **Research Fellowship** e **PhD Scholarship** — da [página oficial da Secretaria de Estado suíça para Educação, Pesquisa e Inovação (SERI)](https://www.sbfi.admin.ch/en/swiss-government-excellence-scholarships-at-a-glance) que constam para o Brasil na [lista oficial da América do Sul](https://www.sbfi.admin.ch/dam/en/sd-web/0pLGIOBtvEBW/2026-09-01_Central_and_Latin_America_List_of_countries_and_territories_complete.pdf). O prazo para candidatos do Brasil é **27/10/2026, às 23h59 no horário local da Suíça**; a abertura indicada é 20/08/2026. A bolsa informa **CHF 2.450 por mês**, não um valor total garantido, e não cobre taxas universitárias. A duração e possibilidade de renovação diferem entre as modalidades. O valor e a lista de países foram verificados em 21/10/2026.
+
+Ambas exigem orientador acadêmico na Suíça e demais condições da edição. **Artes** aparece no guia geral, mas não na linha do Brasil da lista de países; por isso não foi importada como oportunidade para brasileiros. Também não foi incluída uma bolsa de pós-doutorado, que não consta das modalidades brasileiras para 2027–2028. A listagem por país não é garantia de elegibilidade individual ou de aprovação. A candidatura é feita pelo [portal GO ESKAS](https://www.go.eskas.ch/BewerbungServlet?aust_prog=CHECK&identifier=SBFI&kz_bew_art=IN&kz_bew_pers=S&onlyEligibilityCheck=ELIG_CHECK_SUCCESS&sprache=en).
+
+Para reproduzir: `npm run db:migrate` e `npm run data:import-swiss-excellence -- data/imports/swiss-excellence-2027-2028-brazil-2026-10-21.json`. O filtro **Suíça** combina essas modalidades com registros IEFA que listem explicitamente esse destino. Para uma edição futura, confirme novamente modalidades por país, prazo, valores e critérios; não reutilize estes dados automaticamente.
+
 ## Universitaly / MAECI — Itália, verificação em 21/10/2026
 
 A [página de bolsas do Universitaly](https://www.universitaly.it/en/borse-studio) é um guia, não um catálogo de editais individuais. Sua [página de bolsas das universidades](https://www.universitaly.it/en/borse-studio/atenei) informa ausência de editais em todas as 20 regiões na data da verificação. O mapa de entes regionais é um diretório de instituições, não uma lista de bolsas individuais. Portanto, nenhum desses itens foi fabricado como bolsa.
