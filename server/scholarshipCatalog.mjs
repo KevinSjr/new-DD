@@ -304,6 +304,28 @@ const catalog = `WITH catalog AS (
   FROM global_admissions_belgium_imports g
   WHERE g.catalog_status = 'listed' AND ($2 = '' OR $2 = 'belgica')
 
+  UNION ALL
+
+  SELECT 'scholarshipsads_norway', n.source_id, n.title,
+    left(coalesce(n.summary, ''), 420),
+    'ScholarshipsAds · Norway', n.source_url, NULL::text, n.fetched_at::text,
+    CASE WHEN n.deadline_date_listing IS NOT NULL THEN
+      to_char(n.deadline_date_listing, 'DD/MM/YYYY') || ' (edição listada)'
+      ELSE NULL END,
+    n.amount_listing,
+    CASE WHEN n.deadline_date_listing < CURRENT_DATE THEN
+      'Prazo da edição listada encerrado; reabertura não confirmada'
+      WHEN n.deadline_date_listing IS NOT NULL THEN
+      'Prazo listado pela plataforma; abertura não verificada'
+      ELSE 'Prazo e abertura não confirmados' END,
+    CASE WHEN n.nationality_listing ILIKE '%International Students%' THEN
+      'Estudantes internacionais na listagem; Brasil não confirmado individualmente'
+      ELSE 'Brasil não confirmado nos critérios listados' END,
+    n.field_of_study, n.nationality_listing, n.destinations, n.study_level,
+    'Noruega listada pela plataforma; confira edital oficial e destino específico'
+  FROM scholarshipsads_norway_imports n
+  WHERE n.catalog_status = 'listed' AND ($2 = '' OR $2 = 'noruega')
+
 )`
 
 export async function scholarshipCatalog(pool, params) {

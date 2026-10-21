@@ -5,7 +5,7 @@ import './ScholarshipSearchPage.css'
 
 type Country = { slug: string; name: string }
 type Scholarship = {
-  source: 'verified' | 'iefa' | 'scholarship_america' | 'study_australia' | 'daad' | 'campusbourses' | 'study_japan' | 'scholarship_china' | 'study_korea' | 'spain_administration' | 'universitaly_maeci' | 'swiss_excellence' | 'study_in_sweden' | 'efg_finland' | 'efg_denmark' | 'global_admissions_belgium'; source_id: string; title: string;
+  source: 'verified' | 'iefa' | 'scholarship_america' | 'study_australia' | 'daad' | 'campusbourses' | 'study_japan' | 'scholarship_china' | 'study_korea' | 'spain_administration' | 'universitaly_maeci' | 'swiss_excellence' | 'study_in_sweden' | 'efg_finland' | 'efg_denmark' | 'global_admissions_belgium' | 'scholarshipsads_norway'; source_id: string; title: string;
   description: string; source_label: string; source_url: string; application_url: string | null;
   observed_at: string; deadline: string | null; amount: string | null; source_status: string;
   brazil_criteria: string; field_of_study: string | null; nationality: string | null;
@@ -58,6 +58,7 @@ const sourceName: Record<Scholarship['source'], string> = {
   efg_finland: 'European Funding Guide · Finlândia',
   efg_denmark: 'European Funding Guide · Dinamarca',
   global_admissions_belgium: 'Global Admissions · Bélgica',
+  scholarshipsads_norway: 'ScholarshipsAds · Noruega',
 }
 const observedDate = (value: string) => {
   const date = value.slice(0, 10).split('-')
