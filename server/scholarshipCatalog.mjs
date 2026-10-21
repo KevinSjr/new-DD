@@ -138,6 +138,31 @@ const catalog = `WITH catalog AS (
   FROM study_japan_imports j
   WHERE j.catalog_status = 'listed' AND ($2 = '' OR $2 = 'japao')
 
+  UNION ALL
+
+  SELECT 'scholarship_china', c.source_id, c.title,
+    left(trim(concat_ws(' · ', nullif(c.institution, ''),
+      CASE WHEN c.city <> '' THEN c.city || COALESCE(', ' || nullif(c.province, ''), '') END,
+      CASE WHEN c.intake_year IS NOT NULL THEN c.intake_year::text || ' ' || c.intake_season END,
+      CASE WHEN c.teaching_language <> '' THEN 'Teaching language: ' || c.teaching_language END)), 420),
+    CASE WHEN c.english_excerpt THEN 'ScholarshipChina · título em inglês da fonte'
+      ELSE 'ScholarshipChina · catálogo de programas' END,
+    c.source_url, NULL, c.fetched_at::text,
+    nullif(c.deadline_text, ''),
+    left(nullif(concat_ws('; ',
+      CASE WHEN c.tuition_after_scholarship <> '' THEN 'Tuition after scholarship: ' || c.tuition_after_scholarship ||
+        COALESCE(NULLIF(' ' || c.tuition_after_unit, ' '), '') END,
+      CASE WHEN c.regular_tuition <> '' THEN 'Regular tuition listed: ' || c.regular_tuition ||
+        COALESCE(NULLIF(' ' || c.regular_tuition_unit, ' '), '') END,
+      CASE WHEN c.accommodation_after_scholarship <> '' THEN 'Accommodation after scholarship: ' || c.accommodation_after_scholarship END), ''), 500),
+    CASE WHEN c.deadline_date < CURRENT_DATE THEN 'Prazo informado pela fonte já passou; edição atual não verificada'
+      ELSE 'Abertura não verificada; confira taxas e condições na fonte' END,
+    'Nacionalidade e elegibilidade brasileira não verificadas na listagem',
+    nullif(c.field_of_study, ''), NULL, 'China', nullif(c.study_level, ''),
+    'Programa em instituição chinesa; benefício e taxas sujeitos à confirmação na ficha'
+  FROM scholarship_china_imports c
+  WHERE c.catalog_status = 'listed' AND ($2 = '' OR $2 = 'china')
+
 )`
 
 export async function scholarshipCatalog(pool, params) {

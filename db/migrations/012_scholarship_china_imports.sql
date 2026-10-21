@@ -1,0 +1,28 @@
+CREATE TABLE scholarship_china_imports (
+  source_id text PRIMARY KEY CHECK (source_id ~ '^[0-9]+$'),
+  source_url text NOT NULL UNIQUE CHECK (source_url ~ '^https://scholarshipchina\.com/scholarship/details\?id=[0-9]+$'),
+  title text NOT NULL,
+  program_id text NOT NULL DEFAULT '',
+  institution text NOT NULL DEFAULT '',
+  city text NOT NULL DEFAULT '',
+  province text NOT NULL DEFAULT '',
+  field_of_study text NOT NULL DEFAULT '',
+  study_level text NOT NULL DEFAULT '',
+  teaching_language text NOT NULL DEFAULT '',
+  intake_year integer,
+  intake_season text NOT NULL DEFAULT '',
+  scholarship_type text NOT NULL DEFAULT '',
+  regular_tuition text NOT NULL DEFAULT '',
+  tuition_after_scholarship text NOT NULL DEFAULT '',
+  regular_tuition_unit text NOT NULL DEFAULT '',
+  tuition_after_unit text NOT NULL DEFAULT '',
+  accommodation_after_scholarship text NOT NULL DEFAULT '',
+  deadline_text text NOT NULL DEFAULT '',
+  deadline_date date,
+  english_excerpt boolean NOT NULL DEFAULT false,
+  fetched_at timestamptz NOT NULL,
+  catalog_status text NOT NULL DEFAULT 'listed' CHECK (catalog_status IN ('listed', 'reviewed', 'rejected')),
+  created_at timestamptz NOT NULL DEFAULT now(),
+  updated_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX scholarship_china_imports_catalog_idx ON scholarship_china_imports (catalog_status, fetched_at DESC);

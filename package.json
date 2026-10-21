@@ -24,6 +24,8 @@
     "data:verify-campusbourses": "node --env-file=.env.local scripts/verify_campusbourses_import.mjs",
     "data:import-study-japan": "node --env-file=.env.local scripts/import_study_japan.mjs",
     "data:verify-study-japan": "node --env-file=.env.local scripts/verify_study_japan_import.mjs",
+    "data:import-scholarship-china": "node --env-file=.env.local scripts/import_scholarship_china.mjs",
+    "data:verify-scholarship-china": "node --env-file=.env.local scripts/verify_scholarship_china_import.mjs",
     "data:verify-iefa": "node --env-file=.env.local scripts/verify_iefa_import.mjs",
     "admin:hash": "node scripts/hash_admin_password.mjs",
     "preview": "vite preview"
