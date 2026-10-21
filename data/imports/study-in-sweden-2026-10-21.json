@@ -1,0 +1,763 @@
+{
+  "source": "study_in_sweden",
+  "listing_url": "https://studyinsweden.se/scholarships/",
+  "fetched_at": "2026-10-21T21:18:50.195Z",
+  "reported_total": 60,
+  "records": [
+    {
+      "id": "4832",
+      "title": "BTH Scholarships",
+      "category": "University scholarships",
+      "university": "Blekinge Institute of Technology",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.bth.se/english/education/application-and-admission/scholarships",
+      "provider_url": "https://www.bth.se/english/education/application-and-admission/scholarships",
+      "source_modified_at": "2026-04-09T09:17:03Z"
+    },
+    {
+      "id": "4833",
+      "title": "Chalmers University of Technology scholarships",
+      "category": "University scholarships",
+      "university": "Chalmers University of Technology",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "http://www.chalmers.se/en/education/fees-finance/Pages/scholarships.aspx",
+      "provider_url": "https://www.chalmers.se/en/education/fees-finance/Pages/scholarships.aspx",
+      "source_modified_at": "2020-06-04T18:43:50Z"
+    },
+    {
+      "id": "4834",
+      "title": "Dalarna University scholarships",
+      "category": "University scholarships",
+      "university": "Dalarna University",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.du.se/scholarships",
+      "provider_url": "https://www.du.se/scholarships",
+      "source_modified_at": "2026-05-05T14:54:14Z"
+    },
+    {
+      "id": "4835",
+      "title": "Halmstad University scholarships",
+      "category": "University scholarships",
+      "university": "Halmstad University",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.hh.se/english/education/apply-to-halmstad-university/scholarships.html",
+      "provider_url": "https://www.hh.se/english/education/apply-to-halmstad-university/scholarships.html",
+      "source_modified_at": "2020-06-04T18:43:32Z"
+    },
+    {
+      "id": "4836",
+      "title": "Jönköping University scholarships",
+      "category": "University scholarships",
+      "university": "Jönköping University",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://ju.se/en/study-at-ju/admissions/scholarships.html",
+      "provider_url": "https://ju.se/en/study-at-ju/admissions/scholarships.html",
+      "source_modified_at": "2020-09-01T12:06:18Z"
+    },
+    {
+      "id": "4837",
+      "title": "Karlstad University scholarships",
+      "category": "University scholarships",
+      "university": "Karlstad University",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.kau.se/en/education/explore-student-life/application-admission/scholarships",
+      "provider_url": "https://www.kau.se/en/education/explore-student-life/application-admission/scholarships",
+      "source_modified_at": "2020-06-04T18:43:12Z"
+    },
+    {
+      "id": "4838",
+      "title": "Karolinska Institutet scholarships",
+      "category": "University scholarships",
+      "university": "Karolinska Institutet",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://education.ki.se/scholarships",
+      "provider_url": "https://education.ki.se/scholarships",
+      "source_modified_at": "2020-06-04T18:43:01Z"
+    },
+    {
+      "id": "4839",
+      "title": "Kristianstad University scholarships",
+      "category": "University scholarships",
+      "university": "Kristianstad University",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.hkr.se/en/study-at-hkr/non-exchange-student/scholarship/",
+      "provider_url": "https://www.hkr.se/en/study-at-hkr/non-exchange-student/scholarship/",
+      "source_modified_at": "2020-06-04T18:42:51Z"
+    },
+    {
+      "id": "4840",
+      "title": "KTH Royal Institute of Technology scholarships",
+      "category": "University scholarships",
+      "university": "KTH Royal Institute of Technology",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.kth.se/en/student/stod/studier/stipendier/sok-stipendium/hur-du-soker-stipendium-1.1011018",
+      "provider_url": "https://www.kth.se/en/student/stod/studier/stipendier/sok-stipendium/hur-du-soker-stipendium-1.1011018",
+      "source_modified_at": "2025-03-18T09:34:12Z"
+    },
+    {
+      "id": "4841",
+      "title": "Linköping University scholarships",
+      "category": "University scholarships",
+      "university": "Linköping University",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://liu.se/en/article/scholarships",
+      "provider_url": "https://liu.se/en/article/scholarships",
+      "source_modified_at": "2020-06-04T18:42:27Z"
+    },
+    {
+      "id": "4842",
+      "title": "Linnaeus University scholarships",
+      "category": "University scholarships",
+      "university": "Linnaeus University",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://lnu.se/en/education/study-at-linnaeus-university/scholarships/",
+      "provider_url": "https://lnu.se/en/education/study-at-linnaeus-university/scholarships/",
+      "source_modified_at": "2020-06-04T18:42:17Z"
+    },
+    {
+      "id": "4843",
+      "title": "Luleå University of Technology scholarships",
+      "category": "University scholarships",
+      "university": "Luleå University of Technology",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.ltu.se/en/education/programme/tmeea-master-programme-in-electrification/scholarships",
+      "provider_url": "https://www.ltu.se/en/education/programme/tmeea-master-programme-in-electrification/scholarships",
+      "source_modified_at": "2024-09-25T08:04:19Z"
+    },
+    {
+      "id": "4844",
+      "title": "Lund University scholarships",
+      "category": "University scholarships",
+      "university": "Lund University",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.lunduniversity.lu.se/international-admissions/bachelors-masters-studies/scholarships-and-awards",
+      "provider_url": "https://www.lunduniversity.lu.se/international-admissions/bachelors-masters-studies/scholarships-and-awards",
+      "source_modified_at": "2020-06-04T18:41:58Z"
+    },
+    {
+      "id": "4845",
+      "title": "Malmö University scholarships",
+      "category": "University scholarships",
+      "university": "Malmö University",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://mau.se/en/education/scholarships/",
+      "provider_url": "https://mau.se/en/education/scholarships/",
+      "source_modified_at": "2020-06-04T18:41:48Z"
+    },
+    {
+      "id": "4846",
+      "title": "Mid Sweden University scholarships",
+      "category": "University scholarships",
+      "university": "Mid Sweden University",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.miun.se/en/education/programmes/Fees-and-scholarships/Scholarship/",
+      "provider_url": "https://www.miun.se/en/education/programmes/Fees-and-scholarships/Scholarship/",
+      "source_modified_at": "2020-06-04T18:41:35Z"
+    },
+    {
+      "id": "4847",
+      "title": "Mälardalen University scholarships",
+      "category": "University scholarships",
+      "university": "Mälardalen University",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.mdh.se/international/application-and-admission/malardalen-university-scholarship-programme",
+      "provider_url": "https://www.mdh.se/international/application-and-admission/malardalen-university-scholarship-programme",
+      "source_modified_at": "2020-06-04T18:41:23Z"
+    },
+    {
+      "id": "4848",
+      "title": "Swedish University of Agricultural Sciences scholarships",
+      "category": "University scholarships",
+      "university": "SLU – Swedish University of Agricultural Sciences",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.slu.se/en/education/application-and-admission/tuition-fees-and-scholarships/",
+      "provider_url": "https://www.slu.se/en/education/application-and-admission/tuition-fees-and-scholarships/",
+      "source_modified_at": "2020-06-04T18:41:10Z"
+    },
+    {
+      "id": "4849",
+      "title": "Stockholm School of Economics scholarships",
+      "category": "University scholarships",
+      "university": "Stockholm School of Economics",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.hhs.se/en/education/study-at-sse/tuition-and-fees/",
+      "provider_url": "https://www.hhs.se/en/education/study-at-sse/tuition-and-fees/",
+      "source_modified_at": "2020-06-04T18:41:01Z"
+    },
+    {
+      "id": "4850",
+      "title": "Stockholm University scholarships",
+      "category": "University scholarships",
+      "university": "Stockholm University",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.su.se/english/education/how-to-apply/fees-and-scholarships",
+      "provider_url": "https://www.su.se/english/education/how-to-apply/fees-and-scholarships",
+      "source_modified_at": "2020-06-04T18:40:50Z"
+    },
+    {
+      "id": "4851",
+      "title": "Södertörn University scholarships",
+      "category": "University scholarships",
+      "university": "Södertörn University",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.sh.se/english/sodertorn-university/student/prospective-students/scholarships",
+      "provider_url": "https://www.sh.se/english/sodertorn-university/student/prospective-students/scholarships",
+      "source_modified_at": "2020-06-04T18:38:33Z"
+    },
+    {
+      "id": "4852",
+      "title": "Umeå University scholarships",
+      "category": "University scholarships",
+      "university": "Umeå University",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.umu.se/en/education/fees-and-scholarships/scholarships/",
+      "provider_url": "https://www.umu.se/en/education/fees-and-scholarships/scholarships/",
+      "source_modified_at": "2020-06-04T18:38:24Z"
+    },
+    {
+      "id": "4853",
+      "title": "University of Borås scholarships",
+      "category": "University scholarships",
+      "university": "University of Borås",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.hb.se/en/International-Student/Fees-and-scholarships/Scholarships/",
+      "provider_url": "https://www.hb.se/en/International-Student/Fees-and-scholarships/Scholarships/",
+      "source_modified_at": "2020-06-04T18:38:12Z"
+    },
+    {
+      "id": "4854",
+      "title": "University of Gothenburg scholarships",
+      "category": "University scholarships",
+      "university": "University of Gothenburg",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.gu.se/en/study-in-gothenburg/apply/scholarships-for-fee-paying-students",
+      "provider_url": "https://www.gu.se/en/study-in-gothenburg/apply/scholarships-for-fee-paying-students",
+      "source_modified_at": "2020-09-03T12:26:48Z"
+    },
+    {
+      "id": "4855",
+      "title": "University of Gävle scholarships",
+      "category": "University scholarships",
+      "university": "University of Gävle",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://hig.se/Ext/En/University-of-Gavle/Education/Scholarships.html",
+      "provider_url": "https://hig.se/Ext/En/University-of-Gavle/Education/Scholarships.html",
+      "source_modified_at": "2020-06-04T18:37:48Z"
+    },
+    {
+      "id": "4856",
+      "title": "University of Skövde scholarships",
+      "category": "University scholarships",
+      "university": "University of Skövde",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.his.se/en/education/admission/scholarships/",
+      "provider_url": "https://www.his.se/en/education/admission/scholarships/",
+      "source_modified_at": "2020-06-04T18:37:37Z"
+    },
+    {
+      "id": "4857",
+      "title": "University West scholarships",
+      "category": "University scholarships",
+      "university": "University West",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.hv.se/en/education/degree-programmes/tuition-fees-and-scholarships/scholarships/",
+      "provider_url": "https://www.hv.se/en/education/degree-programmes/tuition-fees-and-scholarships/scholarships/",
+      "source_modified_at": "2020-06-04T18:37:26Z"
+    },
+    {
+      "id": "4858",
+      "title": "Uppsala University scholarships",
+      "category": "University scholarships",
+      "university": "Uppsala University",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.uu.se/en/admissions/scholarships/",
+      "provider_url": "https://www.uu.se/en/admissions/scholarships/",
+      "source_modified_at": "2020-06-04T18:37:16Z"
+    },
+    {
+      "id": "4859",
+      "title": "Örebro University scholarships",
+      "category": "University scholarships",
+      "university": "Örebro University",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.oru.se/english/study/master-students/scholarships/",
+      "provider_url": "https://www.oru.se/english/study/master-students/scholarships/",
+      "source_modified_at": "2020-06-04T18:37:03Z"
+    },
+    {
+      "id": "4860",
+      "title": "Rotary International district and global grants",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [],
+      "original_provider_url": "https://my.rotary.org/en/take-action/apply-grants",
+      "provider_url": "https://my.rotary.org/en/take-action/apply-grants",
+      "source_modified_at": "2020-05-26T19:18:00Z"
+    },
+    {
+      "id": "5010",
+      "title": "UNESCO Fellowships",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [],
+      "original_provider_url": "https://www.unesco.org/en/fellowships",
+      "provider_url": "https://www.unesco.org/en/fellowships",
+      "source_modified_at": "2022-05-23T09:11:14Z"
+    },
+    {
+      "id": "5017",
+      "title": "Educations.com “Study a Master’s in Europe” scholarship",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [],
+      "original_provider_url": "https://www.educations.com/scholarships/study-a-masters-in-europe-15211",
+      "provider_url": "https://www.educations.com/scholarships/study-a-masters-in-europe-15211",
+      "source_modified_at": "2020-05-30T09:15:30Z"
+    },
+    {
+      "id": "5020",
+      "title": "State Programme – Education of Azerbaijani Youth Abroad",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "Azerbaijan"
+      ],
+      "original_provider_url": "http://www.xaricdetehsil.edu.gov.az/",
+      "provider_url": null,
+      "source_modified_at": "2020-05-30T09:17:34Z"
+    },
+    {
+      "id": "5021",
+      "title": "Becas Chile scholarship programme",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "Chile"
+      ],
+      "original_provider_url": "https://www.conicyt.cl/becasconicyt/",
+      "provider_url": "https://www.conicyt.cl/becasconicyt/",
+      "source_modified_at": "2020-05-30T09:19:03Z"
+    },
+    {
+      "id": "5022",
+      "title": "Scholarships for International Commercial Arbitration Law at Stockholm University",
+      "category": "University scholarships",
+      "university": "Stockholm University",
+      "regions": [
+        "Not in European Union"
+      ],
+      "original_provider_url": "https://www.su.se/english/education/course-catalogue/ji/jic1m",
+      "provider_url": "https://www.su.se/english/education/course-catalogue/ji/jic1m",
+      "source_modified_at": "2026-05-05T15:23:55Z"
+    },
+    {
+      "id": "5024",
+      "title": "Colfuturo",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "Colombia"
+      ],
+      "original_provider_url": "https://www.colfuturo.org/",
+      "provider_url": "https://www.colfuturo.org/",
+      "source_modified_at": "2020-05-30T09:22:19Z"
+    },
+    {
+      "id": "5026",
+      "title": "The Foundation’s Educational Grants Scheme",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "Cyprus"
+      ],
+      "original_provider_url": "https://www.leventisscholarships.org/index.aspx",
+      "provider_url": "https://www.leventisscholarships.org/index.aspx",
+      "source_modified_at": "2020-05-30T09:23:31Z"
+    },
+    {
+      "id": "5028",
+      "title": "International Education Center (IEC) scholarships",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "Georgia"
+      ],
+      "original_provider_url": "http://iec.gov.ge/",
+      "provider_url": null,
+      "source_modified_at": "2020-05-30T09:28:12Z"
+    },
+    {
+      "id": "5029",
+      "title": "Indonesian Endowment Fund for Education (LPDP) programme",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "Indonesia"
+      ],
+      "original_provider_url": "https://lpdp.kemenkeu.go.id/en/",
+      "provider_url": "https://lpdp.kemenkeu.go.id/en/",
+      "source_modified_at": "2026-05-05T15:16:53Z"
+    },
+    {
+      "id": "5031",
+      "title": "Fondazione C.M. Lerici",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "Italy"
+      ],
+      "original_provider_url": "https://www.cmlerici.se/",
+      "provider_url": "https://www.cmlerici.se/",
+      "source_modified_at": "2026-05-05T15:17:40Z"
+    },
+    {
+      "id": "5032",
+      "title": "Bolashak International Scholarship",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "Kazakhstan"
+      ],
+      "original_provider_url": "https://www.bolashak.gov.kz/index.php/en/",
+      "provider_url": "https://www.bolashak.gov.kz/index.php/en/",
+      "source_modified_at": "2020-05-30T09:29:56Z"
+    },
+    {
+      "id": "5036",
+      "title": "The Nakajima Foundation",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "Japan"
+      ],
+      "original_provider_url": "http://www.nakajimafound.or.jp/",
+      "provider_url": null,
+      "source_modified_at": "2020-05-30T09:30:52Z"
+    },
+    {
+      "id": "5037",
+      "title": "Yoshida Scholarship Foundation",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "Japan"
+      ],
+      "original_provider_url": "http://www.ysf.or.jp/englishpage/index.html",
+      "provider_url": "https://www.ysf.or.jp/englishpage/index.html",
+      "source_modified_at": "2020-05-30T09:31:22Z"
+    },
+    {
+      "id": "5038",
+      "title": "Keidanren Ishizaka Memorial Foundation",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "Japan"
+      ],
+      "original_provider_url": "http://www.keidanren.or.jp/japanese/profile/ishizaka/",
+      "provider_url": "https://www.keidanren.or.jp/japanese/profile/ishizaka/",
+      "source_modified_at": "2020-05-30T09:31:52Z"
+    },
+    {
+      "id": "5039",
+      "title": "Japan Student Services Organization (JASSO)",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "Japan"
+      ],
+      "original_provider_url": "https://www.jasso.go.jp/en/",
+      "provider_url": "https://www.jasso.go.jp/en/",
+      "source_modified_at": "2020-05-30T09:32:18Z"
+    },
+    {
+      "id": "5040",
+      "title": "Japan Society for the Promotion of Science (JSPS)",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "Japan"
+      ],
+      "original_provider_url": "https://www.jsps.go.jp/english/e-c2c/index.html",
+      "provider_url": "https://www.jsps.go.jp/english/e-c2c/index.html",
+      "source_modified_at": "2020-05-30T09:32:43Z"
+    },
+    {
+      "id": "5041",
+      "title": "Canon Foundation in Europe",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "Japan"
+      ],
+      "original_provider_url": "https://www.canonfoundation.org/programmes/",
+      "provider_url": "https://www.canonfoundation.org/programmes/",
+      "source_modified_at": "2020-05-30T09:33:08Z"
+    },
+    {
+      "id": "5042",
+      "title": "The Swedish Foundation for International Cooperation in Research and Higher Education (STINT) with the Japan Society for the Promotion of Science (JSPS)",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "Japan"
+      ],
+      "original_provider_url": "https://www.jsps.go.jp/english/e-bilat/index.html",
+      "provider_url": "https://www.jsps.go.jp/english/e-bilat/index.html",
+      "source_modified_at": "2020-05-30T09:33:42Z"
+    },
+    {
+      "id": "5045",
+      "title": "Mexico-Suecia Linnaeus Palme",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "Mexico"
+      ],
+      "original_provider_url": "https://mxselinnaeus.com/programmes/sweden-for-mexican-students/",
+      "provider_url": "https://mxselinnaeus.com/programmes/sweden-for-mexican-students/",
+      "source_modified_at": "2020-05-30T09:35:45Z"
+    },
+    {
+      "id": "5046",
+      "title": "IFARHU scholarships",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "Panama"
+      ],
+      "original_provider_url": "https://www.ifarhu.gob.pa/",
+      "provider_url": "https://www.ifarhu.gob.pa/",
+      "source_modified_at": "2020-05-30T09:36:09Z"
+    },
+    {
+      "id": "5049",
+      "title": "St:Johannes Stipendiefond",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "Serbia"
+      ],
+      "original_provider_url": "https://www.sankt-johannes.se/index.php/stipendium",
+      "provider_url": "https://www.sankt-johannes.se/index.php/stipendium",
+      "source_modified_at": "2020-05-30T09:38:23Z"
+    },
+    {
+      "id": "5051",
+      "title": "American Scandinavian Foundation scholarship",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "United States"
+      ],
+      "original_provider_url": "http://www.amscan.org/fellowships-and-grants/",
+      "provider_url": "https://www.amscan.org/fellowships-and-grants/",
+      "source_modified_at": "2020-05-30T09:39:11Z"
+    },
+    {
+      "id": "5052",
+      "title": "Fulbright Scholarship",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "United States"
+      ],
+      "original_provider_url": "https://fulbrightscholars.org/",
+      "provider_url": "https://fulbrightscholars.org/",
+      "source_modified_at": "2026-05-05T15:02:30Z"
+    },
+    {
+      "id": "5053",
+      "title": "SWEA",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "United States"
+      ],
+      "original_provider_url": "https://swea.org/",
+      "provider_url": "https://swea.org/",
+      "source_modified_at": "2020-05-30T09:39:56Z"
+    },
+    {
+      "id": "5054",
+      "title": "American Women’s Club travel grant",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "United States"
+      ],
+      "original_provider_url": "https://awcstockholm.org/about/scholarship/",
+      "provider_url": "https://awcstockholm.org/about/scholarship/",
+      "source_modified_at": "2020-05-30T09:40:22Z"
+    },
+    {
+      "id": "5055",
+      "title": "The Society for the Advancement of Scandinavian Studies (SASS) – The Birgit Baldwin Fellowship in Scandinavian Studies",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "United States"
+      ],
+      "original_provider_url": "https://scandinavianstudy.org/awards-fellowships/",
+      "provider_url": "https://scandinavianstudy.org/awards-fellowships/",
+      "source_modified_at": "2020-05-30T09:40:53Z"
+    },
+    {
+      "id": "5056",
+      "title": "American Swedish Institute Scholarships",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "United States"
+      ],
+      "original_provider_url": "https://asimn.org/about/scholarships/",
+      "provider_url": "https://asimn.org/about/scholarships/",
+      "source_modified_at": "2026-05-05T14:57:52Z"
+    },
+    {
+      "id": "5057",
+      "title": "The Bicentennial Swedish-American Exchange Fund",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "United States"
+      ],
+      "original_provider_url": "https://1976fund.org/",
+      "provider_url": "https://1976fund.org/",
+      "source_modified_at": "2020-05-30T09:42:12Z"
+    },
+    {
+      "id": "5669",
+      "title": "Swedish Institute Scholarships for Global Professionals (SISGP)",
+      "category": "Swedish Institute scholarships",
+      "university": "",
+      "regions": [
+        "Armenia",
+        "Azerbaijan",
+        "Bangladesh",
+        "Belarus",
+        "Bolivia, Plurinational State of",
+        "Brazil",
+        "Colombia",
+        "Ecuador",
+        "Egypt",
+        "Ethiopia",
+        "Georgia",
+        "Guatemala",
+        "Indonesia",
+        "Iraq",
+        "Jordan",
+        "Kenya",
+        "Liberia",
+        "Malaysia",
+        "Mexico",
+        "Moldova, Republic of",
+        "Morocco",
+        "Nigeria",
+        "Peru",
+        "Philippines",
+        "Rwanda",
+        "Senegal",
+        "South Africa",
+        "Tanzania, United Republic of",
+        "Thailand",
+        "Uganda",
+        "Ukraine",
+        "Viet Nam",
+        "Zambia"
+      ],
+      "original_provider_url": "https://si.se/en/apply/scholarships/swedish-institute-scholarships-for-global-professionals/",
+      "provider_url": "https://si.se/en/apply/scholarships/swedish-institute-scholarships-for-global-professionals/",
+      "source_modified_at": "2025-10-13T12:13:12Z"
+    },
+    {
+      "id": "5695",
+      "title": "Konsumentrapporten Scholarship",
+      "category": "Other scholarships",
+      "university": "",
+      "regions": [
+        "Germany"
+      ],
+      "original_provider_url": "https://konsumentrapporten.se/scholarship/",
+      "provider_url": "https://konsumentrapporten.se/scholarship/",
+      "source_modified_at": "2020-06-22T12:11:45Z"
+    },
+    {
+      "id": "43789",
+      "title": "Pioneering Women in STEM",
+      "category": "Swedish Institute scholarships",
+      "university": "",
+      "regions": [
+        "Bangladesh",
+        "Indonesia",
+        "Kenya",
+        "Malaysia",
+        "Nigeria",
+        "Philippines",
+        "Rwanda",
+        "South Africa",
+        "Thailand",
+        "Viet Nam"
+      ],
+      "original_provider_url": "https://si.se/en/apply/scholarships/pioneeringwomeninstem/#:~:text=The%20SI%20scholarship%20Pioneering%20women%20in%20STEM%20is%20a%20competitive,expenses%20throughout%20the%20study%20period.",
+      "provider_url": "https://si.se/en/apply/scholarships/pioneeringwomeninstem/#:~:text=The%20SI%20scholarship%20Pioneering%20women%20in%20STEM%20is%20a%20competitive,expenses%20throughout%20the%20study%20period.",
+      "source_modified_at": "2024-11-04T14:47:32Z"
+    }
+  ]
+}

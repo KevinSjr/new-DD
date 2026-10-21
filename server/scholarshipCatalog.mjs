@@ -233,6 +233,26 @@ const catalog = `WITH catalog AS (
   FROM swiss_excellence_imports s
   WHERE s.catalog_status = 'listed' AND ($2 = '' OR $2 = 'suica')
 
+  UNION ALL
+
+  SELECT 'study_in_sweden', s.source_id::text, s.title,
+    left(trim(concat_ws(' · ', s.category, nullif(s.university, ''),
+      CASE WHEN s.regions_listing <> '' THEN 'Listed audience: ' || s.regions_listing END)), 420),
+    'Study in Sweden · catalog listing', 'https://studyinsweden.se/scholarships/',
+    s.provider_url, s.fetched_at::text, NULL, NULL,
+    'Listada no catálogo; abertura e prazo não verificados',
+    CASE WHEN s.regions_listing ILIKE '%Brazil%' THEN 'Brasil listado na origem; edição e demais critérios não verificados'
+      WHEN s.regions_listing ILIKE '%Not in European Union%' THEN 'Grupo fora da UE listado; Brasil não especificado individualmente'
+      ELSE 'Brasil não listado individualmente; elegibilidade não verificada' END,
+    NULL, nullif(s.regions_listing, ''),
+    CASE WHEN s.category = 'Other scholarships' THEN NULL ELSE 'Sweden' END,
+    NULL,
+    CASE WHEN s.category = 'Other scholarships' THEN
+      'Catálogo Study in Sweden; destino deste programa externo não confirmado individualmente'
+      ELSE 'Catálogo Study in Sweden; condições da instituição ou do Swedish Institute devem ser confirmadas' END
+  FROM study_in_sweden_imports s
+  WHERE s.catalog_status = 'listed' AND ($2 = '' OR $2 = 'suecia')
+
 )`
 
 export async function scholarshipCatalog(pool, params) {
