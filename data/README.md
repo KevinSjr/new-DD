@@ -1,5 +1,13 @@
 # Dados e importações
 
+## StudySpy — Nova Zelândia, coleta de 22/10/2026
+
+`data/imports/studyspy-nz-2026-10-22.json` contém **617 fichas** da [busca pública de bolsas do StudySpy](https://studyspy.ac.nz/search/scholarships), nas categorias `International Only` (129) e `Both domestic and international` (488). O [Study with New Zealand](https://www.studywithnewzealand.govt.nz/en/study-options/scholarship/results) informa que sua busca é alimentada pelo StudySpy, mas o acesso automatizado direto a esse portal recebeu HTTP 429; **a fonte efetiva dos registros aqui é o StudySpy**. Os registros `Domestic Only` e os de categoria não informada ficaram fora desta coleta. A ficha `2025 Scholarships` agrega vários descontos e permanece no JSON, mas fica `rejected` no banco; **616 fichas** entram no filtro Nova Zelândia. A coleta não equivale a todas as bolsas existentes no país.
+
+O arquivo preserva título, instituição, categoria de nacionalidade, países explicitamente listados, níveis, área quando publicada, cobertura descrita, prazo com ano quando informado, estado de abertura na data da coleta e links da ficha e do provedor. Descrições e requisitos no índice de busca podem estar **truncados**: consulte a ficha e o edital. Quantias e percentuais não foram tratados como valor total garantido. O status aberto/fechado é apenas um retrato da fonte, e datas antigas não indicam reabertura. Duas fichas listam `Brazil` entre os países; isso não confirma todos os demais requisitos. Onde não há país listado, a categoria internacional **não comprova elegibilidade brasileira**.
+
+`db/migrations/026_studyspy_nz_imports.sql` cria a tabela com `catalog_status='listed'` por padrão e permite preservar a página agregadora como `rejected`. Para instalar: `npm run db:migrate` e `npm run data:import-studyspy-nz -- data/imports/studyspy-nz-2026-10-22.json`. Para nova coleta: `npm run data:scrape-studyspy-nz -- data/imports/novo-arquivo.json`.
+
 ## Education Malaysia — Malásia, coleta de 22/10/2026
 
 `data/imports/education-malaysia-2026-10-22.json` contém os **1.189 cartões** anunciados no [catálogo Education Malaysia](https://educationmalaysia.gov.my/plan-your-studies/choose-what-to-study/scholarship-listing), coletados em 48 páginas. Cada cartão é uma combinação de financiador e curso, com link para uma ficha específica; **não são 1.189 programas de bolsa independentes**. Uma entrada do governo de Maurício, sem instituição malaia de destino, fica no JSON bruto mas não entra no filtro Malásia. Assim, **1.188 combinações** estão listadas no buscador, além de eventuais registros de outras fontes.

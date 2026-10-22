@@ -1,0 +1,30 @@
+CREATE TABLE studyspy_nz_imports (
+  source_id text PRIMARY KEY CHECK (source_id ~ '^[0-9]+$'),
+  title text NOT NULL,
+  source_url text NOT NULL CHECK (source_url LIKE 'https://studyspy.ac.nz/scholarships/%'),
+  provider_name text,
+  provider_type text,
+  description text,
+  entry_requirements text,
+  nationality_category text NOT NULL CHECK (nationality_category IN ('International Only', 'Both domestic and international')),
+  eligible_countries jsonb NOT NULL DEFAULT '[]'::jsonb CHECK (jsonb_typeof(eligible_countries) = 'array'),
+  eligible_regions jsonb NOT NULL DEFAULT '[]'::jsonb CHECK (jsonb_typeof(eligible_regions) = 'array'),
+  eligible_ethnicities jsonb NOT NULL DEFAULT '[]'::jsonb CHECK (jsonb_typeof(eligible_ethnicities) = 'array'),
+  study_levels jsonb NOT NULL DEFAULT '[]'::jsonb CHECK (jsonb_typeof(study_levels) = 'array'),
+  subject_or_faculty text,
+  value_description text,
+  value_number numeric,
+  number_available integer,
+  tenure text,
+  close_date date,
+  is_open_listing boolean,
+  is_always_open boolean NOT NULL DEFAULT false,
+  provider_url text,
+  application_form_url text,
+  fetched_at timestamptz NOT NULL,
+  catalog_status text NOT NULL DEFAULT 'listed' CHECK (catalog_status IN ('listed', 'reviewed', 'rejected')),
+  created_at timestamptz NOT NULL DEFAULT now(),
+  updated_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX studyspy_nz_catalog_idx
+  ON studyspy_nz_imports (catalog_status, fetched_at DESC);

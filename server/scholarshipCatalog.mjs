@@ -403,6 +403,41 @@ const catalog = `WITH catalog AS (
   FROM education_malaysia_imports e
   WHERE e.catalog_status = 'listed' AND ($2 = '' OR $2 = 'malasia')
 
+  UNION ALL
+
+  SELECT 'studyspy_nz', n.source_id, n.title,
+    left(coalesce(n.description, '') || CASE WHEN n.provider_name IS NOT NULL
+      THEN ' · ' || n.provider_name ELSE '' END, 420),
+    'StudySpy · catálogo da Nova Zelândia', n.source_url,
+    coalesce(n.provider_url, n.application_form_url), n.fetched_at::text,
+    CASE WHEN n.is_always_open THEN 'Inscrições contínuas segundo a fonte; confirme vigência'
+      WHEN n.close_date IS NOT NULL THEN to_char(n.close_date, 'DD/MM/YYYY') || ' (fuso não informado)'
+      ELSE NULL::text END,
+    n.value_description,
+    CASE WHEN n.is_always_open THEN 'Inscrições contínuas na fonte coletada; confirme vigência'
+      WHEN n.close_date < CURRENT_DATE THEN 'Prazo da edição listada encerrado; próxima edição não verificada'
+      WHEN n.is_open_listing = true THEN 'Aberta segundo a fonte na coleta; confirme vigência'
+      WHEN n.is_open_listing = false THEN 'Fechada segundo a fonte na coleta'
+      ELSE 'Abertura não informada pela fonte' END,
+    CASE WHEN n.eligible_countries ? 'Brazil' OR n.eligible_countries ? 'br'
+      THEN 'Brasil listado entre os países; demais requisitos não verificados'
+      WHEN jsonb_array_length(n.eligible_countries) > 0
+      THEN 'Brasil não aparece na lista de países da fonte; confira a ficha'
+      ELSE 'Categoria internacional; elegibilidade brasileira não confirmada' END,
+    n.subject_or_faculty,
+    CASE WHEN jsonb_array_length(n.eligible_countries) > 12
+      THEN CASE WHEN n.eligible_countries ? 'Brazil' THEN 'Brazil está na lista. ' ELSE '' END ||
+        array_to_string(ARRAY(SELECT value FROM jsonb_array_elements_text(n.eligible_countries) AS value LIMIT 12), ', ') ||
+        ' e mais países (consulte a ficha)'
+      WHEN jsonb_array_length(n.eligible_countries) > 0
+      THEN array_to_string(ARRAY(SELECT value FROM jsonb_array_elements_text(n.eligible_countries) AS value), ', ')
+      ELSE n.nationality_category END,
+    'New Zealand',
+    array_to_string(ARRAY(SELECT value FROM jsonb_array_elements_text(n.study_levels) AS value), ', '),
+    'StudySpy reúne bolsas de instituições neozelandesas; confirme local de estudo e requisitos no provedor'
+  FROM studyspy_nz_imports n
+  WHERE n.catalog_status = 'listed' AND ($2 = '' OR $2 = 'nova-zelandia')
+
 )`
 
 export async function scholarshipCatalog(pool, params) {

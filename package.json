@@ -48,6 +48,8 @@
     "data:import-scholarship-guide-singapore": "node --env-file=.env.local scripts/import_scholarship_guide_singapore.mjs",
     "data:scrape-education-malaysia": "node scripts/scrape_education_malaysia.mjs",
     "data:import-education-malaysia": "node --env-file=.env.local scripts/import_education_malaysia.mjs",
+    "data:scrape-studyspy-nz": "node scripts/scrape_studyspy_nz.mjs",
+    "data:import-studyspy-nz": "node --env-file=.env.local scripts/import_studyspy_nz.mjs",
     "data:verify-iefa": "node --env-file=.env.local scripts/verify_iefa_import.mjs",
     "admin:hash": "node scripts/hash_admin_password.mjs",
     "preview": "vite preview"
