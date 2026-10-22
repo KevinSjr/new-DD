@@ -326,6 +326,19 @@ const catalog = `WITH catalog AS (
   FROM scholarshipsads_norway_imports n
   WHERE n.catalog_status = 'listed' AND ($2 = '' OR $2 = 'noruega')
 
+  UNION ALL
+
+  SELECT 'study_taiwan', t.source_id, t.title,
+    'Entrada do catálogo Study in Taiwan vinculada a ' || t.institution || '.',
+    'Study in Taiwan · catálogo', t.source_url, t.provider_url, t.fetched_at::text,
+    NULL::text, NULL::text,
+    'Listada no catálogo; abertura e edital vigente não verificados',
+    'Brasil não informado na listagem; confira os critérios do programa',
+    NULL::text, NULL::text, t.destination, NULL::text,
+    'Taiwan indicado no catálogo; confira instituição, benefícios e regras na fonte responsável'
+  FROM study_taiwan_imports t
+  WHERE t.catalog_status = 'listed' AND ($2 = '' OR $2 = 'taiwan')
+
 )`
 
 export async function scholarshipCatalog(pool, params) {

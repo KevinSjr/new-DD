@@ -1,4 +1,8 @@
-# QS World University Rankings 2027 — extração local
+# Dados e importações
+
+## Study in Taiwan — coleta pública de 21/10/2026
+
+`data/imports/study-taiwan-2026-10-21.json` contém os **99 registros** anunciados no [catálogo Study in Taiwan](https://www.studyintaiwan.org/how-to-apply/scholarship), distribuídos por 10 páginas. O arquivo preserva o título original, a versão em inglês quando o próprio título é bilíngue, a instituição, a categoria, o link da listagem e o link externo indicado pela fonte. Quatro entradas administrativas ou de diretório não entram no buscador, restando **95 registros listados** no filtro Taiwan. O catálogo não informa, por item, prazo, valor total, nível, área ou elegibilidade brasileira; esses campos permanecem sem confirmação. Um link externo da fonte usa HTTP, preservado como publicado. Para instalar: `npm run db:migrate` e `npm run data:import-study-taiwan -- data/imports/study-taiwan-2026-10-21.json`. Para nova coleta, use `npm run data:scrape-study-taiwan -- data/imports/novo-arquivo.json`.
 
 ## Global Admissions — bolsas Brasil → Bélgica coletadas em 21/10/2026
 
