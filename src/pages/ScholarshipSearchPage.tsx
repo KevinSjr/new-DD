@@ -5,7 +5,7 @@ import './ScholarshipSearchPage.css'
 
 type Country = { slug: string; name: string }
 type Scholarship = {
-  source: 'verified' | 'iefa' | 'scholarship_america' | 'study_australia' | 'daad' | 'campusbourses' | 'study_japan' | 'scholarship_china' | 'study_korea' | 'spain_administration' | 'universitaly_maeci' | 'swiss_excellence' | 'study_in_sweden' | 'efg_finland' | 'efg_denmark' | 'global_admissions_belgium' | 'scholarshipsads_norway' | 'study_taiwan' | 'study_hong_kong' | 'scholarship_guide_singapore'; source_id: string; title: string;
+  source: 'verified' | 'iefa' | 'scholarship_america' | 'study_australia' | 'daad' | 'campusbourses' | 'study_japan' | 'scholarship_china' | 'study_korea' | 'spain_administration' | 'universitaly_maeci' | 'swiss_excellence' | 'study_in_sweden' | 'efg_finland' | 'efg_denmark' | 'global_admissions_belgium' | 'scholarshipsads_norway' | 'study_taiwan' | 'study_hong_kong' | 'scholarship_guide_singapore' | 'education_malaysia'; source_id: string; title: string;
   description: string; source_label: string; source_url: string; application_url: string | null;
   observed_at: string; deadline: string | null; amount: string | null; source_status: string;
   brazil_criteria: string; field_of_study: string | null; nationality: string | null;
@@ -18,6 +18,10 @@ const levelNames: Record<string, string> = {
   'curso-curto': 'Curso curto', pesquisa: 'Pesquisa', outro: 'Outro',
 }
 const sourceLevelNames: Record<string, string> = {
+  UG: 'Graduação', PG: 'Pós-graduação', Foundation: 'Curso preparatório',
+  Diploma: 'Diploma', 'Advanced Diploma': 'Diploma avançado',
+  "Bachelor's Degree": 'Graduação', Master: 'Mestrado',
+  '(Select a Level Of Study)': 'Não informado pela fonte',
   CEGEP: 'CEGEP (pré-universitário no Canadá)', 'College Freshman': '1º ano de graduação',
   'College Graduate': 'Graduado(a)', 'College Senior': 'Último ano de graduação',
   'College Sophomore': '2º ano de graduação', 'College Undergraduate': 'Graduação',
@@ -71,6 +75,7 @@ const sourceName: Record<Scholarship['source'], string> = {
   study_taiwan: 'Study in Taiwan · catálogo',
   study_hong_kong: 'Study in Hong Kong · governo',
   scholarship_guide_singapore: 'Scholarship Guide · Singapura',
+  education_malaysia: 'Education Malaysia · Malásia',
 }
 const observedDate = (value: string) => {
   const date = value.slice(0, 10).split('-')

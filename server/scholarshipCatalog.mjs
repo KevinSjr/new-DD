@@ -385,6 +385,24 @@ const catalog = `WITH catalog AS (
   FROM scholarship_guide_singapore_imports s
   WHERE s.catalog_status = 'listed' AND ($2 = '' OR $2 = 'singapura')
 
+  UNION ALL
+
+  SELECT 'education_malaysia', e.source_id, e.course,
+    'Curso listado com bolsa por ' || e.provider || '. Consulte a ficha para critérios e detalhes de inscrição.',
+    'Education Malaysia · catálogo', e.source_url, NULL::text, e.fetched_at::text,
+    NULL::text, e.award_listing,
+    'Listada no catálogo; abertura e prazo não informados',
+    CASE WHEN e.provider ILIKE '%Republic of Maldives%'
+      THEN 'Parceria com órgão das Maldivas; elegibilidade brasileira não confirmada'
+      ELSE 'Brasil não citado nominalmente; confira os critérios da ficha' END,
+    e.course,
+    CASE WHEN e.provider ILIKE '%Republic of Maldives%' THEN 'Parceiro das Maldivas citado; nacionalidades elegíveis não confirmadas'
+      ELSE NULL::text END,
+    'Malaysia', e.study_level,
+    'Listagem do portal Education Malaysia; confirme o campus e os critérios na ficha individual'
+  FROM education_malaysia_imports e
+  WHERE e.catalog_status = 'listed' AND ($2 = '' OR $2 = 'malasia')
+
 )`
 
 export async function scholarshipCatalog(pool, params) {
