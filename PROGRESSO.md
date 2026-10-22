@@ -5,6 +5,13 @@ Antes de cada tarefa, consultar `AGENTS.md` e `CLAUDE.md` (na raiz do projeto).
 
 Última atualização: 2026-10-22
 
+## Responsividade global — 2026-10-22
+
+- Adicionada a meta tag `viewport` em `index.html`; sem ela, navegadores móveis podem usar uma largura virtual de desktop e ignorar na prática os breakpoints existentes nas páginas.
+- O menu do cabeçalho permanece recolhido em tablets e notebooks estreitos, expandindo em linha a partir de 74em; o painel móvel agora rola dentro da altura disponível.
+- `npm run build` passou. Em Chrome headless, `scripts/check_responsive.mjs` verificou 15 rotas em 320, 375, 768, 1024 e 1280 px, além do menu aberto e da tabela de ranking em 320 px: 77/77 verificações passaram. Capturas em 320 px da home, ranking, GPA, bolsas e Alemanha foram inspecionadas; dispositivos reais e leitores de tela seguem não testados.
+- Com a API e o PostgreSQL locais ativos, a auditoria carregou 12 cartões reais da primeira página do buscador (12.742 registros no catálogo) e conferiu cada cartão nas cinco larguras. Também conferiu 12 cartões em 320 px para cada um dos filtros Estados Unidos, Reino Unido, Alemanha, Japão e Nova Zelândia: 87/87 verificações totais passaram, sem transbordamento. A captura do primeiro cartão em 320 px foi inspecionada. Para repetir com dados locais: definir `RESPONSIVE_API_ORIGIN=http://127.0.0.1:3001` e executar `npm run test:responsive`. Outras páginas do catálogo e dispositivos físicos não foram inspecionados visualmente.
+
 ## Identidade visual — 2026-10-22
 
 - A marca enviada pelo usuário foi adaptada em três peças com fundo transparente: versão principal para o rodapé, horizontal para o cabeçalho e ícone para favicon/atalho móvel. Os textos explicativos e a paleta da prancha de referência não fazem parte das imagens finais.
