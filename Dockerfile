@@ -6,6 +6,7 @@ COPY . .
 RUN npm run build
 
 FROM node:22-alpine
+LABEL org.opencontainers.image.source=https://github.com/KevinSjr/new-DD
 WORKDIR /app
 ENV NODE_ENV=production
 COPY package*.json ./
