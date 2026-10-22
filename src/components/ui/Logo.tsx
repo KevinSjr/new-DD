@@ -1,26 +1,30 @@
-import logoSrc from '../../assets/logo.png'
+import horizontalLogoSrc from '../../assets/daydreaming-horizontal.png'
+import primaryLogoSrc from '../../assets/daydreaming-primary.png'
 
-// Proporção da imagem original (677 × 473), usada para evitar "pulo" de layout no carregamento.
-const LOGO_RATIO = 473 / 677
+const LOGO_RATIOS = {
+  horizontal: 228 / 998,
+  primary: 444 / 887,
+} as const
 
 type LogoProps = {
   /** Largura em pixels. A altura é calculada para manter a proporção. */
   width?: number
   className?: string
+  variant?: keyof typeof LOGO_RATIOS
 }
 
 /**
- * Logo da nuvem "Day Dreaming". É o único elemento de marca do projeto.
+ * Logo Daydreaming. A versão horizontal serve aos espaços estreitos do cabeçalho.
  * O texto alternativo já identifica a marca; quando a logo estiver dentro de um
  * link para a página inicial, esse alt serve como nome acessível do link.
  */
-export function Logo({ width = 160, className }: LogoProps) {
+export function Logo({ width = 160, className, variant = 'primary' }: LogoProps) {
   return (
     <img
-      src={logoSrc}
-      alt="Day Dreaming"
+      src={variant === 'horizontal' ? horizontalLogoSrc : primaryLogoSrc}
+      alt="Daydreaming"
       width={width}
-      height={Math.round(width * LOGO_RATIO)}
+      height={Math.round(width * LOGO_RATIOS[variant])}
       className={className}
       decoding="async"
     />

@@ -59,7 +59,7 @@ function formatScore(score: number | null) {
 }
 
 export function RankingPage() {
-  useDocumentTitle('Ranking de universidades 2027 | Day Dreaming')
+  useDocumentTitle('Ranking de universidades 2027 | Daydreaming')
   const [dataset, setDataset] = useState<RankingDataset | null>(null)
   const [error, setError] = useState('')
   const [loadAttempt, setLoadAttempt] = useState(0)

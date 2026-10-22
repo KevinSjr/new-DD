@@ -24,6 +24,12 @@
   border-radius: var(--radius-md);
 }
 
+.site-header__logo {
+  display: block;
+  width: 160px;
+  height: auto;
+}
+
 /* ---------- Botão "Menu" (somente celular) ---------- */
 
 .site-header__toggle {
@@ -139,6 +145,10 @@
 /* ---------- Tablet e desktop ---------- */
 
 @media (min-width: 52em) {
+  .site-header__logo {
+    width: 110px;
+  }
+
   .site-header__toggle {
     display: none;
   }
@@ -174,5 +184,11 @@
     padding: 0;
     border-top: 0;
     gap: 0.75rem;
+  }
+}
+
+@media (min-width: 64em) {
+  .site-header__logo {
+    width: 150px;
   }
 }

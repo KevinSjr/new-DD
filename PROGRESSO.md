@@ -3,14 +3,20 @@
 Registro das micro tarefas. Marque `[x]` só quando a tarefa estiver concluída e verificada.
 Antes de cada tarefa, consultar `AGENTS.md` e `CLAUDE.md` (na raiz do projeto).
 
-Última atualização: 2026-10-18
+Última atualização: 2026-10-22
+
+## Identidade visual — 2026-10-22
+
+- A marca enviada pelo usuário foi adaptada em três peças com fundo transparente: versão principal para o rodapé, horizontal para o cabeçalho e ícone para favicon/atalho móvel. Os textos explicativos e a paleta da prancha de referência não fazem parte das imagens finais.
+- O nome visível e os títulos das páginas passaram a usar “Daydreaming” em uma palavra. Os tokens da marca seguem as cores indicadas na prancha; os demais tokens da interface foram preservados.
+- `npm run build` passou. `npm run lint` ainda aponta dois problemas anteriores, em `Trail.tsx` e `ScholarshipSearchPage.tsx`, fora da mudança de marca.
 
 ## Decisões duradouras
 
 - Projeto novo em pasta separada do `dd5`/XAMPP.
 - Stack: Vite + React + TypeScript, CSS próprio (tokens em `src/styles/tokens.css`).
 - Sem bibliotecas extras até haver necessidade clara (ex.: roteador só quando houver a segunda página).
-- Logo da nuvem "Day Dreaming" é o único elemento de marca; sem mascote.
+- Logo "Daydreaming" (nuvem azul, estrelas amarelas e trajetória branca) é o elemento de marca; versões principal, horizontal e ícone, sem mascote.
 - Primeira entrega: somente a home.
 - Dados de demonstração e funcionalidades planejadas devem ser identificados como tais na interface.
 - Convenção visual: **contorno tracejado = ainda não existe / em desenvolvimento** (sempre acompanhado de texto, nunca só de cor).

@@ -110,7 +110,7 @@ function ScholarshipCard({ scholarship }: { scholarship: Scholarship }) {
 }
 
 export function ScholarshipSearchPage() {
-  useDocumentTitle('Buscar bolsas | Day Dreaming')
+  useDocumentTitle('Buscar bolsas | Daydreaming')
   const [country, setCountry] = useState('')
   const [page, setPage] = useState(1)
   const [countries, setCountries] = useState<Country[]>([])

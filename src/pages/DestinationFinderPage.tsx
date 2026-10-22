@@ -61,7 +61,7 @@ function ResearchChecklist({ answers }: { answers: DestinationAnswers }) {
 }
 
 export function DestinationFinderPage() {
-  useDocumentTitle('Descobridor de destinos | Day Dreaming')
+  useDocumentTitle('Descobridor de destinos | Daydreaming')
   const [step, setStep] = useState(-1)
   const [answers, setAnswers] = useState<Partial<DestinationAnswers>>({ regions: [], priorities: [] })
   const [error, setError] = useState('')

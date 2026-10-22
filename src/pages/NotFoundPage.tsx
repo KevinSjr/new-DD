@@ -3,7 +3,7 @@ import { useDocumentTitle } from '../hooks/useDocumentTitle'
 import './NotFoundPage.css'
 
 export function NotFoundPage() {
-  useDocumentTitle('Página não encontrada | Day Dreaming')
+  useDocumentTitle('Página não encontrada | Daydreaming')
 
   return (
     <section className="not-found" aria-labelledby="nao-encontrada-titulo">

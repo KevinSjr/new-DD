@@ -90,7 +90,7 @@ export function CountryGuidePage({ slug }: { slug: string }) {
   const guide = COUNTRY_GUIDES.find((item) => item.slug === slug)
   const content = COUNTRY_GUIDE_CONTENT[slug]
 
-  useDocumentTitle(guide ? `${guide.name}: guia de país | Day Dreaming` : null)
+  useDocumentTitle(guide ? `${guide.name}: guia de país | Daydreaming` : null)
 
   if (!guide) return <NotFoundPage />
 

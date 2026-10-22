@@ -29,7 +29,7 @@ function calculateScores(answers: Record<string, Answer>): Scores {
 }
 
 export function VocationalTestPage() {
-  useDocumentTitle('Explore seus interesses | Day Dreaming')
+  useDocumentTitle('Explore seus interesses | Daydreaming')
   const [screen, setScreen] = useState<'intro' | 'questions' | 'values' | 'result'>('intro')
   const [step, setStep] = useState(0)
   const [answers, setAnswers] = useState<Record<string, Answer>>({})

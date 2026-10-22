@@ -53,7 +53,7 @@ function GuideBlock({ block }: { block: GermanyBlock }) {
 }
 
 export function GermanyGuidePage() {
-  useDocumentTitle('Estudar na Alemanha | Day Dreaming')
+  useDocumentTitle('Estudar na Alemanha | Daydreaming')
   const [activeId, setActiveId] = useState(initialSection)
   const [visited, setVisited] = useState(() => [initialSection()])
   const activeIndex = GERMANY_SECTIONS.findIndex((section) => section.id === activeId)

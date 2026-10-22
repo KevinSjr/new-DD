@@ -29,7 +29,7 @@ export function Footer() {
       <div className="container site-footer__grid">
         {/* ---------- Marca ---------- */}
         <div className="site-footer__brand">
-          <Logo width={140} />
+          <Logo width={200} />
           <p>
             Para estudantes brasileiros que querem descobrir, comparar e planejar oportunidades de
             estudo no exterior.
@@ -71,7 +71,7 @@ export function Footer() {
       </div>
 
       <div className="container site-footer__bottom">
-        <p>© {year} Day Dreaming</p>
+        <p>© {year} Daydreaming</p>
         <a
           href="#top"
           onClick={(event: MouseEvent<HTMLAnchorElement>) => {

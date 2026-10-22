@@ -12,7 +12,7 @@ const freshCourse = (): CourseInput => ({ name: '', grade: '', credits: '' })
 const number = (value: number) => value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
 export function GpaCalculatorPage() {
-  useDocumentTitle('Calculadora de GPA | Day Dreaming')
+  useDocumentTitle('Calculadora de GPA | Daydreaming')
   const [mode, setMode] = useState<EntryMode>('average')
   const [average, setAverage] = useState('')
   const [courses, setCourses] = useState<CourseInput[]>([freshCourse()])

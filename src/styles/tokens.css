@@ -5,16 +5,16 @@
    use sempre estas variáveis.
 
    Paleta e tipografia: seguem a home de referência aprovada (azul vivo, roxo-marinho,
-   amarelo, menta, coral e lilás; fonte Poppins). A logo mantém as cores originais.
+   amarelo, menta, coral e lilás; fonte Poppins). Os tokens da logo seguem a nova marca.
    Os NOMES das variáveis não mudaram, só os valores: rodapé, guias e 404 seguem funcionando.
    Para ajustar a identidade, altere só este arquivo.
    ========================================================================== */
 
 :root {
   /* ---------- Cores: logo (valores exatos, usados em ilustrações e detalhes) ---------- */
-  --brand-sky: #56afd8;            /* azul da nuvem — claro demais para texto branco */
-  --brand-navy: #0b2b4d;           /* azul-marinho das letras */
-  --brand-star: #fed53e;           /* amarelo da estrela */
+  --brand-sky: #59b9df;            /* azul da nuvem — claro demais para texto branco */
+  --brand-navy: #152e50;           /* azul-marinho das letras */
+  --brand-star: #ffce4a;           /* amarelo da estrela */
 
   /* ---------- Cores: marca (versões para interface, com contraste) ---------- */
   --color-primary: #2a6fe8;        /* ações principais (texto branco: contraste ≥ 4,5:1) */

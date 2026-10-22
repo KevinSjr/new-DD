@@ -47,7 +47,7 @@ const percentFormatter = new Intl.NumberFormat('pt-BR', { style: 'percent', maxi
 
 export function SubjectAreaRankingPage({ areaKey }: { areaKey: SubjectAreaKey }) {
   const area = SUBJECT_AREAS[areaKey]
-  useDocumentTitle(`Ranking de ${area.title} 2026 | Day Dreaming`)
+  useDocumentTitle(`Ranking de ${area.title} 2026 | Daydreaming`)
   const [dataset, setDataset] = useState<Dataset | null>(null)
   const [error, setError] = useState('')
   const [loadAttempt, setLoadAttempt] = useState(0)

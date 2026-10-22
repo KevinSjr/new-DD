@@ -38,8 +38,8 @@ export function Header() {
   return (
     <header className="site-header">
       <div className="container site-header__bar">
-        <Link className="site-header__brand" to="/" aria-label="Day Dreaming, ir para o início">
-          <Logo width={88} />
+        <Link className="site-header__brand" to="/" aria-label="Daydreaming, ir para o início">
+          <Logo variant="horizontal" width={160} className="site-header__logo" />
         </Link>
 
         <button

@@ -68,7 +68,7 @@ export function Trust() {
           </h2>
           <p className="trust__lead">
             Bolsas, prazos, vistos e custos mudam com frequência, e uma informação errada pode
-            custar tempo e dinheiro. Por isso, o Day Dreaming vai mostrar de onde cada dado vem e
+            custar tempo e dinheiro. Por isso, o Daydreaming vai mostrar de onde cada dado vem e
             quando foi verificado, e vai dizer com franqueza o que ainda não sabe.
           </p>
         </header>
@@ -121,7 +121,7 @@ export function Trust() {
         <p className="trust__limit">
           <strong>O que não prometemos:</strong> aprovação, bolsa, visto ou elegibilidade. Os
           requisitos finais e as decisões pertencem sempre à instituição ou à entidade responsável,
-          e o Day Dreaming não substitui a consulta à fonte oficial nem a orientação de
+          e o Daydreaming não substitui a consulta à fonte oficial nem a orientação de
           profissionais quando necessário.
         </p>
 

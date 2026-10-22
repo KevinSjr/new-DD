@@ -4,7 +4,7 @@ import { Icon } from '../components/ui/Icon'
 import './RankingsHubPage.css'
 
 export function RankingsHubPage() {
-  useDocumentTitle('Escolha um ranking | Day Dreaming')
+  useDocumentTitle('Escolha um ranking | Daydreaming')
 
   return (
     <article className="rankings-hub">

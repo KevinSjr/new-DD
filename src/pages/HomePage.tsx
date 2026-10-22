@@ -12,7 +12,7 @@ import { useDocumentTitle } from '../hooks/useDocumentTitle'
  * bloco de confiança e chamada final (1.6). O rodapé vem do Layout.
  */
 export function HomePage() {
-  useDocumentTitle('Day Dreaming')
+  useDocumentTitle('Daydreaming')
 
   return (
     <>
