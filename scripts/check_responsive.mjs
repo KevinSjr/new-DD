@@ -7,9 +7,9 @@ import { extname, join, resolve, sep } from 'node:path'
 const root = resolve('dist')
 const chromePath = process.env.CHROME_PATH || 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
 const apiOrigin = process.env.RESPONSIVE_API_ORIGIN || ''
-if (apiOrigin && apiOrigin !== 'http://127.0.0.1:3001') throw new Error('A auditoria só aceita a API local em http://127.0.0.1:3001')
+if (apiOrigin && !/^http:\/\/127\.0\.0\.1:300[12]$/.test(apiOrigin)) throw new Error('A auditoria só aceita a API local nas portas 3001 ou 3002')
 const routes = [
-  '/', '/rankings', '/ranking', '/rankings/artes-humanidades',
+  '/', '/exames', '/exames/sat', '/exames/sat/desafio-diario', '/exames/sat/simulado', '/admin/sat', '/rankings', '/ranking', '/rankings/artes-humanidades',
   '/rankings/engenharia-tecnologia', '/rankings/ciencias-da-vida-medicina',
   '/rankings/ciencias-naturais', '/rankings/ciencias-sociais-administracao',
   '/teste-vocacional', '/calculadora-gpa', '/descobridor-de-destinos',
@@ -142,7 +142,7 @@ try {
   if (process.env.RESPONSIVE_SCREENSHOTS_DIR) {
     const screenshotsDir = resolve(process.env.RESPONSIVE_SCREENSHOTS_DIR)
     await mkdir(screenshotsDir, { recursive: true })
-    for (const route of ['/', '/ranking', '/calculadora-gpa', '/bolsas', '/paises/alemanha']) {
+    for (const route of ['/', '/exames/sat', '/exames/sat/desafio-diario', '/ranking', '/calculadora-gpa', '/bolsas', '/paises/alemanha']) {
       await command('Page.navigate', { url: `http://127.0.0.1:${port}${route}` })
       await evaluateJson(`JSON.stringify({ ready: true })`, route)
       await delay(250)

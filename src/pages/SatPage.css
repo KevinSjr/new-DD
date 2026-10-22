@@ -1,0 +1,58 @@
+.sat-page { padding-block: var(--space-5) var(--space-9); }
+.sat-page__breadcrumb { display: flex; gap: var(--space-2); align-items: center; font-size: var(--text-sm); margin-bottom: var(--space-7); }
+.sat-page__header { max-width: 70ch; margin-bottom: var(--space-7); }
+.sat-page__eyebrow, .sat-question__label { color: var(--color-primary-ink); font-size: var(--text-sm); font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+.sat-page__header h1 { font-size: clamp(2rem, 5vw, var(--text-4xl)); margin-block: var(--space-2) var(--space-4); }
+.sat-page__header > p:last-child, .sat-page__mode p, .sat-page__note { color: var(--color-ink-muted); }
+.sat-page__modes { display: grid; gap: var(--space-5); }
+.sat-page__mode, .sat-page__panel { min-width: 0; padding: var(--space-5); border: 2px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface); box-shadow: var(--shadow-soft); }
+.sat-page__mode h2, .sat-page__panel h2 { font-size: var(--text-xl); margin: var(--space-3) 0; }
+.sat-page__symbol { display: inline-grid; place-items: center; width: 3.25rem; height: 3.25rem; border-radius: var(--radius-lg); background: var(--color-accent-soft); color: var(--color-warning-text); font-size: 2rem; }
+.sat-page__button { display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; border: 0; border-radius: var(--radius-sm); padding: var(--space-2) var(--space-5); background: var(--color-primary); color: #fff; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
+.sat-page__button--secondary { background: var(--color-primary-soft); color: var(--color-primary-ink); }
+.sat-page__button:disabled { opacity: .55; cursor: not-allowed; }
+.sat-page__mode .sat-page__button { margin-top: var(--space-4); }
+.sat-page__availability { font-weight: 700; }
+.sat-page__note { max-width: 80ch; margin-top: var(--space-7); padding: var(--space-4); border-left: 4px solid var(--color-primary); background: var(--color-primary-soft); border-radius: var(--radius-sm); }
+.sat-page__alert { padding: var(--space-4); border-radius: var(--radius-sm); background: var(--color-danger-soft); color: var(--color-danger-ink); }
+.sat-page__progress { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2); margin-bottom: var(--space-5); padding-bottom: var(--space-4); border-bottom: 1px solid var(--color-border); font-weight: 700; }
+.sat-page__progress span:last-child { color: var(--color-warning-text); font-size: var(--text-lg); }
+.sat-question__passage { max-width: 75ch; white-space: pre-wrap; line-height: 1.8; }
+.sat-question__image-frame { max-width: 100%; overflow-x: auto; margin-block: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-sm); }
+.sat-question__image { display: block; max-width: none; height: auto; }
+.sat-question__image-frame:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 2px; }
+.sat-question__transcript { max-width: 75ch; margin-block: var(--space-4); }
+.sat-question__transcript summary { color: var(--color-primary-ink); cursor: pointer; font-weight: 700; }
+.sat-question__transcript > p:first-of-type { color: var(--color-ink-muted); font-size: var(--text-sm); }
+.sat-question h2 { max-width: 75ch; font-size: var(--text-lg); }
+.sat-question__choices { display: grid; gap: var(--space-3); margin: var(--space-5) 0; padding: 0; border: 0; }
+.sat-question__choices legend { margin-bottom: var(--space-3); font-weight: 700; }
+.sat-question__choices label { display: flex; gap: var(--space-3); align-items: flex-start; min-width: 0; padding: var(--space-3); border: 2px solid var(--color-border-input); border-radius: var(--radius-sm); cursor: pointer; }
+.sat-question__choices label.is-selected { border-color: var(--color-primary); background: var(--color-primary-soft); }
+.sat-question__choices input { margin-top: .35rem; accent-color: var(--color-primary); }
+.sat-question__choices strong { color: var(--color-primary-ink); }
+.sat-question__numeric { display: grid; gap: var(--space-2); max-width: 20rem; margin-block: var(--space-4); font-weight: 700; }
+.sat-question__numeric input { min-height: 2.75rem; padding: var(--space-2); border: 2px solid var(--color-border-input); border-radius: var(--radius-sm); font: inherit; }
+.sat-page__feedback { padding: var(--space-5); border-radius: var(--radius-md); }
+.sat-page__feedback.is-correct { background: var(--color-success-soft); color: var(--color-success-ink); }
+.sat-page__feedback.is-incorrect { background: var(--color-danger-soft); color: var(--color-danger-ink); }
+.sat-page__feedback .sat-page__button { margin-top: var(--space-4); }
+.sat-page__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
+.sat-page__result > p:first-of-type { font-size: var(--text-xl); font-weight: 700; }
+.sat-report__summary { margin-block: var(--space-5); padding: var(--space-5); border-left: 4px solid var(--color-primary); border-radius: var(--radius-sm); background: var(--color-primary-soft); }
+.sat-report__summary p { margin-block: 0 var(--space-2); }
+.sat-report__summary p:last-child { margin: var(--space-2) 0 0; font-weight: 700; }
+.sat-report__summary strong { display: block; color: var(--color-primary-ink); font-size: clamp(2rem, 6vw, 3.5rem); line-height: 1.15; }
+.sat-report__summary strong span, .sat-report__section-score span { font-size: var(--text-base); font-weight: 500; }
+.sat-report__sections { display: grid; gap: var(--space-4); margin-block: var(--space-5); }
+.sat-report__section { min-width: 0; padding: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+.sat-report__section h3 { margin: 0; font-size: var(--text-lg); }
+.sat-report__section-score { margin-block: var(--space-3); color: var(--color-primary-ink); font-size: var(--text-xl); font-weight: 700; }
+.sat-report__section dl { margin: 0; }
+.sat-report__section dl div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-2); padding-block: var(--space-2); border-top: 1px solid var(--color-border); }
+.sat-report__section dd { margin: 0; font-weight: 700; }
+.sat-report__method { max-width: 75ch; margin-block: var(--space-5); }
+.sat-report__method h3 { font-size: var(--text-lg); }
+.sat-report__method p { color: var(--color-ink-muted); }
+@media (min-width: 48em) { .sat-report__sections { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 48em) { .sat-page__modes { grid-template-columns: repeat(2, minmax(0, 1fr)); } .sat-page__mode, .sat-page__panel { padding: var(--space-7); } }

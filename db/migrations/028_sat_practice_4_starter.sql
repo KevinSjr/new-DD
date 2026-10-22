@@ -1,0 +1,36 @@
+-- Cinco itens conferidos nas páginas 4–6 do teste em papel nº 4 e no gabarito
+-- enviados pelo usuário. São suficientes para experimentar o desafio diário,
+-- mas NÃO constituem um exame completo nem uma reprodução do SAT adaptativo.
+INSERT INTO sat_questions
+  (form_code,section,module_number,question_number,passage,prompt,choices,answer_type,accepted_answers,explanation,source_url,source_page,status)
+VALUES
+  ('practice-4-paper','reading-writing',1,1,
+   'The spacecraft OSIRIS-REx briefly made contact with the asteroid 101955 Bennu in 2020. NASA scientist Daniella DellaGiustina reports that despite facing the unexpected obstacle of a surface mostly covered in boulders, OSIRIS-REx successfully _______ a sample of the surface, gathering pieces of it to bring back to Earth.',
+   'Which choice completes the text with the most logical and precise word or phrase?',
+   '[{"key":"A","text":"attached"},{"key":"B","text":"collected"},{"key":"C","text":"followed"},{"key":"D","text":"replaced"}]',
+   'multiple-choice',ARRAY['B'],'“Collected” indica que a nave reuniu uma amostra para trazê-la de volta à Terra.',
+   'https://satsuite.collegeboard.org/media/pdf/sat-practice-test-4-digital.pdf',4,'published'),
+  ('practice-4-paper','reading-writing',1,2,
+   'Research conducted by planetary scientist Katarina Miljkovic suggests that the Moon’s surface may not accurately _______ early impact events. When the Moon was still forming, its surface was softer, and asteroid or meteoroid impacts would have left less of an impression; thus, evidence of early impacts may no longer be present.',
+   'Which choice completes the text with the most logical and precise word or phrase?',
+   '[{"key":"A","text":"reflect"},{"key":"B","text":"receive"},{"key":"C","text":"evaluate"},{"key":"D","text":"mimic"}]',
+   'multiple-choice',ARRAY['A'],'“Reflect” significa mostrar sinais; a superfície pode não mostrar os impactos antigos.',
+   'https://satsuite.collegeboard.org/media/pdf/sat-practice-test-4-digital.pdf',4,'published'),
+  ('practice-4-paper','reading-writing',1,3,
+   'Handedness, a preferential use of either the right or left hand, typically is easy to observe in humans. Because this trait is present but less _______ in many other animals, animal-behavior researchers often employ tasks specially designed to reveal individual animals’ preferences for a certain hand or paw.',
+   'Which choice completes the text with the most logical and precise word or phrase?',
+   '[{"key":"A","text":"recognizable"},{"key":"B","text":"intriguing"},{"key":"C","text":"significant"},{"key":"D","text":"useful"}]',
+   'multiple-choice',ARRAY['A'],'“Recognizable” expressa que a preferência é mais difícil de perceber em outros animais.',
+   'https://satsuite.collegeboard.org/media/pdf/sat-practice-test-4-digital.pdf',5,'published'),
+  ('practice-4-paper','reading-writing',1,4,
+   'It is by no means _______ to recognize the influence of Dutch painter Hieronymus Bosch on Ali Banisadr’s paintings; indeed, Banisadr himself cites Bosch as an inspiration. However, some scholars have suggested that the ancient Mesopotamian poem Epic of Gilgamesh may have had a far greater impact on Banisadr’s work.',
+   'Which choice completes the text with the most logical and precise word or phrase?',
+   '[{"key":"A","text":"substantial"},{"key":"B","text":"satisfying"},{"key":"C","text":"unimportant"},{"key":"D","text":"appropriate"}]',
+   'multiple-choice',ARRAY['C'],'A influência de Bosch é reconhecida, portanto notá-la não é “unimportant”.',
+   'https://satsuite.collegeboard.org/media/pdf/sat-practice-test-4-digital.pdf',5,'published'),
+  ('practice-4-paper','reading-writing',1,5,
+   'The following text is adapted from Susan Glaspell’s 1912 short story “Out There.” An elderly shop owner is looking at a picture that he recently acquired and hopes to sell. It did seem that the picture failed to fit in with the rest of the shop. A persuasive young fellow who claimed he was closing out his stock let the old man have it for what he called a song. It was only a little out-of-the-way store which subsisted chiefly on the framing of pictures. The old man looked around at his views of the city, his pictures of cats and dogs, his flaming bits of landscape. “Don’t belong in here,” he fumed. And yet the old man was secretly proud of his acquisition. There was a hidden dignity in his scowling as he shuffled about pondering the least ridiculous place for the picture.',
+   'Which choice best states the main purpose of the text?',
+   '[{"key":"A","text":"To reveal the shop owner’s conflicted feelings about the new picture"},{"key":"B","text":"To convey the shop owner’s resentment of the person he got the new picture from"},{"key":"C","text":"To describe the items that the shop owner most highly prizes"},{"key":"D","text":"To explain differences between the new picture and other pictures in the shop"}]',
+   'multiple-choice',ARRAY['A'],'Ele acha que o quadro não combina com a loja, mas também sente orgulho da aquisição; o texto revela esses sentimentos conflitantes.',
+   'https://satsuite.collegeboard.org/media/pdf/sat-practice-test-4-digital.pdf',6,'published');

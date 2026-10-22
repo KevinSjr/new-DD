@@ -5,6 +5,7 @@ import { scryptSync, timingSafeEqual } from 'node:crypto'
 import { database } from './db.mjs'
 import { STUDY_LEVELS, validateScholarship } from './validation.mjs'
 import { scholarshipCatalog } from './scholarshipCatalog.mjs'
+import { getDaily, answerDaily, examAvailability, getExam, gradeExam, listSatQuestions, saveSatQuestion, archiveSatQuestion, validateSatQuestion } from './sat.mjs'
 
 const port = Number(process.env.API_PORT || 3001)
 const host = process.env.API_HOST || '127.0.0.1'
@@ -49,7 +50,10 @@ const originAllowed = req => {
   const origin = req.headers.origin
   if (!origin) return true // CLI/API clients using explicit Authorization
   if (process.env.PUBLIC_ORIGIN) return origin === process.env.PUBLIC_ORIGIN
-  return origin === `http://${req.headers.host}`
+  if (origin === `http://${req.headers.host}`) return true
+  // O proxy do Vite mantém a Origin do navegador (:5173), mas encaminha Host como API (:3001).
+  return !production && (host === '127.0.0.1' || host === 'localhost')
+    && ['http://localhost:5173', 'http://127.0.0.1:5173'].includes(origin)
 }
 async function body(req) {
   if (!(req.headers['content-type'] || '').startsWith('application/json')) throw Object.assign(new Error('Envie JSON.'), { status: 415 })
@@ -192,6 +196,17 @@ const server = createServer(async (req, res) => {
     if (req.method === 'GET' && url.pathname === '/api/scholarship-leads') return json(res, 200, await scholarshipLeads(url.searchParams))
     if (req.method === 'GET' && url.pathname === '/api/scholarship-america-leads') return json(res, 200, await scholarshipAmericaLeads(url.searchParams))
     if (req.method === 'GET' && url.pathname === '/api/scholarship-catalog') return json(res, 200, await scholarshipCatalog(database(), url.searchParams))
+    if (req.method === 'GET' && url.pathname === '/api/sat/daily') return json(res, 200, await getDaily(req, res))
+    if (req.method === 'POST' && url.pathname === '/api/sat/daily/answer') {
+      if (!originAllowed(req)) return json(res, 403, { error:'Origem não permitida.' })
+      return json(res, 200, await answerDaily(req, await body(req)))
+    }
+    if (req.method === 'GET' && url.pathname === '/api/sat/exam/availability') return json(res, 200, await examAvailability())
+    if (req.method === 'GET' && url.pathname === '/api/sat/exam') return json(res, 200, await getExam())
+    if (req.method === 'POST' && url.pathname === '/api/sat/exam/grade') {
+      if (!originAllowed(req)) return json(res, 403, { error:'Origem não permitida.' })
+      return json(res, 200, await gradeExam(await body(req)))
+    }
     if (!url.pathname.startsWith('/api/admin/')) return json(res, 404, { error:'Rota não encontrada.' })
     if (!adminReady) return json(res, 503, { error:'Administração ainda não configurada neste servidor.' })
     if (!originAllowed(req)) return json(res, 403, { error:'Origem não permitida.' })
@@ -199,6 +214,23 @@ const server = createServer(async (req, res) => {
     if (!authenticated(req)) { failedAuth(req); return json(res, 401, { error:'Credenciais inválidas.' }) }
     failures.delete(req.socket.remoteAddress)
     if (req.method === 'GET' && url.pathname === '/api/admin/me') return json(res, 200, { username:process.env.ADMIN_USERNAME })
+    if (req.method === 'GET' && url.pathname === '/api/admin/sat/questions') return json(res, 200, await listSatQuestions())
+    if (req.method === 'POST' && url.pathname === '/api/admin/sat/questions') {
+      const result = validateSatQuestion(await body(req))
+      if (result.error) return json(res, 400, { error:result.error })
+      return json(res, 201, { id:await saveSatQuestion(null, result.data) })
+    }
+    const satQuestion = url.pathname.match(/^\/api\/admin\/sat\/questions\/(\d+)$/)
+    if (satQuestion && req.method === 'PUT') {
+      const result = validateSatQuestion(await body(req))
+      if (result.error) return json(res, 400, { error:result.error })
+      const saved = await saveSatQuestion(satQuestion[1], result.data)
+      return saved ? json(res, 200, { id:saved }) : json(res, 404, { error:'Questão não encontrada.' })
+    }
+    if (satQuestion && req.method === 'DELETE') {
+      const archived = await archiveSatQuestion(satQuestion[1])
+      return archived ? json(res, 200, { archived:true }) : json(res, 404, { error:'Questão não encontrada.' })
+    }
     if (req.method === 'GET' && url.pathname === '/api/admin/scholarships') return json(res, 200, await list(false, url.searchParams.get('q')))
     if (req.method === 'POST' && url.pathname === '/api/admin/scholarships') {
       const countries = (await database().query('SELECT slug FROM countries')).rows.map(row => row.slug)
