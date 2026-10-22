@@ -5,7 +5,7 @@ import './ScholarshipSearchPage.css'
 
 type Country = { slug: string; name: string }
 type Scholarship = {
-  source: 'verified' | 'iefa' | 'scholarship_america' | 'study_australia' | 'daad' | 'campusbourses' | 'study_japan' | 'scholarship_china' | 'study_korea' | 'spain_administration' | 'universitaly_maeci' | 'swiss_excellence' | 'study_in_sweden' | 'efg_finland' | 'efg_denmark' | 'global_admissions_belgium' | 'scholarshipsads_norway' | 'study_taiwan'; source_id: string; title: string;
+  source: 'verified' | 'iefa' | 'scholarship_america' | 'study_australia' | 'daad' | 'campusbourses' | 'study_japan' | 'scholarship_china' | 'study_korea' | 'spain_administration' | 'universitaly_maeci' | 'swiss_excellence' | 'study_in_sweden' | 'efg_finland' | 'efg_denmark' | 'global_admissions_belgium' | 'scholarshipsads_norway' | 'study_taiwan' | 'study_hong_kong'; source_id: string; title: string;
   description: string; source_label: string; source_url: string; application_url: string | null;
   observed_at: string; deadline: string | null; amount: string | null; source_status: string;
   brazil_criteria: string; field_of_study: string | null; nationality: string | null;
@@ -39,6 +39,10 @@ const sourceLevelNames: Record<string, string> = {
   'Doctoral candidates/PhD students': 'Doutorandos',
   'Postdoctoral researchers': 'Pesquisadores de pós-doutorado',
   Faculty: 'Docentes',
+  'Degree and above': 'Graduação e níveis superiores',
+  Undergraduate: 'Graduação',
+  'Undergraduate (first year)': 'Graduação (primeiro ano)',
+  'Research postgraduate': 'Pós-graduação em pesquisa',
 }
 const studyLevel = (value: string | null) => value
   ? levelNames[value] || value.split(', ').map(item => sourceLevelNames[item] || item).join(', ')
@@ -60,6 +64,7 @@ const sourceName: Record<Scholarship['source'], string> = {
   global_admissions_belgium: 'Global Admissions · Bélgica',
   scholarshipsads_norway: 'ScholarshipsAds · Noruega',
   study_taiwan: 'Study in Taiwan · catálogo',
+  study_hong_kong: 'Study in Hong Kong · governo',
 }
 const observedDate = (value: string) => {
   const date = value.slice(0, 10).split('-')
@@ -82,8 +87,8 @@ function ScholarshipCard({ scholarship }: { scholarship: Scholarship }) {
       <div><dt>Nível de estudo</dt><dd>{studyLevel(scholarship.study_level)}</dd></div>
     </dl>
     <p className="sch-search__source">{scholarship.country_basis}. Fonte: {scholarship.source_label} · {scholarship.source === 'verified' ? 'verificada' : 'coletada'} em {observedDate(scholarship.observed_at)}. Confirme prazo e elegibilidade na página original.</p>
-    <div className="sch-search__links"><a className="sch-search__action" href={scholarship.source_url} target="_blank" rel="noreferrer">{scholarship.source === 'study_in_sweden' || scholarship.source === 'study_taiwan' ? 'Ver listagem original' : 'Ver página da bolsa'} <span aria-hidden="true">↗</span></a>
-      {scholarship.application_url && <a className="sch-search__action" href={scholarship.application_url} target="_blank" rel="noreferrer">{scholarship.source === 'spain_administration' ? 'Ver publicação oficial' : (scholarship.source === 'study_in_sweden' || scholarship.source === 'efg_finland' || scholarship.source === 'efg_denmark' || scholarship.source === 'global_admissions_belgium' || scholarship.source === 'study_taiwan') ? 'Ver página do provedor' : 'Consultar inscrição'} <span aria-hidden="true">↗</span></a>}</div>
+    <div className="sch-search__links"><a className="sch-search__action" href={scholarship.source_url} target="_blank" rel="noreferrer">{scholarship.source === 'study_in_sweden' || scholarship.source === 'study_taiwan' || scholarship.source === 'study_hong_kong' ? 'Ver listagem original' : 'Ver página da bolsa'} <span aria-hidden="true">↗</span></a>
+      {scholarship.application_url && <a className="sch-search__action" href={scholarship.application_url} target="_blank" rel="noreferrer">{scholarship.source === 'spain_administration' ? 'Ver publicação oficial' : scholarship.source === 'study_hong_kong' ? 'Ver página do financiador' : (scholarship.source === 'study_in_sweden' || scholarship.source === 'efg_finland' || scholarship.source === 'efg_denmark' || scholarship.source === 'global_admissions_belgium' || scholarship.source === 'study_taiwan') ? 'Ver página do provedor' : 'Consultar inscrição'} <span aria-hidden="true">↗</span></a>}</div>
   </li>
 }
 

@@ -339,6 +339,24 @@ const catalog = `WITH catalog AS (
   FROM study_taiwan_imports t
   WHERE t.catalog_status = 'listed' AND ($2 = '' OR $2 = 'taiwan')
 
+  UNION ALL
+
+  SELECT 'study_hong_kong', h.source_id, h.title, left(h.description, 420),
+    'Study in Hong Kong · Education Bureau', h.source_url, h.provider_url, h.fetched_at::text,
+    NULL::text,
+    CASE WHEN h.amount_reference_year IS NOT NULL THEN h.amount_reference_year || ': ' || h.amount_listing
+      ELSE h.amount_listing END,
+    'Descrita na fonte governamental; inscrição e prazo atuais não confirmados',
+    CASE WHEN h.nationality_listing ~ '^Students from (Indonesia|Malaysia|Thailand|Myanmar|Mongolia|Kazakhstan)$'
+      THEN 'Não: modalidade destinada a estudantes de ' || replace(h.nationality_listing, 'Students from ', '') || ' segundo a fonte'
+      WHEN h.nationality_listing = 'Students from Belt and Road countries'
+      THEN 'Brasil não confirmado entre os países elegíveis desta modalidade'
+      ELSE 'Brasil não citado nominalmente; confira os requisitos individuais' END,
+    NULL::text, h.nationality_listing, h.destination, h.study_level,
+    'Hong Kong indicado pelo Education Bureau; benefícios e candidatura devem ser confirmados no programa'
+  FROM study_hong_kong_imports h
+  WHERE h.catalog_status = 'listed' AND ($2 = '' OR $2 = 'hong-kong')
+
 )`
 
 export async function scholarshipCatalog(pool, params) {

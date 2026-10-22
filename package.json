@@ -42,6 +42,8 @@
     "data:import-scholarshipsads-norway": "node --env-file=.env.local scripts/import_scholarshipsads_norway.mjs",
     "data:scrape-study-taiwan": "node scripts/scrape_study_taiwan.mjs",
     "data:import-study-taiwan": "node --env-file=.env.local scripts/import_study_taiwan.mjs",
+    "data:scrape-study-hong-kong": "node scripts/scrape_study_hong_kong.mjs",
+    "data:import-study-hong-kong": "node --env-file=.env.local scripts/import_study_hong_kong.mjs",
     "data:verify-iefa": "node --env-file=.env.local scripts/verify_iefa_import.mjs",
     "admin:hash": "node scripts/hash_admin_password.mjs",
     "preview": "vite preview"
