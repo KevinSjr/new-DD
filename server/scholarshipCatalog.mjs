@@ -357,6 +357,34 @@ const catalog = `WITH catalog AS (
   FROM study_hong_kong_imports h
   WHERE h.catalog_status = 'listed' AND ($2 = '' OR $2 = 'hong-kong')
 
+  UNION ALL
+
+  SELECT 'scholarship_guide_singapore', s.source_id, s.title,
+    left(coalesce(s.description_listing, ''), 420),
+    'Scholarship Guide · Other Citizen', s.source_url, NULL::text, s.fetched_at::text,
+    CASE WHEN s.deadline_date IS NOT NULL THEN to_char(s.deadline_date, 'DD/MM/YYYY') || ' (fonte consultada)'
+      ELSE NULL END,
+    CASE WHEN length(s.award_value) > 700 THEN left(s.award_value, 700) || '… Consulte a ficha completa.'
+      ELSE s.award_value END,
+    CASE WHEN s.deadline_date < CURRENT_DATE THEN 'Prazo da edição listada encerrado; próxima edição não verificada'
+      WHEN s.deadline_date IS NOT NULL THEN 'Prazo futuro na fonte coletada; abertura atual não verificada'
+      WHEN s.status_listing = 'Application Cycle Closed' THEN 'Ciclo fechado segundo a fonte'
+      ELSE 'Prazo e abertura não informados pela fonte' END,
+    CASE WHEN s.title ILIKE 'ASEAN Undergraduate Scholarship%' OR
+      s.requirements ~* 'Only Malaysian citizens|citizens? of (an? )?ASEAN|citizens from ASEAN|Singapore Citizen or ASEAN Citizen|Singaporean / ASEAN|Singapore Citizens and citizens of ASEAN'
+      THEN 'Não: a ficha exige cidadania de país da ASEAN ou da Malásia'
+      WHEN s.requirements ILIKE '%Non-Singaporeans are required to have obtained Singapore citizenship%'
+      THEN 'Exige cidadania de Singapura antes do início; confira a ficha'
+      WHEN s.requirements ILIKE '%Open to all nationalities%' OR s.requirements ILIKE '%All nationalities%'
+      THEN 'Todas as nacionalidades mencionadas na ficha; demais requisitos não verificados'
+      ELSE 'Other Citizen na listagem; elegibilidade brasileira individual não confirmada' END,
+    CASE WHEN s.course_of_study = 'All Courses' THEN 'Todas as áreas'
+      ELSE s.course_of_study END,
+    s.nationality_listing, s.locations, s.student_level,
+    'Singapura indicada em Locations; outras exigências e possíveis destinos devem ser conferidos na ficha'
+  FROM scholarship_guide_singapore_imports s
+  WHERE s.catalog_status = 'listed' AND ($2 = '' OR $2 = 'singapura')
+
 )`
 
 export async function scholarshipCatalog(pool, params) {

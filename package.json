@@ -44,6 +44,8 @@
     "data:import-study-taiwan": "node --env-file=.env.local scripts/import_study_taiwan.mjs",
     "data:scrape-study-hong-kong": "node scripts/scrape_study_hong_kong.mjs",
     "data:import-study-hong-kong": "node --env-file=.env.local scripts/import_study_hong_kong.mjs",
+    "data:scrape-scholarship-guide-singapore": "node scripts/scrape_scholarship_guide_singapore.mjs",
+    "data:import-scholarship-guide-singapore": "node --env-file=.env.local scripts/import_scholarship_guide_singapore.mjs",
     "data:verify-iefa": "node --env-file=.env.local scripts/verify_iefa_import.mjs",
     "admin:hash": "node scripts/hash_admin_password.mjs",
     "preview": "vite preview"
