@@ -1,4 +1,4 @@
-# Daydreaming
+# Daydreaming.
 
 Plataforma em desenvolvimento para estudantes brasileiros explorarem oportunidades de estudo no exterior. Este projeto usa React, TypeScript e Vite.
 
