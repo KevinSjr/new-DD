@@ -7,8 +7,8 @@ type Question = {
   id: number; form_code: FormCode; section: SatSection; module_number: number; question_number: number;
   passage: string; prompt: string; choices: { key: string; text: string }[]; answer_type: 'multiple-choice' | 'numeric'; image_path: string | null
 }
-type FormCode = 'practice-4-paper' | 'practice-5-paper' | 'practice-6-paper' | 'practice-7-paper' | 'practice-8-paper'
-const formCodes: FormCode[] = ['practice-4-paper', 'practice-5-paper', 'practice-6-paper', 'practice-7-paper', 'practice-8-paper']
+type FormCode = 'practice-4-paper' | 'practice-5-paper' | 'practice-6-paper' | 'practice-7-paper' | 'practice-8-paper' | 'practice-9-paper'
+const formCodes: FormCode[] = ['practice-4-paper', 'practice-5-paper', 'practice-6-paper', 'practice-7-paper', 'practice-8-paper', 'practice-9-paper']
 const testNumber = (formCode: FormCode) => formCode.split('-')[1]
 type SatSection = 'reading-writing' | 'math'
 type DailyState = { available: boolean; section?: SatSection; needed?: number; published?: number; lives: number; maxLives: number; total: number; answered: number; correct: number; finished: boolean; question: Question | null; feedback?: { correct: boolean; acceptedAnswers: string[]; explanation: string } }
@@ -62,10 +62,10 @@ export function SatHomePage() {
       <p>Escolha um treino curto com sóis ou reserve tempo para um simulado completo. Seus acertos aqui não geram pontuação oficial do SAT.</p></header>
     <div className="sat-page__modes">
       <section className="sat-page__mode"><span aria-hidden="true" className="sat-page__symbol">☀</span><h2>Desafio diário</h2>
-        <p>Escolha Leitura e escrita ou Matemática. Cada área oferece cinco questões e três sóis por dia, misturando questões dos testes 4, 5, 6, 7 e 8. Seu progresso fica associado a um cookie anônimo neste navegador.</p>
+        <p>Escolha Leitura e escrita ou Matemática. Cada área oferece cinco questões e três sóis por dia, misturando questões dos testes 4 a 9. Seu progresso fica associado a um cookie anônimo neste navegador.</p>
         <Link className="sat-page__button" to="/exames/sat/desafio-diario">Escolher área do desafio</Link></section>
       <section className="sat-page__mode"><span aria-hidden="true" className="sat-page__symbol">◷</span><h2>Modo exame</h2>
-        <p>Escolha o teste prático nº 4, 5, 6, 7 ou 8. Cada um tem quatro módulos e 120 questões em papel; nenhum reproduz o SAT digital adaptativo.</p>
+        <p>Escolha um dos testes práticos nº 4 a 9. Cada um tem quatro módulos e 120 questões em papel; nenhum reproduz o SAT digital adaptativo.</p>
         <p className="sat-page__availability" aria-live="polite">{error || (availability ? availability.map(item => `Teste ${testNumber(item.formCode)}: ${item.ready ? 'pronto' : `${item.modules.reduce((sum, module) => sum + module.published, 0)}/120 publicadas`}`).join(' · ') : 'Conferindo questões…')}</p>
         <Link className="sat-page__button sat-page__button--secondary" to="/exames/sat/simulado">Escolher teste completo</Link></section>
     </div>
@@ -116,7 +116,7 @@ export function SatDailyPage() {
         <button className="sat-page__button" disabled={busy || !answer.trim()} onClick={submit}>{busy ? 'Conferindo…' : 'Responder'}</button>
       </>}
     </div>}
-    <p className="sat-page__note">As questões vêm das adaptações em papel dos testes práticos nº 4, nº 5, nº 6, nº 7 e nº 8. O desafio não mede sua pontuação oficial no SAT.</p>
+    <p className="sat-page__note">As questões vêm das adaptações em papel dos testes práticos nº 4 a nº 9. O desafio não mede sua pontuação oficial no SAT.</p>
   </main>
 }
 
@@ -211,13 +211,14 @@ export function SatExamPage() {
     return () => window.clearTimeout(timeout)
   }, [started, deadline, grade, breakTime, beginModule, nextModule])
   return <main className="sat-page container"><nav className="sat-page__breadcrumb"><Link to="/exames/sat">SAT</Link><span aria-hidden="true">/</span><span aria-current="page">Modo exame</span></nav>
-    <header className="sat-page__header"><p className="sat-page__eyebrow">Prática em tempo real</p><h1>Simulado completo</h1><p>Escolha uma das reproduções não adaptativas dos testes práticos em papel nº 4, nº 5, nº 6, nº 7 e nº 8. Ao terminar, você verá acertos e uma faixa estimada, nunca uma nota SAT oficial.</p></header>
+    <header className="sat-page__header"><p className="sat-page__eyebrow">Prática em tempo real</p><h1>Simulado completo</h1><p>Escolha uma das reproduções não adaptativas dos testes práticos em papel nº 4 a nº 9. Ao terminar, você verá acertos e uma faixa estimada, nunca uma nota SAT oficial.</p></header>
     {!formCode && <div className="sat-page__exam-choices">
       <section className="sat-page__panel"><h2>Teste prático nº 4</h2><p>120 questões e relatório com a tabela de conversão própria do teste nº 4.</p><button className="sat-page__button" onClick={() => chooseForm('practice-4-paper')}>Preparar teste 4</button></section>
       <section className="sat-page__panel"><h2>Teste prático nº 5</h2><p>120 questões e o mesmo formato de relatório, com a tabela de conversão própria do teste nº 5.</p><button className="sat-page__button" onClick={() => chooseForm('practice-5-paper')}>Preparar teste 5</button></section>
       <section className="sat-page__panel"><h2>Teste prático nº 6</h2><p>120 questões e o mesmo formato de relatório, com a tabela de conversão própria do teste nº 6.</p><button className="sat-page__button" onClick={() => chooseForm('practice-6-paper')}>Preparar teste 6</button></section>
       <section className="sat-page__panel"><h2>Teste prático nº 7</h2><p>120 questões e o mesmo formato de relatório, com a tabela de conversão própria do teste nº 7.</p><button className="sat-page__button" onClick={() => chooseForm('practice-7-paper')}>Preparar teste 7</button></section>
       <section className="sat-page__panel"><h2>Teste prático nº 8</h2><p>120 questões e o mesmo formato de relatório, com a tabela de conversão própria do teste nº 8.</p><button className="sat-page__button" onClick={() => chooseForm('practice-8-paper')}>Preparar teste 8</button></section>
+      <section className="sat-page__panel"><h2>Teste prático nº 9</h2><p>120 questões e o mesmo formato de relatório, com a tabela de conversão própria do teste nº 9.</p><button className="sat-page__button" onClick={() => chooseForm('practice-9-paper')}>Preparar teste 9</button></section>
     </div>}
     {formCode && !started && <button className="sat-page__change" onClick={() => { ++requestId.current; setFormCode(null); setExam(null); setError(''); setLoading(false) }}>Escolher outra versão</button>}
     {error && <p role="alert" className="sat-page__alert">{error}</p>}

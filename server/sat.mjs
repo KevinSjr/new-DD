@@ -1,11 +1,11 @@
 import { createHash, randomBytes } from 'node:crypto'
 import { database } from './db.mjs'
-import { SAT_SCORING_SOURCE, SAT_SCORING_SOURCE_5, SAT_SCORING_SOURCE_6, SAT_SCORING_SOURCE_7, SAT_SCORING_SOURCE_8, scorePractice4, scorePractice5, scorePractice6, scorePractice7, scorePractice8 } from './satScoring.mjs'
+import { SAT_SCORING_SOURCE, SAT_SCORING_SOURCE_5, SAT_SCORING_SOURCE_6, SAT_SCORING_SOURCE_7, SAT_SCORING_SOURCE_8, SAT_SCORING_SOURCE_9, scorePractice4, scorePractice5, scorePractice6, scorePractice7, scorePractice8, scorePractice9 } from './satScoring.mjs'
 
 export const DAILY_COUNT = 5
 export const DAILY_LIVES = 3
 const FORM_CODE = 'practice-4-paper'
-export const SAT_FORMS = ['practice-4-paper', 'practice-5-paper', 'practice-6-paper', 'practice-7-paper', 'practice-8-paper']
+export const SAT_FORMS = ['practice-4-paper', 'practice-5-paper', 'practice-6-paper', 'practice-7-paper', 'practice-8-paper', 'practice-9-paper']
 export const SAT_SECTIONS = ['reading-writing', 'math']
 const SOURCE = 'https://satsuite.collegeboard.org/media/pdf/sat-practice-test-4-digital.pdf'
 const publicFields = 'id,form_code,section,module_number,question_number,passage,prompt,choices,answer_type,image_path'
@@ -188,13 +188,13 @@ export async function gradeExam(input) {
       modules.find(item => item.section === row.section && item.moduleNumber === row.module_number).correct++
     }
   }
-  const score = { 'practice-4-paper':scorePractice4, 'practice-5-paper':scorePractice5, 'practice-6-paper':scorePractice6, 'practice-7-paper':scorePractice7, 'practice-8-paper':scorePractice8 }[formCode]
+  const score = { 'practice-4-paper':scorePractice4, 'practice-5-paper':scorePractice5, 'practice-6-paper':scorePractice6, 'practice-7-paper':scorePractice7, 'practice-8-paper':scorePractice8, 'practice-9-paper':scorePractice9 }[formCode]
   const ranges = score(sections['reading-writing'].correct, sections.math.correct)
   sections['reading-writing'].scoreRange = ranges.readingWriting
   sections.math.scoreRange = ranges.math
   return {
     formCode, sections, modules, correct:sections['reading-writing'].correct + sections.math.correct, total:120,
-    scoreRange:ranges.total, scoringSource:{ 'practice-4-paper':SAT_SCORING_SOURCE, 'practice-5-paper':SAT_SCORING_SOURCE_5, 'practice-6-paper':SAT_SCORING_SOURCE_6, 'practice-7-paper':SAT_SCORING_SOURCE_7, 'practice-8-paper':SAT_SCORING_SOURCE_8 }[formCode],
+    scoreRange:ranges.total, scoringSource:{ 'practice-4-paper':SAT_SCORING_SOURCE, 'practice-5-paper':SAT_SCORING_SOURCE_5, 'practice-6-paper':SAT_SCORING_SOURCE_6, 'practice-7-paper':SAT_SCORING_SOURCE_7, 'practice-8-paper':SAT_SCORING_SOURCE_8, 'practice-9-paper':SAT_SCORING_SOURCE_9 }[formCode],
     note:'Faixas estimadas pela tabela do College Board específica deste teste prático em papel. Não são uma nota oficial nem reproduzem a correção adaptativa do SAT digital.',
   }
 }
