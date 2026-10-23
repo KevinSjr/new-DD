@@ -196,13 +196,13 @@ const server = createServer(async (req, res) => {
     if (req.method === 'GET' && url.pathname === '/api/scholarship-leads') return json(res, 200, await scholarshipLeads(url.searchParams))
     if (req.method === 'GET' && url.pathname === '/api/scholarship-america-leads') return json(res, 200, await scholarshipAmericaLeads(url.searchParams))
     if (req.method === 'GET' && url.pathname === '/api/scholarship-catalog') return json(res, 200, await scholarshipCatalog(database(), url.searchParams))
-    if (req.method === 'GET' && url.pathname === '/api/sat/daily') return json(res, 200, await getDaily(req, res))
+    if (req.method === 'GET' && url.pathname === '/api/sat/daily') return json(res, 200, await getDaily(req, res, url.searchParams.get('section') || 'reading-writing'))
     if (req.method === 'POST' && url.pathname === '/api/sat/daily/answer') {
       if (!originAllowed(req)) return json(res, 403, { error:'Origem não permitida.' })
       return json(res, 200, await answerDaily(req, await body(req)))
     }
-    if (req.method === 'GET' && url.pathname === '/api/sat/exam/availability') return json(res, 200, await examAvailability())
-    if (req.method === 'GET' && url.pathname === '/api/sat/exam') return json(res, 200, await getExam())
+    if (req.method === 'GET' && url.pathname === '/api/sat/exam/availability') return json(res, 200, await examAvailability(url.searchParams.get('form') || undefined))
+    if (req.method === 'GET' && url.pathname === '/api/sat/exam') return json(res, 200, await getExam(url.searchParams.get('form') || undefined))
     if (req.method === 'POST' && url.pathname === '/api/sat/exam/grade') {
       if (!originAllowed(req)) return json(res, 403, { error:'Origem não permitida.' })
       return json(res, 200, await gradeExam(await body(req)))

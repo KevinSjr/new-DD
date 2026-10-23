@@ -5,6 +5,9 @@
 .sat-page__header h1 { font-size: clamp(2rem, 5vw, var(--text-4xl)); margin-block: var(--space-2) var(--space-4); }
 .sat-page__header > p:last-child, .sat-page__mode p, .sat-page__note { color: var(--color-ink-muted); }
 .sat-page__modes { display: grid; gap: var(--space-5); }
+.sat-page__exam-choices { display: grid; gap: var(--space-5); margin-bottom: var(--space-5); }
+.sat-page__section-choices { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-5); }
+.sat-page__change { margin-bottom: var(--space-5); border: 0; padding: var(--space-2) 0; background: transparent; color: var(--color-primary-ink); font: inherit; font-weight: 700; text-decoration: underline; cursor: pointer; }
 .sat-page__mode, .sat-page__panel { min-width: 0; padding: var(--space-5); border: 2px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface); box-shadow: var(--shadow-soft); }
 .sat-page__mode h2, .sat-page__panel h2 { font-size: var(--text-xl); margin: var(--space-3) 0; }
 .sat-page__symbol { display: inline-grid; place-items: center; width: 3.25rem; height: 3.25rem; border-radius: var(--radius-lg); background: var(--color-accent-soft); color: var(--color-warning-text); font-size: 2rem; }
@@ -56,3 +59,4 @@
 .sat-report__method p { color: var(--color-ink-muted); }
 @media (min-width: 48em) { .sat-report__sections { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 48em) { .sat-page__modes { grid-template-columns: repeat(2, minmax(0, 1fr)); } .sat-page__mode, .sat-page__panel { padding: var(--space-7); } }
+@media (min-width: 48em) { .sat-page__exam-choices { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { validateSatQuestion } from '../server/sat.mjs'
-import { scorePractice4, scoreRangeForRaw } from '../server/satScoring.mjs'
+import { scorePractice4, scorePractice5, scoreRangeForRaw, SAT_SCORING_SOURCE_5 } from '../server/satScoring.mjs'
 
 const valid = {
   section:'reading-writing', module_number:1, question_number:1, passage:'Short passage', prompt:'Which choice is best?',
@@ -14,6 +14,11 @@ test('uma questão completa pode ser publicada', () => {
   const result = validateSatQuestion(valid)
   assert.equal(result.error, undefined)
   assert.equal(result.data.accepted_answers[0], 'B')
+})
+
+test('CRUD distingue as versões 4 e 5', () => {
+  assert.equal(validateSatQuestion({ ...valid, form_code:'practice-5-paper' }).data.form_code, 'practice-5-paper')
+  assert.match(validateSatQuestion({ ...valid, form_code:'practice-6-paper' }).error, /Versão/)
 })
 
 test('publicação sem explicação é bloqueada', () => {
@@ -56,47 +61,82 @@ test('tabela respeita pontos de mudança e limites de cada seção', () => {
   assert.throws(() => scoreRangeForRaw('reading-writing', -1), RangeError)
 })
 
+test('teste 5 mantém as mesmas métricas com sua própria tabela oficial', () => {
+  assert.match(SAT_SCORING_SOURCE_5, /scoring-sat-practice-test-5-digital\.pdf$/)
+  assert.deepEqual(scorePractice5(0, 0), {
+    readingWriting:{ lower:200, upper:200 }, math:{ lower:200, upper:200 }, total:{ lower:400, upper:400 },
+  })
+  assert.deepEqual(scorePractice5(66, 54), {
+    readingWriting:{ lower:790, upper:800 }, math:{ lower:790, upper:800 }, total:{ lower:1580, upper:1600 },
+  })
+  assert.deepEqual(scoreRangeForRaw('reading-writing', 33, 'practice-5-paper'), { lower:450, upper:490 })
+  assert.deepEqual(scoreRangeForRaw('math', 33, 'practice-5-paper'), { lower:490, upper:550 })
+  assert.deepEqual(scoreRangeForRaw('math', 54, 'practice-5-paper'), { lower:790, upper:800 })
+  assert.throws(() => scoreRangeForRaw('math', 0, 'practice-6-paper'), RangeError)
+})
+
 if (process.env.SAT_API_URL) {
   const origin = process.env.SAT_API_URL
   test('desafio diário no banco: questão sem gabarito, resposta e perda de sol', async () => {
-    const initialResponse = await fetch(`${origin}/api/sat/daily`)
+    const initialResponse = await fetch(`${origin}/api/sat/daily?section=reading-writing`)
     assert.equal(initialResponse.status, 200)
     const cookie = initialResponse.headers.get('set-cookie')?.split(';')[0]
     assert.ok(cookie)
     const initial = await initialResponse.json()
     assert.equal(initial.available, true)
     assert.equal(initial.total, 5)
+    assert.equal(initial.section, 'reading-writing')
+    assert.equal(initial.question.section, 'reading-writing')
     assert.equal('accepted_answers' in initial.question, false)
+    const mathResponse = await fetch(`${origin}/api/sat/daily?section=math`, { headers:{ Cookie:cookie } })
+    assert.equal(mathResponse.status, 200)
+    const math = await mathResponse.json()
+    assert.equal(math.section, 'math')
+    assert.equal(math.question.section, 'math')
+    assert.equal(math.lives, 3)
     const answerResponse = await fetch(`${origin}/api/sat/daily/answer`, {
       method:'POST', headers:{ Cookie:cookie, Origin:origin, 'Content-Type':'application/json' },
-      body:JSON.stringify({ questionId:initial.question.id, answer:'Z' }),
+      body:JSON.stringify({ section:'reading-writing', questionId:initial.question.id, answer:'Z' }),
     })
     assert.equal(answerResponse.status, 200)
     const after = await answerResponse.json()
     assert.equal(after.lives, 2)
     assert.equal(after.answered, 1)
     assert.equal(after.feedback.correct, false)
+    const mathAgain = await fetch(`${origin}/api/sat/daily?section=math`, { headers:{ Cookie:cookie } }).then(result => result.json())
+    assert.equal(mathAgain.lives, 3)
+    assert.equal(mathAgain.answered, 0)
     const replay = await fetch(`${origin}/api/sat/daily/answer`, {
       method:'POST', headers:{ Cookie:cookie, Origin:origin, 'Content-Type':'application/json' },
-      body:JSON.stringify({ questionId:initial.question.id, answer:'A' }),
+      body:JSON.stringify({ section:'reading-writing', questionId:initial.question.id, answer:'A' }),
     })
     assert.equal(replay.status, 409)
     const foreignOrigin = await fetch(`${origin}/api/sat/daily/answer`, {
       method:'POST', headers:{ Cookie:cookie, Origin:'https://example.com', 'Content-Type':'application/json' },
-      body:JSON.stringify({ questionId:initial.question.id, answer:'A' }),
+      body:JSON.stringify({ section:'reading-writing', questionId:initial.question.id, answer:'A' }),
     })
     assert.equal(foreignOrigin.status, 403)
   })
   test('API retorna relatório de faixa com seções e módulos', async () => {
-    const response = await fetch(`${origin}/api/sat/exam/grade`, {
-      method:'POST', headers:{ Origin:origin, 'Content-Type':'application/json' }, body:JSON.stringify({ answers:[] }),
-    })
-    assert.equal(response.status, 200)
-    const report = await response.json()
-    assert.deepEqual(report.scoreRange, { lower:400, upper:400 })
-    assert.deepEqual(report.sections['reading-writing'].scoreRange, { lower:200, upper:200 })
-    assert.deepEqual(report.sections.math.scoreRange, { lower:200, upper:200 })
-    assert.deepEqual(report.modules.map(item => item.correct), [0, 0, 0, 0])
-    assert.match(report.scoringSource, /^https:\/\//)
+    for (const formCode of ['practice-4-paper', 'practice-5-paper']) {
+      const examResponse = await fetch(`${origin}/api/sat/exam?form=${formCode}`)
+      assert.equal(examResponse.status, 200)
+      const exam = await examResponse.json()
+      assert.equal(exam.ready, true)
+      assert.equal(exam.questions.length, 120)
+      assert.ok(exam.questions.every(question => question.form_code === formCode))
+      const response = await fetch(`${origin}/api/sat/exam/grade`, {
+        method:'POST', headers:{ Origin:origin, 'Content-Type':'application/json' }, body:JSON.stringify({ formCode, answers:[] }),
+      })
+      assert.equal(response.status, 200)
+      const report = await response.json()
+      assert.equal(report.formCode, formCode)
+      assert.deepEqual(report.scoreRange, { lower:400, upper:400 })
+      assert.deepEqual(report.sections['reading-writing'].scoreRange, { lower:200, upper:200 })
+      assert.deepEqual(report.sections.math.scoreRange, { lower:200, upper:200 })
+      assert.deepEqual(report.modules.map(item => item.correct), [0, 0, 0, 0])
+      assert.match(report.scoringSource, /^https:\/\//)
+      assert.equal(report.scoringSource.includes(`test-${formCode === 'practice-5-paper' ? '5' : '4'}-digital.pdf`), true)
+    }
   })
 }
