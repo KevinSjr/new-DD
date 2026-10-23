@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { validateSatQuestion } from '../server/sat.mjs'
-import { scorePractice4, scorePractice5, scorePractice6, scoreRangeForRaw, SAT_SCORING_SOURCE_5, SAT_SCORING_SOURCE_6 } from '../server/satScoring.mjs'
+import { scorePractice4, scorePractice5, scorePractice6, scorePractice7, scoreRangeForRaw, SAT_SCORING_SOURCE_5, SAT_SCORING_SOURCE_6, SAT_SCORING_SOURCE_7 } from '../server/satScoring.mjs'
 
 const valid = {
   section:'reading-writing', module_number:1, question_number:1, passage:'Short passage', prompt:'Which choice is best?',
@@ -16,10 +16,11 @@ test('uma questão completa pode ser publicada', () => {
   assert.equal(result.data.accepted_answers[0], 'B')
 })
 
-test('CRUD distingue as versões 4, 5 e 6', () => {
+test('CRUD distingue as versões 4, 5, 6 e 7', () => {
   assert.equal(validateSatQuestion({ ...valid, form_code:'practice-5-paper' }).data.form_code, 'practice-5-paper')
   assert.equal(validateSatQuestion({ ...valid, form_code:'practice-6-paper' }).data.form_code, 'practice-6-paper')
-  assert.match(validateSatQuestion({ ...valid, form_code:'practice-7-paper' }).error, /Versão/)
+  assert.equal(validateSatQuestion({ ...valid, form_code:'practice-7-paper' }).data.form_code, 'practice-7-paper')
+  assert.match(validateSatQuestion({ ...valid, form_code:'practice-8-paper' }).error, /Versão/)
 })
 
 test('publicação sem explicação é bloqueada', () => {
@@ -73,7 +74,7 @@ test('teste 5 mantém as mesmas métricas com sua própria tabela oficial', () =
   assert.deepEqual(scoreRangeForRaw('reading-writing', 33, 'practice-5-paper'), { lower:450, upper:490 })
   assert.deepEqual(scoreRangeForRaw('math', 33, 'practice-5-paper'), { lower:490, upper:550 })
   assert.deepEqual(scoreRangeForRaw('math', 54, 'practice-5-paper'), { lower:790, upper:800 })
-  assert.throws(() => scoreRangeForRaw('math', 0, 'practice-7-paper'), RangeError)
+  assert.throws(() => scoreRangeForRaw('math', 0, 'practice-8-paper'), RangeError)
 })
 
 test('teste 6 usa sua tabela oficial sem mudar as métricas do relatório', () => {
@@ -87,6 +88,19 @@ test('teste 6 usa sua tabela oficial sem mudar as métricas do relatório', () =
   assert.deepEqual(scoreRangeForRaw('reading-writing', 33, 'practice-6-paper'), { lower:470, upper:510 })
   assert.deepEqual(scoreRangeForRaw('math', 33, 'practice-6-paper'), { lower:510, upper:540 })
   assert.deepEqual(scoreRangeForRaw('reading-writing', 41, 'practice-6-paper'), { lower:530, upper:590 })
+})
+
+test('teste 7 usa sua tabela oficial sem mudar as métricas do relatório', () => {
+  assert.match(SAT_SCORING_SOURCE_7, /scoring-sat-practice-test-7-digital\.pdf$/)
+  assert.deepEqual(scorePractice7(0, 0), {
+    readingWriting:{ lower:200, upper:200 }, math:{ lower:200, upper:200 }, total:{ lower:400, upper:400 },
+  })
+  assert.deepEqual(scorePractice7(66, 54), {
+    readingWriting:{ lower:800, upper:800 }, math:{ lower:800, upper:800 }, total:{ lower:1600, upper:1600 },
+  })
+  assert.deepEqual(scoreRangeForRaw('reading-writing', 33, 'practice-7-paper'), { lower:420, upper:460 })
+  assert.deepEqual(scoreRangeForRaw('math', 33, 'practice-7-paper'), { lower:500, upper:560 })
+  assert.deepEqual(scoreRangeForRaw('math', 54, 'practice-7-paper'), { lower:800, upper:800 })
 })
 
 if (process.env.SAT_API_URL) {
@@ -132,7 +146,7 @@ if (process.env.SAT_API_URL) {
     assert.equal(foreignOrigin.status, 403)
   })
   test('API retorna relatório de faixa com seções e módulos', async () => {
-    for (const formCode of ['practice-4-paper', 'practice-5-paper', 'practice-6-paper']) {
+    for (const formCode of ['practice-4-paper', 'practice-5-paper', 'practice-6-paper', 'practice-7-paper']) {
       const examResponse = await fetch(`${origin}/api/sat/exam?form=${formCode}`)
       assert.equal(examResponse.status, 200)
       const exam = await examResponse.json()
