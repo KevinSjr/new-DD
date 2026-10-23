@@ -7,7 +7,9 @@ type Question = {
   id: number; form_code: FormCode; section: SatSection; module_number: number; question_number: number;
   passage: string; prompt: string; choices: { key: string; text: string }[]; answer_type: 'multiple-choice' | 'numeric'; image_path: string | null
 }
-type FormCode = 'practice-4-paper' | 'practice-5-paper'
+type FormCode = 'practice-4-paper' | 'practice-5-paper' | 'practice-6-paper'
+const formCodes: FormCode[] = ['practice-4-paper', 'practice-5-paper', 'practice-6-paper']
+const testNumber = (formCode: FormCode) => formCode.split('-')[1]
 type SatSection = 'reading-writing' | 'math'
 type DailyState = { available: boolean; section?: SatSection; needed?: number; published?: number; lives: number; maxLives: number; total: number; answered: number; correct: number; finished: boolean; question: Question | null; feedback?: { correct: boolean; acceptedAnswers: string[]; explanation: string } }
 type ExamState = { formCode: FormCode; ready: boolean; modules: { section: string; module_number: number; total: number; published: number; minutes: number }[]; questions: Question[] }
@@ -29,7 +31,7 @@ async function api<T>(path: string, init?: RequestInit): Promise<T> {
 
 function QuestionView({ question, answer, onAnswer }: { question: Question; answer: string; onAnswer: (answer: string) => void }) {
   return <div className="sat-question" key={question.id}>
-    <p className="sat-question__label">Teste {question.form_code === 'practice-5-paper' ? '5' : '4'} · {question.section === 'math' ? 'Matemática' : 'Leitura e escrita'} · Módulo {question.module_number} · Questão {question.question_number}</p>
+    <p className="sat-question__label">Teste {testNumber(question.form_code)} · {question.section === 'math' ? 'Matemática' : 'Leitura e escrita'} · Módulo {question.module_number} · Questão {question.question_number}</p>
     {question.image_path ? <>
       <div className="sat-question__image-frame" tabIndex={0} role="region" aria-label={`Questão ${question.question_number}: deslize ou use as setas para ler a imagem completa`}>
         <img className="sat-question__image" src={question.image_path} alt={`Enunciado original da questão ${question.question_number}. Há uma transcrição em texto a seguir.`} />
@@ -53,18 +55,18 @@ export function SatHomePage() {
   useDocumentTitle('SAT: escolha seu modo | Daydreaming')
   const [availability, setAvailability] = useState<ExamState[] | null>(null)
   const [error, setError] = useState('')
-  useEffect(() => { Promise.all(['practice-4-paper', 'practice-5-paper'].map(form => api<ExamState>(`/api/sat/exam/availability?form=${form}`))).then(setAvailability).catch(cause => setError(String(cause.message))) }, [])
+  useEffect(() => { Promise.all(formCodes.map(form => api<ExamState>(`/api/sat/exam/availability?form=${form}`))).then(setAvailability).catch(cause => setError(String(cause.message))) }, [])
   return <main className="sat-page container">
     <nav className="sat-page__breadcrumb" aria-label="Você está em"><Link to="/exames">Exames</Link><span aria-hidden="true">/</span><span aria-current="page">SAT</span></nav>
     <header className="sat-page__header"><p className="sat-page__eyebrow">SAT · preparação</p><h1>Como você quer praticar hoje?</h1>
       <p>Escolha um treino curto com sóis ou reserve tempo para um simulado completo. Seus acertos aqui não geram pontuação oficial do SAT.</p></header>
     <div className="sat-page__modes">
       <section className="sat-page__mode"><span aria-hidden="true" className="sat-page__symbol">☀</span><h2>Desafio diário</h2>
-        <p>Escolha Leitura e escrita ou Matemática. Cada área oferece cinco questões e três sóis por dia, misturando questões dos testes 4 e 5. Seu progresso fica associado a um cookie anônimo neste navegador.</p>
+        <p>Escolha Leitura e escrita ou Matemática. Cada área oferece cinco questões e três sóis por dia, misturando questões dos testes 4, 5 e 6. Seu progresso fica associado a um cookie anônimo neste navegador.</p>
         <Link className="sat-page__button" to="/exames/sat/desafio-diario">Escolher área do desafio</Link></section>
       <section className="sat-page__mode"><span aria-hidden="true" className="sat-page__symbol">◷</span><h2>Modo exame</h2>
-        <p>Escolha o teste prático nº 4 ou nº 5. Cada um tem quatro módulos e 120 questões em papel; nenhum reproduz o SAT digital adaptativo.</p>
-        <p className="sat-page__availability" aria-live="polite">{error || (availability ? availability.map(item => `Teste ${item.formCode === 'practice-5-paper' ? '5' : '4'}: ${item.ready ? 'pronto' : `${item.modules.reduce((sum, module) => sum + module.published, 0)}/120 publicadas`}`).join(' · ') : 'Conferindo questões…')}</p>
+        <p>Escolha o teste prático nº 4, 5 ou 6. Cada um tem quatro módulos e 120 questões em papel; nenhum reproduz o SAT digital adaptativo.</p>
+        <p className="sat-page__availability" aria-live="polite">{error || (availability ? availability.map(item => `Teste ${testNumber(item.formCode)}: ${item.ready ? 'pronto' : `${item.modules.reduce((sum, module) => sum + module.published, 0)}/120 publicadas`}`).join(' · ') : 'Conferindo questões…')}</p>
         <Link className="sat-page__button sat-page__button--secondary" to="/exames/sat/simulado">Escolher teste completo</Link></section>
     </div>
     <p className="sat-page__note">O SAT digital atual tem 54 questões de Reading and Writing em 64 minutos e 44 de Math em 70 minutos, divididas em dois módulos por seção. O segundo módulo é adaptativo; esta plataforma ainda não reproduz essa adaptação. <a href="https://satsuite.collegeboard.org/sat/whats-on-the-test/structure" target="_blank" rel="noopener noreferrer">Confira o formato no College Board<span className="sr-only"> (abre em nova aba)</span></a>.</p>
@@ -114,7 +116,7 @@ export function SatDailyPage() {
         <button className="sat-page__button" disabled={busy || !answer.trim()} onClick={submit}>{busy ? 'Conferindo…' : 'Responder'}</button>
       </>}
     </div>}
-    <p className="sat-page__note">As questões vêm das adaptações em papel dos testes práticos nº 4 e nº 5. O desafio não mede sua pontuação oficial no SAT.</p>
+    <p className="sat-page__note">As questões vêm das adaptações em papel dos testes práticos nº 4, nº 5 e nº 6. O desafio não mede sua pontuação oficial no SAT.</p>
   </main>
 }
 
@@ -124,7 +126,7 @@ function SatExamReport({ grade }: { grade: Grade }) {
     { key:'math' as const, title:'Matemática' },
   ]
   return <section className="sat-page__panel sat-report" aria-labelledby="sat-report-title" aria-live="polite">
-    <p className="sat-page__eyebrow">Fim do simulado · Teste {grade.formCode === 'practice-5-paper' ? '5' : '4'}</p>
+    <p className="sat-page__eyebrow">Fim do simulado · Teste {testNumber(grade.formCode)}</p>
     <h2 id="sat-report-title">Seu relatório final</h2>
     <div className="sat-report__summary">
       <p>Faixa total estimada neste teste prático</p>
@@ -209,18 +211,19 @@ export function SatExamPage() {
     return () => window.clearTimeout(timeout)
   }, [started, deadline, grade, breakTime, beginModule, nextModule])
   return <main className="sat-page container"><nav className="sat-page__breadcrumb"><Link to="/exames/sat">SAT</Link><span aria-hidden="true">/</span><span aria-current="page">Modo exame</span></nav>
-    <header className="sat-page__header"><p className="sat-page__eyebrow">Prática em tempo real</p><h1>Simulado completo</h1><p>Escolha uma das reproduções não adaptativas dos testes práticos em papel nº 4 e nº 5. Ao terminar, você verá acertos e uma faixa estimada, nunca uma nota SAT oficial.</p></header>
+    <header className="sat-page__header"><p className="sat-page__eyebrow">Prática em tempo real</p><h1>Simulado completo</h1><p>Escolha uma das reproduções não adaptativas dos testes práticos em papel nº 4, nº 5 e nº 6. Ao terminar, você verá acertos e uma faixa estimada, nunca uma nota SAT oficial.</p></header>
     {!formCode && <div className="sat-page__exam-choices">
       <section className="sat-page__panel"><h2>Teste prático nº 4</h2><p>120 questões e relatório com a tabela de conversão própria do teste nº 4.</p><button className="sat-page__button" onClick={() => chooseForm('practice-4-paper')}>Preparar teste 4</button></section>
       <section className="sat-page__panel"><h2>Teste prático nº 5</h2><p>120 questões e o mesmo formato de relatório, com a tabela de conversão própria do teste nº 5.</p><button className="sat-page__button" onClick={() => chooseForm('practice-5-paper')}>Preparar teste 5</button></section>
+      <section className="sat-page__panel"><h2>Teste prático nº 6</h2><p>120 questões e o mesmo formato de relatório, com a tabela de conversão própria do teste nº 6.</p><button className="sat-page__button" onClick={() => chooseForm('practice-6-paper')}>Preparar teste 6</button></section>
     </div>}
     {formCode && !started && <button className="sat-page__change" onClick={() => { ++requestId.current; setFormCode(null); setExam(null); setError(''); setLoading(false) }}>Escolher outra versão</button>}
     {error && <p role="alert" className="sat-page__alert">{error}</p>}
-    {loading && <p>Conferindo as questões do teste {formCode === 'practice-5-paper' ? '5' : '4'}…</p>}
+    {loading && formCode && <p>Conferindo as questões do teste {testNumber(formCode)}…</p>}
     {exam && !exam.ready && <div className="sat-page__panel"><h2>Simulado em preparação</h2><p>Para começar, precisamos publicar todas as 120 questões e respostas verificadas do material enviado.</p>
       <ul>{exam.modules.map(item => <li key={`${item.section}-${item.module_number}`}>{item.section === 'math' ? 'Matemática' : 'Leitura e escrita'}, módulo {item.module_number}: {item.published}/{item.total}</li>)}</ul>
       <p>Enquanto isso, o <Link to="/exames/sat/desafio-diario">desafio diário</Link> já pode ser praticado.</p></div>}
-    {exam?.ready && !started && <div className="sat-page__panel"><h2>Antes de iniciar · Teste {formCode === 'practice-5-paper' ? '5' : '4'}</h2><p>Quatro módulos: 33 questões de Reading and Writing em 39 minutos cada, 10 minutos de intervalo, e 27 questões de Math em 43 minutos cada. São os tempos da versão em papel enviada, não do SAT digital atual.</p><p>O progresso deste simulado não é salvo. Se recarregar a página, precisará recomeçar.</p><button className="sat-page__button" onClick={() => { setStarted(true); beginModule(0) }}>Iniciar simulado</button></div>}
+    {exam?.ready && !started && formCode && <div className="sat-page__panel"><h2>Antes de iniciar · Teste {testNumber(formCode)}</h2><p>Quatro módulos: 33 questões de Reading and Writing em 39 minutos cada, 10 minutos de intervalo, e 27 questões de Math em 43 minutos cada. São os tempos da versão em papel enviada, não do SAT digital atual.</p><p>O progresso deste simulado não é salvo. Se recarregar a página, precisará recomeçar.</p><button className="sat-page__button" onClick={() => { setStarted(true); beginModule(0) }}>Iniciar simulado</button></div>}
     {started && !grade && breakTime && <div className="sat-page__panel"><h2>Intervalo</h2><p>Descanse antes de começar Matemática. Restam {Math.floor(remaining / 60)}:{String(remaining % 60).padStart(2, '0')}.</p><button className="sat-page__button" onClick={() => beginModule(2)}>Começar Matemática agora</button></div>}
     {started && !grade && !breakTime && question && <div className="sat-page__panel">
       <div className="sat-page__progress"><span>Módulo {moduleIndex + 1}/4 · Questão {questionIndex + 1}/{questions.length}</span><span aria-live="off">Tempo: {Math.floor(remaining / 60)}:{String(remaining % 60).padStart(2, '0')}</span></div>

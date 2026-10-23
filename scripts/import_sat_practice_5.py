@@ -16,8 +16,6 @@ from audit_sat_pdf import choice_texts, image_for_question, question_positions, 
 
 
 ROOT = Path(__file__).resolve().parent.parent
-FORM = "practice-5-paper"
-SOURCE = "https://satsuite.collegeboard.org/media/pdf/sat-practice-test-5-digital.pdf"
 SECTIONS = [
     ("reading-writing", 1, 4, 16, 33, 2, 17),
     ("reading-writing", 2, 18, 31, 33, 18, 33),
@@ -36,7 +34,7 @@ FULL_WIDTH_PAGES = {10, 24, 25, 26, 38}
 FINAL_PAGES = {16, 31, 41, 50}
 
 
-def answers_from_explanations(pdf, section, module, start, end, maximum):
+def answers_from_explanations(pdf, section, module, start, end, maximum, answer_key=KEY):
     joined = "\n".join(pdf[number - 1].get_text() for number in range(start, end + 1))
     parts = re.split(r"(?m)^\s*QUESTION\s+(\d+)\b", joined)
     found = {}
@@ -49,7 +47,7 @@ def answers_from_explanations(pdf, section, module, start, end, maximum):
     if sorted(found) != list(range(1, maximum + 1)):
         raise ValueError(f"Missing explanations for {section} {module}: {sorted(found)}")
     for number, content in found.items():
-        expected = KEY[(section, module)][number - 1].split(";")
+        expected = answer_key[(section, module)][number - 1].split(";")
         match = re.search(r"Choice\s+([A-D])\s+is\s+(?:the best answer|correct)", content, re.I)
         if match and (expected != [match.group(1)]):
             raise ValueError(f"Key mismatch {section} {module} #{number}: {expected} != {match.group(1)}")
@@ -58,32 +56,38 @@ def answers_from_explanations(pdf, section, module, start, end, maximum):
     return found
 
 
-def question_rect(positions, index):
+def question_rect(positions, index, full_width_pages=FULL_WIDTH_PAGES, final_pages=FINAL_PAGES):
     _, page_number, column, top = positions[index]
     next_top = next((item[3] for item in positions[index + 1:] if item[1] == page_number and item[2] == column), None)
-    bottom = next_top - 4 if next_top else (610 if page_number in FINAL_PAGES else 715)
-    if page_number in FULL_WIDTH_PAGES:
+    bottom = next_top - 4 if next_top else (610 if page_number in final_pages else 715)
+    if page_number in full_width_pages:
         return pymupdf.Rect(35, top - 3, 578, bottom)
     right = column == 1
     return pymupdf.Rect(316 if right else 35, top - 3, 578 if right else 294, bottom)
 
 
-def build(test_pdf, answers_pdf):
-    output = ROOT / "public" / "sat-assets" / "practice-5"
+def build(test_pdf, answers_pdf, *, test_number=5, sections=SECTIONS, answer_key=KEY,
+          full_width_pages=FULL_WIDTH_PAGES, final_pages=FINAL_PAGES, migration_number="030"):
+    form = f"practice-{test_number}-paper"
+    source = f"https://satsuite.collegeboard.org/media/pdf/sat-practice-test-{test_number}-digital.pdf"
+    output = ROOT / "public" / "sat-assets" / f"practice-{test_number}"
     output.mkdir(parents=True, exist_ok=True)
     rows = []
     fallbacks = []
-    for section, module, first, last, maximum, answer_first, answer_last in SECTIONS:
-        key = KEY[(section, module)]
+    for section, module, first, last, maximum, answer_first, answer_last in sections:
+        key = answer_key[(section, module)]
         if len(key) != maximum:
             raise ValueError(f"Key length for {section} {module}: {len(key)}/{maximum}")
-        explanations = answers_from_explanations(answers_pdf, section, module, answer_first, answer_last, maximum)
-        positions = question_positions(test_pdf, first, last, maximum)
+        explanations = answers_from_explanations(answers_pdf, section, module, answer_first, answer_last, maximum, answer_key)
+        positions = []
+        for position in question_positions(test_pdf, first, last, maximum):
+            if position[0] == len(positions) + 1:
+                positions.append(position)
         if [item[0] for item in positions] != list(range(1, maximum + 1)):
             raise ValueError(f"Question positions incomplete in {section} {module}")
         for index, (number, page_number, _, _) in enumerate(positions):
             page = test_pdf[page_number - 1]
-            rect = question_rect(positions, index)
+            rect = question_rect(positions, index, full_width_pages, final_pages)
             transcribed = page.get_text(sort=True, clip=rect)
             transcribed = re.sub(r"\.{12,}", "", transcribed).replace("\ufffd", "'").strip()
             transcribed = re.sub(r"(?m)^\s*Unauthorized copying or reuse.*$", "", transcribed).strip()
@@ -104,24 +108,24 @@ def build(test_pdf, answers_pdf):
             image_name = f"{'rw' if section == 'reading-writing' else 'math'}-m{module}-q{number:02}.png"
             image_for_question(page, rect, output / image_name)
             explanation = re.split(r"Choice\s+[A-D]\s+is\s+incorrect", explanations[number], maxsplit=1)[0]
-            explanation = re.split(r"SAT PRACTICE TEST #5 ANSWER EXPLANATIONS", explanation, maxsplit=1)[0].strip()[:2000]
+            explanation = re.split(rf"SAT PRACTICE TEST #{test_number} ANSWER EXPLANATIONS", explanation, maxsplit=1)[0].strip()[:2000]
             if len(explanation) < 15:
                 raise ValueError(f"Short explanation in {section} {module} #{number}")
             prompt = "Digite sua resposta para a questão reproduzida na imagem." if numeric else "Escolha a melhor alternativa para a questão reproduzida na imagem."
             values = [
-                sql_string(FORM), sql_string(section), str(module), str(number), sql_string(transcribed[:12000]),
+                sql_string(form), sql_string(section), str(module), str(number), sql_string(transcribed[:12000]),
                 sql_string(prompt), sql_string(json.dumps(choices, ensure_ascii=False)) + "::jsonb",
                 sql_string("numeric" if numeric else "multiple-choice"),
                 "ARRAY[" + ",".join(sql_string(value) for value in accepted) + "]::text[]",
-                sql_string(explanation), sql_string(f"/sat-assets/practice-5/{image_name}"),
-                sql_string(SOURCE), str(page_number), sql_string("published"),
+                sql_string(explanation), sql_string(f"/sat-assets/practice-{test_number}/{image_name}"),
+                sql_string(source), str(page_number), sql_string("published"),
             ]
             rows.append("(" + ",".join(values) + ")")
     if len(rows) != 120:
         raise ValueError(f"Expected 120 rows, got {len(rows)}")
-    migration = ROOT / "db" / "migrations" / "030_sat_practice_5.sql"
+    migration = ROOT / "db" / "migrations" / f"{migration_number}_sat_practice_{test_number}.sql"
     migration.write_text(
-        "-- Generated from the user-provided College Board SAT Practice Test #5 and answer explanations.\n"
+        f"-- Generated from the user-provided College Board SAT Practice Test #{test_number} and answer explanations.\n"
         "-- Images preserve charts and notation; text is an automatic transcription.\n"
         "INSERT INTO sat_questions\n"
         "  (form_code,section,module_number,question_number,passage,prompt,choices,answer_type,accepted_answers,explanation,image_path,source_url,source_page,status)\n"

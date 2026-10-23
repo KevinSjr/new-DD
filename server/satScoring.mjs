@@ -2,6 +2,7 @@
 // Applies only to the nondigital/paper version of Practice Test #4.
 export const SAT_SCORING_SOURCE = 'https://satsuite.collegeboard.org/media/pdf/scoring-sat-practice-test-4-digital.pdf'
 export const SAT_SCORING_SOURCE_5 = 'https://satsuite.collegeboard.org/media/pdf/scoring-sat-practice-test-5-digital.pdf'
+export const SAT_SCORING_SOURCE_6 = 'https://satsuite.collegeboard.org/media/pdf/scoring-sat-practice-test-6-digital.pdf'
 
 // Raw score, Reading and Writing lower/upper, Math lower/upper.
 // The Math section has only 54 questions, so rows 55–66 omit its range.
@@ -147,11 +148,83 @@ const rows5 = `
 66 790 800
 `.trim().split('\n').map(line => line.trim().split(/\s+/).map(Number))
 
+// College Board, Scoring Your Paper SAT Practice Test #6, page 5.
+const rows6 = `
+0 200 200 200 200
+1 200 200 200 200
+2 200 200 200 200
+3 200 200 200 200
+4 200 200 200 200
+5 200 210 200 200
+6 200 230 200 200
+7 200 250 200 220
+8 210 270 200 230
+9 220 280 220 250
+10 230 290 250 280
+11 240 300 280 310
+12 260 320 290 320
+13 270 330 300 330
+14 280 330 310 340
+15 290 350 320 350
+16 310 370 330 360
+17 320 380 330 360
+18 340 380 340 370
+19 350 390 350 380
+20 360 400 360 390
+21 370 410 370 400
+22 380 420 370 400
+23 390 430 380 410
+24 400 440 390 420
+25 400 440 400 430
+26 410 450 420 450
+27 420 460 430 460
+28 430 470 440 470
+29 440 480 460 490
+30 450 490 470 500
+31 460 500 480 510
+32 470 510 500 530
+33 470 510 510 540
+34 480 520 520 550
+35 490 530 530 560
+36 500 540 550 580
+37 510 550 560 590
+38 520 560 570 600
+39 530 570 580 610
+40 540 580 590 620
+41 530 590 600 630
+42 550 610 620 650
+43 560 620 630 660
+44 570 630 650 680
+45 580 640 670 700
+46 590 650 690 720
+47 590 650 710 740
+48 600 660 730 760
+49 620 660 740 770
+50 630 670 750 780
+51 640 680 760 790
+52 650 690 770 800
+53 660 700 780 800
+54 670 710 790 800
+55 680 720
+56 690 730
+57 700 740
+58 710 750
+59 720 760
+60 720 760
+61 730 770
+62 750 770
+63 760 780
+64 770 790
+65 780 800
+66 790 800
+`.trim().split('\n').map(line => line.trim().split(/\s+/).map(Number))
+
 export function scoreRangeForRaw(section, correct, formCode = 'practice-4-paper') {
   const max = section === 'reading-writing' ? 66 : section === 'math' ? 54 : null
   if (max === null || !Number.isInteger(correct) || correct < 0 || correct > max) throw new RangeError('Pontuação bruta do SAT inválida.')
-  if (!['practice-4-paper', 'practice-5-paper'].includes(formCode)) throw new RangeError('Versão do SAT inválida.')
-  const row = (formCode === 'practice-5-paper' ? rows5 : rows)[correct]
+  const byForm = { 'practice-4-paper':rows, 'practice-5-paper':rows5, 'practice-6-paper':rows6 }
+  if (!Object.hasOwn(byForm, formCode)) throw new RangeError('Versão do SAT inválida.')
+  const row = byForm[formCode][correct]
   if (!row || row[0] !== correct || row.length !== (correct <= 54 ? 5 : 3)) throw new Error('Tabela de conversão do SAT incompleta.')
   const offset = section === 'reading-writing' ? 1 : 3
   return { lower:row[offset], upper:row[offset + 1] }
@@ -170,6 +243,16 @@ export function scorePractice4(readingWritingCorrect, mathCorrect) {
 export function scorePractice5(readingWritingCorrect, mathCorrect) {
   const readingWriting = scoreRangeForRaw('reading-writing', readingWritingCorrect, 'practice-5-paper')
   const math = scoreRangeForRaw('math', mathCorrect, 'practice-5-paper')
+  return {
+    readingWriting,
+    math,
+    total:{ lower:readingWriting.lower + math.lower, upper:readingWriting.upper + math.upper },
+  }
+}
+
+export function scorePractice6(readingWritingCorrect, mathCorrect) {
+  const readingWriting = scoreRangeForRaw('reading-writing', readingWritingCorrect, 'practice-6-paper')
+  const math = scoreRangeForRaw('math', mathCorrect, 'practice-6-paper')
   return {
     readingWriting,
     math,

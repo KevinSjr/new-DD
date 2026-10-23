@@ -60,3 +60,4 @@
 @media (min-width: 48em) { .sat-report__sections { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 48em) { .sat-page__modes { grid-template-columns: repeat(2, minmax(0, 1fr)); } .sat-page__mode, .sat-page__panel { padding: var(--space-7); } }
 @media (min-width: 48em) { .sat-page__exam-choices { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 64em) { .sat-page__exam-choices { grid-template-columns: repeat(3, minmax(0, 1fr)); } }

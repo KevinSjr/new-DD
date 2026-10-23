@@ -4,7 +4,7 @@ import './AdminScholarshipsPage.css'
 
 type Choice = { key: string; text: string }
 type Question = {
-  id: number; form_code: 'practice-4-paper' | 'practice-5-paper'; section: 'reading-writing' | 'math'; module_number: number; question_number: number;
+  id: number; form_code: 'practice-4-paper' | 'practice-5-paper' | 'practice-6-paper'; section: 'reading-writing' | 'math'; module_number: number; question_number: number;
   passage: string; prompt: string; choices: Choice[]; answer_type: 'multiple-choice' | 'numeric';
   accepted_answers: string[]; explanation: string; image_path: string | null; source_url: string; source_page: number | null; status: 'draft' | 'published' | 'archived'
 }
@@ -54,7 +54,7 @@ export function AdminSatPage() {
     finally { setBusy(false) }
   }
   async function archive(item: Question) {
-    if (!window.confirm(`Arquivar a questão ${item.section} ${item.module_number}.${item.question_number}? Ela sairá da prática.`)) return
+    if (!window.confirm(`Arquivar a questão do teste ${item.form_code.split('-')[1]}, ${item.section} ${item.module_number}.${item.question_number}? Ela sairá da prática.`)) return
     setBusy(true); setMessage('')
     try { await request(`/api/admin/sat/questions/${item.id}`, auth, { method:'DELETE' }); await reload(); setMessage('Questão arquivada.') }
     catch (cause) { setMessage(cause instanceof Error ? cause.message : 'Não foi possível arquivar.') }
@@ -71,13 +71,13 @@ export function AdminSatPage() {
     <div className="sch-admin__grid"><section className="sch-admin__panel"><div className="sch-admin__section-head"><h2>Questões</h2><button className="sch-admin__secondary" onClick={() => { setForm(blank()); setEditing(null) }}>Nova questão</button></div>
       <label>Buscar questão<input type="search" value={search} onChange={event => setSearch(event.target.value)} /></label>
       <p>{items.filter(item => item.status === 'published').length} publicadas de {items.length} cadastradas.</p>
-      {filtered.length ? <ul className="sch-admin__list">{filtered.map(item => <li key={item.id}><strong>Teste {item.form_code === 'practice-5-paper' ? '5' : '4'} · {item.section === 'math' ? 'Math' : 'Reading and Writing'} · Módulo {item.module_number}, questão {item.question_number}</strong>
+      {filtered.length ? <ul className="sch-admin__list">{filtered.map(item => <li key={item.id}><strong>Teste {item.form_code.split('-')[1]} · {item.section === 'math' ? 'Math' : 'Reading and Writing'} · Módulo {item.module_number}, questão {item.question_number}</strong>
         <small>{item.status === 'published' ? 'Publicada' : item.status === 'draft' ? 'Rascunho' : 'Arquivada'} · {item.prompt.slice(0, 90)}</small>
         <div className="sch-admin__actions"><button className="sch-admin__secondary" disabled={busy} onClick={() => { setEditing(item.id); setForm({ ...item, image_path:item.image_path || null, answer:item.accepted_answers.join('; ') }); window.scrollTo({ top:0,behavior:'smooth' }) }}>Editar</button>
           <button className="sch-admin__danger" disabled={busy} onClick={() => archive(item)}>Arquivar</button></div></li>)}</ul> : <p>Nenhuma questão encontrada.</p>}
     </section>
     <form className="sch-admin__panel" onSubmit={save}><div className="sch-admin__section-head"><h2>{editing ? 'Editar questão' : 'Nova questão'}</h2><span>{editing ? `#${editing}` : 'Rascunho'}</span></div>
-      <label>Versão do teste<select value={form.form_code} onChange={event => { const formCode = event.target.value as Draft['form_code']; setForm(current => ({ ...current, form_code:formCode, source_url:current.source_url.includes('sat-practice-test-4-digital.pdf') || current.source_url.includes('sat-practice-test-5-digital.pdf') ? `https://satsuite.collegeboard.org/media/pdf/sat-practice-test-${formCode === 'practice-5-paper' ? '5' : '4'}-digital.pdf` : current.source_url })) }}><option value="practice-4-paper">Teste prático 4</option><option value="practice-5-paper">Teste prático 5</option></select></label>
+      <label>Versão do teste<select value={form.form_code} onChange={event => { const formCode = event.target.value as Draft['form_code']; setForm(current => ({ ...current, form_code:formCode, source_url:/sat-practice-test-[456]-digital\.pdf$/.test(current.source_url) ? `https://satsuite.collegeboard.org/media/pdf/sat-practice-test-${formCode.split('-')[1]}-digital.pdf` : current.source_url })) }}><option value="practice-4-paper">Teste prático 4</option><option value="practice-5-paper">Teste prático 5</option><option value="practice-6-paper">Teste prático 6</option></select></label>
       <div className="sch-admin__pair"><label>Seção<select value={form.section} onChange={event => change('section', event.target.value as Draft['section'])}><option value="reading-writing">Reading and Writing</option><option value="math">Math</option></select></label>
         <label>Módulo<select value={form.module_number} onChange={event => change('module_number', Number(event.target.value))}><option value={1}>1</option><option value={2}>2</option></select></label></div>
       <div className="sch-admin__pair"><label>Número da questão<input type="number" min="1" max={form.section === 'math' ? 27 : 33} required value={form.question_number} onChange={event => change('question_number', Number(event.target.value))} /></label>
