@@ -1,0 +1,86 @@
+.australia .germany-hero {
+  background: #e6f4fb;
+}
+
+.australia-hero__art {
+  position: relative;
+  width: 100%;
+  max-width: 29rem;
+  min-height: 18rem;
+  margin-inline: auto;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(#bce8f6 0 62%, #f9e8bd 62% 100%);
+  box-shadow: var(--shadow-lift);
+}
+
+.australia-hero__sun {
+  position: absolute;
+  top: 14%;
+  right: 14%;
+  width: 5rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #ffd164;
+  box-shadow: 0 0 0 1rem rgb(255 209 100 / 0.24);
+}
+
+.australia-hero__land {
+  position: absolute;
+  z-index: 2;
+  left: 12%;
+  bottom: 24%;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.45rem;
+  width: 50%;
+  height: 41%;
+  border-bottom: 0.8rem solid #193f65;
+}
+
+.australia-hero__land span {
+  display: block;
+  width: 23%;
+  height: 55%;
+  border-radius: 0.35rem 0.35rem 0 0;
+  background: #193f65;
+}
+
+.australia-hero__land span:nth-child(2) { height: 100%; }
+.australia-hero__land span:nth-child(3) { height: 72%; }
+
+.australia-hero__sea {
+  position: absolute;
+  z-index: 1;
+  right: -5%;
+  bottom: -32%;
+  left: -5%;
+  height: 60%;
+  border: 0.55rem solid #fff;
+  border-radius: 50%;
+  background: #3aa8cf;
+}
+
+.australia-hero__postcard {
+  position: absolute;
+  z-index: 3;
+  right: 5%;
+  bottom: 7%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: #193f65;
+  box-shadow: var(--shadow-soft);
+  transform: rotate(-4deg);
+}
+
+.australia-hero__postcard strong,
+.australia-hero__postcard small { display: block; }
+.australia-hero__postcard strong { letter-spacing: 0.1em; }
+
+.australia .germany-snapshot a { color: var(--color-primary-ink); }
+
+@media (min-width: 48em) {
+  .australia-hero__art { min-height: 22rem; }
+}

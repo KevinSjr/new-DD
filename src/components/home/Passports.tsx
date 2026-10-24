@@ -8,7 +8,7 @@ import './Passports.css'
  * "Passaportes" de países (home v2, micro tarefa 1.5).
  * Só o país com guia publicado (estado 'available' e href em data/countries.ts) vira link.
  * São 25 destinos; só 6 aparecem de início e o botão "Ver os outros" mostra o resto.
- * Idioma e clima só aparecem para quem tem guia verificado (Alemanha, a partir do guia
+ * Idioma e clima só aparecem para quem tem guia publicado (Alemanha e Austrália, a partir dos guias
  * publicado). Os demais mostram apenas "Guia em preparação": nada de dado não verificado.
  * A sigla é a do aeroporto internacional de referência, só um detalhe visual do bilhete.
  */
@@ -28,7 +28,7 @@ const PASSPORTS: Passport[] = [
   { slug: 'estados-unidos', name: 'Estados Unidos', code: 'JFK' },
   { slug: 'reino-unido', name: 'Reino Unido', code: 'LHR' },
   { slug: 'canada', name: 'Canadá', code: 'YYZ' },
-  { slug: 'australia', name: 'Austrália', code: 'SYD' },
+  { slug: 'australia', name: 'Austrália', code: 'SYD', facts: { language: 'Inglês', climate: 'Varia conforme a região' } },
   {
     slug: 'alemanha',
     name: 'Alemanha',
@@ -105,7 +105,7 @@ export function Passports() {
           <h2 id="paises-titulo">Para onde vai o seu sonho?</h2>
           <p>
             {PASSPORTS.length} destinos no radar. Cada um terá um guia com o que você precisa saber
-            antes de embarcar. Hoje, só o da Alemanha está publicado.
+            antes de embarcar. Os guias da Alemanha e da Austrália já estão publicados.
           </p>
         </div>
         <ul className="passports__grid" id="passaportes-lista">
