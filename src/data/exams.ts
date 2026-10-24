@@ -10,7 +10,7 @@ export type Exam = {
   sourceUrl: string
 }
 
-// Catálogo informativo. Nenhum simulado é apresentado como disponível nesta etapa.
+// Catálogo informativo; cada página informa separadamente o conteúdo de prática disponível.
 export const EXAMS: Exam[] = [
   {
     id: 'sat',
@@ -36,8 +36,8 @@ export const EXAMS: Exam[] = [
     category: 'admission',
     context: 'Seleção para bolsa no Japão',
     description: 'Não é um exame único: o processo da bolsa japonesa pode incluir provas escritas e entrevista, conforme a modalidade e a representação responsável.',
-    sourceLabel: 'Consulado Geral do Japão em São Paulo',
-    sourceUrl: 'https://www.sp.br.emb-japan.go.jp/itpr_pt/bolsa1.html',
+    sourceLabel: 'Study in Japan / JASSO',
+    sourceUrl: 'https://www.studyinjapan.go.jp/en/planning/scholarships/mext-scholarships/examination.html',
   },
   {
     id: 'toefl',

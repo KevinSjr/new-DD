@@ -30,10 +30,11 @@ function ExamRow({ exam, index }: { exam: Exam; index: number }) {
             <span className="exam-catalog__context">{exam.context}</span>
             <h3>{exam.name}</h3>
           </div>
-          <span className="exam-catalog__status">{exam.id === 'sat' ? 'Prática inicial disponível' : 'Em preparação'}</span>
+          <span className="exam-catalog__status">{exam.id === 'sat' || exam.id === 'mext' ? 'Prática disponível' : 'Em preparação'}</span>
         </div>
         <p>{exam.description}</p>
         {exam.id === 'sat' && <Link className="exam-catalog__open" to="/exames/sat">Escolher modo de prática <span aria-hidden="true">→</span></Link>}
+        {exam.id === 'mext' && <Link className="exam-catalog__open" to="/exames/mext">Praticar MEXT 2025 A ou B <span aria-hidden="true">→</span></Link>}
       </div>
     </li>
   )
@@ -55,7 +56,7 @@ export function ExamCatalogPage() {
           <div>
             <p className="exam-catalog__eyebrow">Prepare o próximo passo</p>
             <h1>Encontre o exame certo para sua candidatura</h1>
-            <p>Escolha uma prova e acompanhe a preparação dos exercícios dentro do Daydreaming. O SAT já tem um desafio inicial; os demais conteúdos estão em construção.</p>
+            <p>Escolha uma prova para praticar dentro do Daydreaming. O SAT e as modalidades A e B do MEXT 2025 têm exercícios; os demais conteúdos estão em construção.</p>
             <a className="exam-catalog__jump" href="#admissao">Explorar exames <span aria-hidden="true">↓</span></a>
           </div>
           <aside className="exam-catalog__hero-note" aria-label="Como usar o catálogo">

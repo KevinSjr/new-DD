@@ -6,7 +6,7 @@ import './Footer.css'
 /*
  * Rodapé (micro tarefa 1.9 da v1, mantido na home v2; links atualizados na 1.6 v2).
  * O aviso de privacidade descreve o estado ATUAL do site: sem conta ou
- * cadastro de identificação, mas com cookie anônimo no desafio SAT. Se qualquer coleta for adicionada
+ * cadastro de identificação, mas com cookies anônimos nos desafios SAT e MEXT. Se qualquer coleta for adicionada
  * (conta, progresso salvo, formulário, análise de uso), este texto precisa ser
  * atualizado ANTES da publicação, junto com uma política de privacidade completa.
  * Os links "/#..." funcionam também a partir das páginas de país (voltam à home).
@@ -58,8 +58,8 @@ export function Footer() {
           <p className="site-footer__tag">Aviso provisório</p>
           <p>
             <strong>Hoje, o site não pede dados de identificação.</strong> Não há conta nem cadastro
-            de e-mail, e não usamos ferramentas de análise ou publicidade. O desafio diário do SAT
-            usa um cookie anônimo para guardar respostas e sóis no servidor por dia; esse progresso
+            de e-mail, e não usamos ferramentas de análise ou publicidade. Os desafios diários do SAT e MEXT
+            usam cookies anônimos para guardar respostas e sóis no servidor por dia; esse progresso
             não é sincronizado entre dispositivos. Como qualquer site, o servidor pode registrar
             dados técnicos de acesso, como o endereço IP.
           </p>

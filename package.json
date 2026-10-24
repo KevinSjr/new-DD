@@ -10,6 +10,8 @@
     "test:gpa": "node --experimental-strip-types tests/gpa.test.mjs",
     "test:destinations": "node --experimental-strip-types tests/destinationMatcher.test.mjs",
     "test:sat": "node tests/sat.test.mjs",
+    "test:mext": "node tests/mext.test.mjs",
+    "test:mext:db": "node --env-file=.env.local tests/mext.test.mjs",
     "test:scholarships": "node tests/scholarships.test.mjs",
     "test:responsive": "node scripts/check_responsive.mjs",
     "api:dev": "node --env-file=.env.local server/index.mjs",

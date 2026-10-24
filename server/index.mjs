@@ -6,6 +6,7 @@ import { database } from './db.mjs'
 import { STUDY_LEVELS, validateScholarship } from './validation.mjs'
 import { scholarshipCatalog } from './scholarshipCatalog.mjs'
 import { getDaily, answerDaily, examAvailability, getExam, gradeExam, listSatQuestions, saveSatQuestion, archiveSatQuestion, validateSatQuestion } from './sat.mjs'
+import { getMextDaily, answerMextDaily, mextAvailability, getMextExam, gradeMextExam } from './mext.mjs'
 
 const port = Number(process.env.API_PORT || 3001)
 const host = process.env.API_HOST || '127.0.0.1'
@@ -206,6 +207,17 @@ const server = createServer(async (req, res) => {
     if (req.method === 'POST' && url.pathname === '/api/sat/exam/grade') {
       if (!originAllowed(req)) return json(res, 403, { error:'Origem não permitida.' })
       return json(res, 200, await gradeExam(await body(req)))
+    }
+    if (req.method === 'GET' && url.pathname === '/api/mext/daily') return json(res, 200, await getMextDaily(req, res, url.searchParams.get('track') || 'A', url.searchParams.get('subject') || 'english'))
+    if (req.method === 'POST' && url.pathname === '/api/mext/daily/answer') {
+      if (!originAllowed(req)) return json(res, 403, { error:'Origem não permitida.' })
+      return json(res, 200, await answerMextDaily(req, await body(req)))
+    }
+    if (req.method === 'GET' && url.pathname === '/api/mext/exam/availability') return json(res, 200, await mextAvailability(url.searchParams.get('track') || 'A', url.searchParams.get('science') || 'physics'))
+    if (req.method === 'GET' && url.pathname === '/api/mext/exam') return json(res, 200, await getMextExam(url.searchParams.get('track') || 'A', url.searchParams.get('science') || 'physics'))
+    if (req.method === 'POST' && url.pathname === '/api/mext/exam/grade') {
+      if (!originAllowed(req)) return json(res, 403, { error:'Origem não permitida.' })
+      return json(res, 200, await gradeMextExam(await body(req)))
     }
     if (!url.pathname.startsWith('/api/admin/')) return json(res, 404, { error:'Rota não encontrada.' })
     if (!adminReady) return json(res, 503, { error:'Administração ainda não configurada neste servidor.' })

@@ -13,6 +13,7 @@ import { AdminScholarshipsPage } from './pages/AdminScholarshipsPage'
 import { ScholarshipSearchPage } from './pages/ScholarshipSearchPage'
 import { ExamCatalogPage } from './pages/ExamCatalogPage'
 import { SatHomePage, SatDailyPage, SatExamPage } from './pages/SatPage'
+import { MextHomePage, MextDailyPage, MextExamPage } from './pages/MextPage'
 import { AdminSatPage } from './pages/AdminSatPage'
 import { useLocation } from './router/navigation'
 
@@ -34,7 +35,7 @@ import { useLocation } from './router/navigation'
  *   qualquer outra     página não encontrada
  */
 function Routes() {
-  const { pathname } = useLocation()
+  const { pathname, search } = useLocation()
   const path = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname
 
   if (path === '/') return <HomePage />
@@ -48,6 +49,9 @@ function Routes() {
   if (path === '/exames/sat') return <SatHomePage />
   if (path === '/exames/sat/desafio-diario') return <SatDailyPage />
   if (path === '/exames/sat/simulado') return <SatExamPage />
+  if (path === '/exames/mext') return <MextHomePage />
+  if (path === '/exames/mext/desafio-diario') return <MextDailyPage />
+  if (path === '/exames/mext/exame') return <MextExamPage key={search} />
   if (path === '/admin/sat') return <AdminSatPage />
   if (path === '/admin/bolsas') return <AdminScholarshipsPage />
   if (path === '/rankings/artes-humanidades') return <SubjectAreaRankingPage key="arts-humanities" areaKey="arts-humanities" />
