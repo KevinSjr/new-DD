@@ -3,6 +3,7 @@ import { HomePage } from './pages/HomePage'
 import { CountryGuidePage } from './pages/CountryGuidePage'
 import { GermanyGuidePage } from './pages/GermanyGuidePage'
 import { AustraliaGuidePage } from './pages/AustraliaGuidePage'
+import { BelgiumGuidePage } from './pages/BelgiumGuidePage'
 import { RankingPage } from './pages/RankingPage'
 import { RankingsHubPage } from './pages/RankingsHubPage'
 import { SubjectAreaRankingPage } from './pages/SubjectAreaRankingPage'
@@ -62,6 +63,7 @@ function Routes() {
   if (path === '/rankings/ciencias-sociais-administracao') return <SubjectAreaRankingPage key="social-sciences-management" areaKey="social-sciences-management" />
   if (path === '/paises/alemanha') return <GermanyGuidePage />
   if (path === '/paises/australia') return <AustraliaGuidePage />
+  if (path === '/paises/belgica') return <BelgiumGuidePage />
 
   const guide = path.match(/^\/paises\/([a-z0-9-]+)$/)
   if (guide) return <CountryGuidePage slug={guide[1]} />

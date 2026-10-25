@@ -1,0 +1,84 @@
+.belgium .germany-hero { background: #f8f2dc; }
+
+.belgium-hero__art {
+  position: relative;
+  width: 100%;
+  max-width: 29rem;
+  min-height: 18rem;
+  margin-inline: auto;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: #d9ebf1;
+  box-shadow: var(--shadow-lift);
+}
+
+.belgium-hero__sun {
+  position: absolute;
+  top: 12%;
+  right: 12%;
+  width: 5rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f6c953;
+  box-shadow: 0 0 0 1rem rgb(246 201 83 / 0.22);
+}
+
+.belgium-hero__building {
+  position: absolute;
+  z-index: 2;
+  bottom: 20%;
+  left: 11%;
+  display: flex;
+  align-items: end;
+  justify-content: space-around;
+  width: 65%;
+  height: 38%;
+  padding: 0.7rem 0.5rem 0;
+  border: 0.25rem solid #24364d;
+  border-radius: 0.2rem 0.2rem 0 0;
+  background: #d3654c;
+  box-shadow: 0 -1.4rem 0 -0.25rem #24364d;
+}
+
+.belgium-hero__building i {
+  width: 12%;
+  height: 65%;
+  border: 0.2rem solid #24364d;
+  border-bottom: 0;
+  border-radius: 1rem 1rem 0 0;
+  background: #f9e6b4;
+}
+
+.belgium-hero__building i:nth-child(3) { height: 85%; }
+
+.belgium-hero__street {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 20%;
+  background: #b8c4bc;
+}
+
+.belgium-hero__postcard {
+  position: absolute;
+  z-index: 3;
+  right: 5%;
+  bottom: 7%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: #24364d;
+  box-shadow: var(--shadow-soft);
+  transform: rotate(-4deg);
+}
+
+.belgium-hero__postcard strong,
+.belgium-hero__postcard small { display: block; }
+.belgium-hero__postcard strong { letter-spacing: 0.1em; }
+.belgium .germany-snapshot a { color: var(--color-primary-ink); }
+
+@media (min-width: 48em) {
+  .belgium-hero__art { min-height: 22rem; }
+}

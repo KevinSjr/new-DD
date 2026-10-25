@@ -6,10 +6,10 @@ import './Passports.css'
 
 /*
  * "Passaportes" de países (home v2, micro tarefa 1.5).
- * Só o país com guia publicado (estado 'available' e href em data/countries.ts) vira link.
+ * Só países com guia publicado (estado 'available' e href em data/countries.ts) viram links.
  * São 25 destinos; só 6 aparecem de início e o botão "Ver os outros" mostra o resto.
- * Idioma e clima só aparecem para quem tem guia publicado (Alemanha e Austrália, a partir dos guias
- * publicado). Os demais mostram apenas "Guia em preparação": nada de dado não verificado.
+ * Idioma e clima só aparecem para países com guia publicado. Os demais mostram apenas
+ * "Guia em preparação": nada de dado não verificado.
  * A sigla é a do aeroporto internacional de referência, só um detalhe visual do bilhete.
  */
 type Tone = 'sun' | 'coral' | 'sky' | 'mint' | 'lilac'
@@ -48,7 +48,7 @@ const PASSPORTS: Passport[] = [
   { slug: 'suecia', name: 'Suécia', code: 'ARN' },
   { slug: 'finlandia', name: 'Finlândia', code: 'HEL' },
   { slug: 'dinamarca', name: 'Dinamarca', code: 'CPH' },
-  { slug: 'belgica', name: 'Bélgica', code: 'BRU' },
+  { slug: 'belgica', name: 'Bélgica', code: 'BRU', facts: { language: 'Neerlandês, francês e alemão', climate: 'Temperado oceânico' } },
   { slug: 'noruega', name: 'Noruega', code: 'OSL' },
   { slug: 'taiwan', name: 'Taiwan', code: 'TPE' },
   { slug: 'hong-kong', name: 'Hong Kong', code: 'HKG' },
@@ -60,7 +60,7 @@ const PASSPORTS: Passport[] = [
 /** A cor do bilhete só decora: alterna pela posição na lista. */
 const TONES: Tone[] = ['sky', 'sun', 'coral', 'mint', 'lilac']
 
-/** Quantos bilhetes aparecem antes de "Ver todos" (inclui a Alemanha, que já tem guia). */
+/** Quantos bilhetes aparecem antes de "Ver todos". */
 const VISIBLE_AT_FIRST = 6
 
 function TicketBody({ passport, open }: { passport: Passport; open: boolean }) {
@@ -105,7 +105,7 @@ export function Passports() {
           <h2 id="paises-titulo">Para onde vai o seu sonho?</h2>
           <p>
             {PASSPORTS.length} destinos no radar. Cada um terá um guia com o que você precisa saber
-            antes de embarcar. Os guias da Alemanha e da Austrália já estão publicados.
+            antes de embarcar. Os guias da Alemanha, Austrália e Bélgica já estão publicados.
           </p>
         </div>
         <ul className="passports__grid" id="passaportes-lista">
