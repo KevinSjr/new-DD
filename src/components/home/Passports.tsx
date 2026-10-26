@@ -27,7 +27,7 @@ type Passport = {
 const PASSPORTS: Passport[] = [
   { slug: 'estados-unidos', name: 'Estados Unidos', code: 'JFK' },
   { slug: 'reino-unido', name: 'Reino Unido', code: 'LHR' },
-  { slug: 'canada', name: 'Canadá', code: 'YYZ' },
+  { slug: 'canada', name: 'Canadá', code: 'YYZ', facts: { language: 'Inglês e francês', climate: 'Varia conforme a região' } },
   { slug: 'australia', name: 'Austrália', code: 'SYD', facts: { language: 'Inglês', climate: 'Varia conforme a região' } },
   {
     slug: 'alemanha',
@@ -105,7 +105,7 @@ export function Passports() {
           <h2 id="paises-titulo">Para onde vai o seu sonho?</h2>
           <p>
             {PASSPORTS.length} destinos no radar. Cada um terá um guia com o que você precisa saber
-            antes de embarcar. Os guias da Alemanha, Austrália e Bélgica já estão publicados.
+            antes de embarcar. Os guias da Alemanha, Austrália, Bélgica e Canadá já estão publicados.
           </p>
         </div>
         <ul className="passports__grid" id="passaportes-lista">

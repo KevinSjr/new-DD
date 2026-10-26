@@ -1,0 +1,81 @@
+.canada .germany-hero { background: #e9f2f6; }
+
+.canada-hero__art {
+  position: relative;
+  width: 100%;
+  max-width: 29rem;
+  min-height: 18rem;
+  margin-inline: auto;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: #b6dcea;
+  box-shadow: var(--shadow-lift);
+}
+
+.canada-hero__sun {
+  position: absolute;
+  top: 13%;
+  right: 13%;
+  width: 5rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f5d074;
+  box-shadow: 0 0 0 1rem rgb(245 208 116 / 0.24);
+}
+
+.canada-hero__mountain {
+  position: absolute;
+  bottom: 18%;
+  width: 85%;
+  height: 55%;
+  clip-path: polygon(0 100%, 38% 5%, 60% 52%, 75% 25%, 100% 100%);
+}
+
+.canada-hero__mountain--back { right: -7%; background: #e9f4f3; }
+.canada-hero__mountain--front { left: -12%; bottom: 10%; background: #6e9c9c; }
+
+.canada-hero__forest {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  height: 34%;
+  padding-inline: 5%;
+  background: #d6e5d8;
+}
+
+.canada-hero__forest i {
+  width: 13%;
+  height: 80%;
+  clip-path: polygon(50% 0, 100% 75%, 70% 75%, 100% 100%, 0 100%, 30% 75%, 0 75%);
+  background: #24556c;
+}
+
+.canada-hero__forest i:nth-child(even) { height: 65%; }
+
+.canada-hero__postcard {
+  position: absolute;
+  z-index: 3;
+  right: 5%;
+  bottom: 7%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: #20435b;
+  box-shadow: var(--shadow-soft);
+  transform: rotate(-4deg);
+}
+
+.canada-hero__postcard strong,
+.canada-hero__postcard small { display: block; }
+.canada-hero__postcard strong { letter-spacing: 0.1em; }
+.canada .germany-snapshot a { color: var(--color-primary-ink); }
+
+@media (min-width: 48em) {
+  .canada-hero__art { min-height: 22rem; }
+}
