@@ -1,0 +1,79 @@
+.denmark .germany-hero { background: #e9f3f3; }
+
+.denmark-hero__art {
+  position: relative;
+  width: 100%;
+  max-width: 29rem;
+  min-height: 18rem;
+  margin-inline: auto;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: #b6dce2;
+  box-shadow: var(--shadow-lift);
+}
+
+.denmark-hero__sun {
+  position: absolute;
+  top: 11%;
+  right: 14%;
+  width: 5rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f2cc7f;
+  box-shadow: 0 0 0 1rem rgb(242 204 127 / 0.2);
+}
+
+.denmark-hero__water {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 31%;
+  background: #4b8d9b;
+  clip-path: polygon(0 13%, 20% 5%, 42% 16%, 63% 4%, 82% 16%, 100% 7%, 100% 100%, 0 100%);
+}
+
+.denmark-hero__house {
+  position: absolute;
+  bottom: 27%;
+  width: 19%;
+  height: 34%;
+  background: #d96d5f;
+}
+
+.denmark-hero__house::before {
+  content: '';
+  position: absolute;
+  right: -8%;
+  bottom: 100%;
+  left: -8%;
+  height: 29%;
+  background: #314e5f;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.denmark-hero__house--one { left: 12%; }
+.denmark-hero__house--two { left: 34%; height: 27%; background: #e6c6a5; }
+
+.denmark-hero__postcard {
+  position: absolute;
+  z-index: 2;
+  right: 5%;
+  bottom: 7%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: #20435b;
+  box-shadow: var(--shadow-soft);
+  transform: rotate(-4deg);
+}
+
+.denmark-hero__postcard strong,
+.denmark-hero__postcard small { display: block; }
+.denmark-hero__postcard strong { letter-spacing: 0.1em; }
+.denmark .germany-snapshot a { color: var(--color-primary-ink); }
+
+@media (min-width: 48em) {
+  .denmark-hero__art { min-height: 22rem; }
+}
