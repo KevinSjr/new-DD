@@ -5,6 +5,7 @@ import { GermanyGuidePage } from './pages/GermanyGuidePage'
 import { AustraliaGuidePage } from './pages/AustraliaGuidePage'
 import { BelgiumGuidePage } from './pages/BelgiumGuidePage'
 import { CanadaGuidePage } from './pages/CanadaGuidePage'
+import { ChinaGuidePage } from './pages/ChinaGuidePage'
 import { RankingPage } from './pages/RankingPage'
 import { RankingsHubPage } from './pages/RankingsHubPage'
 import { SubjectAreaRankingPage } from './pages/SubjectAreaRankingPage'
@@ -66,6 +67,7 @@ function Routes() {
   if (path === '/paises/australia') return <AustraliaGuidePage />
   if (path === '/paises/belgica') return <BelgiumGuidePage />
   if (path === '/paises/canada') return <CanadaGuidePage />
+  if (path === '/paises/china') return <ChinaGuidePage />
 
   const guide = path.match(/^\/paises\/([a-z0-9-]+)$/)
   if (guide) return <CountryGuidePage slug={guide[1]} />
