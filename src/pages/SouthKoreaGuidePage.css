@@ -1,0 +1,78 @@
+.south-korea .germany-hero { background: #e9f1f3; }
+
+.korea-hero__art {
+  position: relative;
+  width: 100%;
+  max-width: 29rem;
+  min-height: 18rem;
+  margin-inline: auto;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: #bedde7;
+  box-shadow: var(--shadow-lift);
+}
+
+.korea-hero__sun {
+  position: absolute;
+  top: 12%;
+  right: 15%;
+  width: 5.5rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #e8a280;
+  box-shadow: 0 0 0 1rem rgb(232 162 128 / 0.17);
+}
+
+.korea-hero__mountain {
+  position: absolute;
+  bottom: 0;
+  width: 110%;
+  height: 68%;
+  clip-path: polygon(0 100%, 0 65%, 17% 39%, 34% 75%, 54% 8%, 76% 74%, 91% 44%, 100% 67%, 100% 100%);
+}
+
+.korea-hero__mountain--back { right: -10%; background: #8cabb7; }
+.korea-hero__mountain--front { left: -23%; bottom: -23%; background: #4b7890; }
+
+.korea-hero__building {
+  position: absolute;
+  z-index: 2;
+  bottom: 0;
+  background: #29485c;
+}
+
+.korea-hero__building--one { left: 11%; width: 16%; height: 31%; }
+.korea-hero__building--two { left: 29%; width: 11%; height: 24%; }
+.korea-hero__building--one::before,
+.korea-hero__building--two::before {
+  content: '';
+  position: absolute;
+  left: -13%;
+  bottom: 100%;
+  width: 126%;
+  height: 12%;
+  background: #29485c;
+}
+
+.korea-hero__postcard {
+  position: absolute;
+  z-index: 3;
+  right: 5%;
+  bottom: 7%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: #20435b;
+  box-shadow: var(--shadow-soft);
+  transform: rotate(-4deg);
+}
+
+.korea-hero__postcard strong,
+.korea-hero__postcard small { display: block; }
+.korea-hero__postcard strong { letter-spacing: 0.1em; }
+.south-korea .germany-snapshot a { color: var(--color-primary-ink); }
+
+@media (min-width: 48em) {
+  .korea-hero__art { min-height: 22rem; }
+}

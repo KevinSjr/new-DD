@@ -15,4 +15,5 @@ export const COUNTRY_GUIDES: readonly CountryGuide[] = [
   { slug: 'belgica', name: 'Bélgica', status: 'available', href: '/paises/belgica' },
   { slug: 'canada', name: 'Canadá', status: 'available', href: '/paises/canada' },
   { slug: 'china', name: 'China', status: 'available', href: '/paises/china' },
+  { slug: 'coreia-do-sul', name: 'Coreia do Sul', status: 'available', href: '/paises/coreia-do-sul' },
 ]
