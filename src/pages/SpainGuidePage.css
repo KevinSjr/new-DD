@@ -1,0 +1,76 @@
+.spain .germany-hero { background: #f7eee5; }
+
+.spain-hero__art {
+  position: relative;
+  width: 100%;
+  max-width: 29rem;
+  min-height: 18rem;
+  margin-inline: auto;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: #a9d6e2;
+  box-shadow: var(--shadow-lift);
+}
+
+.spain-hero__sun {
+  position: absolute;
+  top: 12%;
+  right: 13%;
+  width: 5rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f4c766;
+  box-shadow: 0 0 0 0.9rem rgb(244 199 102 / 0.2);
+}
+
+.spain-hero__land {
+  position: absolute;
+  inset: auto 0 0;
+  height: 35%;
+  background: #c97e61;
+  clip-path: polygon(0 28%, 25% 11%, 54% 22%, 78% 5%, 100% 17%, 100% 100%, 0 100%);
+}
+
+.spain-hero__building {
+  position: absolute;
+  bottom: 26%;
+  width: 24%;
+  height: 34%;
+  background: #f9e9c9;
+  border-radius: 45% 45% 0 0;
+  box-shadow: inset 0 0 0 0.35rem #c56850;
+}
+
+.spain-hero__building::after {
+  content: '';
+  position: absolute;
+  inset: 35% 39% 0;
+  border-radius: 50% 50% 0 0;
+  background: #5e7890;
+}
+
+.spain-hero__building--one { left: 12%; }
+.spain-hero__building--two { left: 39%; bottom: 28%; height: 45%; width: 19%; }
+
+.spain-hero__postcard {
+  position: absolute;
+  z-index: 2;
+  right: 5%;
+  bottom: 7%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: #20435b;
+  box-shadow: var(--shadow-soft);
+  transform: rotate(-4deg);
+}
+
+.spain-hero__postcard strong,
+.spain-hero__postcard small { display: block; }
+.spain-hero__postcard strong { letter-spacing: 0.1em; }
+.spain .germany-snapshot a { color: var(--color-primary-ink); }
+
+@media (min-width: 48em) {
+  .spain-hero__art { min-height: 22rem; }
+}
