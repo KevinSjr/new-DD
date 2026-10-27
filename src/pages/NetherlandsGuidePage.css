@@ -1,0 +1,84 @@
+.netherlands .germany-hero { background: #e8f1f1; }
+
+.netherlands-hero__art {
+  position: relative;
+  width: 100%;
+  max-width: 29rem;
+  min-height: 18rem;
+  margin-inline: auto;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: #a7cbd6;
+  box-shadow: var(--shadow-lift);
+}
+
+.netherlands-hero__sun {
+  position: absolute;
+  top: 11%;
+  right: 16%;
+  width: 4.5rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f6e0a8;
+  box-shadow: 0 0 0 0.8rem rgb(246 224 168 / 0.25);
+}
+
+.netherlands-hero__land {
+  position: absolute;
+  inset: auto 0 0;
+  height: 35%;
+  background: #8fae9c;
+}
+
+.netherlands-hero__arch,
+.netherlands-hero__roof {
+  position: absolute;
+  bottom: 27%;
+  width: 24%;
+  height: 39%;
+  background: #bf6b53;
+  box-shadow: inset 0.35rem 0 0 rgb(66 64 60 / 0.17), 0.4rem 0.4rem 0 rgb(48 70 80 / 0.14);
+}
+
+.netherlands-hero__arch {
+  left: 19%;
+  clip-path: polygon(0 11%, 28% 11%, 28% 0, 72% 0, 72% 11%, 100% 11%, 100% 100%, 0 100%);
+}
+
+.netherlands-hero__roof {
+  left: 45%;
+  height: 45%;
+  background: #e0c4a0;
+  clip-path: polygon(0 17%, 25% 17%, 25% 8%, 40% 8%, 40% 0, 60% 0, 60% 8%, 75% 8%, 75% 17%, 100% 17%, 100% 100%, 0 100%);
+}
+
+.netherlands-hero__canal {
+  position: absolute;
+  inset: auto 0 0;
+  height: 28%;
+  background: #568da4;
+  clip-path: polygon(0 9%, 30% 5%, 60% 11%, 100% 4%, 100% 100%, 0 100%);
+}
+
+.netherlands-hero__postcard {
+  position: absolute;
+  z-index: 2;
+  right: 5%;
+  bottom: 7%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: #20435b;
+  box-shadow: var(--shadow-soft);
+  transform: rotate(-4deg);
+}
+
+.netherlands-hero__postcard strong,
+.netherlands-hero__postcard small { display: block; }
+.netherlands-hero__postcard strong { letter-spacing: 0.08em; }
+.netherlands .germany-snapshot a { color: var(--color-primary-ink); }
+
+@media (min-width: 48em) {
+  .netherlands-hero__art { min-height: 22rem; }
+}

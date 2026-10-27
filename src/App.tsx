@@ -12,6 +12,7 @@ import { SpainGuidePage } from './pages/SpainGuidePage'
 import { UnitedStatesGuidePage } from './pages/UnitedStatesGuidePage'
 import { FinlandGuidePage } from './pages/FinlandGuidePage'
 import { FranceGuidePage } from './pages/FranceGuidePage'
+import { NetherlandsGuidePage } from './pages/NetherlandsGuidePage'
 import { RankingPage } from './pages/RankingPage'
 import { RankingsHubPage } from './pages/RankingsHubPage'
 import { SubjectAreaRankingPage } from './pages/SubjectAreaRankingPage'
@@ -80,6 +81,7 @@ function Routes() {
   if (path === '/paises/estados-unidos') return <UnitedStatesGuidePage />
   if (path === '/paises/finlandia') return <FinlandGuidePage />
   if (path === '/paises/franca') return <FranceGuidePage />
+  if (path === '/paises/paises-baixos') return <NetherlandsGuidePage />
 
   const guide = path.match(/^\/paises\/([a-z0-9-]+)$/)
   if (guide) return <CountryGuidePage slug={guide[1]} />
