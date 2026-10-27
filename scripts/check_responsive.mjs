@@ -8,12 +8,12 @@ const root = resolve('dist')
 const chromePath = process.env.CHROME_PATH || 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
 const apiOrigin = process.env.RESPONSIVE_API_ORIGIN || ''
 if (apiOrigin && !/^http:\/\/127\.0\.0\.1:300[12]$/.test(apiOrigin)) throw new Error('A auditoria só aceita a API local nas portas 3001 ou 3002')
-const routes = [
+const routes = process.env.RESPONSIVE_ONLY_ROUTE ? [process.env.RESPONSIVE_ONLY_ROUTE] : [
   '/', '/exames', '/exames/sat', '/exames/sat/desafio-diario', '/exames/sat/simulado', '/admin/sat', '/rankings', '/ranking', '/rankings/artes-humanidades',
   '/rankings/engenharia-tecnologia', '/rankings/ciencias-da-vida-medicina',
   '/rankings/ciencias-naturais', '/rankings/ciencias-sociais-administracao',
   '/teste-vocacional', '/calculadora-gpa', '/descobridor-de-destinos',
-  '/bolsas', '/admin/bolsas', '/paises/alemanha', '/paises/outro',
+  '/bolsas', '/admin/bolsas', '/paises/alemanha', '/paises/estados-unidos', '/paises/outro',
 ]
 const widths = [320, 375, 768, 1024, 1280]
 const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.png': 'image/png', '.svg': 'image/svg+xml', '.woff': 'font/woff', '.woff2': 'font/woff2' }
@@ -121,23 +121,25 @@ try {
       } else console.log('OK', width, route, `${data.document}/${data.viewport}`, data.heading.slice(0, 45))
     }
   }
-  await command('Emulation.setDeviceMetricsOverride', { width: 320, height: 640, deviceScaleFactor: 1, mobile: true })
-  await command('Page.navigate', { url: `http://127.0.0.1:${port}/` })
-  await evaluateJson(`(() => { document.querySelector('.site-header__toggle').click(); return JSON.stringify({ clicked: true }) })()`, '/')
-  await delay(100)
-  const menu = await evaluateJson(`(() => { const menu = document.querySelector('.site-nav'); return JSON.stringify({ visible: getComputedStyle(menu).display !== 'none', bottom: menu.getBoundingClientRect().bottom, viewportHeight: innerHeight, documentWidth: document.documentElement.scrollWidth, viewportWidth: innerWidth }) })()`, '/')
-  if (!menu.visible || menu.bottom > menu.viewportHeight + 1 || menu.documentWidth > menu.viewportWidth + 1) {
-    failures++
-    console.log('FAIL menu móvel', menu)
-  } else console.log('OK menu móvel aberto', menu)
+  if (!process.env.RESPONSIVE_ONLY_ROUTE) {
+    await command('Emulation.setDeviceMetricsOverride', { width: 320, height: 640, deviceScaleFactor: 1, mobile: true })
+    await command('Page.navigate', { url: `http://127.0.0.1:${port}/` })
+    await evaluateJson(`(() => { document.querySelector('.site-header__toggle').click(); return JSON.stringify({ clicked: true }) })()`, '/')
+    await delay(100)
+    const menu = await evaluateJson(`(() => { const menu = document.querySelector('.site-nav'); return JSON.stringify({ visible: getComputedStyle(menu).display !== 'none', bottom: menu.getBoundingClientRect().bottom, viewportHeight: innerHeight, documentWidth: document.documentElement.scrollWidth, viewportWidth: innerWidth }) })()`, '/')
+    if (!menu.visible || menu.bottom > menu.viewportHeight + 1 || menu.documentWidth > menu.viewportWidth + 1) {
+      failures++
+      console.log('FAIL menu móvel', menu)
+    } else console.log('OK menu móvel aberto', menu)
 
-  await command('Page.navigate', { url: `http://127.0.0.1:${port}/ranking` })
-  await delay(1000)
-  const ranking = await evaluateJson(`(() => { const container = document.querySelector('.ranking-results__scroll'); return JSON.stringify({ exists: !!container, scrollWidth: container?.scrollWidth, clientWidth: container?.clientWidth, documentWidth: document.documentElement.scrollWidth, viewportWidth: innerWidth, rows: document.querySelectorAll('.ranking-results tbody tr').length }) })()`, '/ranking')
-  if (!ranking.exists || ranking.rows === 0 || ranking.scrollWidth <= ranking.clientWidth || ranking.documentWidth > ranking.viewportWidth + 1) {
-    failures++
-    console.log('FAIL tabela móvel de ranking', ranking)
-  } else console.log('OK tabela móvel de ranking', ranking)
+    await command('Page.navigate', { url: `http://127.0.0.1:${port}/ranking` })
+    await delay(1000)
+    const ranking = await evaluateJson(`(() => { const container = document.querySelector('.ranking-results__scroll'); return JSON.stringify({ exists: !!container, scrollWidth: container?.scrollWidth, clientWidth: container?.clientWidth, documentWidth: document.documentElement.scrollWidth, viewportWidth: innerWidth, rows: document.querySelectorAll('.ranking-results tbody tr').length }) })()`, '/ranking')
+    if (!ranking.exists || ranking.rows === 0 || ranking.scrollWidth <= ranking.clientWidth || ranking.documentWidth > ranking.viewportWidth + 1) {
+      failures++
+      console.log('FAIL tabela móvel de ranking', ranking)
+    } else console.log('OK tabela móvel de ranking', ranking)
+  }
 
   if (process.env.RESPONSIVE_SCREENSHOTS_DIR) {
     const screenshotsDir = resolve(process.env.RESPONSIVE_SCREENSHOTS_DIR)
@@ -193,7 +195,7 @@ try {
   }
 
   if (failures) process.exitCode = 1
-  const checks = widths.length * routes.length + 2 + (apiOrigin ? widths.length + 5 : 0)
+  const checks = widths.length * routes.length + (process.env.RESPONSIVE_ONLY_ROUTE ? 0 : 2) + (apiOrigin ? widths.length + 5 : 0)
   console.log(`${checks - failures}/${checks} verificações responsivas passaram`)
 } finally {
   socket?.close()

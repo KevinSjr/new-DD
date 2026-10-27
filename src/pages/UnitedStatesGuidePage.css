@@ -1,0 +1,83 @@
+.united-states .germany-hero { background: #eaf1f8; }
+
+.united-states-hero__art {
+  position: relative;
+  width: 100%;
+  max-width: 29rem;
+  min-height: 18rem;
+  margin-inline: auto;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: #a4c9df;
+  box-shadow: var(--shadow-lift);
+}
+
+.united-states-hero__sun {
+  position: absolute;
+  top: 11%;
+  right: 13%;
+  width: 5rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f4cb75;
+  box-shadow: 0 0 0 0.85rem rgb(244 203 117 / 0.18);
+}
+
+.united-states-hero__land {
+  position: absolute;
+  inset: auto 0 0;
+  height: 31%;
+  background: #628d8a;
+  clip-path: polygon(0 20%, 22% 8%, 47% 18%, 68% 5%, 100% 15%, 100% 100%, 0 100%);
+}
+
+.united-states-hero__building {
+  position: absolute;
+  bottom: 25%;
+  width: 27%;
+  height: 35%;
+  background: #e8d7bb;
+  box-shadow: inset 0 -0.55rem #d2ad89;
+}
+
+.united-states-hero__building::before {
+  content: '';
+  position: absolute;
+  inset: -17% -8% auto;
+  height: 18%;
+  background: #435b76;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.united-states-hero__building::after {
+  content: '';
+  position: absolute;
+  inset: 24% 18% 0;
+  background: repeating-linear-gradient(90deg, #56728b 0 20%, transparent 20% 40%);
+}
+
+.united-states-hero__building--one { left: 11%; }
+.united-states-hero__building--two { left: 42%; bottom: 26%; width: 20%; height: 47%; }
+
+.united-states-hero__postcard {
+  position: absolute;
+  z-index: 2;
+  right: 5%;
+  bottom: 7%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: #20435b;
+  box-shadow: var(--shadow-soft);
+  transform: rotate(-4deg);
+}
+
+.united-states-hero__postcard strong,
+.united-states-hero__postcard small { display: block; }
+.united-states-hero__postcard strong { letter-spacing: 0.08em; }
+.united-states .germany-snapshot a { color: var(--color-primary-ink); }
+
+@media (min-width: 48em) {
+  .united-states-hero__art { min-height: 22rem; }
+}

@@ -25,7 +25,7 @@ type Passport = {
 
 /** Ordem pedida pelo projeto. Cada slug é o mesmo usado em data/countries.ts. */
 const PASSPORTS: Passport[] = [
-  { slug: 'estados-unidos', name: 'Estados Unidos', code: 'JFK' },
+  { slug: 'estados-unidos', name: 'Estados Unidos', code: 'JFK', facts: { language: 'Inglês predominante', climate: 'Varia conforme a região' } },
   { slug: 'reino-unido', name: 'Reino Unido', code: 'LHR' },
   { slug: 'canada', name: 'Canadá', code: 'YYZ', facts: { language: 'Inglês e francês', climate: 'Varia conforme a região' } },
   { slug: 'australia', name: 'Austrália', code: 'SYD', facts: { language: 'Inglês', climate: 'Varia conforme a região' } },
@@ -105,7 +105,7 @@ export function Passports() {
           <h2 id="paises-titulo">Para onde vai o seu sonho?</h2>
           <p>
             {PASSPORTS.length} destinos no radar. Cada um terá um guia com o que você precisa saber
-            antes de embarcar. Os guias da Alemanha, Austrália, Bélgica, Canadá, China, Coreia do Sul, Dinamarca e Espanha já estão publicados.
+            antes de embarcar. Os guias da Alemanha, Austrália, Bélgica, Canadá, China, Coreia do Sul, Dinamarca, Espanha e Estados Unidos já estão publicados.
           </p>
         </div>
         <ul className="passports__grid" id="passaportes-lista">
