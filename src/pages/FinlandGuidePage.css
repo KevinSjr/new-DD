@@ -1,0 +1,67 @@
+.finland .germany-hero { background: #eaf3f5; }
+
+.finland-hero__art {
+  position: relative;
+  width: 100%;
+  max-width: 29rem;
+  min-height: 18rem;
+  margin-inline: auto;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: #9abed0;
+  box-shadow: var(--shadow-lift);
+}
+
+.finland-hero__sun {
+  position: absolute;
+  top: 12%;
+  right: 16%;
+  width: 4rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f3e7bb;
+  box-shadow: 0 0 0 1rem rgb(243 231 187 / 0.16);
+}
+
+.finland-hero__land {
+  position: absolute;
+  inset: auto 0 0;
+  height: 39%;
+  background: #edf4ed;
+  clip-path: polygon(0 24%, 20% 13%, 42% 24%, 66% 8%, 100% 19%, 100% 100%, 0 100%);
+}
+
+.finland-hero__pine {
+  position: absolute;
+  bottom: 28%;
+  width: 22%;
+  height: 47%;
+  background: #356b67;
+  clip-path: polygon(50% 0, 78% 38%, 66% 38%, 95% 83%, 57% 83%, 57% 100%, 43% 100%, 43% 83%, 5% 83%, 34% 38%, 22% 38%);
+}
+
+.finland-hero__pine--one { left: 11%; }
+.finland-hero__pine--two { left: 36%; bottom: 29%; height: 36%; background: #4b8179; }
+
+.finland-hero__postcard {
+  position: absolute;
+  z-index: 2;
+  right: 5%;
+  bottom: 7%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: #20435b;
+  box-shadow: var(--shadow-soft);
+  transform: rotate(-4deg);
+}
+
+.finland-hero__postcard strong,
+.finland-hero__postcard small { display: block; }
+.finland-hero__postcard strong { letter-spacing: 0.1em; }
+.finland .germany-snapshot a { color: var(--color-primary-ink); }
+
+@media (min-width: 48em) {
+  .finland-hero__art { min-height: 22rem; }
+}
