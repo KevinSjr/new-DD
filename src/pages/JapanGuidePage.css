@@ -1,0 +1,85 @@
+.japan .germany-hero { background: #f5f0ed; }
+
+.japan-hero__art {
+  position: relative;
+  width: 100%;
+  max-width: 29rem;
+  min-height: 18rem;
+  margin-inline: auto;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: #b7d4dc;
+  box-shadow: var(--shadow-lift);
+}
+
+.japan-hero__sun {
+  position: absolute;
+  top: 12%;
+  right: 16%;
+  width: 5.2rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #d98479;
+  box-shadow: 0 0 0 0.9rem rgb(217 132 121 / 0.2);
+}
+
+.japan-hero__land {
+  position: absolute;
+  inset: auto 0 0;
+  height: 46%;
+  background: #819a83;
+  clip-path: polygon(0 45%, 24% 27%, 46% 36%, 69% 13%, 100% 39%, 100% 100%, 0 100%);
+}
+
+.japan-hero__arch {
+  position: absolute;
+  z-index: 1;
+  bottom: 24%;
+  left: 24%;
+  width: 42%;
+  height: 42%;
+  background: #a64e48;
+  clip-path: polygon(0 0, 100% 0, 100% 11%, 84% 14%, 84% 100%, 73% 100%, 73% 19%, 27% 19%, 27% 100%, 16% 100%, 16% 14%, 0 11%);
+}
+
+.japan-hero__roof {
+  position: absolute;
+  bottom: 26%;
+  right: 0;
+  width: 40%;
+  height: 56%;
+  background: #e6e9e4;
+  clip-path: polygon(0 85%, 52% 2%, 100% 85%, 100% 100%, 0 100%);
+}
+
+.japan-hero__path {
+  position: absolute;
+  z-index: 1;
+  inset: auto 0 0;
+  height: 27%;
+  background: #cfbfa6;
+  clip-path: polygon(44% 0, 55% 0, 79% 100%, 20% 100%);
+}
+
+.japan-hero__postcard {
+  position: absolute;
+  z-index: 2;
+  right: 5%;
+  bottom: 7%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: #20435b;
+  box-shadow: var(--shadow-soft);
+  transform: rotate(-4deg);
+}
+
+.japan-hero__postcard strong,
+.japan-hero__postcard small { display: block; }
+.japan-hero__postcard strong { letter-spacing: 0.1em; }
+.japan .germany-snapshot a { color: var(--color-primary-ink); }
+
+@media (min-width: 48em) {
+  .japan-hero__art { min-height: 22rem; }
+}
