@@ -1,0 +1,86 @@
+.norway .germany-hero { background: #eef2f5; }
+
+.norway-hero__art {
+  position: relative;
+  width: 100%;
+  max-width: 29rem;
+  min-height: 18rem;
+  margin-inline: auto;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(#b9d1df 0 66%, #a8bdc4 66%);
+  box-shadow: var(--shadow-lift);
+}
+
+.norway-hero__sun {
+  position: absolute;
+  top: 13%;
+  right: 14%;
+  width: 4.8rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #e9dba0;
+  box-shadow: 0 0 0 1rem rgb(244 205 118 / 20%);
+}
+
+.norway-hero__land {
+  position: absolute;
+  inset: auto 0 0;
+  height: 42%;
+  background: #6f91a0;
+  clip-path: polygon(0 48%, 21% 24%, 38% 38%, 64% 12%, 100% 42%, 100% 100%, 0 100%);
+}
+
+.norway-hero__arch,
+.norway-hero__roof {
+  position: absolute;
+  z-index: 1;
+  bottom: 15%;
+  width: 55%;
+  height: 55%;
+  background: #3e6680;
+}
+
+.norway-hero__arch {
+  left: -5%;
+  clip-path: polygon(0 14%, 30% 6%, 47% 30%, 70% 37%, 100% 100%, 0 100%);
+}
+.norway-hero__roof {
+  right: -8%;
+  background: #e5e9e7;
+  clip-path: polygon(0 100%, 32% 35%, 53% 9%, 77% 17%, 100% 58%, 100% 100%);
+}
+
+.norway-hero__path {
+  position: absolute;
+  z-index: 1;
+  inset: auto 0 0;
+  width: 100%;
+  height: 26%;
+  background: #5b9cb0;
+  clip-path: polygon(0 31%, 28% 48%, 54% 22%, 100% 40%, 100% 100%, 0 100%);
+}
+
+.norway-hero__postcard {
+  position: absolute;
+  z-index: 2;
+  right: 5%;
+  bottom: 7%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: #20435b;
+  box-shadow: var(--shadow-soft);
+  transform: rotate(-4deg);
+}
+
+.norway-hero__postcard strong,
+.norway-hero__postcard small { display: block; }
+.norway-hero__postcard strong { letter-spacing: 0.1em; }
+.norway .germany-snapshot a { color: var(--color-primary-ink); }
+
+@media (min-width: 48em) {
+  .norway-hero__art { min-height: 22rem; }
+}
+

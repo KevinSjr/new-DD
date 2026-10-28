@@ -49,7 +49,7 @@ const PASSPORTS: Passport[] = [
   { slug: 'finlandia', name: 'Finlândia', code: 'HEL', facts: { language: 'Finlandês e sueco', climate: 'Invernos frios' } },
   { slug: 'dinamarca', name: 'Dinamarca', code: 'CPH', facts: { language: 'Dinamarquês', climate: 'Temperado e ventoso' } },
   { slug: 'belgica', name: 'Bélgica', code: 'BRU', facts: { language: 'Neerlandês, francês e alemão', climate: 'Temperado oceânico' } },
-  { slug: 'noruega', name: 'Noruega', code: 'OSL' },
+  { slug: 'noruega', name: 'Noruega', code: 'OSL', facts: { language: 'Norueguês', climate: 'Varia entre costa e interior' } },
   { slug: 'taiwan', name: 'Taiwan', code: 'TPE' },
   { slug: 'hong-kong', name: 'Hong Kong', code: 'HKG' },
   { slug: 'singapura', name: 'Singapura', code: 'SIN' },
@@ -105,7 +105,7 @@ export function Passports() {
           <h2 id="paises-titulo">Para onde vai o seu sonho?</h2>
           <p>
             {PASSPORTS.length} destinos no radar. Cada um terá um guia com o que você precisa saber
-            antes de embarcar. Os guias da Alemanha, Austrália, Bélgica, Canadá, China, Coreia do Sul, Dinamarca, Espanha, Estados Unidos, Finlândia, França, Países Baixos, Irlanda, Itália, Japão e Malásia já estão publicados.
+            antes de embarcar. Os guias da Alemanha, Austrália, Bélgica, Canadá, China, Coreia do Sul, Dinamarca, Espanha, Estados Unidos, Finlândia, França, Países Baixos, Irlanda, Itália, Japão, Malásia e Noruega já estão publicados.
           </p>
         </div>
         <ul className="passports__grid" id="passaportes-lista">

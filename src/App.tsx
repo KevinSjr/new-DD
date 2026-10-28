@@ -17,6 +17,7 @@ import { IrelandGuidePage } from './pages/IrelandGuidePage'
 import { ItalyGuidePage } from './pages/ItalyGuidePage'
 import { JapanGuidePage } from './pages/JapanGuidePage'
 import { MalaysiaGuidePage } from './pages/MalaysiaGuidePage'
+import { NorwayGuidePage } from './pages/NorwayGuidePage'
 import { RankingPage } from './pages/RankingPage'
 import { RankingsHubPage } from './pages/RankingsHubPage'
 import { SubjectAreaRankingPage } from './pages/SubjectAreaRankingPage'
@@ -90,6 +91,7 @@ function Routes() {
   if (path === '/paises/italia') return <ItalyGuidePage />
   if (path === '/paises/japao') return <JapanGuidePage />
   if (path === '/paises/malasia') return <MalaysiaGuidePage />
+  if (path === '/paises/noruega') return <NorwayGuidePage />
 
   const guide = path.match(/^\/paises\/([a-z0-9-]+)$/)
   if (guide) return <CountryGuidePage slug={guide[1]} />
