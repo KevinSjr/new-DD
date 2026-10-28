@@ -1,0 +1,94 @@
+.italy .germany-hero { background: #f5efea; }
+
+.italy-hero__art {
+  position: relative;
+  width: 100%;
+  max-width: 29rem;
+  min-height: 18rem;
+  margin-inline: auto;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: #add0d6;
+  box-shadow: var(--shadow-lift);
+}
+
+.italy-hero__sun {
+  position: absolute;
+  top: 13%;
+  right: 15%;
+  width: 5rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f5d39c;
+  box-shadow: 0 0 0 0.9rem rgb(245 211 156 / 0.24);
+}
+
+.italy-hero__land {
+  position: absolute;
+  inset: auto 0 0;
+  height: 37%;
+  background: #879b78;
+  clip-path: polygon(0 35%, 24% 13%, 51% 30%, 74% 6%, 100% 23%, 100% 100%, 0 100%);
+}
+
+.italy-hero__arch {
+  position: absolute;
+  bottom: 26%;
+  left: 17%;
+  width: 40%;
+  height: 38%;
+  background: #d6ab84;
+  clip-path: polygon(0 23%, 19% 23%, 19% 6%, 30% 6%, 30% 0, 70% 0, 70% 6%, 81% 6%, 81% 23%, 100% 23%, 100% 100%, 0 100%);
+}
+
+.italy-hero__arch::after {
+  content: '';
+  position: absolute;
+  left: 36%;
+  bottom: 0;
+  width: 28%;
+  height: 58%;
+  border-radius: 45% 45% 0 0;
+  background: #536d66;
+}
+
+.italy-hero__roof {
+  position: absolute;
+  bottom: 26%;
+  left: 61%;
+  width: 15%;
+  height: 27%;
+  background: #f1dcc1;
+  clip-path: polygon(0 22%, 50% 0, 100% 22%, 100% 100%, 0 100%);
+}
+
+.italy-hero__path {
+  position: absolute;
+  inset: auto 0 0;
+  height: 25%;
+  background: #c9bc9d;
+  clip-path: polygon(42% 0, 52% 0, 76% 100%, 22% 100%);
+}
+
+.italy-hero__postcard {
+  position: absolute;
+  z-index: 2;
+  right: 5%;
+  bottom: 7%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: #20435b;
+  box-shadow: var(--shadow-soft);
+  transform: rotate(-4deg);
+}
+
+.italy-hero__postcard strong,
+.italy-hero__postcard small { display: block; }
+.italy-hero__postcard strong { letter-spacing: 0.1em; }
+.italy .germany-snapshot a { color: var(--color-primary-ink); }
+
+@media (min-width: 48em) {
+  .italy-hero__art { min-height: 22rem; }
+}
