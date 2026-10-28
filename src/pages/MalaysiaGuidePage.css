@@ -1,0 +1,81 @@
+.malaysia .germany-hero { background: #ecf3eb; }
+
+.malaysia-hero__art {
+  position: relative;
+  width: 100%;
+  max-width: 29rem;
+  min-height: 18rem;
+  margin-inline: auto;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(#b7dfe2 0 66%, #a4be9f 66%);
+  box-shadow: var(--shadow-lift);
+}
+
+.malaysia-hero__sun {
+  position: absolute;
+  top: 13%;
+  right: 14%;
+  width: 4.8rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f4cd76;
+  box-shadow: 0 0 0 1rem rgb(244 205 118 / 20%);
+}
+
+.malaysia-hero__land {
+  position: absolute;
+  inset: auto 0 0;
+  height: 42%;
+  background: #63977d;
+  clip-path: polygon(0 48%, 21% 24%, 38% 38%, 64% 12%, 100% 42%, 100% 100%, 0 100%);
+}
+
+.malaysia-hero__arch,
+.malaysia-hero__roof {
+  position: absolute;
+  z-index: 1;
+  bottom: 21%;
+  width: 15%;
+  height: 52%;
+  background: #dfe8d9;
+  clip-path: polygon(43% 0, 57% 0, 67% 12%, 79% 12%, 79% 100%, 21% 100%, 21% 12%, 33% 12%);
+  box-shadow: inset 0 0 0 2px #456d6b;
+}
+
+.malaysia-hero__arch { left: 35%; }
+.malaysia-hero__roof { left: 51%; }
+
+.malaysia-hero__path {
+  position: absolute;
+  z-index: 1;
+  left: 46%;
+  bottom: 37%;
+  width: 10%;
+  height: 22%;
+  border-top: 4px solid #dfe8d9;
+  border-radius: 50% 50% 0 0;
+}
+
+.malaysia-hero__postcard {
+  position: absolute;
+  z-index: 2;
+  right: 5%;
+  bottom: 7%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: #20435b;
+  box-shadow: var(--shadow-soft);
+  transform: rotate(-4deg);
+}
+
+.malaysia-hero__postcard strong,
+.malaysia-hero__postcard small { display: block; }
+.malaysia-hero__postcard strong { letter-spacing: 0.1em; }
+.malaysia .germany-snapshot a { color: var(--color-primary-ink); }
+
+@media (min-width: 48em) {
+  .malaysia-hero__art { min-height: 22rem; }
+}

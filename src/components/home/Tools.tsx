@@ -28,7 +28,7 @@ const TOOLS: Tool[] = [
   { title: 'Teste vocacional', icon: 'compass', tone: 'lilac', href: '/teste-vocacional', tag: 'Questionário disponível', description: 'Explore seus interesses em 60 atividades e encontre caminhos para investigar, sem rótulos definitivos.' },
   { title: 'Rankings', icon: 'trophy', tone: 'sun', href: '/rankings', tag: 'Seis listas disponíveis', description: 'Compare universidades no ranking geral ou explore as cinco áreas de estudo do QS by Subject 2026.' },
   { title: 'Simulador de entrevista', icon: 'mic', tone: 'coral', tag: SOON, description: 'Ensaie as perguntas mais comuns de bolsas e universidades antes do dia.' },
-  { title: 'Guia de países', icon: 'map', tone: 'sky', href: '/#paises', tag: 'Quinze guias publicados', description: 'Custo de vida, clima, trabalho e tudo o que muda quando você chega.' },
+  { title: 'Guia de países', icon: 'map', tone: 'sky', href: '/#paises', tag: 'Dezesseis guias publicados', description: 'Custo de vida, clima, trabalho e tudo o que muda quando você chega.' },
   { title: 'Buscador de bolsas', icon: 'search', tone: 'mint', href: '/bolsas', tag: 'Busca disponível', description: 'Explore bolsas de diferentes fontes em um só lugar e confira os critérios no edital original.' },
   { title: 'Descobridor de destinos', icon: 'globe', tone: 'lilac', href: '/descobridor-de-destinos', tag: 'Exploração disponível', description: 'Compare 25 destinos pelas suas preferências de região, idioma e clima.' },
   { title: 'Match de bolsas e universidades', icon: 'sparkles', tone: 'sun', tag: SOON, description: 'Cruze seu perfil com bolsas e universidades e veja as melhores combinações.' },

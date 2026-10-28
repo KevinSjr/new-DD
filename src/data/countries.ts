@@ -25,4 +25,5 @@ export const COUNTRY_GUIDES: readonly CountryGuide[] = [
   { slug: 'irlanda', name: 'Irlanda', status: 'available', href: '/paises/irlanda' },
   { slug: 'italia', name: 'Itália', status: 'available', href: '/paises/italia' },
   { slug: 'japao', name: 'Japão', status: 'available', href: '/paises/japao' },
+  { slug: 'malasia', name: 'Malásia', status: 'available', href: '/paises/malasia' },
 ]
