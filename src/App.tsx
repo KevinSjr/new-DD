@@ -22,6 +22,7 @@ import { PortugalGuidePage } from './pages/PortugalGuidePage'
 import { UnitedKingdomGuidePage } from './pages/UnitedKingdomGuidePage'
 import { SingaporeGuidePage } from './pages/SingaporeGuidePage'
 import { SwitzerlandGuidePage } from './pages/SwitzerlandGuidePage'
+import { SwedenGuidePage } from './pages/SwedenGuidePage'
 import { RankingPage } from './pages/RankingPage'
 import { RankingsHubPage } from './pages/RankingsHubPage'
 import { SubjectAreaRankingPage } from './pages/SubjectAreaRankingPage'
@@ -100,6 +101,7 @@ function Routes() {
   if (path === '/paises/reino-unido') return <UnitedKingdomGuidePage />
   if (path === '/paises/singapura') return <SingaporeGuidePage />
   if (path === '/paises/suica') return <SwitzerlandGuidePage />
+  if (path === '/paises/suecia') return <SwedenGuidePage />
 
   const guide = path.match(/^\/paises\/([a-z0-9-]+)$/)
   if (guide) return <CountryGuidePage slug={guide[1]} />
