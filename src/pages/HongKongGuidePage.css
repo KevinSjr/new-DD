@@ -1,0 +1,72 @@
+.hong-kong .germany-hero { background: #eef2f7; }
+
+.hong-kong-hero__art {
+  position: relative;
+  width: 100%;
+  max-width: 29rem;
+  min-height: 18rem;
+  margin-inline: auto;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(#b6c8db 0 70%, #6b9cad 70%);
+  box-shadow: var(--shadow-lift);
+}
+
+.hong-kong-hero__sun {
+  position: absolute;
+  top: 13%;
+  right: 14%;
+  width: 4.8rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f2c877;
+  box-shadow: 0 0 0 1rem rgb(242 200 119 / 20%);
+}
+
+.hong-kong-hero__skyline {
+  position: absolute;
+  inset: auto 0 25%;
+  height: 52%;
+  background: #4b728e;
+  clip-path: polygon(0 100%, 0 60%, 9% 60%, 9% 45%, 15% 45%, 15% 70%, 22% 70%, 22% 29%, 30% 29%, 30% 49%, 38% 49%, 38% 15%, 46% 15%, 46% 51%, 54% 51%, 54% 38%, 64% 38%, 64% 66%, 71% 66%, 71% 23%, 78% 23%, 78% 46%, 87% 46%, 87% 57%, 100% 57%, 100% 100%);
+}
+
+.hong-kong-hero__tower {
+  position: absolute;
+  left: 42%;
+  bottom: 25%;
+  width: 5%;
+  height: 68%;
+  background: #294d70;
+  clip-path: polygon(50% 0, 68% 15%, 100% 100%, 0 100%, 32% 15%);
+}
+
+.hong-kong-hero__harbour {
+  position: absolute;
+  inset: auto 0 0;
+  height: 26%;
+  background: repeating-linear-gradient(175deg, #6b9cad 0 0.7rem, #86b4bf 0.7rem 1rem);
+}
+
+.hong-kong-hero__postcard {
+  position: absolute;
+  z-index: 1;
+  right: 5%;
+  bottom: 7%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: #213f60;
+  box-shadow: var(--shadow-soft);
+  transform: rotate(-4deg);
+}
+
+.hong-kong-hero__postcard strong,
+.hong-kong-hero__postcard small { display: block; }
+.hong-kong-hero__postcard strong { letter-spacing: 0.1em; }
+.hong-kong .germany-snapshot a { color: var(--color-primary-ink); }
+
+@media (min-width: 48em) {
+  .hong-kong-hero__art { min-height: 22rem; }
+}
