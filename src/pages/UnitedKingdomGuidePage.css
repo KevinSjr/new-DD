@@ -1,0 +1,91 @@
+.united-kingdom .germany-hero { background: #e9f0f7; }
+
+.united-kingdom-hero__art {
+  position: relative;
+  width: 100%;
+  max-width: 29rem;
+  min-height: 18rem;
+  margin-inline: auto;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(#a8c7dc 0 66%, #d6e0e9 66%);
+  box-shadow: var(--shadow-lift);
+}
+
+.united-kingdom-hero__sun {
+  position: absolute;
+  top: 13%;
+  right: 14%;
+  width: 4.8rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f7d277;
+  box-shadow: 0 0 0 1rem rgb(244 205 118 / 20%);
+}
+
+.united-kingdom-hero__land {
+  position: absolute;
+  inset: auto 0 0;
+  height: 42%;
+  background: #43617f;
+  clip-path: polygon(0 36%, 25% 23%, 48% 44%, 72% 15%, 100% 35%, 100% 100%, 0 100%);
+}
+
+.united-kingdom-hero__clock-tower,
+.united-kingdom-hero__skyline {
+  position: absolute;
+  z-index: 1;
+  bottom: 19%;
+  background: #e4e9ef;
+}
+
+.united-kingdom-hero__clock-tower {
+  left: 28%;
+  width: 13%;
+  height: 57%;
+  background: radial-gradient(circle at 50% 29%, #f7d277 0 11%, #193652 12% 14%, transparent 15%), repeating-linear-gradient(0deg, #e4e9ef 0 20%, #a8c7dc 20% 23%);
+  clip-path: polygon(50% 0, 65% 14%, 100% 18%, 100% 100%, 0 100%, 0 18%, 35% 14%);
+}
+.united-kingdom-hero__skyline {
+  right: 14%;
+  width: 32%;
+  height: 34%;
+  background: repeating-linear-gradient(90deg, #e4e9ef 0 15%, #a8c7dc 15% 18%);
+  clip-path: polygon(0 28%, 16% 28%, 16% 5%, 28% 5%, 28% 30%, 42% 30%, 42% 0, 56% 0, 56% 25%, 69% 25%, 69% 10%, 84% 10%, 84% 34%, 100% 34%, 100% 100%, 0 100%);
+}
+
+.united-kingdom-hero__path {
+  position: absolute;
+  z-index: 1;
+  inset: auto 0 0;
+  width: 100%;
+  height: 26%;
+  background: #7faeb6;
+  clip-path: polygon(0 31%, 28% 48%, 54% 22%, 100% 40%, 100% 100%, 0 100%);
+}
+
+.united-kingdom-hero__postcard {
+  position: absolute;
+  z-index: 2;
+  right: 5%;
+  bottom: 7%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: #193652;
+  box-shadow: var(--shadow-soft);
+  transform: rotate(-4deg);
+}
+
+.united-kingdom-hero__postcard strong,
+.united-kingdom-hero__postcard small { display: block; }
+.united-kingdom-hero__postcard strong { letter-spacing: 0.1em; }
+.united-kingdom .germany-snapshot a { color: var(--color-primary-ink); }
+
+@media (min-width: 48em) {
+  .united-kingdom-hero__art { min-height: 22rem; }
+}
+
+
+

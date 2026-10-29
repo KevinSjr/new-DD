@@ -13,7 +13,7 @@ const routes = process.env.RESPONSIVE_ONLY_ROUTE ? [process.env.RESPONSIVE_ONLY_
   '/rankings/engenharia-tecnologia', '/rankings/ciencias-da-vida-medicina',
   '/rankings/ciencias-naturais', '/rankings/ciencias-sociais-administracao',
   '/teste-vocacional', '/calculadora-gpa', '/descobridor-de-destinos',
-  '/bolsas', '/admin/bolsas', '/paises/alemanha', '/paises/estados-unidos', '/paises/finlandia', '/paises/franca', '/paises/paises-baixos', '/paises/irlanda', '/paises/italia', '/paises/japao', '/paises/malasia', '/paises/noruega', '/paises/portugal', '/paises/outro',
+  '/bolsas', '/admin/bolsas', '/paises/alemanha', '/paises/estados-unidos', '/paises/finlandia', '/paises/franca', '/paises/paises-baixos', '/paises/irlanda', '/paises/italia', '/paises/japao', '/paises/malasia', '/paises/noruega', '/paises/portugal', '/paises/reino-unido', '/paises/outro',
 ]
 const widths = [320, 375, 768, 1024, 1280]
 const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.png': 'image/png', '.svg': 'image/svg+xml', '.woff': 'font/woff', '.woff2': 'font/woff2' }
