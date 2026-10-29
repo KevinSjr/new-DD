@@ -1,0 +1,92 @@
+.singapore .germany-hero { background: #f8efe9; }
+
+.singapore-hero__art {
+  position: relative;
+  width: 100%;
+  max-width: 29rem;
+  min-height: 18rem;
+  margin-inline: auto;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(#f4c7b6 0 66%, #efe7db 66%);
+  box-shadow: var(--shadow-lift);
+}
+
+.singapore-hero__sun {
+  position: absolute;
+  top: 13%;
+  right: 14%;
+  width: 4.8rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f7d277;
+  box-shadow: 0 0 0 1rem rgb(244 205 118 / 20%);
+}
+
+.singapore-hero__land {
+  position: absolute;
+  inset: auto 0 0;
+  height: 42%;
+  background: #c97162;
+  clip-path: polygon(0 36%, 25% 23%, 48% 44%, 72% 15%, 100% 35%, 100% 100%, 0 100%);
+}
+
+.singapore-hero__tower,
+.singapore-hero__skyline {
+  position: absolute;
+  z-index: 1;
+  bottom: 19%;
+  background: #f8e7d7;
+}
+
+.singapore-hero__tower {
+  left: 14%;
+  width: 37%;
+  height: 51%;
+  background: repeating-linear-gradient(0deg, #f8e7d7 0 12%, #d99b8d 12% 15%);
+  clip-path: polygon(0 19%, 100% 19%, 100% 28%, 86% 30%, 86% 100%, 68% 100%, 68% 30%, 50% 30%, 50% 100%, 32% 100%, 32% 30%, 14% 30%, 14% 100%, 0 100%, 0 30%);
+}
+.singapore-hero__skyline {
+  right: 14%;
+  width: 32%;
+  height: 34%;
+  background: repeating-linear-gradient(90deg, #f8e7d7 0 15%, #f4c7b6 15% 18%);
+  clip-path: polygon(0 28%, 16% 28%, 16% 5%, 28% 5%, 28% 30%, 42% 30%, 42% 0, 56% 0, 56% 25%, 69% 25%, 69% 10%, 84% 10%, 84% 34%, 100% 34%, 100% 100%, 0 100%);
+}
+
+.singapore-hero__path {
+  position: absolute;
+  z-index: 1;
+  inset: auto 0 0;
+  width: 100%;
+  height: 26%;
+  background: #7faeb6;
+  clip-path: polygon(0 31%, 28% 48%, 54% 22%, 100% 40%, 100% 100%, 0 100%);
+}
+
+.singapore-hero__postcard {
+  position: absolute;
+  z-index: 2;
+  right: 5%;
+  bottom: 7%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: #7d2f3a;
+  box-shadow: var(--shadow-soft);
+  transform: rotate(-4deg);
+}
+
+.singapore-hero__postcard strong,
+.singapore-hero__postcard small { display: block; }
+.singapore-hero__postcard strong { letter-spacing: 0.1em; }
+.singapore .germany-snapshot a { color: var(--color-primary-ink); }
+
+@media (min-width: 48em) {
+  .singapore-hero__art { min-height: 22rem; }
+}
+
+
+
+
