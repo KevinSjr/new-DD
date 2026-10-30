@@ -34,4 +34,5 @@ export const COUNTRY_GUIDES: readonly CountryGuide[] = [
   { slug: 'suecia', name: 'Suécia', status: 'available', href: '/paises/suecia' },
   { slug: 'taiwan', name: 'Taiwan', status: 'available', href: '/paises/taiwan' },
   { slug: 'hong-kong', name: 'Hong Kong', status: 'available', href: '/paises/hong-kong' },
+  { slug: 'nova-zelandia', name: 'Nova Zelândia', status: 'available', href: '/paises/nova-zelandia' },
 ]

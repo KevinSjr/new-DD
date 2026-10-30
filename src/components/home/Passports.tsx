@@ -54,7 +54,7 @@ const PASSPORTS: Passport[] = [
   { slug: 'hong-kong', name: 'Hong Kong', code: 'HKG', facts: { language: 'Chinês e inglês oficiais', climate: 'Subtropical, verão quente e úmido' } },
   { slug: 'singapura', name: 'Singapura', code: 'SIN', facts: { language: 'Inglês, mandarim, malaio e tâmil', climate: 'Tropical, quente e úmido' } },
   { slug: 'malasia', name: 'Malásia', code: 'KUL', facts: { language: 'Malaio', climate: 'Tropical, com monções' } },
-  { slug: 'nova-zelandia', name: 'Nova Zelândia', code: 'AKL' },
+  { slug: 'nova-zelandia', name: 'Nova Zelândia', code: 'AKL', facts: { language: 'Inglês predominante', climate: 'Temperado; varia entre as ilhas' } },
 ]
 
 /** A cor do bilhete só decora: alterna pela posição na lista. */

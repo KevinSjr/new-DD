@@ -1,0 +1,72 @@
+.new-zealand .germany-hero { background: #edf5f4; }
+
+.new-zealand-hero__art {
+  position: relative;
+  width: 100%;
+  max-width: 29rem;
+  min-height: 18rem;
+  margin-inline: auto;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(#b8e0eb 0 64%, #c4dfd1 64%);
+  box-shadow: var(--shadow-lift);
+}
+
+.new-zealand-hero__sun {
+  position: absolute;
+  top: 13%;
+  right: 17%;
+  width: 4.3rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #ffd471;
+  box-shadow: 0 0 0 0.9rem rgb(255 212 113 / 20%);
+}
+
+.new-zealand-hero__mountains {
+  position: absolute;
+  inset: auto 0 22%;
+  height: 60%;
+  background: #6a9a91;
+  clip-path: polygon(0 100%, 0 70%, 18% 32%, 31% 70%, 51% 9%, 75% 79%, 86% 50%, 100% 77%, 100% 100%);
+}
+
+.new-zealand-hero__peak {
+  position: absolute;
+  background: #f4f8f4;
+  clip-path: polygon(50% 0, 0 100%, 32% 70%, 50% 84%, 68% 70%, 100% 100%);
+}
+
+.new-zealand-hero__peak--left { left: 10%; top: 36.5%; width: 16%; height: 12%; }
+.new-zealand-hero__peak--center { left: 42%; top: 22.5%; width: 18%; height: 17%; }
+.new-zealand-hero__peak--right { left: 80%; top: 47%; width: 12%; height: 10%; }
+
+.new-zealand-hero__lake {
+  position: absolute;
+  inset: auto 0 0;
+  height: 25%;
+  background: repeating-linear-gradient(175deg, #72b7c4 0 0.7rem, #8ac8cf 0.7rem 1rem);
+}
+
+.new-zealand-hero__postcard {
+  position: absolute;
+  z-index: 1;
+  right: 5%;
+  bottom: 7%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: #213f60;
+  box-shadow: var(--shadow-soft);
+  transform: rotate(-4deg);
+}
+
+.new-zealand-hero__postcard strong,
+.new-zealand-hero__postcard small { display: block; }
+.new-zealand-hero__postcard strong { letter-spacing: 0.1em; }
+.new-zealand .germany-snapshot a { color: var(--color-primary-ink); }
+
+@media (min-width: 48em) {
+  .new-zealand-hero__art { min-height: 22rem; }
+}
