@@ -5,8 +5,7 @@ import './Hero.css'
 /*
  * Topo da home (home v2, micro tarefa 1.2).
  * A ilustração e os três selos flutuantes são DECORATIVOS e de exemplo: o site ainda não
- * tem metas, sequências, ligas nem conta de usuário. A legenda visível diz isso, e o
- * "Já tenho conta" é um botão desativado com o texto "(em breve)" (não finge função).
+ * tem metas, sequências nem ligas. A legenda visível diz isso.
  */
 export function Hero() {
   return (
@@ -22,9 +21,7 @@ export function Hero() {
             <Button href="/#trilha" size="lg">
               Começar minha trilha
             </Button>
-            <button type="button" className="hero__soon" aria-disabled="true">
-              Já tenho conta <span className="hero__soon-tag">(em breve)</span>
-            </button>
+            <Button href="/conta" variant="secondary" size="lg">Já tenho conta</Button>
           </div>
         </div>
 

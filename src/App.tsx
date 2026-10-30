@@ -25,6 +25,7 @@ import { SwitzerlandGuidePage } from './pages/SwitzerlandGuidePage'
 import { SwedenGuidePage } from './pages/SwedenGuidePage'
 import { TaiwanGuidePage } from './pages/TaiwanGuidePage'
 import { HongKongGuidePage } from './pages/HongKongGuidePage'
+import { AccountPage } from './pages/AccountPage'
 import { RankingPage } from './pages/RankingPage'
 import { RankingsHubPage } from './pages/RankingsHubPage'
 import { SubjectAreaRankingPage } from './pages/SubjectAreaRankingPage'
@@ -62,6 +63,7 @@ function Routes() {
   const path = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname
 
   if (path === '/') return <HomePage />
+  if (path === '/conta') return <AccountPage />
   if (path === '/rankings') return <RankingsHubPage />
   if (path === '/ranking') return <RankingPage />
   if (path === '/teste-vocacional') return <VocationalTestPage />

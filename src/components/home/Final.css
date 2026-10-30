@@ -38,30 +38,3 @@
   gap: var(--space-4);
   justify-content: center;
 }
-
-/* Ainda não existe conta: contorno tracejado + texto, em branco sobre o degradê */
-.final__soon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
-  min-height: 3.625rem;
-  padding: 0 1.5rem;
-  border: var(--border-width) dashed #fff;
-  border-radius: var(--radius-md);
-  background: transparent;
-  color: #fff;
-  font-family: inherit;
-  font-size: 1rem;
-  font-weight: var(--weight-bold);
-  line-height: 1.2;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  cursor: not-allowed;
-}
-
-.final__soon-tag {
-  font-size: 0.8rem;
-  letter-spacing: 0.02em;
-  text-transform: none;
-}

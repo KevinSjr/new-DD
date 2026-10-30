@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "node --env-file=.env.local scripts/dev.mjs",
     "build": "tsc -b && vite build && node scripts/verify_publish.mjs",
     "lint": "eslint .",
     "test:gpa": "node --experimental-strip-types tests/gpa.test.mjs",
@@ -13,6 +13,7 @@
     "test:mext": "node tests/mext.test.mjs",
     "test:mext:db": "node --env-file=.env.local tests/mext.test.mjs",
     "test:scholarships": "node tests/scholarships.test.mjs",
+    "test:account": "node tests/account.test.mjs",
     "test:responsive": "node scripts/check_responsive.mjs",
     "api:dev": "node --env-file=.env.local server/index.mjs",
     "api:start": "node server/index.mjs",

@@ -7,6 +7,7 @@ import { STUDY_LEVELS, validateScholarship } from './validation.mjs'
 import { scholarshipCatalog } from './scholarshipCatalog.mjs'
 import { getDaily, answerDaily, examAvailability, getExam, gradeExam, listSatQuestions, saveSatQuestion, archiveSatQuestion, validateSatQuestion } from './sat.mjs'
 import { getMextDaily, answerMextDaily, mextAvailability, getMextExam, gradeMextExam } from './mext.mjs'
+import { handleAccountRequest } from './account.mjs'
 
 const port = Number(process.env.API_PORT || 3001)
 const host = process.env.API_HOST || '127.0.0.1'
@@ -52,9 +53,9 @@ const originAllowed = req => {
   if (!origin) return true // CLI/API clients using explicit Authorization
   if (process.env.PUBLIC_ORIGIN) return origin === process.env.PUBLIC_ORIGIN
   if (origin === `http://${req.headers.host}`) return true
-  // O proxy do Vite mantém a Origin do navegador (:5173), mas encaminha Host como API (:3001).
+  // O proxy do Vite mantém a Origin do navegador, mas encaminha Host como API.
   return !production && (host === '127.0.0.1' || host === 'localhost')
-    && ['http://localhost:5173', 'http://127.0.0.1:5173'].includes(origin)
+    && /^http:\/\/(localhost|127\.0\.0\.1):51(?:7[3-9]|8\d|9\d)$/.test(origin)
 }
 async function body(req) {
   if (!(req.headers['content-type'] || '').startsWith('application/json')) throw Object.assign(new Error('Envie JSON.'), { status: 415 })
@@ -219,6 +220,7 @@ const server = createServer(async (req, res) => {
       if (!originAllowed(req)) return json(res, 403, { error:'Origem não permitida.' })
       return json(res, 200, await gradeMextExam(await body(req)))
     }
+    if (await handleAccountRequest(req, res, url, { json, body, originAllowed, production })) return
     if (!url.pathname.startsWith('/api/admin/')) return json(res, 404, { error:'Rota não encontrada.' })
     if (!adminReady) return json(res, 503, { error:'Administração ainda não configurada neste servidor.' })
     if (!originAllowed(req)) return json(res, 403, { error:'Origem não permitida.' })
@@ -271,7 +273,7 @@ const server = createServer(async (req, res) => {
     }
     return json(res, 404, { error:'Rota não encontrada.' })
   } catch (error) {
-    console.error('API error:', error?.code || error?.message)
+    if (!error.status || error.status >= 500) console.error('API error:', error?.code || error?.message)
     json(res, error.status || 500, { error:error.status ? error.message : 'Falha no servidor. Confira a conexão com o banco e as migrações.' })
   }
 })

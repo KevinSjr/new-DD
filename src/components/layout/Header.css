@@ -107,7 +107,7 @@
   color: var(--color-primary-ink);
 }
 
-/* ---------- Ações: "Entrar" (em breve) e "Começar" ---------- */
+/* ---------- Ações de conta e início ---------- */
 
 .site-nav__actions {
   display: flex;
@@ -119,14 +119,14 @@
   border-top: var(--border-width) solid var(--color-border);
 }
 
-/* Recurso em desenvolvimento: contorno tracejado + texto "em breve" (padrão do projeto) */
-.site-nav__soon {
+/* Acesso à conta */
+.site-nav__account {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
   min-height: 2.75rem;
   padding: 0 1.125rem;
-  border: var(--border-width) dashed var(--color-border-input);
+  border: var(--border-width) solid var(--color-border-input);
   border-radius: var(--radius-md);
   background: transparent;
   color: var(--color-ink-muted);
@@ -135,14 +135,11 @@
   font-weight: var(--weight-bold);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  cursor: not-allowed;
+  text-decoration: none;
 }
 
-.site-nav__soon-tag {
-  font-size: 0.72rem;
-  letter-spacing: 0.02em;
-  text-transform: none;
-}
+.site-nav__account:hover { background: var(--color-primary-soft); color: var(--color-primary-ink); }
+.site-nav__account:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 3px; }
 
 /* ---------- Tablet e desktop ---------- */
 

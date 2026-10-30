@@ -5,10 +5,8 @@ import './Footer.css'
 
 /*
  * Rodapé (micro tarefa 1.9 da v1, mantido na home v2; links atualizados na 1.6 v2).
- * O aviso de privacidade descreve o estado ATUAL do site: sem conta ou
- * cadastro de identificação, mas com cookies anônimos nos desafios SAT e MEXT. Se qualquer coleta for adicionada
- * (conta, progresso salvo, formulário, análise de uso), este texto precisa ser
- * atualizado ANTES da publicação, junto com uma política de privacidade completa.
+ * Aviso resumido da versão atual. Uma política completa, com responsável e contato,
+ * precisa ser publicada antes da abertura do cadastro ao público.
  * Os links "/#..." funcionam também a partir das páginas de país (voltam à home).
  */
 
@@ -57,17 +55,16 @@ export function Footer() {
           </h2>
           <p className="site-footer__tag">Aviso provisório</p>
           <p>
-            <strong>Hoje, o site não pede dados de identificação.</strong> Não há conta nem cadastro
-            de e-mail, e não usamos ferramentas de análise ou publicidade. Os desafios diários do SAT e MEXT
-            usam cookies anônimos para guardar respostas e sóis no servidor por dia; esse progresso
-            não é sincronizado entre dispositivos. Como qualquer site, o servidor pode registrar
-            dados técnicos de acesso, como o endereço IP.
+            Ao criar uma conta, guardamos nome, e-mail, senha protegida por hash e as preferências
+            opcionais do perfil no banco de dados. Um cookie de sessão, inacessível ao JavaScript,
+            mantém o acesso por até 30 dias. Você pode editar ou excluir sua conta na página
+            <Link to="/conta"> Minha conta</Link>. Os desafios diários do SAT e MEXT continuam usando
+            cookies anônimos separados; suas respostas não são vinculadas ao perfil.
           </p>
           <p>
-            Antes de ampliar a coleta (conta, identificação ou formulários), vamos publicar uma
-            política de privacidade completa, explicar para que serve cada dado e pedir apenas o
-            necessário, em conformidade com a Lei Geral de Proteção de Dados (LGPD, Lei nº
-            13.709/2018).
+            Este aviso é resumido. Antes de abrir o cadastro ao público, é necessário publicar uma
+            política de privacidade completa com responsável, contato, finalidade, retenção e direitos
+            dos titulares conforme a LGPD.
           </p>
         </section>
       </div>

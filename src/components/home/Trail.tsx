@@ -6,7 +6,7 @@ import './Trail.css'
  * Trilha compacta (home v2, micro tarefa 1.3).
  * DEMONSTRAÇÃO: os cinco passos seguem a jornada planejada (descobrir, entender requisitos,
  * comparar, preparar a candidatura, acompanhar etapas). Nada aqui é uma ferramenta pronta,
- * não há conta, progresso salvo, pontos nem ranking. Os passos são "completados" só pela
+ * não há progresso da trilha salvo, pontos nem ranking. Os passos são "completados" só pela
  * rolagem da página, e a legenda visível diz isso.
  */
 type Tone = 'sky' | 'lilac' | 'mint'
@@ -40,6 +40,9 @@ const STAGES: Stage[] = [
 ]
 
 const TOTAL = STAGES.reduce((sum, stage) => sum + stage.steps.length, 0)
+const STAGE_STARTS = STAGES.map((_, stageIndex) =>
+  STAGES.slice(0, stageIndex).reduce((sum, stage) => sum + stage.steps.length, 0),
+)
 
 /** Deslocamento horizontal de cada passo (em px), para a trilha serpentear. */
 const OFFSETS = [0, 64, 0, -64, 0]
@@ -73,7 +76,6 @@ export function Trail() {
   const { done, refs } = useTrailProgress(TOTAL)
   const finished = done >= TOTAL
   const current = Math.min(done + 1, TOTAL)
-  let index = -1
 
   return (
     <section className="trail" id="trilha" aria-labelledby="trilha-titulo">
@@ -101,7 +103,7 @@ export function Trail() {
           </div>
 
           <div className="trail__stages">
-            {STAGES.map((stage) => (
+            {STAGES.map((stage, stageIndex) => (
               <div className="trail__stage" key={stage.title}>
                 <div className={`trail__banner trail__banner--${stage.tone}`}>
                   <h3>{stage.title}</h3>
@@ -109,8 +111,7 @@ export function Trail() {
                 </div>
                 <ol className="trail__steps">
                   {stage.steps.map((label, i) => {
-                    index += 1
-                    const n = index
+                    const n = STAGE_STARTS[stageIndex] + i
                     const state = n < done ? 'done' : n === done ? 'current' : 'locked'
                     const hasNext = i < stage.steps.length - 1
                     return (

@@ -3,8 +3,7 @@ import './Final.css'
 
 /*
  * Chamada final (home v2, micro tarefa 1.6).
- * Ainda não existe conta nem cadastro, então não há "Criar conta" funcionando: o botão
- * principal leva aos guias publicados e o outro é um botão desativado, com "(em breve)".
+ * A pessoa pode explorar destinos sem conta ou criar um perfil opcional.
  */
 export function Final() {
   return (
@@ -16,9 +15,7 @@ export function Final() {
           <Button href="/#paises" variant="secondary" size="lg">
             Explorar países
           </Button>
-          <button type="button" className="final__soon" aria-disabled="true">
-            Criar conta <span className="final__soon-tag">(em breve)</span>
-          </button>
+          <Button href="/conta" variant="secondary" size="lg">Criar conta</Button>
         </div>
       </div>
     </section>

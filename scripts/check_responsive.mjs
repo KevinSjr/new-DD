@@ -12,7 +12,7 @@ const routes = process.env.RESPONSIVE_ONLY_ROUTE ? [process.env.RESPONSIVE_ONLY_
   '/', '/exames', '/exames/sat', '/exames/sat/desafio-diario', '/exames/sat/simulado', '/admin/sat', '/rankings', '/ranking', '/rankings/artes-humanidades',
   '/rankings/engenharia-tecnologia', '/rankings/ciencias-da-vida-medicina',
   '/rankings/ciencias-naturais', '/rankings/ciencias-sociais-administracao',
-  '/teste-vocacional', '/calculadora-gpa', '/descobridor-de-destinos',
+  '/teste-vocacional', '/calculadora-gpa', '/descobridor-de-destinos', '/conta',
   '/bolsas', '/admin/bolsas', '/paises/alemanha', '/paises/estados-unidos', '/paises/finlandia', '/paises/franca', '/paises/hong-kong', '/paises/paises-baixos', '/paises/irlanda', '/paises/italia', '/paises/japao', '/paises/malasia', '/paises/noruega', '/paises/portugal', '/paises/reino-unido', '/paises/singapura', '/paises/suecia', '/paises/suica', '/paises/taiwan', '/paises/outro',
 ]
 const widths = [320, 375, 768, 1024, 1280]

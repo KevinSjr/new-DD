@@ -18,7 +18,21 @@ const NAV_ITEMS = [
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [hasAccount, setHasAccount] = useState(false)
   const toggleRef = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    let active = true
+    function refreshAccount() {
+      fetch('/api/account/me', { credentials: 'same-origin' })
+        .then((response) => response.ok ? response.json() : null)
+        .then((data) => { if (active) setHasAccount(Boolean(data?.user)) })
+        .catch(() => { if (active) setHasAccount(false) })
+    }
+    refreshAccount()
+    window.addEventListener('daydreaming:auth-changed', refreshAccount)
+    return () => { active = false; window.removeEventListener('daydreaming:auth-changed', refreshAccount) }
+  }, [])
 
   // Esc fecha o menu no celular e devolve o foco ao botão que o abriu
   useEffect(() => {
@@ -72,14 +86,7 @@ export function Header() {
           </ul>
 
           <div className="site-nav__actions">
-            {/*
-              Contas ainda não existem. O botão aparece (como na referência), mas é marcado como
-              "em breve" com contorno tracejado e não faz nada. aria-disabled mantém o botão
-              alcançável pelo teclado e lido pelo leitor de tela.
-            */}
-            <button type="button" className="site-nav__soon" aria-disabled="true">
-              Entrar <span className="site-nav__soon-tag">(em breve)</span>
-            </button>
+            <Link className="site-nav__account" to="/conta" onClick={() => setMenuOpen(false)}>{hasAccount ? 'Minha conta' : 'Entrar'}</Link>
             <Button href="/#trilha" size="sm" onClick={() => setMenuOpen(false)}>
               Começar
             </Button>
