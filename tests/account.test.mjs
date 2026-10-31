@@ -29,6 +29,14 @@ test('perfil aceita campos opcionais e rejeita valores fora do domínio', () => 
   assert.equal(valid.destination, null)
   assert.throws(() => validateProfile({ displayName: 'Ana', studyLevel: 'admin', interestArea: '', destinationSlug: '' }), /nível/)
   assert.throws(() => validateProfile({ displayName: 'Ana', studyLevel: '', interestArea: '', destinationSlug: '../outro' }), /destino/)
+  const detailed = validateProfile({ displayName: 'Ana', studyLevel: 'graduacao', interestArea: 'Ciências', destinationSlugs: ['canada', 'alemanha'], fullName: 'Ana Silva', schoolName: 'Escola Pública', schoolYear: '3º ano', city: 'São Paulo', stateCode: 'sp', gpa: '3,80', satScore: '1200', toeflScore: '102', ieltsScore: '7.5', languages: ['Português', 'Inglês'], plannedExams: ['SAT'], targetYear: '2028' })
+  assert.deepEqual(detailed.destinations, ['canada', 'alemanha'])
+  assert.equal(detailed.stateCode, 'SP')
+  assert.equal(detailed.gpa, 3.8)
+  assert.equal(detailed.ieltsScore, 7.5)
+  assert.throws(() => validateProfile({ displayName: 'Ana', destinationSlugs: ['canada', 'alemanha', 'franca', 'japao'] }), /três destinos/)
+  assert.throws(() => validateProfile({ displayName: 'Ana', gpa: 4.5 }), /GPA/)
+  assert.throws(() => validateProfile({ displayName: 'Ana', languages: ['Inglês', 'Inglês'] }), /Idiomas/)
 })
 
 if (process.env.ACCOUNT_API_URL) {
@@ -67,9 +75,12 @@ if (process.env.ACCOUNT_API_URL) {
       assert.equal(viteAlternatePort.status, 200)
       const invalidDestination = await request('/api/account/profile', 'PUT', { displayName: 'Pessoa Teste', studyLevel: '', interestArea: '', destinationSlug: 'destino-inexistente' })
       assert.equal(invalidDestination.status, 400)
-      const saved = await request('/api/account/profile', 'PUT', { displayName: 'Pessoa Atualizada', studyLevel: 'mestrado', interestArea: 'Ciência de dados', destinationSlug: 'canada' })
+      const saved = await request('/api/account/profile', 'PUT', { displayName: 'Pessoa Atualizada', studyLevel: 'mestrado', interestArea: 'Ciência de dados', destinationSlug: 'canada', destinationSlugs: ['canada', 'alemanha'], fullName: 'Pessoa de Teste', schoolName: 'Escola Teste', schoolYear: 'Último ano', city: 'São Paulo', stateCode: 'SP', gpa: '3.8', satScore: '1200', toeflScore: '100', ieltsScore: '7.5', languages: ['Português', 'Inglês'], plannedExams: ['SAT'], targetYear: '2028' })
       assert.equal(saved.status, 200)
       assert.equal(saved.data.user.destinationSlug, 'canada')
+      assert.deepEqual(saved.data.user.destinationSlugs, ['canada', 'alemanha'])
+      assert.equal(saved.data.user.schoolName, 'Escola Teste')
+      assert.equal(saved.data.user.gpa, 3.8)
       const changed = await request('/api/account/password', 'POST', { currentPassword: initialPassword, newPassword: replacementPassword })
       assert.equal(changed.status, 200)
       activePassword = replacementPassword
@@ -82,6 +93,8 @@ if (process.env.ACCOUNT_API_URL) {
       const newLogin = await request('/api/account/login', 'POST', { email, password: replacementPassword })
       assert.equal(newLogin.status, 200)
       assert.equal(newLogin.data.user.interestArea, 'Ciência de dados')
+      assert.deepEqual(newLogin.data.user.destinationSlugs, ['canada', 'alemanha'])
+      assert.equal(newLogin.data.user.schoolYear, 'Último ano')
       const removed = await request('/api/account/me', 'DELETE', { password: replacementPassword })
       assert.equal(removed.status, 200)
       removedAccount = true
