@@ -22,12 +22,14 @@ export function GpaCalculatorPage() {
   const [methodId, setMethodId] = useState(GPA_METHODS[0].id)
   const [calculated, setCalculated] = useState<Calculated | null>(null)
   const [error, setError] = useState('')
+  const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved' | 'login' | 'error'>('idle')
+  const [saveError, setSaveError] = useState('')
   const addRef = useRef<HTMLButtonElement>(null)
   const removeRefs = useRef<(HTMLButtonElement | null)[]>([])
   const method = GPA_METHODS.find(item => item.id === methodId) ?? GPA_METHODS[0]
   const selectedResult = calculated?.results[GPA_METHODS.findIndex(item => item.id === methodId)]
 
-  function invalidate() { setCalculated(null); setError('') }
+  function invalidate() { setCalculated(null); setError(''); setSaveState('idle'); setSaveError('') }
   function updateCourse(index: number, field: keyof CourseInput, value: string) {
     setCourses(previous => previous.map((course, courseIndex) => courseIndex === index ? { ...course, [field]: value } : course))
     invalidate()
@@ -45,6 +47,7 @@ export function GpaCalculatorPage() {
     try {
       setCalculated({ input, results: GPA_METHODS.map(item => calculateGpa(input, item)) })
       setError('')
+      setSaveState('idle'); setSaveError('')
     } catch (cause) {
       setCalculated(null)
       setError(cause instanceof GpaInputError ? cause.message : 'Não foi possível calcular. Revise os valores informados.')
@@ -52,7 +55,33 @@ export function GpaCalculatorPage() {
   }
   function clear() {
     setMode('average'); setAverage(''); setCourses([freshCourse()]); setPassingPreset('6')
-    setCustomPassing(''); setIncludeFailed(true); setMethodId('bands'); setCalculated(null); setError('')
+    setCustomPassing(''); setIncludeFailed(true); setMethodId('bands'); setCalculated(null); setError(''); setSaveState('idle'); setSaveError('')
+  }
+
+  async function saveToProfile() {
+    if (!calculated || calculated.results.some(item => item.gpa === null)) return
+    const input = calculated.input
+    setSaveState('saving'); setSaveError('')
+    try {
+      const response = await fetch('/api/account/gpa-estimates', {
+        method: 'PUT', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          bands: calculated.results[0].gpa, proportional: calculated.results[1].gpa, letters: calculated.results[2].gpa,
+          sourceAverage: calculated.results[0].sourceAverage, inputMode: input.mode,
+          weighted: calculated.results[0].weighted,
+          passingGrade: input.mode === 'courses' ? Number(input.passingGrade.replace(',', '.')) : null,
+          includeFailed: input.mode === 'courses' ? input.includeFailed : null,
+        }),
+      })
+      if (!response.headers.get('content-type')?.includes('application/json')) throw new Error('A API não respondeu corretamente. Reinicie npm run dev.')
+      const payload = await response.json().catch(() => ({}))
+      if (response.status === 401) { setSaveState('login'); return }
+      if (!response.ok) throw new Error(payload.error || 'Não foi possível salvar as estimativas.')
+      setSaveState('saved')
+    } catch (cause) {
+      setSaveError(cause instanceof Error ? cause.message : 'Não foi possível acessar a API.')
+      setSaveState('error')
+    }
   }
 
   return <main className="gpa-page">
@@ -66,7 +95,7 @@ export function GpaCalculatorPage() {
       <div className="gpa-page__layout">
         <section className="gpa-panel" aria-labelledby="gpa-input-title">
           <h2 id="gpa-input-title">Suas notas</h2>
-          <p className="gpa-panel__intro">Escolha como deseja informar seu histórico. Nada é enviado ou salvo.</p>
+          <p className="gpa-panel__intro">Escolha como deseja informar seu histórico. O cálculo acontece no navegador; somente as três estimativas são enviadas se você optar por salvá-las no perfil.</p>
           <fieldset className="gpa-mode"><legend>Modo de entrada</legend>
             <label><input type="radio" name="gpa-mode" checked={mode === 'average'} onChange={() => { setMode('average'); invalidate() }} /> Tenho só a média geral (CR)</label>
             <label><input type="radio" name="gpa-mode" checked={mode === 'courses'} onChange={() => { setMode('courses'); invalidate() }} /> Quero informar disciplina por disciplina</label>
@@ -102,7 +131,7 @@ export function GpaCalculatorPage() {
           <p>Não existe conversão oficial única entre as escalas. Cada universidade e cada avaliadora de credenciais, como WES e ECE, pode usar sua própria metodologia. O GPA calculado aqui não substitui uma avaliação oficial.</p>
           <p>Confira o método e os documentos exigidos pela universidade de destino antes de informar um GPA na candidatura.</p>
           <p>A fonte do método escolhido aparece no resultado. Os valores são referências a validar, não uma previsão de admissão.</p>
-          <p><strong>Privacidade:</strong> o cálculo roda no seu navegador; nada é enviado ou salvo. Ao recarregar, os dados desaparecem.</p>
+          <p><strong>Privacidade:</strong> o cálculo roda no seu navegador. Notas por disciplina não são enviadas. Se você escolher salvar, as três estimativas e os parâmetros do cálculo ficam na sua conta; os campos preenchidos desaparecem ao recarregar.</p>
         </aside>
       </div>
       <section className="gpa-results" aria-live="polite" aria-atomic="true" aria-labelledby="gpa-result-title">
@@ -117,6 +146,11 @@ export function GpaCalculatorPage() {
               </tbody></table></div></>}
           <h3>Compare os três métodos</h3><p>Mesmas notas, regras diferentes. Os conceitos abaixo são aproximados pela média brasileira; o GPA por disciplina é a média dos pontos convertidos.</p>
           <div className="gpa-comparison">{GPA_METHODS.map((item, index) => <div className={item.id === methodId ? 'gpa-comparison__item gpa-comparison__item--active' : 'gpa-comparison__item'} key={item.id}><strong>{item.name}</strong><span>{calculated.results[index].gpa === null ? 'Sem disciplinas' : `${number(calculated.results[index].gpa)} / 4,0`}</span><small>{calculated.results[index].letter ?? '—'}</small></div>)}</div>
+          {!calculated.results.some(item => item.gpa === null) && <div className="gpa-save"><div><h3>Guardar estas estimativas</h3><p>Salve os três métodos juntos no seu perfil. Um novo salvamento substituirá as estimativas anteriores; seu GPA informado manualmente não será alterado.</p></div><button type="button" className="gpa-primary" disabled={saveState === 'saving'} onClick={() => void saveToProfile()}>{saveState === 'saving' ? 'Salvando…' : saveState === 'saved' ? 'Salvar novamente' : 'Salvar os três resultados no perfil'}</button>
+            {saveState === 'saved' && <p role="status">Estimativas salvas. <Link to="/conta?tab=academicos">Ver em dados acadêmicos</Link></p>}
+            {saveState === 'login' && <p role="status">Entre ou crie uma conta para salvar. <a href="/conta" target="_blank" rel="noopener noreferrer">Abrir Minha conta em outra aba</a>, depois volte aqui e clique novamente em salvar.</p>}
+            {saveState === 'error' && <p role="alert">{saveError}</p>}
+          </div>}
           <p className="gpa-note">Nenhum dos três resultados é oficial. Os valores podem variar conforme a avaliação. Consulte sempre a universidade de destino.</p>
         </>}
       </section>

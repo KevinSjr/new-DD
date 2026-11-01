@@ -57,5 +57,10 @@
 .gpa-comparison__item { display: flex; flex-direction: column; gap: var(--space-2); border: 2px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--space-4); }
 .gpa-comparison__item--active { border-color: var(--color-primary); }
 .gpa-comparison__item span { font-size: var(--text-xl); font-weight: 700; }
+.gpa-save { display: grid; justify-items: start; gap: var(--space-3); margin: var(--space-5) 0; padding: var(--space-5); border: 2px solid var(--color-primary); border-radius: var(--radius-lg); background: var(--color-primary-soft); }
+.gpa-save h3 { margin: 0 0 var(--space-2); }
+.gpa-save p { margin: 0; }
+.gpa-save a { color: var(--color-primary-ink); font-weight: 700; }
+.gpa-save button { max-width: 100%; white-space: normal; }
 @media (max-width: 63.99em) { .gpa-page__layout { grid-template-columns: 1fr; } .gpa-guidance { order: -1; } }
 @media (max-width: 47.99em) { .gpa-page__hero-badge { display: none; } .gpa-course__fields, .gpa-comparison { grid-template-columns: 1fr; } }

@@ -26,8 +26,8 @@
 .vocational__question legend { width: 100%; padding: 0; font-size: var(--text-lg); font-weight: var(--weight-bold); line-height: var(--leading-snug); }
 .vocational__question-number { margin-right: var(--space-3); color: var(--color-primary-ink); }
 .vocational__options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2); margin-top: var(--space-4); }
-.vocational__option, .vocational__value { display: flex; gap: var(--space-2); align-items: center; min-height: 3rem; padding: var(--space-2) var(--space-3); border: 2px solid var(--color-border-input); border-radius: var(--radius-md); background: white; font-size: var(--text-sm); cursor: pointer; }
 .vocational__option:last-child { grid-column: 1 / -1; }
+.vocational__option, .vocational__value { display: flex; gap: var(--space-2); align-items: center; min-height: 3rem; padding: var(--space-2) var(--space-3); border: 2px solid var(--color-border-input); border-radius: var(--radius-md); background: white; font-size: var(--text-sm); cursor: pointer; }
 .vocational__option input, .vocational__value input { flex: none; width: 1.2rem; height: 1.2rem; margin: 0; accent-color: var(--color-primary); }
 .vocational__option--selected, .vocational__value--selected { border-color: var(--color-primary); background: var(--color-primary-soft); }
 .vocational__value:has(input:disabled) { opacity: .56; cursor: not-allowed; }
@@ -42,11 +42,24 @@
 .vocational__result-card { min-width: 0; padding: var(--space-5); border: 2px solid var(--color-border); border-radius: var(--radius-xl); background: white; }
 .vocational__result-card--insight { background: var(--color-accent-soft); }
 .vocational__result-card h2, .vocational__priorities h2, .vocational__next h2 { font-size: var(--text-2xl); }
+.vocational__chart { padding: clamp(1.25rem, 3vw, 2.5rem); background: linear-gradient(135deg, #fff 0%, var(--color-primary-soft) 100%); }
+.vocational__chart-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--space-2) var(--space-5); }
+.vocational__chart-head h2 { margin: 0; }
+.vocational__chart-head p { max-width: 38rem; margin: 0; color: var(--color-ink-muted); font-size: var(--text-sm); }
 .vocational__muted { margin-top: var(--space-2); color: var(--color-ink-muted); font-size: var(--text-sm); }
 .vocational__scores { display: grid; gap: var(--space-4); margin: var(--space-5) 0 0; padding: 0; list-style: none; }
-.vocational__score-label { display: flex; justify-content: space-between; gap: var(--space-2); font-size: var(--text-sm); }
-.vocational__bar { height: .75rem; margin-top: var(--space-2); border-radius: var(--radius-pill); background: var(--color-border); overflow: hidden; }
+.vocational__scores li { padding: var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-lg); background: #fff; }
+.vocational__score-label { display: flex; align-items: center; gap: var(--space-3); }
+.vocational__score-label > div { display: grid; min-width: 0; }
+.vocational__score-label strong { color: var(--color-ink); font-size: var(--text-lg); }
+.vocational__score-label small { color: var(--color-ink-muted); }
+.vocational__rank { display: grid; flex: none; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: .8rem; background: var(--color-primary); color: white; font-weight: var(--weight-bold); }
+.vocational__score-value { margin-left: auto; color: var(--color-primary-ink); font-size: var(--text-xl); font-weight: var(--weight-bold); white-space: nowrap; }
+.vocational__score-value small { font-size: var(--text-sm); }
+.vocational__bar { height: 1rem; margin-top: var(--space-3); border-radius: var(--radius-pill); background: var(--color-border); overflow: hidden; }
 .vocational__bar span { display: block; height: 100%; border-radius: inherit; background: var(--color-primary); }
+.vocational__scores li:nth-child(2) .vocational__rank, .vocational__scores li:nth-child(2) .vocational__bar span { background: var(--color-lilac-dark); }
+.vocational__chart-axis { display: flex; justify-content: space-between; margin: var(--space-2) var(--space-4) 0; color: var(--color-ink-muted); font-size: var(--text-xs); }
 .vocational__insights { display: grid; gap: var(--space-5); margin-top: var(--space-5); }
 .vocational__insights > div { border-top: 2px solid var(--color-border-strong); padding-top: var(--space-3); }
 .vocational__insight-index { color: var(--color-primary-ink); font-weight: var(--weight-bold); }
@@ -69,6 +82,7 @@
 .vocational__career-list span { color: var(--color-ink-muted); font-size: var(--text-sm); }
 .vocational__career-more { margin-top: var(--space-5); }
 .vocational__career-more summary { width: fit-content; padding: var(--space-2) var(--space-4); border: 2px solid var(--color-border-input); border-radius: var(--radius-pill); background: var(--color-surface); color: var(--color-primary-ink); font-weight: var(--weight-bold); cursor: pointer; }
+.vocational__career-more .vocational__career-list { margin-top: var(--space-3); }
 .vocational__career-more > p { max-width: 70ch; margin-block: var(--space-4); color: var(--color-ink-muted); }
 .vocational__career-note { max-width: 80ch; margin-top: var(--space-5); padding: var(--space-4); border-left: 4px solid var(--color-primary); border-radius: var(--radius-sm); background: var(--color-primary-soft); font-size: var(--text-sm); }
 .vocational__priorities { margin-top: var(--space-5); padding: var(--space-5); border-radius: var(--radius-xl); background: var(--color-lilac-soft); }
@@ -87,8 +101,7 @@
   .vocational__options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .vocational__option:last-child { grid-column: auto; }
   .vocational__values { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .vocational__result-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
   .vocational__career-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .vocational__next { grid-template-columns: minmax(0, 1fr) auto; }
 }
-@media (min-width: 64em) { .vocational__options { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+@media (min-width: 64em) { .vocational__options { grid-template-columns: repeat(5, minmax(0, 1fr)); } }

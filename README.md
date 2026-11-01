@@ -34,7 +34,7 @@ O painel mantém as credenciais apenas na memória da aba; recarregar exige novo
 
 A migração `046_user_accounts.sql` cria contas, perfis e sessões. O cadastro fica em `/conta` e usa a mesma API Node e o mesmo PostgreSQL do buscador. Cada pessoa pode entrar, editar nome e preferências (nível, área e destino), trocar a senha, sair e excluir a própria conta. As senhas usam scrypt com salt individual; a sessão usa um token aleatório cujo hash é guardado no banco e um cookie `HttpOnly`, `SameSite=Strict` e `Secure` em produção. Sessões expiram em 30 dias. O painel administrativo continua separado das contas de estudantes.
 
-Para ativar localmente, execute `npm run db:migrate` e `npm run dev`. Abra `/conta` no endereço do Vite. Execute `npm run test:account` para verificar hash e validações. Não há recuperação de senha por e-mail nem verificação de endereço nesta versão. As preferências ainda não alteram automaticamente buscas ou recomendações, e o progresso anônimo dos simulados não é vinculado à conta. Antes de abrir o cadastro ao público, publique uma política de privacidade completa com responsável, contato e prazos de retenção.
+Para ativar localmente, execute `npm run db:migrate` e `npm run dev`. Abra `/conta` no endereço do Vite. Execute `npm run test:account` para verificar hash e validações. Não há recuperação de senha por e-mail nem verificação de endereço nesta versão. As preferências ficam no perfil; o usuário aplica os filtros do buscador de bolsas manualmente. O progresso anônimo dos simulados não é vinculado à conta. Antes de abrir o cadastro ao público, publique uma política de privacidade completa com responsável, contato e prazos de retenção.
 
 ### Ver o buscador de bolsas no navegador
 

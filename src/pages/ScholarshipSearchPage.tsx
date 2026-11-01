@@ -12,6 +12,8 @@ type Scholarship = {
   destinations: string | null; study_level: string | null; country_basis: string;
 }
 type Page = { items: Scholarship[]; total: number; page: number; pageSize: number }
+type Filters = { q: string; country: string; level: string; area: string; deadline: string; criteria: string }
+const emptyFilters: Filters = { q: '', country: '', level: '', area: '', deadline: '', criteria: '' }
 const levelNames: Record<string, string> = {
   graduacao: 'Graduação', 'pos-graduacao': 'Pós-graduação', mestrado: 'Mestrado',
   doutorado: 'Doutorado', intercambio: 'Intercâmbio', idiomas: 'Idiomas',
@@ -111,7 +113,8 @@ function ScholarshipCard({ scholarship }: { scholarship: Scholarship }) {
 
 export function ScholarshipSearchPage() {
   useDocumentTitle('Buscar bolsas | Daydreaming')
-  const [country, setCountry] = useState('')
+  const [draftFilters, setDraftFilters] = useState<Filters>(emptyFilters)
+  const [activeFilters, setActiveFilters] = useState<Filters>(emptyFilters)
   const [page, setPage] = useState(1)
   const [countries, setCountries] = useState<Country[]>([])
   const [data, setData] = useState<Page | null>(null)
@@ -130,8 +133,7 @@ export function ScholarshipSearchPage() {
   useEffect(() => {
     const controller = new AbortController()
     const params = new URLSearchParams({ page: String(page) })
-    if (country) params.set('country', country)
-    setLoading(true); setError('')
+    for (const [key, value] of Object.entries(activeFilters)) if (value) params.set(key, value)
     fetch(`/api/scholarship-catalog?${params}`, { signal: controller.signal })
       .then(async response => {
         const body = await response.json()
@@ -141,7 +143,27 @@ export function ScholarshipSearchPage() {
       .catch(cause => { if (cause.name !== 'AbortError') { setData(null); setError('A busca não pôde carregar. Confira se a API e o PostgreSQL estão em execução e tente novamente.') } })
       .finally(() => { if (!controller.signal.aborted) setLoading(false) })
     return () => controller.abort()
-  }, [country, page, retry])
+  }, [activeFilters, page, retry])
+
+  function updateFilter(key: keyof Filters, value: string) {
+    setDraftFilters(previous => ({ ...previous, [key]: value }))
+  }
+  function applyFilters(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setData(null); setError(''); setLoading(true); setPage(1)
+    setActiveFilters({ ...draftFilters, q: draftFilters.q.trim() })
+  }
+  function clearFilters() {
+    setDraftFilters(emptyFilters)
+    setData(null); setError(''); setLoading(true); setPage(1)
+    setActiveFilters({ ...emptyFilters })
+  }
+  function changePage(nextPage: number) {
+    setData(null); setError(''); setLoading(true); setPage(nextPage)
+  }
+  function tryAgain() {
+    setLoading(true); setError(''); setRetry(value => value + 1)
+  }
 
   const totalPages = data ? Math.ceil(data.total / data.pageSize) : 0
   return <article className="sch-search">
@@ -150,26 +172,38 @@ export function ScholarshipSearchPage() {
       <p>Compare registros de bolsas em um único formato e confira os detalhes na fonte antes de planejar uma candidatura.</p></div></header>
     <div className="container sch-search__body">
       <div className="sch-search__notice sch-search__notice--warning"><p><strong>Registros de fontes diferentes são listados automaticamente.</strong> A inclusão no catálogo não confirma que a bolsa esteja aberta nem que você seja elegível. Campos ausentes aparecem como “não informado”; valores divulgados podem não representar o total da bolsa. Confira prazo, valor e critérios na página original.</p></div>
-      <div className="sch-search__filters"><label htmlFor="scholarship-country">País<select id="scholarship-country" value={country} onChange={event => { setCountry(event.target.value); setPage(1) }}><option value="">Todos os países</option>{countries.map(item => <option key={item.slug} value={item.slug}>{item.name}</option>)}</select></label></div>
-      {country === 'estados-unidos' && <p className="sch-search__country-note">Estados Unidos reúne registros do IEFA que listam esse destino e o catálogo da Scholarship America, sediado nos EUA. Para esta última fonte, a localização do catálogo <strong>não confirma o país onde o estudo ocorrerá</strong>.</p>}
-      {country === 'australia' && <p className="sch-search__country-note">Austrália reúne registros do IEFA que listam esse destino e bolsas do Study Australia sem indicação de que possam ser realizadas no exterior. Estar no catálogo ou aceitar estudantes internacionais <strong>não confirma elegibilidade para brasileiros</strong>; confira o edital da instituição.</p>}
-      {country === 'alemanha' && <p className="sch-search__country-note">Alemanha reúne registros do IEFA que listam esse destino e programas da base DAAD. Na base DAAD, o filtro “Country” indica <strong>de onde a pessoa se candidata, não onde estudará</strong>. Por isso, o destino e a elegibilidade devem ser confirmados na página de cada programa.</p>}
-      {country === 'coreia-do-sul' && <p className="sch-search__country-note">Coreia do Sul inclui bolsas divulgadas por universidades no Study in Korea. Algumas exigem vínculo ou condições locais; <strong>estar na lista não confirma elegibilidade para brasileiros nem inscrições abertas</strong>. Confira a ficha e a universidade antes de se candidatar.</p>}
-      {country === 'espanha' && <p className="sch-search__country-note">Espanha reúne registros classificados como “BECAS” no portal da administração pública espanhola. O âmbito geográfico indica a jurisdição da convocatória, <strong>não garante que os estudos ocorram na Espanha nem que brasileiros possam se candidatar</strong>. Confira beneficiários, prazo e edital.</p>}
-      {country === 'italia' && <p className="sch-search__country-note">Itália inclui uma chamada MAECI 2026–2027 vinculada pelo Universitaly. <strong>O prazo desta edição já terminou</strong>. O Brasil aparece na lista oficial de países, mas a candidatura depende de todos os requisitos do edital; não há nova edição confirmada aqui.</p>}
-      {country === 'suica' && <p className="sch-search__country-note">Suíça inclui as modalidades Pesquisa e Doutorado da bolsa federal 2027–2028, listadas para candidaturas do Brasil. <strong>Prazo divulgado: 27/10/2026, às 23h59 no horário suíço.</strong> A quantia divulgada é mensal, não o valor total; é preciso atender aos requisitos e obter apoio de um orientador na Suíça. A modalidade de Artes não consta da lista para o Brasil.</p>}
-      {country === 'suecia' && <p className="sch-search__country-note">Suécia reúne registros da listagem Study in Sweden: bolsas universitárias, do Swedish Institute e de outras organizações. Muitos links levam a páginas gerais, e alguns programas externos <strong>não confirmam a Suécia como destino</strong>. A menção ao Brasil ou à categoria “fora da União Europeia” não confirma elegibilidade individual. Prazo, valor e abertura precisam ser conferidos no provedor.</p>}
-      {country === 'finlandia' && <p className="sch-search__country-note">Finlândia inclui cinco fichas públicas da seção de estudos na Finlândia do European Funding Guide. A lista completa anunciada pela fonte exige cadastro e não foi coletada. <strong>Alguns apoios exigem vínculo prévio com instituição finlandesa; um também permite pesquisa fora do país.</strong> A página informa quando a nacionalidade brasileira não basta ou quando um prazo de 2026 já passou.</p>}
-      {country === 'dinamarca' && <p className="sch-search__country-note">Dinamarca inclui cinco fichas públicas da seção de estudos no país do European Funding Guide. <strong>A maioria exige residência municipal ou matrícula prévia em instituição dinamarquesa;</strong> nenhuma dessas condições deve ser confundida com elegibilidade automática para brasileiros. A lista completa exige cadastro, e os auxílios apresentados pela fonte para estudar fora não foram importados neste filtro.</p>}
-      {country === 'belgica' && <p className="sch-search__country-note">Bélgica inclui 24 bolsas da página da Global Admissions para estudantes brasileiros. <strong>Estar nessa página não garante elegibilidade individual nem inscrição aberta.</strong> Muitos programas são mestrados conjuntos Erasmus Mundus e podem ter etapas fora da Bélgica. Meses de prazo e descrições de cobertura não substituem o edital da edição atual; em ao menos uma ficha, o mês da tabela difere do prazo descrito nos detalhes.</p>}
-      {country === 'china' && <p className="sch-search__country-note">China reúne programas com bolsa listados no ScholarshipChina e registros IEFA que indicam esse destino. O ScholarshipChina é uma plataforma de candidatura, não um edital governamental: <strong>mensalidade reduzida ou zerada não significa bolsa em dinheiro</strong>. A ficha pode cobrar taxas de candidatura e serviço e trazer restrições de nacionalidade. Confira esses custos, as condições, o prazo e a elegibilidade antes de se candidatar.</p>}
+      <form className="sch-search__filters" onSubmit={applyFilters}>
+        <div className="sch-search__filters-head"><h2>Refine sua busca</h2><p>Combine filtros para encontrar registros que merecem uma leitura mais cuidadosa.</p></div>
+        <div className="sch-search__filters-grid">
+          <label>Palavra-chave<input type="search" maxLength={100} placeholder="Título ou descrição" value={draftFilters.q} onChange={event => updateFilter('q', event.target.value)} /></label>
+          <label>País<select value={draftFilters.country} onChange={event => updateFilter('country', event.target.value)}><option value="">Todos os países</option>{countries.map(item => <option key={item.slug} value={item.slug}>{item.name}</option>)}</select></label>
+          <label>Nível de estudo<select value={draftFilters.level} onChange={event => updateFilter('level', event.target.value)}><option value="">Todos os níveis</option><option value="undergraduate">Graduação</option><option value="postgraduate">Mestrado e pós-graduação</option><option value="doctoral">Doutorado e pesquisa pós-doutoral</option><option value="other">Outros níveis listados</option><option value="unknown">Não informado</option></select></label>
+          <label>Área listada<select value={draftFilters.area} onChange={event => updateFilter('area', event.target.value)}><option value="">Todas as áreas</option><option value="engineering">Engenharia e tecnologia</option><option value="arts">Artes e humanidades</option><option value="health">Saúde e ciências da vida</option><option value="natural">Ciências naturais</option><option value="social">Ciências sociais e gestão</option><option value="unknown">Não informada</option></select></label>
+          <label>Prazo<select value={draftFilters.deadline} onChange={event => updateFilter('deadline', event.target.value)}><option value="">Qualquer prazo</option><option value="upcoming">Data de prazo a partir de hoje</option><option value="past">Data de prazo já passou</option><option value="undated">Sem data comparável</option></select></label>
+          <label>Situação dos critérios<select value={draftFilters.criteria} onChange={event => updateFilter('criteria', event.target.value)}><option value="">Todas as situações</option><option value="mentioned">Brasil citado na fonte</option><option value="broad">Categoria internacional ou ampla</option><option value="not-listed">Brasil não listado ou restrição indicada</option><option value="unknown">Informação inconclusiva</option></select></label>
+        </div>
+        <p className="sch-search__filter-note">Nível e área são aproximações dos termos da fonte. O prazo compara apenas datas estruturadas; uma data futura não confirma inscrições abertas. A menção ao Brasil não confirma elegibilidade.</p>
+        <div className="sch-search__filter-actions"><button type="submit">Aplicar filtros</button><button type="button" onClick={clearFilters}>Limpar filtros</button></div>
+      </form>
+      {activeFilters.country === 'estados-unidos' && <p className="sch-search__country-note">Estados Unidos reúne registros do IEFA que listam esse destino e o catálogo da Scholarship America, sediado nos EUA. Para esta última fonte, a localização do catálogo <strong>não confirma o país onde o estudo ocorrerá</strong>.</p>}
+      {activeFilters.country === 'australia' && <p className="sch-search__country-note">Austrália reúne registros do IEFA que listam esse destino e bolsas do Study Australia sem indicação de que possam ser realizadas no exterior. Estar no catálogo ou aceitar estudantes internacionais <strong>não confirma elegibilidade para brasileiros</strong>; confira o edital da instituição.</p>}
+      {activeFilters.country === 'alemanha' && <p className="sch-search__country-note">Alemanha reúne registros do IEFA que listam esse destino e programas da base DAAD. Na base DAAD, o filtro “Country” indica <strong>de onde a pessoa se candidata, não onde estudará</strong>. Por isso, o destino e a elegibilidade devem ser confirmados na página de cada programa.</p>}
+      {activeFilters.country === 'coreia-do-sul' && <p className="sch-search__country-note">Coreia do Sul inclui bolsas divulgadas por universidades no Study in Korea. Algumas exigem vínculo ou condições locais; <strong>estar na lista não confirma elegibilidade para brasileiros nem inscrições abertas</strong>. Confira a ficha e a universidade antes de se candidatar.</p>}
+      {activeFilters.country === 'espanha' && <p className="sch-search__country-note">Espanha reúne registros classificados como “BECAS” no portal da administração pública espanhola. O âmbito geográfico indica a jurisdição da convocatória, <strong>não garante que os estudos ocorram na Espanha nem que brasileiros possam se candidatar</strong>. Confira beneficiários, prazo e edital.</p>}
+      {activeFilters.country === 'italia' && <p className="sch-search__country-note">Itália inclui uma chamada MAECI 2026–2027 vinculada pelo Universitaly. <strong>O prazo desta edição já terminou</strong>. O Brasil aparece na lista oficial de países, mas a candidatura depende de todos os requisitos do edital; não há nova edição confirmada aqui.</p>}
+      {activeFilters.country === 'suica' && <p className="sch-search__country-note">Suíça inclui as modalidades Pesquisa e Doutorado da bolsa federal 2027–2028, listadas para candidaturas do Brasil. <strong>Prazo divulgado: 27/10/2026, às 23h59 no horário suíço.</strong> A quantia divulgada é mensal, não o valor total; é preciso atender aos requisitos e obter apoio de um orientador na Suíça. A modalidade de Artes não consta da lista para o Brasil.</p>}
+      {activeFilters.country === 'suecia' && <p className="sch-search__country-note">Suécia reúne registros da listagem Study in Sweden: bolsas universitárias, do Swedish Institute e de outras organizações. Muitos links levam a páginas gerais, e alguns programas externos <strong>não confirmam a Suécia como destino</strong>. A menção ao Brasil ou à categoria “fora da União Europeia” não confirma elegibilidade individual. Prazo, valor e abertura precisam ser conferidos no provedor.</p>}
+      {activeFilters.country === 'finlandia' && <p className="sch-search__country-note">Finlândia inclui cinco fichas públicas da seção de estudos na Finlândia do European Funding Guide. A lista completa anunciada pela fonte exige cadastro e não foi coletada. <strong>Alguns apoios exigem vínculo prévio com instituição finlandesa; um também permite pesquisa fora do país.</strong> A página informa quando a nacionalidade brasileira não basta ou quando um prazo de 2026 já passou.</p>}
+      {activeFilters.country === 'dinamarca' && <p className="sch-search__country-note">Dinamarca inclui cinco fichas públicas da seção de estudos no país do European Funding Guide. <strong>A maioria exige residência municipal ou matrícula prévia em instituição dinamarquesa;</strong> nenhuma dessas condições deve ser confundida com elegibilidade automática para brasileiros. A lista completa exige cadastro, e os auxílios apresentados pela fonte para estudar fora não foram importados neste filtro.</p>}
+      {activeFilters.country === 'belgica' && <p className="sch-search__country-note">Bélgica inclui 24 bolsas da página da Global Admissions para estudantes brasileiros. <strong>Estar nessa página não garante elegibilidade individual nem inscrição aberta.</strong> Muitos programas são mestrados conjuntos Erasmus Mundus e podem ter etapas fora da Bélgica. Meses de prazo e descrições de cobertura não substituem o edital da edição atual; em ao menos uma ficha, o mês da tabela difere do prazo descrito nos detalhes.</p>}
+      {activeFilters.country === 'china' && <p className="sch-search__country-note">China reúne programas com bolsa listados no ScholarshipChina e registros IEFA que indicam esse destino. O ScholarshipChina é uma plataforma de candidatura, não um edital governamental: <strong>mensalidade reduzida ou zerada não significa bolsa em dinheiro</strong>. A ficha pode cobrar taxas de candidatura e serviço e trazer restrições de nacionalidade. Confira esses custos, as condições, o prazo e a elegibilidade antes de se candidatar.</p>}
       <section className="sch-search__results" aria-labelledby="sch-search-results-title">
         <div className="sch-search__heading"><div><p className="sch-search__eyebrow">Resultados</p><h2 id="sch-search-results-title">Bolsas para explorar</h2></div>
           {!loading && !error && data && <span aria-live="polite">{data.total} {data.total === 1 ? 'resultado' : 'resultados'}</span>}</div>
-        {loading ? <p className="sch-search__state" role="status">Carregando resultados…</p> : error ? <div className="sch-search__state" role="alert"><p>{error}</p><button type="button" onClick={() => setRetry(value => value + 1)}>Tentar novamente</button></div>
-          : data?.total === 0 ? <div className="sch-search__state"><h3>Nenhum registro para este país</h3><p>Experimente outro país. Bolsas sem destino explícito no IEFA não são atribuídas automaticamente a países específicos.</p></div>
+        {loading ? <p className="sch-search__state" role="status">Carregando resultados…</p> : error ? <div className="sch-search__state" role="alert"><p>{error}</p><button type="button" onClick={tryAgain}>Tentar novamente</button></div>
+          : data?.total === 0 ? <div className="sch-search__state"><h3>Nenhum registro com estes filtros</h3><p>Amplie o nível, a área ou o prazo e confira novamente. A ausência de dados na fonte também pode impedir uma correspondência.</p><button type="button" onClick={clearFilters}>Limpar filtros</button></div>
             : <><ul className="sch-search__list">{data?.items.map(item => <ScholarshipCard key={`${item.source}-${item.source_id}`} scholarship={item} />)}</ul>
-              {totalPages > 1 && <nav className="sch-search__pages" aria-label="Páginas de resultados"><button type="button" disabled={page <= 1} onClick={() => setPage(page - 1)}>Anterior</button><span>Página {page} de {totalPages}</span><button type="button" disabled={page >= totalPages} onClick={() => setPage(page + 1)}>Próxima</button></nav>}</>}
+              {totalPages > 1 && <nav className="sch-search__pages" aria-label="Páginas de resultados"><button type="button" disabled={page <= 1} onClick={() => changePage(page - 1)}>Anterior</button><span>Página {page} de {totalPages}</span><button type="button" disabled={page >= totalPages} onClick={() => changePage(page + 1)}>Próxima</button></nav>}</>}
       </section>
     </div>
   </article>

@@ -4,8 +4,8 @@ import './Hero.css'
 
 /*
  * Topo da home (home v2, micro tarefa 1.2).
- * A ilustração e os três selos flutuantes são DECORATIVOS e de exemplo: o site ainda não
- * tem metas, sequências nem ligas. A legenda visível diz isso.
+ * A ilustração e os dois selos flutuantes são decorativos e de exemplo: o site ainda não
+ * tem metas nem sequências. A legenda visível diz isso.
  */
 export function Hero() {
   return (
@@ -99,18 +99,9 @@ export function Hero() {
               </span>
               <b>Dias seguidos</b>
             </div>
-            <div className="hero__chip hero__chip--league">
-              <span className="hero__chip-ico hero__chip-ico--lilac">
-                <Icon name="trophy" size={18} strokeWidth={3} />
-              </span>
-              <div>
-                <b>Liga semanal</b>
-                <small>Exemplo</small>
-              </div>
-            </div>
           </div>
           <figcaption className="hero__caption">
-            Ilustração de exemplo. Metas, sequências e ligas ainda não existem no site.
+            Ilustração de exemplo. Metas e sequências ainda não existem no site.
           </figcaption>
         </figure>
       </div>

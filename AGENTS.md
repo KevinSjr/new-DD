@@ -39,7 +39,6 @@ Confirme o estado real de implementação antes de afirmar que uma funcionalidad
 - Acompanhamento de progresso e prazos.
 - Comparação de oportunidades.
 - Recomendações de próximos passos.
-- Correspondência entre perfil do usuário e oportunidades, com explicação dos critérios e sem prometer elegibilidade ou aprovação.
 
 ### Preparação acadêmica
 - Calculadora de GPA/conversão de notas, explicando que instituições podem usar métodos próprios.
@@ -221,7 +220,7 @@ As fases são uma orientação, não uma obrigação rígida. Confirme prioridad
 
 ### Fase 4 — Personalização e acompanhamento
 - Perfil e preferências.
-- Recomendações explicáveis.
+- Recomendações explicáveis de destinos e próximos passos.
 - Checklists e progresso de candidatura.
 - Salvamento/sincronização com controles de privacidade.
 

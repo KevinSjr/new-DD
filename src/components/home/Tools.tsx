@@ -3,7 +3,7 @@ import { Icon, type IconName } from '../ui/Icon'
 import './Tools.css'
 
 /*
- * As nove ferramentas planejadas (home v2, micro tarefa 1.4).
+ * Ferramentas da home, disponíveis ou sinalizadas como planejadas.
  * Cada cartão traz uma etiqueta de estado (contorno tracejado + texto).
  * Cartões com rota levam a ferramentas ou catálogos existentes; os demais
  * permanecem sinalizados como planejados.
@@ -28,10 +28,9 @@ const TOOLS: Tool[] = [
   { title: 'Teste vocacional', icon: 'compass', tone: 'lilac', href: '/teste-vocacional', tag: 'Questionário disponível', description: 'Explore seus interesses em 60 atividades e encontre caminhos para investigar, sem rótulos definitivos.' },
   { title: 'Rankings', icon: 'trophy', tone: 'sun', href: '/rankings', tag: 'Seis listas disponíveis', description: 'Compare universidades no ranking geral ou explore as cinco áreas de estudo do QS by Subject 2026.' },
   { title: 'Simulador de entrevista', icon: 'mic', tone: 'coral', tag: SOON, description: 'Ensaie as perguntas mais comuns de bolsas e universidades antes do dia.' },
-  { title: 'Guia de países', icon: 'map', tone: 'sky', href: '/#paises', tag: 'Vinte e quatro guias publicados', description: 'Custo de vida, clima, trabalho e tudo o que muda quando você chega.' },
+  { title: 'Guia de países', icon: 'map', tone: 'sky', href: '/#paises', tag: 'Vinte e cinco guias publicados', description: 'Custo de vida, clima, trabalho e tudo o que muda quando você chega.' },
   { title: 'Buscador de bolsas', icon: 'search', tone: 'mint', href: '/bolsas', tag: 'Busca disponível', description: 'Explore bolsas de diferentes fontes em um só lugar e confira os critérios no edital original.' },
   { title: 'Descobridor de destinos', icon: 'globe', tone: 'lilac', href: '/descobridor-de-destinos', tag: 'Exploração disponível', description: 'Compare 25 destinos pelas suas preferências de região, idioma e clima.' },
-  { title: 'Match de bolsas e universidades', icon: 'sparkles', tone: 'sun', tag: SOON, description: 'Cruze seu perfil com bolsas e universidades e veja as melhores combinações.' },
 ]
 
 function ToolBody({ tool }: { tool: Tool }) {
@@ -52,7 +51,7 @@ export function Tools() {
     <section className="tools" id="ferramentas" aria-labelledby="ferramentas-titulo">
       <div className="container">
         <div className="tools__head">
-          <h2 id="ferramentas-titulo">Nove ferramentas, uma só jornada</h2>
+          <h2 id="ferramentas-titulo">Ferramentas para avançar na sua jornada</h2>
           <p>
             Comece pelos seus interesses e avance para a pesquisa de áreas e destinos. Hoje, você já
             pode usar o questionário exploratório, o descobridor de destinos, a calculadora de GPA,

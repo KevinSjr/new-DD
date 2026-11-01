@@ -110,10 +110,6 @@
   color: var(--color-ink);
 }
 
-.hero__chip-ico--lilac {
-  background: var(--color-lilac-dark);
-}
-
 .hero__chip--goal {
   left: 0;
   top: 18%;
@@ -123,11 +119,6 @@
 .hero__chip--streak {
   right: 0;
   top: 44%;
-}
-
-.hero__chip--league {
-  left: 6%;
-  bottom: 14%;
 }
 
 /* Barra de progresso decorativa (valor de exemplo) */

@@ -9,6 +9,13 @@ const studyLevels = new Set(['graduacao', 'pos-graduacao', 'mestrado', 'doutorad
 const languages = new Set(['Português', 'Inglês', 'Espanhol', 'Alemão', 'Francês', 'Japonês', 'Coreano', 'Mandarim', 'Outro'])
 const plannedExams = new Set(['TOEFL', 'IELTS', 'Duolingo English Test', 'SAT', 'GRE', 'GMAT', 'JLPT', 'TOPIK', 'HSK', 'Outro'])
 const targetYears = new Set(['2027', '2028', '2029-plus', 'undecided'])
+const journeyTaskKeys = new Set([
+  'define-goal', 'choose-destinations', 'set-timeline',
+  'compare-countries', 'search-scholarships', 'shortlist-programs',
+  'check-eligibility', 'check-exams', 'map-deadlines',
+  'gather-documents', 'write-application', 'review-application',
+  'submit-application', 'track-responses', 'plan-next-step',
+])
 const loginAttempts = new Map()
 const error = (status, message) => Object.assign(new Error(message), { status })
 const tokenHash = token => createHash('sha256').update(token).digest('hex')
@@ -128,6 +135,16 @@ function publicUser(row) {
   }
 }
 
+function publicGpaEstimate(row) {
+  if (!row) return null
+  return {
+    bands: Number(row.bands_gpa), proportional: Number(row.proportional_gpa), letters: Number(row.letters_gpa),
+    sourceAverage: Number(row.source_average), inputMode: row.input_mode, weighted: row.weighted,
+    passingGrade: row.passing_grade === null ? null : Number(row.passing_grade),
+    includeFailed: row.include_failed, savedAt: row.saved_at,
+  }
+}
+
 function checkRate(req) {
   const key = req.socket.remoteAddress || 'unknown'
   const record = loginAttempts.get(key)
@@ -210,6 +227,94 @@ export async function handleAccountRequest(req, res, url, { json, body, originAl
 
   const user = await currentUser(req)
   if (!user) throw error(401, 'Entre na sua conta para continuar.')
+
+  if (path === '/api/account/gpa-estimates') {
+    if (method === 'GET') {
+      const result = await database().query('SELECT * FROM user_gpa_estimates WHERE user_id=$1', [user.id])
+      json(res, 200, { estimate: publicGpaEstimate(result.rows[0]) })
+      return true
+    }
+    if (method === 'PUT') {
+      const input = await body(req)
+      const values = [input?.bands, input?.proportional, input?.letters, input?.sourceAverage]
+      if (values.some((value, index) => typeof value !== 'number' || !Number.isFinite(value) || value < 0 || value > (index === 3 ? 10 : 4))) throw error(400, 'Envie os três resultados válidos e a média de origem.')
+      if (input?.inputMode !== 'average' && input?.inputMode !== 'courses') throw error(400, 'Modo de cálculo inválido.')
+      if (typeof input?.weighted !== 'boolean') throw error(400, 'Informe se o cálculo usou créditos.')
+      const passingGrade = input.inputMode === 'courses' ? input.passingGrade : null
+      const includeFailed = input.inputMode === 'courses' ? input.includeFailed : null
+      if (input.inputMode === 'courses' && (typeof passingGrade !== 'number' || !Number.isFinite(passingGrade) || passingGrade < 0 || passingGrade > 10 || typeof includeFailed !== 'boolean')) throw error(400, 'Parâmetros das disciplinas inválidos.')
+      if (input.inputMode === 'average' && input.weighted) throw error(400, 'A média geral não pode ser ponderada por créditos.')
+      const result = await database().query(`INSERT INTO user_gpa_estimates
+        (user_id,bands_gpa,proportional_gpa,letters_gpa,source_average,input_mode,weighted,passing_grade,include_failed)
+        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+        ON CONFLICT (user_id) DO UPDATE SET bands_gpa=EXCLUDED.bands_gpa,proportional_gpa=EXCLUDED.proportional_gpa,
+          letters_gpa=EXCLUDED.letters_gpa,source_average=EXCLUDED.source_average,input_mode=EXCLUDED.input_mode,
+          weighted=EXCLUDED.weighted,passing_grade=EXCLUDED.passing_grade,include_failed=EXCLUDED.include_failed,saved_at=now()
+        RETURNING *`, [user.id, ...values, input.inputMode, input.weighted, passingGrade, includeFailed])
+      json(res, 200, { estimate: publicGpaEstimate(result.rows[0]) })
+      return true
+    }
+    if (method === 'DELETE') {
+      await database().query('DELETE FROM user_gpa_estimates WHERE user_id=$1', [user.id])
+      json(res, 200, { estimate: null })
+      return true
+    }
+  }
+
+  if (method === 'GET' && path === '/api/account/journey') {
+    const [tasks, deadlines] = await Promise.all([
+      database().query('SELECT task_key AS "key", status, updated_at AS "updatedAt" FROM user_journey_tasks WHERE user_id=$1', [user.id]),
+      database().query('SELECT id::text, title, to_char(due_date, \'YYYY-MM-DD\') AS "dueDate", note FROM user_journey_deadlines WHERE user_id=$1 ORDER BY due_date,id', [user.id]),
+    ])
+    json(res, 200, { tasks: tasks.rows, deadlines: deadlines.rows })
+    return true
+  }
+
+  const taskMatch = path.match(/^\/api\/account\/journey\/tasks\/([a-z0-9-]+)$/)
+  if (taskMatch && journeyTaskKeys.has(taskMatch[1])) {
+    if (method === 'PUT') {
+      const input = await body(req)
+      if (input?.status !== 'done' && input?.status !== 'skipped') throw error(400, 'Escolha um estado válido para a tarefa.')
+      await database().query(`INSERT INTO user_journey_tasks (user_id,task_key,status) VALUES ($1,$2,$3)
+        ON CONFLICT (user_id,task_key) DO UPDATE SET status=EXCLUDED.status,updated_at=now()`, [user.id, taskMatch[1], input.status])
+      json(res, 200, { key: taskMatch[1], status: input.status })
+      return true
+    }
+    if (method === 'DELETE') {
+      await database().query('DELETE FROM user_journey_tasks WHERE user_id=$1 AND task_key=$2', [user.id, taskMatch[1]])
+      json(res, 200, { key: taskMatch[1], status: null })
+      return true
+    }
+  }
+
+  const deadlineMatch = path.match(/^\/api\/account\/journey\/deadlines(?:\/(\d+))?$/)
+  if (deadlineMatch) {
+    if ((method === 'POST' && !deadlineMatch[1]) || (method === 'PUT' && deadlineMatch[1])) {
+      const input = await body(req)
+      const title = typeof input?.title === 'string' ? input.title.trim().replace(/\s+/g, ' ') : ''
+      const note = typeof input?.note === 'string' ? input.note.trim() : ''
+      const dueDate = input?.dueDate
+      if (title.length < 2 || title.length > 120) throw error(400, 'Informe um título de 2 a 120 caracteres.')
+      if (note.length > 500) throw error(400, 'A observação deve ter até 500 caracteres.')
+      if (typeof dueDate !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(dueDate) || Number.isNaN(Date.parse(`${dueDate}T00:00:00Z`)) || new Date(`${dueDate}T00:00:00Z`).toISOString().slice(0, 10) !== dueDate) throw error(400, 'Informe uma data válida.')
+      if (method === 'POST') {
+        const count = await database().query('SELECT count(*)::int AS total FROM user_journey_deadlines WHERE user_id=$1', [user.id])
+        if (count.rows[0].total >= 50) throw error(400, 'O limite é de 50 prazos. Remova um para adicionar outro.')
+      }
+      const result = method === 'POST'
+        ? await database().query('INSERT INTO user_journey_deadlines (user_id,title,due_date,note) VALUES ($1,$2,$3,$4) RETURNING id::text,title,to_char(due_date, \'YYYY-MM-DD\') AS "dueDate",note', [user.id, title, dueDate, note || null])
+        : await database().query('UPDATE user_journey_deadlines SET title=$1,due_date=$2,note=$3 WHERE id=$4 AND user_id=$5 RETURNING id::text,title,to_char(due_date, \'YYYY-MM-DD\') AS "dueDate",note', [title, dueDate, note || null, deadlineMatch[1], user.id])
+      if (!result.rowCount) throw error(404, 'Prazo não encontrado.')
+      json(res, method === 'POST' ? 201 : 200, result.rows[0])
+      return true
+    }
+    if (method === 'DELETE' && deadlineMatch[1]) {
+      const result = await database().query('DELETE FROM user_journey_deadlines WHERE id=$1 AND user_id=$2', [deadlineMatch[1], user.id])
+      if (!result.rowCount) throw error(404, 'Prazo não encontrado.')
+      json(res, 200, { deleted: true })
+      return true
+    }
+  }
 
   if (method === 'PUT' && path === '/api/account/profile') {
     const data = validateProfile(await body(req))

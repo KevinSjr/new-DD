@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react'
 import { Link } from '../router/Link'
+import { useLocation } from '../router/navigation'
+import { JourneyPanel } from '../components/account/JourneyPanel'
+import { SavedGpaEstimates } from '../components/account/SavedGpaEstimates'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
 import { Icon, type IconName } from '../components/ui/Icon'
 import { COUNTRY_GUIDES } from '../data/countries'
@@ -36,12 +39,13 @@ type ProfileForm = {
 }
 type Mode = 'login' | 'register'
 type Status = 'loading' | 'error' | 'guest' | 'signed-in'
-type AccountTab = 'pessoal' | 'academicos' | 'metas' | 'progresso' | 'privacidade'
+type AccountTab = 'pessoal' | 'academicos' | 'metas' | 'jornada' | 'progresso' | 'privacidade'
 
 const accountTabs: { id: AccountTab; label: string }[] = [
   { id: 'pessoal', label: 'Informações pessoais' },
   { id: 'academicos', label: 'Dados acadêmicos' },
   { id: 'metas', label: 'Metas de intercâmbio' },
+  { id: 'jornada', label: 'Minha jornada' },
   { id: 'progresso', label: 'Progresso e gamificação' },
   { id: 'privacidade', label: 'Privacidade e dados' },
 ]
@@ -122,6 +126,7 @@ function announceAuthChange() {
 
 export function AccountPage() {
   useDocumentTitle('Minha conta | Daydreaming')
+  const location = useLocation()
   const [status, setStatus] = useState<Status>('loading')
   const [user, setUser] = useState<AccountUser | null>(null)
   const [destinations, setDestinations] = useState<Destination[]>([])
@@ -139,11 +144,21 @@ export function AccountPage() {
   const [deletePassword, setDeletePassword] = useState('')
   const [passwordOpen, setPasswordOpen] = useState(false)
   const [deleteOpen, setDeleteOpen] = useState(false)
-  const [activeTab, setActiveTab] = useState<AccountTab>('pessoal')
+  const [activeTab, setActiveTab] = useState<AccountTab>(() => {
+    const requested = new URLSearchParams(window.location.search).get('tab')
+    return accountTabs.some((tab) => tab.id === requested) ? requested as AccountTab : 'pessoal'
+  })
   const [checkedMissions, setCheckedMissions] = useState<string[]>(['destinos'])
   const [showAllDestinations, setShowAllDestinations] = useState(false)
   const passwordCurrentRef = useRef<HTMLInputElement>(null)
   const deletePasswordRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    const requested = new URLSearchParams(location.search).get('tab')
+    if (!accountTabs.some((tab) => tab.id === requested)) return
+    const timer = window.setTimeout(() => setActiveTab(requested as AccountTab), 0)
+    return () => window.clearTimeout(timer)
+  }, [location.search])
   const passwordToggleRef = useRef<HTMLButtonElement>(null)
 
   function toggleChoice(field: 'languages' | 'plannedExams', value: string) {
@@ -366,12 +381,13 @@ export function AccountPage() {
                     <label>Escola <span className="account-v4__optional">Opcional</span><input maxLength={120} value={profile.schoolName} onChange={(event) => setProfile({ ...profile, schoolName: event.target.value })} /></label>
                     <label>Série ou ano <span className="account-v4__optional">Opcional</span><input maxLength={80} placeholder="Ex.: 3º ano do ensino médio" value={profile.schoolYear} onChange={(event) => setProfile({ ...profile, schoolYear: event.target.value })} /></label>
                     <div className="account-v4__location"><label>Cidade <span className="account-v4__optional">Opcional</span><input autoComplete="address-level2" maxLength={100} value={profile.city} onChange={(event) => setProfile({ ...profile, city: event.target.value })} /></label><label>Estado <span className="account-v4__optional">Opcional</span><input autoComplete="address-level1" maxLength={2} pattern="[A-Za-z]{2}" placeholder="SP" value={profile.stateCode} onChange={(event) => setProfile({ ...profile, stateCode: event.target.value.toUpperCase() })} /></label></div>
-                    <div className="account-v4__academic-summary"><div><h3>Resumo dos dados acadêmicos</h3><button type="button" onClick={() => selectTab('academicos')}>Editar dados acadêmicos</button></div><dl><dt>GPA</dt><dd>{profile.gpa.trim() === '' || !Number.isFinite(Number(profile.gpa.replace(',', '.'))) ? 'Não informado' : `${Number(profile.gpa.replace(',', '.')).toFixed(2)} / 4,0`}</dd><dt>Idiomas</dt><dd>{profile.languages.length ? profile.languages.join(', ') : 'Não informado'}</dd><dt>Exames</dt><dd>{profile.plannedExams.length ? profile.plannedExams.join(', ') : 'Não informado'}</dd></dl>{unsavedProfile && <p className="account-v4__draft-note">Prévia das alterações ainda não salvas.</p>}</div>
+                    <div className="account-v4__academic-summary"><div><h3>Resumo dos dados acadêmicos</h3><button type="button" onClick={() => selectTab('academicos')}>Editar dados acadêmicos</button></div><dl><dt>GPA informado</dt><dd>{profile.gpa.trim() === '' || !Number.isFinite(Number(profile.gpa.replace(',', '.'))) ? 'Não informado' : `${Number(profile.gpa.replace(',', '.')).toFixed(2)} / 4,0`}</dd><dt>Idiomas</dt><dd>{profile.languages.length ? profile.languages.join(', ') : 'Não informado'}</dd><dt>Exames</dt><dd>{profile.plannedExams.length ? profile.plannedExams.join(', ') : 'Não informado'}</dd></dl>{unsavedProfile && <p className="account-v4__draft-note">Prévia das alterações ainda não salvas.</p>}</div>
                     <button className="account-page__primary" type="submit" disabled={busy}>{busy ? 'Salvando…' : 'Salvar informações'}</button>
                   </form>
                 </div>}
                 {activeTab === 'academicos' && <div className="account-v4__section">
-                  <div><p className="account-page__eyebrow">Dados opcionais</p><h2>Dados acadêmicos</h2><p>Registre informações que você já conhece. Elas ficam no seu perfil, mas ainda não alimentam automaticamente o buscador de bolsas ou os simulados.</p></div>
+                  <div><p className="account-page__eyebrow">Dados opcionais</p><h2>Dados acadêmicos</h2><p>Registre informações que você já conhece. Elas ficam no seu perfil e podem ser atualizadas quando quiser.</p></div>
+                  <SavedGpaEstimates />
                   <form className="account-page__form account-v4__academic-form" onSubmit={saveProfile}>
                     <div className="account-v4__subcard"><h3>Escola e localização</h3><div className="account-v4__field-grid"><label>Escola<input maxLength={120} value={profile.schoolName} onChange={(event) => setProfile({ ...profile, schoolName: event.target.value })} /></label><label>Série ou ano<input maxLength={80} placeholder="Ex.: 3º ano do ensino médio" value={profile.schoolYear} onChange={(event) => setProfile({ ...profile, schoolYear: event.target.value })} /></label><label>Cidade<input maxLength={100} value={profile.city} onChange={(event) => setProfile({ ...profile, city: event.target.value })} /></label><label>Estado<input maxLength={2} pattern="[A-Za-z]{2}" placeholder="SP" value={profile.stateCode} onChange={(event) => setProfile({ ...profile, stateCode: event.target.value.toUpperCase() })} /></label></div></div>
                     <fieldset className="account-v4__subcard"><legend>Idiomas que você fala</legend><div className="account-v4__chips">{languageOptions.map((language) => <button key={language} type="button" className={profile.languages.includes(language) ? 'is-selected' : ''} aria-pressed={profile.languages.includes(language)} onClick={() => toggleChoice('languages', language)}>{language}</button>)}</div></fieldset>
@@ -388,7 +404,7 @@ export function AccountPage() {
                     <fieldset><legend>O que você quer fazer?</legend><div className="account-v4__chips">{studyLevels.map(([value, label]) => <button key={value} type="button" className={profile.studyLevel === value ? 'is-selected' : ''} aria-pressed={profile.studyLevel === value} onClick={() => setProfile({ ...profile, studyLevel: profile.studyLevel === value ? '' : value })}>{label}</button>)}</div></fieldset>
                     <fieldset><legend>Área de interesse</legend><div className="account-v4__chips">{areaOptions.map((area) => <button key={area} type="button" className={profile.interestArea === area ? 'is-selected' : ''} aria-pressed={profile.interestArea === area} onClick={() => setProfile({ ...profile, interestArea: profile.interestArea === area ? '' : area })}>{area}</button>)}</div><label className="account-v4__other-area">Outra área ou especialidade<input maxLength={100} placeholder="Ex.: Ciência de dados" value={areaOptions.includes(profile.interestArea) ? '' : profile.interestArea} onChange={(event) => setProfile({ ...profile, interestArea: event.target.value })} /></label></fieldset>
                     <fieldset><legend>Quando pretende ir?</legend><div className="account-v4__chips">{targetYears.map(([value, label]) => <button key={value} type="button" className={profile.targetYear === value ? 'is-selected' : ''} aria-pressed={profile.targetYear === value} onClick={() => setProfile({ ...profile, targetYear: profile.targetYear === value ? '' : value })}>{label}</button>)}</div></fieldset>
-                    <p className="account-page__hint">Essas escolhas não confirmam elegibilidade para bolsas. A busca ainda não as aplica automaticamente.</p>
+                    <p className="account-page__hint">Essas escolhas não confirmam elegibilidade para bolsas. Confira os critérios na fonte de cada oportunidade.</p>
                     <button className="account-page__primary" type="submit" disabled={busy}>{busy ? 'Salvando…' : 'Salvar escolhas'}</button>
                   </form>
                 </div>}
@@ -402,9 +418,10 @@ export function AccountPage() {
                   <div><h3>Missões</h3><ul className="account-v4__missions">{demoMissions.map((mission) => <li key={mission.id}><label><input type="checkbox" checked={checkedMissions.includes(mission.id)} onChange={() => setCheckedMissions((previous) => previous.includes(mission.id) ? previous.filter((item) => item !== mission.id) : [...previous, mission.id])} /><span><strong>{mission.title}</strong><small>{mission.detail}</small></span><b>+{mission.xp} XP</b></label></li>)}</ul></div>
                   <div><h3>Conquistas da prévia</h3><div className="account-v4__badges">{demoBadges.map((badge) => <div key={badge.title} className={badge.earned ? 'is-earned' : ''}><span className="account-v4__badge-icon"><Icon name={badge.icon} size={26} /></span><strong>{badge.title}</strong><span>{badge.how}</span><small>{badge.earned ? 'Conquistada na prévia' : 'Ainda não conquistada'}</small></div>)}</div></div>
                 </div>}
+                {activeTab === 'jornada' && <JourneyPanel />}
                 {activeTab === 'privacidade' && <div className="account-v4__section">
                   <div><p className="account-page__eyebrow">Seus dados</p><h2>Privacidade e dados</h2><p>Você escolhe o que informar além do nome de exibição e do e-mail necessários para a conta.</p></div>
-                  <dl className="account-v4__data"><div><dt>Nome e e-mail</dt><dd>Identificam sua conta e permitem o acesso.</dd></div><div><dt>Escola, cidade e dados acadêmicos</dt><dd>São opcionais e ficam no seu perfil. Ainda não alimentam automaticamente as ferramentas.</dd></div><div><dt>Preferências de estudo</dt><dd>Guardam seus destinos, nível, área e ano pretendido; ainda não filtram a busca automaticamente.</dd></div><div><dt>Progresso e gamificação</dt><dd>A aba é uma prévia interativa; missões e XP não são salvos.</dd></div><div><dt>Simulados</dt><dd>Suas respostas anônimas não são vinculadas à conta.</dd></div></dl>
+                  <dl className="account-v4__data"><div><dt>Nome e e-mail</dt><dd>Identificam sua conta e permitem o acesso.</dd></div><div><dt>Escola, cidade e dados acadêmicos</dt><dd>São opcionais e ficam no seu perfil.</dd></div><div><dt>Preferências de estudo</dt><dd>Guardam seus destinos, nível, área e ano pretendido.</dd></div><div><dt>Minha jornada</dt><dd>Tarefas marcadas e prazos ficam salvos na sua conta e são excluídos com ela.</dd></div><div><dt>Progresso e gamificação</dt><dd>Esta aba ainda é uma prévia interativa; missões e XP não são salvos.</dd></div><div><dt>Simulados</dt><dd>Suas respostas anônimas não são vinculadas à conta.</dd></div></dl>
                   <p className="account-v4__privacy-note"><Icon name="lock" size={20} />Você pode alterar a senha ou excluir a conta na seção de segurança ao lado.</p>
                 </div>}
               </div>

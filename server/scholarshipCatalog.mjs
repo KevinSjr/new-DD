@@ -440,17 +440,83 @@ const catalog = `WITH catalog AS (
 
 )`
 
+const levelPatterns = Object.freeze({
+  undergraduate: 'bachelor|undergraduate|undergraduates|(^|[^a-z])ug([^a-z]|$)|graduação|graduacao|college freshman|college sophomore|college senior|degree and above',
+  postgraduate: 'master|postgraduate|post-graduate|(^|[^a-z])pg([^a-z]|$)|mestrado|pós-graduação|pos-graduacao|mba|graduate student',
+  doctoral: 'phd|doctoral|doctorate|doutorado|postdoctoral',
+})
+const areaPatterns = Object.freeze({
+  engineering: 'engineer|technolog|computer|computing|data science|artificial intelligence|software|information systems|engenharia|tecnologia|informática|informatica',
+  arts: '(^|[^a-z])art(s)?([^a-z]|$)|design|architect|humanit|histor|literat|language|linguist|philosoph|theolog|archaeolog|music|cultur|humanidades',
+  health: 'medic|health|nurs|pharmac|biolog|dental|dentist|veterinar|agricultur|agronom|forestry|nutrition|psycholog|saúde|saude',
+  natural: 'chemistr|physics|mathemat|natural scien|environment|ecolog|geolog|geograph|earth|marine|material|astronom|química|quimica|física|fisica',
+  social: 'business|management|financ|account|econom|law|legal|education|pedagog|social|politic|marketing|communicat|journal|tourism|hospitality|sport|sociolog|administra',
+})
+
+// Apenas datas tipadas como DATE entram no filtro temporal. Prazos em texto livre
+// continuam visíveis no cartão, mas não são interpretados como inscrição aberta.
+const filterableCatalog = `${catalog},
+  dated AS (
+    SELECT 'verified'::text AS source, id::text AS source_id, deadline_date AS date_value FROM scholarships
+    UNION ALL SELECT 'campusbourses', source_id::text, deadline_date FROM campusbourses_imports
+    UNION ALL SELECT 'scholarship_china', source_id::text, deadline_date FROM scholarship_china_imports
+    UNION ALL SELECT 'spain_administration', source_id::text, deadline_end FROM spain_administration_imports WHERE deadline_invalid IS NOT TRUE
+    UNION ALL SELECT 'universitaly_maeci', source_id::text, deadline_date FROM italy_maeci_imports
+    UNION ALL SELECT 'swiss_excellence', source_id::text, deadline_date FROM swiss_excellence_imports
+    UNION ALL SELECT 'efg_finland', source_id::text, deadline_date FROM efg_finland_imports
+    UNION ALL SELECT 'efg_denmark', source_id::text, deadline_date FROM efg_denmark_imports
+    UNION ALL SELECT 'scholarshipsads_norway', source_id::text, deadline_date_listing FROM scholarshipsads_norway_imports
+    UNION ALL SELECT 'scholarship_guide_singapore', source_id::text, deadline_date FROM scholarship_guide_singapore_imports
+    UNION ALL SELECT 'studyspy_nz', source_id::text, close_date FROM studyspy_nz_imports
+  ),
+  enriched AS (
+    SELECT c.*, d.date_value,
+      CASE
+        WHEN c.brazil_criteria ~* '^(Brasil listado|Brasil mencionado|Página para brasileiros|Modalidade listada para o Brasil)' THEN 'mentioned'
+        WHEN c.brazil_criteria ~* '^(Sem restrição indicada|Estudantes internacionais|Categoria internacional|Todas as nacionalidades|All nationalities|Grupo fora da UE)' THEN 'broad'
+        WHEN c.brazil_criteria ~* '^(Brasil não listado|Brasil não aparece|Outra nacionalidade listada|Não:|Exige cidadania|Brazilian nationality alone does not qualify)' THEN 'not-listed'
+        ELSE 'unknown'
+      END AS criteria_group
+    FROM catalog c LEFT JOIN dated d ON d.source = c.source AND d.source_id = c.source_id
+  )`
+
 export async function scholarshipCatalog(pool, params) {
   const q = (params.get('q') || '').trim().slice(0, 100)
   const country = (params.get('country') || '').trim()
+  const level = params.get('level') || ''
+  const area = params.get('area') || ''
+  const deadline = params.get('deadline') || ''
+  const criteria = params.get('criteria') || ''
   const page = Math.min(10000, Math.max(1, Number.parseInt(params.get('page') || '1', 10) || 1))
   if (country && !countryHostName(country)) {
     throw Object.assign(new Error('País inválido.'), { status: 400 })
   }
-  const values = [q, country, countryHostName(country) || '']
-  const filter = `WHERE ($1 = '' OR title ILIKE '%' || $1 || '%' OR description ILIKE '%' || $1 || '%')`
-  const count = await pool.query(`${catalog} SELECT count(*)::integer AS total FROM catalog ${filter}`, values)
-  const result = await pool.query(`${catalog} SELECT * FROM catalog ${filter}
-    ORDER BY lower(title), source, source_id LIMIT 12 OFFSET $4`, [...values, (page - 1) * 12])
+  if (level && !Object.hasOwn(levelPatterns, level) && !['other', 'unknown'].includes(level))
+    throw Object.assign(new Error('Nível inválido.'), { status: 400 })
+  if (area && !Object.hasOwn(areaPatterns, area) && area !== 'unknown')
+    throw Object.assign(new Error('Área inválida.'), { status: 400 })
+  if (deadline && !['upcoming', 'past', 'undated'].includes(deadline))
+    throw Object.assign(new Error('Filtro de prazo inválido.'), { status: 400 })
+  if (criteria && !['mentioned', 'broad', 'not-listed', 'unknown'].includes(criteria))
+    throw Object.assign(new Error('Filtro de critérios inválido.'), { status: 400 })
+
+  const values = [q, country, countryHostName(country) || '', level, area, deadline, criteria,
+    levelPatterns[level] || '', areaPatterns[area] || '', Object.values(levelPatterns).join('|')]
+  const filter = `WHERE ($1 = '' OR title ILIKE '%' || $1 || '%' OR description ILIKE '%' || $1 || '%')
+    AND ($4 = '' OR ($4 = 'unknown' AND (nullif(trim(study_level), '') IS NULL OR study_level = '(Select a Level Of Study)'))
+      OR ($4 = 'other' AND nullif(trim(study_level), '') IS NOT NULL AND study_level <> '(Select a Level Of Study)' AND study_level !~* $10)
+      OR ($4 NOT IN ('unknown', 'other') AND study_level ~* $8))
+    AND ($5 = '' OR ($5 = 'unknown' AND nullif(trim(field_of_study), '') IS NULL)
+      OR ($5 <> 'unknown' AND (field_of_study ~* $9
+        OR field_of_study ~* 'unrestricted|all fields|any faculty|any subject|todas as áreas')))
+    AND ($6 = '' OR ($6 = 'upcoming' AND date_value >= CURRENT_DATE)
+      OR ($6 = 'past' AND date_value < CURRENT_DATE)
+      OR ($6 = 'undated' AND date_value IS NULL))
+    AND ($7 = '' OR criteria_group = $7)`
+  const count = await pool.query(`${filterableCatalog} SELECT count(*)::integer AS total FROM enriched ${filter}`, values)
+  const result = await pool.query(`${filterableCatalog} SELECT source, source_id, title, description, source_label,
+    source_url, application_url, observed_at, deadline, amount, source_status, brazil_criteria,
+    field_of_study, nationality, destinations, study_level, country_basis FROM enriched ${filter}
+    ORDER BY lower(title), source, source_id LIMIT 12 OFFSET $11`, [...values, (page - 1) * 12])
   return { items: result.rows, total: count.rows[0].total, page, pageSize: 12 }
 }

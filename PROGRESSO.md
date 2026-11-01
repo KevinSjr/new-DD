@@ -3,7 +3,26 @@
 Registro das micro tarefas. Marque `[x]` só quando a tarefa estiver concluída e verificada.
 Antes de cada tarefa, consultar `AGENTS.md` e `CLAUDE.md` (na raiz do projeto).
 
-Última atualização: 2026-10-22
+Última atualização: 2026-10-31
+
+## Teste vocacional — resultado simplificado — 2026-10-31
+
+- Removida a opção “Não consigo avaliar”; cada uma das 60 atividades agora pede uma resposta de interesse entre 1 e 5. O resultado confere se todas foram respondidas antes de calcular as médias.
+- A tela final mostra um gráfico de barras com apenas as duas maiores médias. Profissões aparecem somente nessas duas áreas, inicialmente três exemplos por área; mais exemplos da mesma área ficam recolhidos. As demais áreas não são apresentadas no resultado.
+- `npx tsc -b`, `npm run lint` e `git diff --check` passaram. A conferência visual no navegador ainda não foi feita.
+
+## Estimativas de GPA no perfil — 2026-10-31
+
+- A calculadora oferece salvar, mediante login, os resultados dos três métodos exibidos. Se a pessoa ainda não entrou, pode abrir a conta em outra aba e voltar para salvar sem perder o cálculo da aba original.
+- As migrations 049–050 criam um registro por usuário para as três estimativas, média brasileira e parâmetros do cálculo, sem guardar as notas individuais das disciplinas. Um novo salvamento substitui o anterior; o GPA informado manualmente no perfil permanece independente. A aba Dados acadêmicos mostra fontes e permite remover as estimativas.
+- `npm run db:migrate`, `npm run lint`, `npm run build` e o teste de integração `npm run test:account` passaram. O teste confirmou validação, persistência, remoção e que o GPA manual não foi alterado. Não houve inspeção visual em navegador nesta tarefa.
+
+## Minha jornada — 2026-10-31
+
+- A home agora apresenta as cinco etapas da jornada e leva à aba “Minha jornada” em `/conta?tab=jornada`. Explorar o site continua possível sem cadastro.
+- A jornada da conta contém 15 tarefas em cinco etapas, marcadas manualmente como concluídas ou puladas. Abrir um link não conclui tarefas. O progresso conta apenas tarefas concluídas.
+- A migration 048 cria registros de tarefa e prazos por usuário; os dados são apagados quando a conta é excluída. A aba permite adicionar, editar e remover prazos. A gamificação anterior permanece identificada como prévia sem persistência.
+- `npm run db:migrate`, `npm run lint`, `npm run build` e `npm run test:account` (com API e PostgreSQL locais) passaram. O teste de integração criou e removeu uma conta temporária e verificou persistência, validação e exclusão dos dados da jornada. O visual em navegador e dispositivos físicos não foi verificado nesta tarefa.
 
 ## Catálogo de exames — 2026-10-22
 
@@ -106,8 +125,7 @@ Tarefas 1.1 a 1.10 da primeira versão foram concluídas e depois substituídas 
 - [ ] 3.4 Buscador de bolsas
 - [ ] 3.5 Rank de universidades (página e dados preparados; falta configurar a hospedagem e publicar)
 - [ ] 3.6 Simulador prático e simulador de entrevista
-- [ ] 3.7 Match de bolsas e universidades
-- [ ] 3.8 Fórum
+- [ ] 3.7 Fórum
 
 ## Notas de verificação
 
@@ -221,7 +239,7 @@ Verificado em Chromium de teste (código empacotado com esbuild; **não** foi um
 
 Verificado em Chromium de teste (código empacotado com esbuild; **não** foi um projeto Vite completo; `tsc` só com tipos simplificados do React):
 
-- Trilha curta: 5 passos em 3 etapas (sem listar as nove ferramentas, sem metas, ligas, XP ou nomes fictícios). Rolando a página, os passos passam de bloqueado para atual e concluído, a linha pontilhada se colore e o painel mostra "Etapa X de 5" até "Trilha completa". Conferido em 390 e 1280 px, do topo até o fim da página.
+- Trilha curta: 5 passos em 3 etapas (sem listar todas as ferramentas, sem metas, XP ou nomes fictícios). Rolando a página, os passos passam de bloqueado para atual e concluído, a linha pontilhada se colore e o painel mostra "Etapa X de 5" até "Trilha completa". Conferido em 390 e 1280 px, do topo até o fim da página.
 - Sem rolagem horizontal de 320 a 1920 px e com texto a 200% (celular e desktop). Corrigidos: painel que estourava a 200% e um vai e vem do estado no fim da página (o texto final mudava a altura da página; agora a altura é reservada).
 - Contraste de 54 textos visíveis: 0 falhas. Nenhum alvo de toque abaixo de 44 px.
 - Movimento reduzido: sem pulo da nuvem nem transição da linha; o estado ainda muda (a informação não depende da animação). O estado de cada passo também existe como texto para leitores de tela.
@@ -290,7 +308,7 @@ Próxima revisão das informações: até **2027-04-15** (180 dias; depois disso
 - **Fonte:** a home v2 usa Poppins (pesos 500 e 700) pelo pacote `@fontsource/poppins`, hospedada junto com o site. Rodar `npm install @fontsource/poppins`. Não usar Google Fonts (envia o IP do visitante ao Google e contradiz o aviso de privacidade).
 - **Privacidade:** o aviso do rodapé é provisório. Pedir revisão jurídica antes de publicar e atualizá-lo antes de qualquer coleta (conta, formulário, análise de uso). Definir e-mail de contato e responsável pelos dados.
 - **Canal de erros:** não existe forma de o usuário avisar sobre informação desatualizada.
-- **Gamificação:** as regras descritas (vidas que recarregam e podem ser desativadas, ligas opcionais, metas sem punição) são propostas a confirmar.
+- **Gamificação:** as regras descritas (vidas que recarregam e podem ser desativadas, metas sem punição) são propostas a confirmar.
 - **Servidor precisa de fallback:** com o roteador próprio, `/paises/alemanha` só abre se o servidor devolver `index.html` para qualquer endereço. O Vite (`npm run dev` e `npm run preview`) já faz isso. Em hospedagem (Apache/XAMPP, Nginx, etc.) é preciso configurar a regra de reescrita antes de publicar. O site não funciona abrindo o `index.html` direto do disco, nem em subpasta sem ajustar.
 - **Guia da Alemanha (versão inicial):** o texto-base foi adaptado; só virou "Confirmado" ou "Estimativa" o que foi conferido em fonte oficial. Não publicados por falta de confirmação: população (a Destatis mostra 83,3 milhões sem data de referência; o texto-base dizia 83,5 milhões no fim de 2025), banco de bolsas e busca de cursos do DAAD (os links não carregaram na consulta), tipos de visto e lista de documentos, número de brasileiros, prazos e salários.
 - **Fontes mais fracas no guia:** o valor do Deutschlandstipendium vem da página de uma universidade e a regra de "bolsa conta como comprovação" vem da página de outra. Trocar por páginas oficiais do governo federal e do consulado quando possível. A faixa de € 900 a € 1.200 do DAAD não informa o ano.

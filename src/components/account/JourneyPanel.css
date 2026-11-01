@@ -1,0 +1,46 @@
+.journey { display: grid; gap: var(--space-5); min-width: 0; }
+.journey__heading h2 { margin: 0 0 var(--space-2); }
+.journey__heading p:last-child, .journey__overview p, .journey__stage-head p, .journey__task-copy p, .journey__deadlines > div > p { color: var(--color-ink-muted); }
+.journey__message { margin: 0; padding: var(--space-3); border-radius: var(--radius-md); background: var(--color-mint-soft); color: var(--color-success-ink); }
+.journey__message--error { background: #fff0ee; color: #a12a26; }
+.journey__overview { display: grid; gap: var(--space-2); padding: var(--space-5); border: 2px solid var(--color-border); border-radius: 1.25rem; background: var(--color-primary-soft); }
+.journey__overview > div:first-child { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2); }
+.journey__overview strong { color: var(--color-primary-ink); font-size: 1.65rem; }
+.journey__overview p { margin: 0; font-size: var(--text-sm); }
+.journey__progress { height: .85rem; overflow: hidden; border-radius: var(--radius-pill); background: #fff; }
+.journey__progress span { display: block; height: 100%; border-radius: inherit; background: var(--color-mint); }
+.journey__stages, .journey__tasks, .journey__deadline-list { display: grid; gap: var(--space-4); margin: 0; padding: 0; list-style: none; }
+.journey__stage { min-width: 0; overflow: hidden; border: 2px solid var(--color-border); border-radius: 1.25rem; background: #fff; }
+.journey__stage-head { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4); background: #f4f9fc; }
+.journey__stage-head > div { min-width: 0; flex: 1; }
+.journey__stage-head h3 { margin: 0; font-size: var(--text-lg); }
+.journey__stage-head p { margin: .2rem 0 0; font-size: var(--text-sm); }
+.journey__number { display: grid; flex: none; place-items: center; width: 2.7rem; height: 2.7rem; border-radius: .85rem; background: var(--color-primary); color: #fff; font-weight: 800; box-shadow: 0 3px 0 var(--color-primary-dark); }
+.journey__count { flex: none; font-weight: var(--weight-bold); color: var(--color-primary-ink); }
+.journey__tasks { gap: 0; }
+.journey__tasks li { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3); padding: var(--space-4); }
+.journey__tasks li + li { border-top: 1px solid var(--color-border); }
+.journey__tasks li.is-done { background: #f5fcf9; }
+.journey__task-copy { flex: 1 1 15rem; min-width: 0; }
+.journey__task-copy strong { color: var(--color-ink); }
+.journey__task-copy p { margin: .25rem 0; font-size: var(--text-sm); }
+.journey__task-copy span { color: var(--color-primary-ink); font-size: var(--text-xs); font-weight: var(--weight-bold); }
+.journey__task-actions, .journey__deadline-list li > div:last-child { display: flex; flex-wrap: wrap; gap: .5rem; }
+.journey__task-actions a, .journey__task-actions button, .journey__deadline-list button, .journey__button { display: inline-flex; align-items: center; min-height: 2.5rem; padding: .4rem .7rem; border: 2px solid var(--color-border); border-radius: .7rem; background: #fff; color: var(--color-primary-ink); font: inherit; font-size: var(--text-sm); font-weight: var(--weight-bold); text-decoration: none; cursor: pointer; }
+.journey__task-actions a:hover, .journey__task-actions button:hover, .journey__deadline-list button:hover, .journey__button:hover { border-color: var(--color-primary); background: var(--color-primary-soft); }
+.journey button:disabled { opacity: .55; cursor: wait; }
+.journey__deadlines { display: grid; gap: var(--space-4); padding: var(--space-5); border: 2px solid var(--color-border); border-radius: 1.25rem; background: #fff; }
+.journey__deadlines h3 { margin: 0; }
+.journey__deadlines > div > p { margin: .3rem 0 0; }
+.journey__deadline-form { display: grid; grid-template-columns: minmax(0, 2fr) minmax(9rem, 1fr); gap: var(--space-3); }
+.journey__deadline-form label { min-width: 0; font-weight: var(--weight-bold); }
+.journey__deadline-form input { display: block; width: 100%; min-width: 0; margin-top: .3rem; padding: .65rem; border: 2px solid var(--color-border-input); border-radius: .7rem; font: inherit; }
+.journey__deadline-form .journey__note, .journey__deadline-form > div { grid-column: 1 / -1; }
+.journey__deadline-form > div { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.journey__empty { margin: 0; padding: var(--space-4); border-radius: .8rem; background: #f4f9fc; color: var(--color-ink-muted); }
+.journey__deadline-list { gap: 0; }
+.journey__deadline-list li { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3); padding: var(--space-3) 0; border-top: 1px solid var(--color-border); }
+.journey__deadline-list li > div:first-child { display: grid; gap: .2rem; min-width: 0; overflow-wrap: anywhere; }
+.journey__deadline-list span, .journey__deadline-list p { color: var(--color-ink-muted); font-size: var(--text-sm); }
+.journey__deadline-list p { margin: 0; }
+@media (max-width: 40em) { .journey__deadline-form { grid-template-columns: 1fr; } .journey__stage-head { align-items: flex-start; } }
