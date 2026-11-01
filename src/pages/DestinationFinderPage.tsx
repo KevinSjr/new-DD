@@ -32,10 +32,10 @@ type RadioKey = Exclude<keyof DestinationAnswers, 'regions' | 'priorities'>
 const stepKeys: (keyof DestinationAnswers)[][] = [
   ['regions', 'climate', 'language', 'learningTime'],
   ['budget', 'tuition', 'place', 'work'],
-  ['after', 'level', 'field', 'priorities'],
+  ['after', 'level', 'field'],
 ]
 const priorityOptions = [
-  ['region', 'Região'], ['climate', 'Clima'], ['language', 'Idioma'],
+  ['balanced', 'Clima e idioma têm o mesmo peso'], ['climate', 'Clima pesa mais'], ['language', 'Idioma pesa mais'],
 ] as const
 
 function ResearchChecklist({ answers }: { answers: DestinationAnswers }) {
@@ -69,24 +69,26 @@ export function DestinationFinderPage() {
   useEffect(() => { if (step >= 0) { headingRef.current?.focus(); window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior }) } }, [step])
   const complete = step === 3
   const matches = complete ? matchDestinations(answers as DestinationAnswers, DESTINATION_PROFILES) : []
-  const preferredMatches = complete ? matches.filter(match => answers.regions?.includes(match.profile.region)).slice(0, 5) : []
+  const regionMatches = complete ? matches.filter(match => answers.regions?.includes(match.profile.region)) : []
+  const preferredMatches = regionMatches.slice(0, 5)
+  const tiedAtCutoff = regionMatches.length > 5 && regionMatches[4].score === regionMatches[5].score
+  const bothComparable = answers.climate !== 'any' && (answers.language !== 'learn' || answers.learningTime === 'none')
 
   function setRadio(key: RadioKey, value: string) {
-    setAnswers(previous => ({ ...previous, [key]: value }))
+    setAnswers(previous => ({ ...previous, [key]: value,
+      ...(key === 'climate' || key === 'language' || key === 'learningTime' ? { priorities: [] } : {}) }))
     setError('')
   }
   function toggleRegion(value: Region) {
     setAnswers(previous => ({ ...previous, regions: previous.regions?.includes(value) ? previous.regions.filter(region => region !== value) : [...(previous.regions ?? []), value] }))
     setError('')
   }
-  function togglePriority(value: 'region' | 'climate' | 'language') {
-    setAnswers(previous => ({ ...previous, priorities: previous.priorities?.includes(value)
-      ? previous.priorities.filter(priority => priority !== value)
-      : (previous.priorities?.length ?? 0) < 2 ? [...(previous.priorities ?? []), value] : previous.priorities }))
+  function setPriority(value: 'balanced' | 'climate' | 'language') {
+    setAnswers(previous => ({ ...previous, priorities: value === 'balanced' ? [] : [value] }))
     setError('')
   }
   function next() {
-    const missing = stepKeys[step].find(key => key === 'regions' ? !answers.regions?.length : key === 'priorities' ? !answers.priorities?.length : !answers[key])
+    const missing = stepKeys[step].find(key => key === 'regions' ? !answers.regions?.length : !answers[key])
     if (missing) {
       setError('Responda todas as perguntas desta etapa para continuar.')
       document.getElementById(`destination-${missing}`)?.focus()
@@ -117,22 +119,23 @@ export function DestinationFinderPage() {
         <div className="destination-choices">{regionOptions.map(option => <label key={option.value} className={answers.regions?.includes(option.value) ? 'is-selected' : ''}><input type="checkbox" checked={answers.regions?.includes(option.value) ?? false} onChange={() => toggleRegion(option.value)} />{option.label}</label>)}</div></fieldset>}
       {questions[step].map(question => <fieldset className="destination-question" key={question.key} id={`destination-${question.key}`} tabIndex={-1}><legend>{question.title}</legend>
         <div className="destination-choices">{question.options.map(([value, label]) => <label key={value} className={answers[question.key as RadioKey] === value ? 'is-selected' : ''}><input type="radio" name={`destination-${question.key}`} checked={answers[question.key as RadioKey] === value} onChange={() => setRadio(question.key as RadioKey, value)} />{label}</label>)}</div></fieldset>)}
-      {step === 2 && <fieldset className="destination-question" id="destination-priorities" tabIndex={-1}><legend>Quais fatores mais importam ao comparar destinos?</legend><p>Escolha até dois. Eles terão peso maior na comparação inicial.</p>
-        <div className="destination-choices">{priorityOptions.map(([value, label]) => <label key={value} className={answers.priorities?.includes(value) ? 'is-selected' : ''}><input type="checkbox" checked={answers.priorities?.includes(value) ?? false} disabled={!answers.priorities?.includes(value) && answers.priorities?.length === 2} onChange={() => togglePriority(value)} />{label}</label>)}</div></fieldset>}
+      {step === 2 && bothComparable && <fieldset className="destination-question" id="destination-priorities" tabIndex={-1}><legend>O que pesa mais para você?</legend><p>Região já define quais países aparecem. Você pode dar mais peso ao clima ou ao idioma na ordem da lista.</p>
+        <div className="destination-choices">{priorityOptions.map(([value, label]) => <label key={value} className={(value === 'balanced' ? !answers.priorities?.length : answers.priorities?.includes(value)) ? 'is-selected' : ''}><input type="radio" name="destination-priority" checked={value === 'balanced' ? !answers.priorities?.length : answers.priorities?.includes(value) ?? false} onChange={() => setPriority(value)} />{label}</label>)}</div></fieldset>}
       <div className="destination-flow__actions">{step > 0 && <button type="button" className="destination-secondary" onClick={() => { setError(''); setStep(step - 1) }}>Voltar</button>}<button type="button" className="destination-primary" onClick={next}>{step === 2 ? 'Ver destinos →' : 'Continuar →'}</button></div>
     </div>}
     {complete && <div className="container destination-result">
       <header><p className="destination-eyebrow">Sua rota começa aqui</p><h1 ref={headingRef} tabIndex={-1}>Destinos para investigar</h1><InfoBadge kind="estimate" />
-        <p>Estes são os destinos mais alinhados dentro das regiões que você escolheu. A ordem não é uma porcentagem de chance nem confirma que um curso ou bolsa esteja disponível.</p></header>
+        <p>Comparamos clima e idioma dentro das regiões escolhidas. Países com o mesmo alinhamento aparecem em ordem alfabética; a lista não prevê bolsa, visto ou aprovação.</p></header>
+      {tiedAtCutoff && <p className="destination-result__tie">Há outros destinos com o mesmo alinhamento do quinto. Mostramos cinco inicialmente; veja a lista completa abaixo.</p>}
       <div className="destination-result__grid">{preferredMatches.map((match, index) => <article className="destination-match" key={match.profile.slug}>
         <span className="destination-match__number">{String(index + 1).padStart(2, '0')}</span><div><h2>{match.profile.name}</h2>
-          <p>{match.reasons[0] ?? 'Pode ser uma opção para explorar, mas não corresponde às primeiras preferências.'}</p>
-          {match.reasons.length > 1 && <ul>{match.reasons.slice(1).map(reason => <li key={reason}>{reason}</li>)}</ul>}
-          {match.cautions.length > 0 && <p className="destination-match__caution"><strong>Atenção:</strong> {match.cautions[0]}</p>}
-          {match.profile.slug === 'alemanha' && <Link to="/paises/alemanha">Explorar guia da Alemanha →</Link>}</div></article>)}</div>
+          {index > 0 && match.score === preferredMatches[index - 1].score && <p className="destination-match__tie">Mesmo alinhamento do destino anterior</p>}
+          <p className="destination-match__reason"><strong>Por que apareceu:</strong> {match.reasons.slice(1).length ? match.reasons.slice(1).join(' ') : 'Está em uma região escolhida; suas respostas não diferenciam clima ou idioma entre os destinos.'}</p>
+          {match.cautions.length > 0 && <p className="destination-match__caution"><strong>Confira:</strong> {match.cautions[0]}</p>}
+          <div className="destination-match__actions"><Link to={`/paises/${match.profile.slug}`}>Conhecer {match.profile.name} →</Link><Link to={`/bolsas?country=${match.profile.slug}`}>Pesquisar bolsas para {match.profile.name} →</Link></div></div></article>)}</div>
       <ResearchChecklist answers={answers as DestinationAnswers} />
-      <details className="destination-others"><summary>Ver os 25 destinos, incluindo outras regiões</summary><ol>{matches.map(match => <li key={match.profile.slug}>{match.profile.name}</li>)}</ol></details>
-      <div className="destination-method"><h2>Como chegamos a esta lista</h2><p>Primeiro mostramos apenas destinos das regiões escolhidas. Dentro delas, comparamos possibilidades gerais de clima e afinidade com o idioma do cotidiano. Os fatores que você priorizou receberam peso maior. Empates seguem a ordem dos passaportes da home. Clima pode variar muito por cidade; idioma de um curso depende da instituição.</p>
+      <details className="destination-others"><summary>Ver os 25 destinos, incluindo outras regiões</summary><ol>{matches.map(match => <li key={match.profile.slug}><Link to={`/paises/${match.profile.slug}`}>{match.profile.name}</Link></li>)}</ol></details>
+      <div className="destination-method"><h2>Como chegamos a esta lista</h2><p>Primeiro mostramos os destinos das regiões escolhidas. Dentro delas, comparamos clima e idioma do cotidiano. Clima “tanto faz” não diferencia países; aceitar aprender o idioma local também não diferencia países quando você dispõe de tempo para isso. Quando ambos os fatores são comparáveis, sua prioridade altera o peso de um deles. Empates aparecem em ordem alfabética, sem diferença de alinhamento. Clima varia por cidade e idioma de ensino depende da instituição.</p>
         <p>Custo de vida, mensalidade, bolsas, trabalho e regras após o curso <strong>não entram na classificação</strong> sem dados oficiais atualizados para o programa e para sua situação. Eles aparecem no checklist para orientar a próxima pesquisa.</p>
         <p>Referências gerais verificadas em 19/10/2026: <a href={DESTINATION_SOURCES.region} target="_blank" rel="noreferrer">regiões da ONU</a> e <a href={DESTINATION_SOURCES.climate} target="_blank" rel="noreferrer">portal climático do Banco Mundial</a>. As categorias amplas do teste são uma síntese editorial, não classificações oficiais de cursos ou cidades.</p></div>
       <div className="destination-result__actions"><Link to="/rankings">Explorar universidades nos rankings →</Link><button type="button" className="destination-secondary" onClick={restart}>Refazer teste</button></div>

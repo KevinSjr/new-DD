@@ -22,8 +22,9 @@ test('the profile set matches all and only the 25 home passports', () => {
 test('matching responds to region, language and climate preferences', () => {
   const matches = matchDestinations(base, DESTINATION_PROFILES)
   assert.equal(matches.length, 25)
-  assert.equal(matches[0].profile.slug, 'reino-unido')
-  assert.equal(matches[1].profile.slug, 'irlanda')
+  assert.equal(matches[0].profile.slug, 'irlanda')
+  assert.equal(matches[1].profile.slug, 'reino-unido')
+  assert.equal(matches[0].score, matches[1].score)
   const asia = matchDestinations({ ...base, regions: ['asia'], climate: 'warm', language: 'english' }, DESTINATION_PROFILES)
   assert.equal(asia[0].profile.slug, 'hong-kong')
   assert.equal(asia[1].profile.slug, 'singapura')
@@ -31,10 +32,13 @@ test('matching responds to region, language and climate preferences', () => {
 
 test('priorities change score and finance answers do not invent eligibility', () => {
   const unprioritized = matchDestinations({ ...base, priorities: [] }, DESTINATION_PROFILES)
-  const prioritized = matchDestinations({ ...base, priorities: ['region'] }, DESTINATION_PROFILES)
+  const prioritized = matchDestinations({ ...base, priorities: ['climate'] }, DESTINATION_PROFILES)
   const germanyA = unprioritized.find(match => match.profile.slug === 'alemanha')
   const germanyB = prioritized.find(match => match.profile.slug === 'alemanha')
   assert.ok(germanyB.score > germanyA.score)
+  const neutral = matchDestinations({ ...base, climate: 'any', language: 'learn', learningTime: 'long', priorities: [] }, DESTINATION_PROFILES)
+  assert.equal(neutral[0].score, neutral[1].score)
+  assert.equal(neutral[0].profile.slug, 'alemanha')
   const expensive = matchDestinations({ ...base, budget: 'high', tuition: 'can-pay' }, DESTINATION_PROFILES)
   const original = matchDestinations(base, DESTINATION_PROFILES)
   assert.deepEqual(expensive.map(match => match.profile.slug), original.map(match => match.profile.slug))

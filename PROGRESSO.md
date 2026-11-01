@@ -3,7 +3,13 @@
 Registro das micro tarefas. Marque `[x]` só quando a tarefa estiver concluída e verificada.
 Antes de cada tarefa, consultar `AGENTS.md` e `CLAUDE.md` (na raiz do projeto).
 
-Última atualização: 2026-10-31
+Última atualização: 2026-11-01
+
+## Descobridor de destinos — 2026-11-01
+
+- A região escolhida passou a definir quais destinos aparecem primeiro, sem consumir peso na comparação dentro da própria região. Clima “tanto faz” e disposição para aprender o idioma local deixam de diferenciar países quando não trazem informação comparativa. A prioridade opcional agora é entre clima e idioma somente quando ambos podem alterar a ordem.
+- Empates passam a aparecer em ordem alfabética e são identificados no resultado, inclusive quando o quinto destino empata com outros. Cada país sugerido oferece link para seu guia e para o buscador de bolsas com o filtro de país aplicado. O catálogo continua sem confirmar bolsa, elegibilidade ou destino de estudo apenas pelo filtro.
+- Os testes do comparador foram atualizados para empates e respostas neutras. `npm run test:destinations`, TypeScript, lint e build passaram. A auditoria em Chrome headless da tela inicial do descobridor passou em 320, 375, 768, 1024 e 1280 px (5/5); o resultado completo ainda não foi inspecionado visualmente.
 
 ## Teste vocacional — resultado simplificado — 2026-10-31
 

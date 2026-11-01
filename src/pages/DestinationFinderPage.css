@@ -30,15 +30,22 @@
 .destination-result { max-width: 64rem; padding-top: var(--space-7); }
 .destination-result > header { max-width: 48rem; margin-bottom: var(--space-6); }
 .destination-result > header p:last-child, .destination-method p { color: var(--color-ink-muted); line-height: var(--leading-normal); }
+.destination-result__tie { margin: 0 0 var(--space-4); padding: var(--space-3) var(--space-4); border-radius: var(--radius-sm); background: var(--color-primary-soft); color: var(--color-primary-ink); font-size: var(--text-sm); }
 .destination-result__grid { display: grid; gap: var(--space-3); }
 .destination-match { display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: var(--space-3); background: white; border: 2px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-5); }
 .destination-match:first-child { border-color: var(--color-primary); }
 .destination-match__number { color: var(--color-primary-ink); font-size: var(--text-xl); font-weight: 700; }
 .destination-match h2 { margin: 0 0 var(--space-2); }
 .destination-match p { margin: 0 0 var(--space-2); color: var(--color-ink-muted); }
+.destination-match .destination-match__tie { color: var(--color-primary-ink); font-weight: 700; }
+.destination-match__reason { line-height: var(--leading-normal); }
 .destination-match ul { margin: 0 0 var(--space-2); padding-left: var(--space-5); }
 .destination-match li { margin-bottom: var(--space-1); }
 .destination-match__caution { background: var(--color-warning-soft); color: var(--color-warning-text) !important; padding: var(--space-2); border-radius: var(--radius-sm); }
+.destination-match__actions { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); }
+.destination-match__actions a { display: inline-flex; align-items: center; min-height: 2.65rem; padding: .55rem .8rem; border: 2px solid var(--color-primary); border-radius: var(--radius-sm); font-size: var(--text-sm); font-weight: 700; text-decoration: none; }
+.destination-match__actions a:first-child { background: var(--color-primary); color: #fff; }
+.destination-match__actions a:hover { background: var(--color-primary-dark); border-color: var(--color-primary-dark); color: #fff; }
 .destination-checklist, .destination-method, .destination-others { background: white; border: 2px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-5); margin-top: var(--space-5); }
 .destination-checklist h3, .destination-method h2 { margin-top: 0; }
 .destination-checklist li { margin-bottom: var(--space-2); }

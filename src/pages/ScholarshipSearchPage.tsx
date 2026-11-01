@@ -14,6 +14,10 @@ type Scholarship = {
 type Page = { items: Scholarship[]; total: number; page: number; pageSize: number }
 type Filters = { q: string; country: string; level: string; area: string; deadline: string; criteria: string }
 const emptyFilters: Filters = { q: '', country: '', level: '', area: '', deadline: '', criteria: '' }
+const initialFilters = (): Filters => {
+  const country = new URLSearchParams(window.location.search).get('country') || ''
+  return { ...emptyFilters, country: /^[a-z0-9-]{2,50}$/.test(country) ? country : '' }
+}
 const levelNames: Record<string, string> = {
   graduacao: 'Graduação', 'pos-graduacao': 'Pós-graduação', mestrado: 'Mestrado',
   doutorado: 'Doutorado', intercambio: 'Intercâmbio', idiomas: 'Idiomas',
@@ -113,8 +117,8 @@ function ScholarshipCard({ scholarship }: { scholarship: Scholarship }) {
 
 export function ScholarshipSearchPage() {
   useDocumentTitle('Buscar bolsas | Daydreaming')
-  const [draftFilters, setDraftFilters] = useState<Filters>(emptyFilters)
-  const [activeFilters, setActiveFilters] = useState<Filters>(emptyFilters)
+  const [draftFilters, setDraftFilters] = useState<Filters>(initialFilters)
+  const [activeFilters, setActiveFilters] = useState<Filters>(initialFilters)
   const [page, setPage] = useState(1)
   const [countries, setCountries] = useState<Country[]>([])
   const [data, setData] = useState<Page | null>(null)
