@@ -58,11 +58,38 @@ if (process.env.ACCOUNT_API_URL) {
       if (nextCookie) cookie = nextCookie
       return { status: response.status, setCookie: response.headers.get('set-cookie'), data: await response.json() }
     }
+    async function finishDaily(source, query, variant) {
+      const path = `/api/${source}/daily`
+      let challengeCookie = ''
+      async function challengeRequest(suffix, method = 'GET', data) {
+        const response = await fetch(`${origin}${path}${suffix}`, {
+          method,
+          headers: { ...(challengeCookie ? { Cookie: challengeCookie } : {}), ...(data === undefined ? {} : { 'Content-Type': 'application/json' }), Origin: origin },
+          body: data === undefined ? undefined : JSON.stringify(data),
+        })
+        const nextCookie = response.headers.get('set-cookie')?.split(';')[0]
+        if (nextCookie) challengeCookie = nextCookie
+        return { status: response.status, data: await response.json() }
+      }
+      let state = await challengeRequest(`?${query}`)
+      assert.equal(state.status, 200)
+      assert.equal(state.data.available, true)
+      assert.equal(state.data.finished, false)
+      assert.equal(state.data.completionProof, null)
+      assert.equal((await request('/api/account/missions/claim', 'POST', { source, proof: 'a'.repeat(64), ...variant })).status, 409)
+      while (!state.data.finished) {
+        state = await challengeRequest('/answer', 'POST', { ...variant, questionId: state.data.question.id, answer: 'Z' })
+        assert.equal(state.status, 200)
+      }
+      assert.match(state.data.completionProof, /^[a-f0-9]{64}$/)
+      return { source, proof: state.data.completionProof, ...variant }
+    }
     try {
       const anonymousUpdate = await request('/api/account/profile', 'PUT', { displayName: 'Pessoa Teste', studyLevel: '', interestArea: '', destinationSlug: '' })
       assert.equal(anonymousUpdate.status, 401)
       assert.equal((await request('/api/account/journey')).status, 401)
       assert.equal((await request('/api/account/gpa-estimates')).status, 401)
+      assert.equal((await request('/api/account/missions')).status, 401)
       const registered = await request('/api/account/register', 'POST', { displayName: 'Pessoa Teste', email, password: initialPassword })
       assert.equal(registered.status, 201)
       assert.ok(cookie.startsWith('dd_account='))
@@ -83,11 +110,17 @@ if (process.env.ACCOUNT_API_URL) {
       assert.deepEqual(saved.data.user.destinationSlugs, ['canada', 'alemanha'])
       assert.equal(saved.data.user.schoolName, 'Escola Teste')
       assert.equal(saved.data.user.gpa, 3.8)
+      let missions = await request('/api/account/missions')
+      assert.equal(missions.status, 200)
+      assert.equal(missions.data.xp, 25)
+      assert.equal(missions.data.missions.find(mission => mission.key === 'study-goal').completed, true)
       assert.equal((await request('/api/account/gpa-estimates')).data.estimate, null)
       assert.equal((await request('/api/account/gpa-estimates', 'PUT', { bands: 5, proportional: 3.4, letters: 3, sourceAverage: 8.5, inputMode: 'average', weighted: false })).status, 400)
       const savedGpa = await request('/api/account/gpa-estimates', 'PUT', { bands: 3.7, proportional: 3.4, letters: 3, sourceAverage: 8.5, inputMode: 'average', weighted: false })
       assert.equal(savedGpa.status, 200)
       assert.equal(savedGpa.data.estimate.proportional, 3.4)
+      missions = await request('/api/account/missions')
+      assert.equal(missions.data.xp, 45)
       assert.equal((await request('/api/account/gpa-estimates')).data.estimate.letters, 3)
       assert.equal((await request('/api/account/me')).data.user.gpa, 3.8)
       assert.equal((await request('/api/account/gpa-estimates', 'DELETE')).status, 200)
@@ -100,6 +133,8 @@ if (process.env.ACCOUNT_API_URL) {
       const deadline = await request('/api/account/journey/deadlines', 'POST', { title: '  Inscrição   do curso  ', dueDate: '2027-03-15', note: 'Ver edital' })
       assert.equal(deadline.status, 201)
       assert.equal(deadline.data.title, 'Inscrição do curso')
+      missions = await request('/api/account/missions')
+      assert.equal(missions.data.xp, 65)
       assert.equal((await request('/api/account/journey/deadlines', 'POST', { title: 'Data inválida', dueDate: '2027-02-30' })).status, 400)
       const reloadedJourney = await request('/api/account/journey')
       assert.equal(reloadedJourney.data.tasks[0].status, 'done')
@@ -108,6 +143,20 @@ if (process.env.ACCOUNT_API_URL) {
       assert.equal((await request(`/api/account/journey/deadlines/${deadline.data.id}`, 'DELETE')).status, 200)
       assert.equal((await request('/api/account/journey/tasks/define-goal', 'DELETE')).status, 200)
       assert.deepEqual((await request('/api/account/journey')).data.tasks, [])
+      assert.equal((await request('/api/account/missions/claim', 'POST', { source: 'sat', proof: 'not-a-proof', section: 'reading-writing' })).status, 400)
+      const satClaim = await finishDaily('sat', 'section=reading-writing', { section: 'reading-writing' })
+      const satAward = await request('/api/account/missions/claim', 'POST', satClaim)
+      assert.equal(satAward.status, 200)
+      assert.equal(satAward.data.earnedXp, 35)
+      assert.equal((await request('/api/account/missions/claim', 'POST', satClaim)).data.earnedXp, 0)
+      const mextClaim = await finishDaily('mext', 'track=A&subject=english', { track: 'A', subject: 'english' })
+      const mextAward = await request('/api/account/missions/claim', 'POST', mextClaim)
+      assert.equal(mextAward.status, 200)
+      assert.equal(mextAward.data.earnedXp, 15)
+      missions = await request('/api/account/missions')
+      assert.equal(missions.data.xp, 115)
+      assert.equal(missions.data.level, 2)
+      assert.equal(missions.data.missions.find(mission => mission.key === 'practice-two-days').progress, 1)
       const changed = await request('/api/account/password', 'POST', { currentPassword: initialPassword, newPassword: replacementPassword })
       assert.equal(changed.status, 200)
       activePassword = replacementPassword

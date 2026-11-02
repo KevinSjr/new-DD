@@ -3,8 +3,10 @@ import { Link } from '../router/Link'
 import { useLocation } from '../router/navigation'
 import { JourneyPanel } from '../components/account/JourneyPanel'
 import { SavedGpaEstimates } from '../components/account/SavedGpaEstimates'
+import { MissionsPanel } from '../components/account/MissionsPanel'
+import { DocumentsPanel } from '../components/account/DocumentsPanel'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
-import { Icon, type IconName } from '../components/ui/Icon'
+import { Icon } from '../components/ui/Icon'
 import { COUNTRY_GUIDES } from '../data/countries'
 import './AccountPage.css'
 import './AccountPageV4.css'
@@ -39,13 +41,14 @@ type ProfileForm = {
 }
 type Mode = 'login' | 'register'
 type Status = 'loading' | 'error' | 'guest' | 'signed-in'
-type AccountTab = 'pessoal' | 'academicos' | 'metas' | 'jornada' | 'progresso' | 'privacidade'
+type AccountTab = 'pessoal' | 'academicos' | 'metas' | 'jornada' | 'documentos' | 'progresso' | 'privacidade'
 
 const accountTabs: { id: AccountTab; label: string }[] = [
   { id: 'pessoal', label: 'Informações pessoais' },
   { id: 'academicos', label: 'Dados acadêmicos' },
   { id: 'metas', label: 'Metas de intercâmbio' },
   { id: 'jornada', label: 'Minha jornada' },
+  { id: 'documentos', label: 'Documentos' },
   { id: 'progresso', label: 'Progresso e gamificação' },
   { id: 'privacidade', label: 'Privacidade e dados' },
 ]
@@ -54,15 +57,6 @@ const areaOptions = ['Engenharia e tecnologia', 'Saúde', 'Negócios', 'Humanas 
 const languageOptions = ['Português', 'Inglês', 'Espanhol', 'Alemão', 'Francês', 'Japonês', 'Coreano', 'Mandarim', 'Outro']
 const examOptions = ['TOEFL', 'IELTS', 'Duolingo English Test', 'SAT', 'GRE', 'GMAT', 'JLPT', 'TOPIK', 'HSK', 'Outro']
 const targetYears = [['2027', 'Em 2027'], ['2028', 'Em 2028'], ['2029-plus', '2029 ou depois'], ['undecided', 'Ainda não sei']] as const
-const demoMissions = [
-  { id: 'destinos', title: 'Escolher destinos', detail: 'Compare até três países de interesse.', xp: 20 },
-  { id: 'guia', title: 'Ler um guia de país', detail: 'Confira fontes e datas das informações.', xp: 30 },
-  { id: 'bolsas', title: 'Pesquisar bolsas', detail: 'Leia os critérios na fonte de cada bolsa.', xp: 30 },
-  { id: 'prova', title: 'Escolher uma prova', detail: 'Veja qual exame seu curso exige.', xp: 20 },
-  { id: 'documentos', title: 'Organizar documentos', detail: 'Faça sua lista conforme o edital.', xp: 40 },
-  { id: 'perfil', title: 'Preencher dados acadêmicos', detail: 'Adicione apenas as informações que quiser.', xp: 20 },
-] as const
-
 const studyLevels = [
   ['graduacao', 'Graduação'], ['pos-graduacao', 'Pós-graduação'], ['mestrado', 'Mestrado'],
   ['doutorado', 'Doutorado'], ['intercambio', 'Intercâmbio'], ['idiomas', 'Curso de idiomas'],
@@ -148,7 +142,6 @@ export function AccountPage() {
     const requested = new URLSearchParams(window.location.search).get('tab')
     return accountTabs.some((tab) => tab.id === requested) ? requested as AccountTab : 'pessoal'
   })
-  const [checkedMissions, setCheckedMissions] = useState<string[]>(['destinos'])
   const [showAllDestinations, setShowAllDestinations] = useState(false)
   const passwordCurrentRef = useRef<HTMLInputElement>(null)
   const deletePasswordRef = useRef<HTMLInputElement>(null)
@@ -320,21 +313,6 @@ export function AccountPage() {
   const destinationGuide = COUNTRY_GUIDES.find((item) => item.slug === profile.destinationSlugs[0] && item.status === 'available')
   const unsavedProfile = user !== null && JSON.stringify(profile) !== JSON.stringify(formFromUser(user))
   const outdatedProfileApi = user !== null && (!Array.isArray(user.destinationSlugs) || !Array.isArray(user.languages) || !Array.isArray(user.plannedExams))
-  const demoXp = demoMissions.reduce((total, mission) => total + (checkedMissions.includes(mission.id) ? mission.xp : 0), 0)
-  const demoLevel = Math.min(5, Math.floor(demoXp / 40) + 1)
-  const demoLevelNames = ['Sonhador', 'Explorador', 'Planejador', 'Candidato', 'Viajante']
-  const demoProgress = demoLevel === 5 ? 100 : Math.round((demoXp % 40) / 40 * 100)
-  const demoBadges: { title: string; how: string; icon: IconName; earned: boolean }[] = [
-    { title: 'Primeiro passo', how: 'Marque uma missão.', icon: 'sparkles', earned: checkedMissions.length >= 1 },
-    { title: 'Explorador de países', how: 'Marque a leitura de um guia.', icon: 'globe', earned: checkedMissions.includes('guia') },
-    { title: 'Caçador de bolsas', how: 'Marque a pesquisa de bolsas.', icon: 'search', earned: checkedMissions.includes('bolsas') },
-    { title: 'Pronto para a prova', how: 'Marque a escolha de uma prova.', icon: 'clipboard', earned: checkedMissions.includes('prova') },
-    { title: 'Documentos em dia', how: 'Marque a organização de documentos.', icon: 'check', earned: checkedMissions.includes('documentos') },
-    { title: 'Perfil completo', how: 'Salve nome, escola, série e cidade.', icon: 'target', earned: Boolean(user?.displayName && user?.schoolName && user?.schoolYear && user?.city) },
-    { title: 'Meio caminho', how: 'Marque metade das missões.', icon: 'route', earned: checkedMissions.length >= 3 },
-    { title: 'Missão cumprida', how: 'Marque todas as missões.', icon: 'trophy', earned: checkedMissions.length === demoMissions.length },
-  ]
-  const demoBadgeCount = demoBadges.filter((badge) => badge.earned).length
 
   return <div className="account-page">
     <div className="container account-page__breadcrumb"><Link to="/">Início</Link><span aria-hidden="true">/</span><span>Minha conta</span></div>
@@ -408,20 +386,12 @@ export function AccountPage() {
                     <button className="account-page__primary" type="submit" disabled={busy}>{busy ? 'Salvando…' : 'Salvar escolhas'}</button>
                   </form>
                 </div>}
-                {activeTab === 'progresso' && <div className="account-v4__section">
-                  <div><p className="account-page__eyebrow">Prévia interativa</p><h2>Progresso e gamificação</h2><p>Marque as missões para experimentar como XP, níveis e conquistas poderão funcionar. A primeira missão já vem marcada como exemplo; as marcações e o XP não são salvos.</p></div>
-                  <div className="account-v4__progress-stats">
-                    <div className="account-v4__level-card"><span className="account-v4__stat-label">Seu nível</span><div className="account-v4__level-identity"><span className="account-v4__level-number" aria-label={`Nível ${demoLevel}`}>{demoLevel}</span><div><strong>{demoLevelNames[demoLevel - 1]}</strong><small>{demoXp} XP no total da prévia</small></div></div><div className="account-v4__progress-track" role="progressbar" aria-label="Progresso de XP até o próximo nível na prévia" aria-valuemin={0} aria-valuemax={100} aria-valuenow={demoProgress}><span style={{ width: `${demoProgress}%` }} /></div><small>{demoLevel === 5 ? 'Nível máximo da prévia.' : `${40 - demoXp % 40} XP para o nível ${demoLevel + 1}.`}</small></div>
-                    <div><span className="account-v4__stat-label">Missões concluídas</span><strong className="account-v4__stat-value">{checkedMissions.length} de {demoMissions.length}</strong><small>{checkedMissions.length === 0 ? 'Você está começando.' : checkedMissions.length === demoMissions.length ? 'Todas as missões marcadas.' : checkedMissions.length >= 3 ? 'Você já passou da metade.' : 'Bom começo.'}</small></div>
-                    <div><span className="account-v4__stat-label">Conquistas</span><strong className="account-v4__stat-value">{demoBadgeCount} de {demoBadges.length}</strong><small>Veja abaixo como liberar cada uma.</small></div>
-                  </div>
-                  <div><h3>Missões</h3><ul className="account-v4__missions">{demoMissions.map((mission) => <li key={mission.id}><label><input type="checkbox" checked={checkedMissions.includes(mission.id)} onChange={() => setCheckedMissions((previous) => previous.includes(mission.id) ? previous.filter((item) => item !== mission.id) : [...previous, mission.id])} /><span><strong>{mission.title}</strong><small>{mission.detail}</small></span><b>+{mission.xp} XP</b></label></li>)}</ul></div>
-                  <div><h3>Conquistas da prévia</h3><div className="account-v4__badges">{demoBadges.map((badge) => <div key={badge.title} className={badge.earned ? 'is-earned' : ''}><span className="account-v4__badge-icon"><Icon name={badge.icon} size={26} /></span><strong>{badge.title}</strong><span>{badge.how}</span><small>{badge.earned ? 'Conquistada na prévia' : 'Ainda não conquistada'}</small></div>)}</div></div>
-                </div>}
+                {activeTab === 'progresso' && <MissionsPanel />}
                 {activeTab === 'jornada' && <JourneyPanel />}
+                {activeTab === 'documentos' && <DocumentsPanel />}
                 {activeTab === 'privacidade' && <div className="account-v4__section">
                   <div><p className="account-page__eyebrow">Seus dados</p><h2>Privacidade e dados</h2><p>Você escolhe o que informar além do nome de exibição e do e-mail necessários para a conta.</p></div>
-                  <dl className="account-v4__data"><div><dt>Nome e e-mail</dt><dd>Identificam sua conta e permitem o acesso.</dd></div><div><dt>Escola, cidade e dados acadêmicos</dt><dd>São opcionais e ficam no seu perfil.</dd></div><div><dt>Preferências de estudo</dt><dd>Guardam seus destinos, nível, área e ano pretendido.</dd></div><div><dt>Minha jornada</dt><dd>Tarefas marcadas e prazos ficam salvos na sua conta e são excluídos com ela.</dd></div><div><dt>Progresso e gamificação</dt><dd>Esta aba ainda é uma prévia interativa; missões e XP não são salvos.</dd></div><div><dt>Simulados</dt><dd>Suas respostas anônimas não são vinculadas à conta.</dd></div></dl>
+                  <dl className="account-v4__data"><div><dt>Nome e e-mail</dt><dd>Identificam sua conta e permitem o acesso.</dd></div><div><dt>Escola, cidade e dados acadêmicos</dt><dd>São opcionais e ficam no seu perfil.</dd></div><div><dt>Preferências de estudo</dt><dd>Guardam seus destinos, nível, área e ano pretendido.</dd></div><div><dt>Minha jornada</dt><dd>Tarefas marcadas e prazos ficam salvos na sua conta e são excluídos com ela.</dd></div><div><dt>Documentos</dt><dd>Arquivos que você enviar ficam restritos à sua conta e são excluídos junto com ela.</dd></div><div><dt>Missões e XP</dt><dd>Ações verificadas pelo site geram XP na sua conta. Os registros são excluídos com ela.</dd></div><div><dt>Simulados</dt><dd>Respostas dos exames completos não são vinculadas à conta. Um desafio diário concluído pode ser associado à conta para registrar a missão.</dd></div></dl>
                   <p className="account-v4__privacy-note"><Icon name="lock" size={20} />Você pode alterar a senha ou excluir a conta na seção de segurança ao lado.</p>
                 </div>}
               </div>

@@ -52,3 +52,5 @@
 .mext-page__report-subjects h3 { margin: 0; font-size: var(--text-lg); }
 .mext-page__report-subjects p { margin-bottom: 0; }
 @media (min-width: 48em) { .mext-page__modes { grid-template-columns: repeat(2, minmax(0, 1fr)); } .mext-page__panel { padding: var(--space-7); } .mext-page__report-subjects { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.mext-page__mission-notice { margin-top:var(--space-4); padding:var(--space-3) var(--space-4); border-radius:var(--radius-sm); background:var(--color-mint-soft); color:var(--color-success-ink); }
+.mext-page__mission-notice a { color:var(--color-primary-ink); font-weight:700; }

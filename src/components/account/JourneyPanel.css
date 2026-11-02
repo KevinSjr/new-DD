@@ -1,5 +1,7 @@
 .journey { display: grid; gap: var(--space-5); min-width: 0; }
 .journey__heading h2 { margin: 0 0 var(--space-2); }
+.journey__heading .journey__button { margin-top: var(--space-2); }
+.journey__deadlines h3 { scroll-margin-top: var(--space-5); }
 .journey__heading p:last-child, .journey__overview p, .journey__stage-head p, .journey__task-copy p, .journey__deadlines > div > p { color: var(--color-ink-muted); }
 .journey__message { margin: 0; padding: var(--space-3); border-radius: var(--radius-md); background: var(--color-mint-soft); color: var(--color-success-ink); }
 .journey__message--error { background: #fff0ee; color: #a12a26; }

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from '../router/Link'
 import { useLocation } from '../router/navigation'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
+import { claimDailyMission } from '../lib/missionRewards'
 import './MextPage.css'
 
 type Track = 'A' | 'B'
@@ -14,7 +15,7 @@ type Question = {
 }
 type Availability = { edition: number; track: Track; science: Science | null; ready: boolean; subjects: { subject: Subject; published: number; total: number; minutes: number }[] }
 type Exam = Availability & { questions: Question[] }
-type Daily = { available: boolean; track: Track; subject: Subject; needed?: number; published?: number; lives: number; maxLives: number; total: number; answered: number; correct: number; finished: boolean; question: Question | null; feedback?: { correct: boolean; acceptedAnswers: string[] } }
+type Daily = { available: boolean; track: Track; subject: Subject; needed?: number; published?: number; lives: number; maxLives: number; total: number; answered: number; correct: number; finished: boolean; completionProof?: string | null; question: Question | null; feedback?: { correct: boolean; acceptedAnswers: string[] } }
 type Grade = { edition: number; track: Track; earned: number; maximum: number; sections: Record<Subject, { earned: number; maximum: number; correct: number; total: number }>; source: string; note: string }
 
 const A_SUBJECTS: { key: Subject; label: string; minutes: number }[] = [
@@ -104,14 +105,24 @@ export function MextDailyPage() {
   const [feedbackVisible, setFeedbackVisible] = useState(false)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
+  const [missionNotice, setMissionNotice] = useState('')
+  async function recordMission(proof: string, selectedTrack: Track, selectedSubject: Subject, request: number) {
+    try {
+      const result = await claimDailyMission({ source:'mext', proof, track:selectedTrack, subject:selectedSubject })
+      if (requestId.current !== request) return
+      setMissionNotice(result.kind === 'awarded' ? `+${result.earnedXp} XP adicionados à sua conta.`
+        : result.kind === 'already' ? 'A XP deste desafio já está registrada na sua conta.'
+          : 'Desafio concluído. Entre na sua conta e volte aqui hoje para receber XP automaticamente.')
+    } catch (cause) { if (requestId.current === request) setMissionNotice(cause instanceof Error ? cause.message : 'Não foi possível registrar a XP agora.') }
+  }
   function chooseTrack(next: Track) {
     ++requestId.current
-    setTrack(next); setSubject(null); setState(null); setAnswer(''); setFeedbackVisible(false); setError('')
+    setTrack(next); setSubject(null); setState(null); setAnswer(''); setFeedbackVisible(false); setError(''); setMissionNotice('')
   }
   function chooseSubject(next: Subject) {
     const request = ++requestId.current
-    setSubject(next); setState(null); setAnswer(''); setFeedbackVisible(false); setError('')
-    api<Daily>(`/api/mext/daily?track=${track}&subject=${next}`).then(result => { if (result.track !== track) throw new Error('A API ainda está na versão anterior. Reinicie a API para usar a modalidade B.'); if (requestId.current === request) setState(result) }).catch(cause => { if (requestId.current === request) setError(String(cause.message)) })
+    setSubject(next); setState(null); setAnswer(''); setFeedbackVisible(false); setError(''); setMissionNotice('')
+    api<Daily>(`/api/mext/daily?track=${track}&subject=${next}`).then(result => { if (result.track !== track) throw new Error('A API ainda está na versão anterior. Reinicie a API para usar a modalidade B.'); if (requestId.current === request) { setState(result); if (result.finished && result.completionProof) void recordMission(result.completionProof, track, next, request) } }).catch(cause => { if (requestId.current === request) setError(String(cause.message)) })
   }
   async function submit() {
     if (!subject || !state?.question || !answer.trim()) return
@@ -119,11 +130,12 @@ export function MextDailyPage() {
     try {
       const next = await api<Daily>('/api/mext/daily/answer', { method:'POST', body:JSON.stringify({ track, subject, questionId:state.question.id, answer }) })
       setState(next); setFeedbackVisible(true); setAnswer('')
+      if (next.finished && next.completionProof) void recordMission(next.completionProof, track, subject, requestId.current)
     } catch (cause) { setError(cause instanceof Error ? cause.message : 'Não foi possível registrar a resposta.') }
     finally { setBusy(false) }
   }
   return <main className="mext-page container"><nav className="mext-page__breadcrumb"><Link to="/exames/mext">MEXT</Link><span aria-hidden="true">/</span><span aria-current="page">Desafio diário</span></nav>
-    <header className="mext-page__header"><p className="mext-page__eyebrow">Prática curta · edição 2025</p><h1>Desafio diário MEXT</h1><p>Cada modalidade e disciplina têm cinco itens e três sóis. Um erro consome um sol dessa combinação; o desafio reinicia no próximo dia, no horário de Brasília.</p></header>
+    <header className="mext-page__header"><p className="mext-page__eyebrow">Prática curta · edição 2025</p><h1>Desafio diário MEXT</h1><p>Cada modalidade e disciplina têm cinco itens e três sóis. Um erro consome um sol dessa combinação; o desafio reinicia no próximo dia, no horário de Brasília. Com uma conta, concluir o desafio registra XP automaticamente.</p></header>
     <div className="mext-page__subject-picker" aria-label="Escolha a modalidade"><button className={`mext-page__button ${track === 'A' ? '' : 'mext-page__button--secondary'}`} aria-pressed={track === 'A'} onClick={() => chooseTrack('A')}>Humanas · A</button><button className={`mext-page__button ${track === 'B' ? '' : 'mext-page__button--secondary'}`} aria-pressed={track === 'B'} onClick={() => chooseTrack('B')}>Exatas · B</button></div>
     <div className="mext-page__subject-picker" aria-label="Escolha a disciplina">{(track === 'A' ? A_SUBJECTS : B_SUBJECTS).map(item => <button key={item.key} className={`mext-page__button ${subject === item.key ? '' : 'mext-page__button--secondary'}`} aria-pressed={subject === item.key} onClick={() => chooseSubject(item.key)}>{item.label}</button>)}</div>
     {error && <p className="mext-page__alert" role="alert">{error}</p>}
@@ -132,7 +144,8 @@ export function MextDailyPage() {
     {state?.available && <div className="mext-page__panel"><div className="mext-page__progress"><span>Itens: {state.answered}/{state.total}</span><span aria-label={`${state.lives} de ${state.maxLives} sóis restantes`}>{'☀'.repeat(state.lives)}{'○'.repeat(state.maxLives - state.lives)}</span></div>
       {feedbackVisible && state.feedback ? <div className={`mext-page__feedback ${state.feedback.correct ? 'is-correct' : 'is-incorrect'}`} role="status"><h2>{state.feedback.correct ? 'Resposta certa!' : 'Você perdeu um sol'}</h2><p>Gabarito: {state.feedback.acceptedAnswers.join(' ou ')}. Confira o item no material original para revisar.</p><button className="mext-page__button" onClick={() => setFeedbackVisible(false)}>{state.finished ? 'Ver resultado' : 'Próximo item'}</button></div>
       : state.finished ? <div className="mext-page__result"><h2>Desafio de hoje concluído</h2><p>{state.correct} acertos em {state.answered} itens respondidos.</p><p>Os sóis voltam amanhã. Seu progresso fica neste navegador por meio de um cookie anônimo.</p></div>
-      : state.question && <><MextQuestion question={state.question} answer={answer} onAnswer={setAnswer} /><button className="mext-page__button" disabled={busy || !answer.trim()} onClick={submit}>{busy ? 'Conferindo…' : 'Responder'}</button></>}</div>}
+      : state.question && <><MextQuestion question={state.question} answer={answer} onAnswer={setAnswer} /><button className="mext-page__button" disabled={busy || !answer.trim()} onClick={submit}>{busy ? 'Conferindo…' : 'Responder'}</button></>}
+      {missionNotice && <p role="status" className="mext-page__mission-notice">{missionNotice} <Link to="/conta?tab=progresso">Ver missões</Link></p>}</div>}
   </main>
 }
 

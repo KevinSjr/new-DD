@@ -90,6 +90,7 @@ async function dailyState(client, run) {
   return {
     available: true, day:run.day, section:run.section, lives:run.lives, maxLives:DAILY_LIVES, total:run.question_ids.length,
     answered:answers.length, correct:answers.filter(item => item.correct).length, finished,
+    completionProof:finished ? run.token_hash : null,
     question:publicQuestion(current),
   }
 }

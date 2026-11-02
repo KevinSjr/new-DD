@@ -61,3 +61,5 @@
 @media (min-width: 48em) { .sat-page__modes { grid-template-columns: repeat(2, minmax(0, 1fr)); } .sat-page__mode, .sat-page__panel { padding: var(--space-7); } }
 @media (min-width: 48em) { .sat-page__exam-choices { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 64em) { .sat-page__exam-choices { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.sat-page__mission-notice { margin-top:var(--space-4); padding:var(--space-3) var(--space-4); border-radius:var(--radius-sm); background:var(--color-mint-soft); color:var(--color-success-ink); }
+.sat-page__mission-notice a { color:var(--color-primary-ink); font-weight:700; }

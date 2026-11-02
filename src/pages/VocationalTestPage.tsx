@@ -178,10 +178,10 @@ export function VocationalTestPage() {
           </header>
 
           <section className="vocational__result-card vocational__chart" aria-labelledby="vocational-dimensions">
-            <div className="vocational__chart-head"><h2 id="vocational-dimensions">Seu panorama</h2><p>Média de interesse de 1 a 5. A barra mostra sua resposta média, não aptidão ou chance de sucesso.</p></div>
+            <div className="vocational__chart-head"><h2 id="vocational-dimensions">Suas seis dimensões de interesse</h2><p>As duas maiores médias estão em destaque. As respostas vão de 1 a 5; as barras usam eixo de 0 a 5. Elas representam interesse, não aptidão.</p></div>
             <ol className="vocational__scores">
-              {leaders.map((score, index) => (
-                <li key={score.area}>
+              {scores.map((score, index) => (
+                <li key={score.area} className={index < 2 ? 'is-featured' : ''}>
                   <div className="vocational__score-label"><span className="vocational__rank">0{index + 1}</span><div><strong>{INTEREST_AREAS[score.area].label}</strong><small>{INTEREST_AREAS[score.area].short}</small></div><span className="vocational__score-value">{score.mean.toFixed(1).replace('.', ',')} <small>/ 5</small></span></div>
                   <div className="vocational__bar" role="meter" aria-label={`Interesse ${INTEREST_AREAS[score.area].label}`} aria-valuemin={0} aria-valuemax={5} aria-valuenow={score.mean}><span style={{ width: `${score.mean / 5 * 100}%` }} /></div>
                 </li>

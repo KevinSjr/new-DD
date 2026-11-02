@@ -49,6 +49,12 @@
 .vocational__muted { margin-top: var(--space-2); color: var(--color-ink-muted); font-size: var(--text-sm); }
 .vocational__scores { display: grid; gap: var(--space-4); margin: var(--space-5) 0 0; padding: 0; list-style: none; }
 .vocational__scores li { padding: var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-lg); background: #fff; }
+.vocational__scores li:not(.is-featured) { padding: var(--space-3) var(--space-4); background: #f9fbff; }
+.vocational__scores li:not(.is-featured) .vocational__rank { background: var(--color-border-strong); color: var(--color-ink); }
+.vocational__scores li:not(.is-featured) .vocational__bar span { background: var(--color-ink-soft); }
+.vocational__scores li:not(.is-featured) .vocational__score-label strong { font-size: var(--text-base); }
+.vocational__scores li:not(.is-featured) .vocational__score-value { font-size: var(--text-lg); }
+.vocational__scores li:not(.is-featured) .vocational__bar { height: .7rem; }
 .vocational__score-label { display: flex; align-items: center; gap: var(--space-3); }
 .vocational__score-label > div { display: grid; min-width: 0; }
 .vocational__score-label strong { color: var(--color-ink); font-size: var(--text-lg); }

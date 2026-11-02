@@ -1,0 +1,23 @@
+.missions-panel { display:grid; gap:var(--space-5); min-width:0; }
+.missions-panel > div:first-child h2 { margin:0 0 var(--space-2); }
+.missions-panel > div:first-child p:last-child { color:var(--color-ink-muted); }
+.missions-panel__error { padding:var(--space-3); border-radius:var(--radius-sm); background:var(--color-danger-soft); color:var(--color-danger-ink); }
+.missions-panel__groups { display:grid; gap:var(--space-5); }
+.missions-panel__groups section { min-width:0; }
+.missions-panel__groups h3 { margin:0 0 var(--space-3); }
+.missions-panel__groups ul, .missions-panel__recent ul { display:grid; gap:var(--space-3); margin:0; padding:0; list-style:none; }
+.missions-panel__groups li { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:var(--space-3); padding:var(--space-4); border:2px solid var(--color-border); border-radius:1rem; background:#fff; }
+.missions-panel__groups li.is-complete { border-color:var(--color-mint); background:var(--color-mint-soft); }
+.missions-panel__groups li > div:first-child { flex:1 1 15rem; min-width:0; }
+.missions-panel__groups li > div:last-child { display:grid; justify-items:end; gap:var(--space-2); }
+.missions-panel__groups strong { color:var(--color-ink); }
+.missions-panel__groups p { margin:.25rem 0; color:var(--color-ink-muted); font-size:var(--text-sm); }
+.missions-panel__groups span { color:var(--color-primary-ink); font-size:var(--text-xs); font-weight:var(--weight-bold); }
+.missions-panel__groups b { color:var(--color-success-ink); white-space:nowrap; }
+.missions-panel__groups a { color:var(--color-primary-ink); font-size:var(--text-sm); font-weight:var(--weight-bold); text-align:right; }
+.missions-panel__recent { padding:var(--space-4); border:2px solid var(--color-border); border-radius:1rem; background:#f9fbff; }
+.missions-panel__recent h3 { margin:0 0 var(--space-3); }
+.missions-panel__recent li { display:flex; justify-content:space-between; gap:var(--space-3); padding:var(--space-2) 0; border-top:1px solid var(--color-border); }
+.missions-panel__recent strong { color:var(--color-success-ink); white-space:nowrap; }
+.missions-panel__note { margin:0; padding:var(--space-4); border-left:4px solid var(--color-primary); border-radius:var(--radius-sm); background:var(--color-primary-soft); color:var(--color-ink-muted); font-size:var(--text-sm); }
+@media (max-width:40em) { .missions-panel__groups li > div:last-child { justify-items:start; } }

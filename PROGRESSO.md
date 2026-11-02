@@ -3,7 +3,29 @@
 Registro das micro tarefas. Marque `[x]` só quando a tarefa estiver concluída e verificada.
 Antes de cada tarefa, consultar `AGENTS.md` e `CLAUDE.md` (na raiz do projeto).
 
-Última atualização: 2026-11-01
+Última atualização: 2026-11-02
+
+## Biblioteca de documentos da conta — 2026-11-02
+
+- A aba Documentos permite enviar, listar, baixar e excluir arquivos PDF, DOCX, PNG e JPG em categorias de candidatura. A etapa “Reunir documentos” da jornada abre a biblioteca.
+- A migration 052 guarda o conteúdo no PostgreSQL com vínculo à conta e exclusão em cascata. A API exige sessão para todas as operações, limita a 20 arquivos de até 5 MB, confere extensão, MIME e assinatura do conteúdo, e força o download como anexo.
+- `npm run db:migrate`, TypeScript, lint dos arquivos afetados, `npm run build` e `npm run test:documents` passaram. O teste de integração verificou envio, listagem sem conteúdo binário, download, exclusão, rejeição de arquivo falsamente identificado como PDF e isolamento entre duas contas temporárias. A API e o Vite foram iniciados em `127.0.0.1:3001` e `127.0.0.1:5173`; a rota da conta respondeu 200. O serviço ainda não faz verificação antivírus nem associa documentos a candidaturas específicas. A aparência da aba autenticada não foi inspecionada no navegador.
+
+## Acesso ao formulário de prazos — 2026-11-01
+
+- O formulário “Meus prazos” foi movido para o início da aba Minha jornada, logo após o resumo, e ganhou um atalho “Adicionar um prazo” no cabeçalho. Antes ele aparecia apenas depois das 15 tarefas, dificultando encontrá-lo.
+- A API local salvou, editou e removeu um prazo no teste de integração com uma conta temporária. A inspeção visual no navegador não pôde ser concluída nesta tarefa.
+
+## Missões e XP automáticas — 2026-11-01
+
+- A aba de progresso da conta agora usa missões reais persistidas no PostgreSQL, sem marcação manual: desafios diários SAT e MEXT, prática em dois dias da semana ou quatro dias do mês, objetivo de estudo, estimativas de GPA, primeiro prazo e primeiro desafio. O nível sobe a cada 100 XP acumulados; erros e dias sem atividade não retiram pontos.
+- A API confirma as ações antes de conceder XP e impede a repetição da recompensa por missão e período. Desafios anônimos concluídos podem ser associados à conta no mesmo dia, no mesmo navegador. Missões únicas já cumpridas antes da mudança são reconhecidas ao abrir o painel, quando os dados necessários ainda existem.
+- A migration 051 cria as tabelas de recompensas e de associação dos desafios à conta. `npm run db:migrate`, TypeScript, lint e o teste de integração `npm run test:account` passaram. O teste concluiu desafios SAT e MEXT com uma conta temporária, verificou 115 XP, nível 2, bloqueio de comprovantes inválidos e ausência de XP duplicada. A inspeção visual no navegador ainda não foi realizada.
+
+## Gráfico vocacional completo — 2026-11-01
+
+- O gráfico final agora apresenta as seis dimensões de interesse, em ordem de média, com as duas maiores visualmente destacadas. As sugestões de profissões continuam limitadas a essas duas áreas.
+- TypeScript e lint passaram. A aparência do estado final ainda não foi conferida no navegador.
 
 ## Descobridor de destinos — 2026-11-01
 

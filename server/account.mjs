@@ -1,6 +1,8 @@
 import { createHash, randomBytes, scrypt as scryptCallback, timingSafeEqual } from 'node:crypto'
 import { promisify } from 'node:util'
 import { database } from './db.mjs'
+import { claimChallenge, getMissions, reconcileUniqueMissions } from './missions.mjs'
+import { handleDocumentsRequest } from './documents.mjs'
 
 const scrypt = promisify(scryptCallback)
 const cookieName = 'dd_account'
@@ -228,6 +230,17 @@ export async function handleAccountRequest(req, res, url, { json, body, originAl
   const user = await currentUser(req)
   if (!user) throw error(401, 'Entre na sua conta para continuar.')
 
+  if (await handleDocumentsRequest(req, res, user.id, path, { json })) return true
+
+  if (method === 'GET' && path === '/api/account/missions') {
+    json(res, 200, await getMissions(user.id))
+    return true
+  }
+  if (method === 'POST' && path === '/api/account/missions/claim') {
+    json(res, 200, await claimChallenge(user.id, await body(req)))
+    return true
+  }
+
   if (path === '/api/account/gpa-estimates') {
     if (method === 'GET') {
       const result = await database().query('SELECT * FROM user_gpa_estimates WHERE user_id=$1', [user.id])
@@ -251,6 +264,7 @@ export async function handleAccountRequest(req, res, url, { json, body, originAl
           letters_gpa=EXCLUDED.letters_gpa,source_average=EXCLUDED.source_average,input_mode=EXCLUDED.input_mode,
           weighted=EXCLUDED.weighted,passing_grade=EXCLUDED.passing_grade,include_failed=EXCLUDED.include_failed,saved_at=now()
         RETURNING *`, [user.id, ...values, input.inputMode, input.weighted, passingGrade, includeFailed])
+      await reconcileUniqueMissions(user.id)
       json(res, 200, { estimate: publicGpaEstimate(result.rows[0]) })
       return true
     }
@@ -305,6 +319,7 @@ export async function handleAccountRequest(req, res, url, { json, body, originAl
         ? await database().query('INSERT INTO user_journey_deadlines (user_id,title,due_date,note) VALUES ($1,$2,$3,$4) RETURNING id::text,title,to_char(due_date, \'YYYY-MM-DD\') AS "dueDate",note', [user.id, title, dueDate, note || null])
         : await database().query('UPDATE user_journey_deadlines SET title=$1,due_date=$2,note=$3 WHERE id=$4 AND user_id=$5 RETURNING id::text,title,to_char(due_date, \'YYYY-MM-DD\') AS "dueDate",note', [title, dueDate, note || null, deadlineMatch[1], user.id])
       if (!result.rowCount) throw error(404, 'Prazo não encontrado.')
+      if (method === 'POST') await reconcileUniqueMissions(user.id)
       json(res, method === 'POST' ? 201 : 200, result.rows[0])
       return true
     }
@@ -338,6 +353,7 @@ export async function handleAccountRequest(req, res, url, { json, body, originAl
       }
       await client.query('COMMIT')
     } catch (cause) { await client.query('ROLLBACK'); throw cause } finally { client.release() }
+    await reconcileUniqueMissions(user.id)
     json(res, 200, { user: { ...publicUser(user), displayName: data.name, studyLevel: data.level, interestArea: data.area,
       destinationSlug: data.destination, destinationSlugs: data.destinations, fullName: data.fullName,
       schoolName: data.schoolName, schoolYear: data.schoolYear, city: data.city, stateCode: data.stateCode,

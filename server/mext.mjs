@@ -116,7 +116,7 @@ async function dailyState(client, run) {
   const finished = answers.length >= run.question_ids.length || run.lives === 0
   const id = finished ? null : run.question_ids[answers.length]
   const question = id ? (await client.query(`SELECT ${publicFields} FROM mext_questions WHERE id=$1`, [id])).rows[0] : null
-  return { available:true, day:run.day, track:run.track, subject:run.subject, lives:run.lives, maxLives:MEXT_DAILY_LIVES, total:run.question_ids.length, answered:answers.length, correct:answers.filter(item => item.correct).length, finished, question:question || null }
+  return { available:true, day:run.day, track:run.track, subject:run.subject, lives:run.lives, maxLives:MEXT_DAILY_LIVES, total:run.question_ids.length, answered:answers.length, correct:answers.filter(item => item.correct).length, finished, completionProof:finished ? run.token_hash : null, question:question || null }
 }
 
 export async function getMextDaily(req, res, track, subject) {

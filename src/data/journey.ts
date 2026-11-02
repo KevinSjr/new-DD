@@ -15,7 +15,7 @@ export const JOURNEY_STAGES = [
     { key: 'map-deadlines', title: 'Registrar prazos importantes', detail: 'Adicione os prazos das candidaturas abaixo, com o ano correto.' },
   ] },
   { title: 'Preparar candidatura', description: 'Organize materiais conforme os editais escolhidos.', tasks: [
-    { key: 'gather-documents', title: 'Reunir documentos', detail: 'Faça sua lista de histórico, traduções e comprovantes exigidos.' },
+    { key: 'gather-documents', title: 'Reunir documentos', detail: 'Confira o edital e guarde as cópias que você possui na sua biblioteca privada.', action: 'Abrir documentos', href: '/conta?tab=documentos' },
     { key: 'write-application', title: 'Preparar textos e formulários', detail: 'Adapte cartas e respostas aos critérios de cada candidatura.' },
     { key: 'review-application', title: 'Revisar antes de enviar', detail: 'Confira dados, anexos, formato e prazo na plataforma oficial.' },
   ] },

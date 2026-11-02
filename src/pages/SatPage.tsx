@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from '../router/Link'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
+import { claimDailyMission } from '../lib/missionRewards'
 import './SatPage.css'
 
 type Question = {
@@ -11,7 +12,7 @@ type FormCode = 'practice-4-paper' | 'practice-5-paper' | 'practice-6-paper' | '
 const formCodes: FormCode[] = ['practice-4-paper', 'practice-5-paper', 'practice-6-paper', 'practice-7-paper', 'practice-8-paper', 'practice-9-paper', 'practice-10-paper', 'practice-11-paper']
 const testNumber = (formCode: FormCode) => formCode.split('-')[1]
 type SatSection = 'reading-writing' | 'math'
-type DailyState = { available: boolean; section?: SatSection; needed?: number; published?: number; lives: number; maxLives: number; total: number; answered: number; correct: number; finished: boolean; question: Question | null; feedback?: { correct: boolean; acceptedAnswers: string[]; explanation: string } }
+type DailyState = { available: boolean; section?: SatSection; needed?: number; published?: number; lives: number; maxLives: number; total: number; answered: number; correct: number; finished: boolean; completionProof?: string | null; question: Question | null; feedback?: { correct: boolean; acceptedAnswers: string[]; explanation: string } }
 type ExamState = { formCode: FormCode; ready: boolean; modules: { section: string; module_number: number; total: number; published: number; minutes: number }[]; questions: Question[] }
 type ScoreRange = { lower: number; upper: number }
 type Grade = {
@@ -82,10 +83,20 @@ export function SatDailyPage() {
   const [feedbackVisible, setFeedbackVisible] = useState(false)
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
+  const [missionNotice, setMissionNotice] = useState('')
+  async function recordMission(proof: string, chosenSection: SatSection, request: number) {
+    try {
+      const result = await claimDailyMission({ source:'sat', proof, section:chosenSection })
+      if (requestId.current !== request) return
+      setMissionNotice(result.kind === 'awarded' ? `+${result.earnedXp} XP adicionados à sua conta.`
+        : result.kind === 'already' ? 'A XP deste desafio já está registrada na sua conta.'
+          : 'Desafio concluído. Entre na sua conta e volte aqui hoje para receber XP automaticamente.')
+    } catch (cause) { if (requestId.current === request) setMissionNotice(cause instanceof Error ? cause.message : 'Não foi possível registrar a XP agora.') }
+  }
   function chooseSection(nextSection: SatSection) {
     const currentRequest = ++requestId.current
-    setSection(nextSection); setState(null); setAnswer(''); setFeedbackVisible(false); setError('')
-    api<DailyState>(`/api/sat/daily?section=${nextSection}`).then(result => { if (requestId.current === currentRequest) setState(result) }).catch(cause => { if (requestId.current === currentRequest) setError(String(cause.message)) })
+    setSection(nextSection); setState(null); setAnswer(''); setFeedbackVisible(false); setError(''); setMissionNotice('')
+    api<DailyState>(`/api/sat/daily?section=${nextSection}`).then(result => { if (requestId.current === currentRequest) { setState(result); if (result.finished && result.completionProof) void recordMission(result.completionProof, nextSection, currentRequest) } }).catch(cause => { if (requestId.current === currentRequest) setError(String(cause.message)) })
   }
   async function submit() {
     if (!state?.question || !answer.trim()) return
@@ -93,11 +104,12 @@ export function SatDailyPage() {
     try {
       const next = await api<DailyState>('/api/sat/daily/answer', { method:'POST', body:JSON.stringify({ section, questionId:state.question.id, answer }) })
       setState(next); setFeedbackVisible(true); setAnswer('')
+      if (next.finished && next.completionProof && section) void recordMission(next.completionProof, section, requestId.current)
     } catch (cause) { setError(cause instanceof Error ? cause.message : 'Não foi possível registrar a resposta.') }
     finally { setBusy(false) }
   }
   return <main className="sat-page container"><nav className="sat-page__breadcrumb"><Link to="/exames/sat">SAT</Link><span aria-hidden="true">/</span><span aria-current="page">Desafio diário</span></nav>
-    <header className="sat-page__header"><p className="sat-page__eyebrow">Um passo por dia</p><h1>Desafio diário do SAT</h1><p>Escolha uma área. Cada uma tem cinco questões e três sóis próprios; a cada erro você perde um sol daquela área. Eles voltam no próximo dia, no horário de Brasília.</p></header>
+    <header className="sat-page__header"><p className="sat-page__eyebrow">Um passo por dia</p><h1>Desafio diário do SAT</h1><p>Escolha uma área. Cada uma tem cinco questões e três sóis próprios; a cada erro você perde um sol daquela área. Eles voltam no próximo dia, no horário de Brasília. Com uma conta, concluir o desafio registra XP automaticamente.</p></header>
     <div className="sat-page__section-choices" aria-label="Área do desafio">
       <button className={`sat-page__button ${section === 'reading-writing' ? '' : 'sat-page__button--secondary'}`} aria-pressed={section === 'reading-writing'} onClick={() => chooseSection('reading-writing')}>Reading and Writing</button>
       <button className={`sat-page__button ${section === 'math' ? '' : 'sat-page__button--secondary'}`} aria-pressed={section === 'math'} onClick={() => chooseSection('math')}>Mathematics</button>
@@ -115,6 +127,7 @@ export function SatDailyPage() {
         <QuestionView question={state.question} answer={answer} onAnswer={setAnswer} />
         <button className="sat-page__button" disabled={busy || !answer.trim()} onClick={submit}>{busy ? 'Conferindo…' : 'Responder'}</button>
       </>}
+      {missionNotice && <p role="status" className="sat-page__mission-notice">{missionNotice} <Link to="/conta?tab=progresso">Ver missões</Link></p>}
     </div>}
     <p className="sat-page__note">As questões vêm das adaptações em papel dos testes práticos nº 4 a nº 11. O desafio não mede sua pontuação oficial no SAT.</p>
   </main>
