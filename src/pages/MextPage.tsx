@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from '../router/Link'
 import { useLocation } from '../router/navigation'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
+import { recordAchievement } from '../lib/achievementEvents'
 import { claimDailyMission } from '../lib/missionRewards'
 import './MextPage.css'
 
@@ -184,6 +185,7 @@ export function MextExamPage() {
     try {
       const result = await api<Grade>('/api/mext/exam/grade', { method:'POST', body:JSON.stringify({ track, science, answers:Object.entries(answers).map(([questionId, answer]) => ({ questionId:Number(questionId), answer })) }) })
       setGrade(result)
+      recordAchievement('mext-report',track)
     } catch (cause) { setError(cause instanceof Error ? cause.message : 'Não foi possível corrigir o exame.') }
     finally { setBusy(false) }
   }, [answers, busy, track, science])
@@ -204,7 +206,7 @@ export function MextExamPage() {
     {error && <p className="mext-page__alert" role="alert">{error}</p>}
     {!exam && !error && <p>Carregando exame…</p>}
     {exam && !exam.ready && <div className="mext-page__panel"><h2>Exame em preparação</h2><ul>{exam.subjects.map(item => <li key={item.subject}>{labelFor(item.subject, track)}: {item.published}/{item.total}</li>)}</ul></div>}
-    {exam?.ready && !started && <div className="mext-page__panel"><h2>Antes de começar</h2><p>Ordem da prática: {subjects.map(item => item.label).join(', ')}. Cada disciplina tem até 100 pontos. Respostas e resultado do exame não são salvos; recarregar a página recomeça a sessão.</p><p>Quando o tempo de uma disciplina terminar, a próxima começa automaticamente. Você também pode avançar antes.</p>{track === 'B' && <p>Em Matemática e Química, respostas abertas são corrigidas pelas formas cadastradas do gabarito. Uma forma equivalente pode exigir conferência manual com o PDF.</p>}<button className="mext-page__button" onClick={() => { setStarted(true); beginSubject(0) }}>Iniciar exame {track}</button></div>}
+    {exam?.ready && !started && <div className="mext-page__panel"><h2>Antes de começar</h2><p>Ordem da prática: {subjects.map(item => item.label).join(', ')}. Cada disciplina tem até 100 pontos. Respostas e resultado completo não são salvos; recarregar a página recomeça a sessão. Se estiver conectado, a modalidade concluída é registrada para conquistas.</p><p>Quando o tempo de uma disciplina terminar, a próxima começa automaticamente. Você também pode avançar antes.</p>{track === 'B' && <p>Em Matemática e Química, respostas abertas são corrigidas pelas formas cadastradas do gabarito. Uma forma equivalente pode exigir conferência manual com o PDF.</p>}<button className="mext-page__button" onClick={() => { setStarted(true); beginSubject(0) }}>Iniciar exame {track}</button></div>}
     {started && examEnded && !grade && <div className="mext-page__panel"><h2>Exame concluído</h2><p>{busy ? 'Corrigindo suas respostas…' : 'A correção não terminou. Tente novamente sem perder suas respostas.'}</p>{!busy && <button className="mext-page__button" onClick={() => void finish()}>Corrigir exame</button>}</div>}
     {started && !examEnded && !grade && question && <div className="mext-page__panel"><div className="mext-page__progress"><span>{subject.label} · item {questionIndex + 1}/{questions.length}</span><span aria-live="off">Tempo: {Math.floor(remaining / 60)}:{String(remaining % 60).padStart(2, '0')}</span></div>
       <MextQuestion question={question} answer={answers[question.id] || ''} onAnswer={value => setAnswers(current => ({ ...current, [question.id]:value }))} />

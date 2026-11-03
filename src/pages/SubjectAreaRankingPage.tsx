@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { SUBJECT_AREAS, type SubjectAreaKey } from '../data/subjectAreas'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
 import { Link } from '../router/Link'
+import { recordAchievement } from '../lib/achievementEvents'
 import './RankingPage.css'
 import './SubjectAreaRankingPage.css'
 
@@ -55,6 +56,15 @@ export function SubjectAreaRankingPage({ areaKey }: { areaKey: SubjectAreaKey })
   const [country, setCountry] = useState('')
   const [sortField, setSortField] = useState<SortField>('rank')
   const [page, setPage] = useState(1)
+
+  useEffect(() => { if (dataset) recordAchievement('rank-page',`${areaKey}:${page}`,{ scope:areaKey }) }, [dataset,page,areaKey])
+  useEffect(() => {
+    if (!dataset || (!country && search.trim().length < 2)) return
+    const timer = window.setTimeout(() => recordAchievement('rank-filter',[areaKey,country,search.trim().length >= 2 ? 'query' : ''].join('|'),{
+      scope:areaKey, country, filterCount:Number(Boolean(country)) + Number(search.trim().length >= 2),
+    }),500)
+    return () => window.clearTimeout(timer)
+  }, [dataset,areaKey,country,search])
 
   useEffect(() => {
     const controller = new AbortController()

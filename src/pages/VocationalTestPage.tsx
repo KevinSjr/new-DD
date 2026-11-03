@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
 import { Link } from '../router/Link'
+import { recordAchievement } from '../lib/achievementEvents'
 import { INTEREST_AREAS, QUESTION_STEPS, VALUES, type InterestArea } from '../data/vocationalQuestions'
 import { CareerRecommendations } from '../components/vocational/CareerRecommendations'
 import './VocationalTestPage.css'
@@ -34,7 +35,9 @@ export function VocationalTestPage() {
   const [answers, setAnswers] = useState<Record<string, Answer>>({})
   const [priorities, setPriorities] = useState<string[]>([])
   const [error, setError] = useState('')
+  const [runId, setRunId] = useState('')
   const headingRef = useRef<HTMLHeadingElement>(null)
+  const completionRef = useRef<Promise<void>>(Promise.resolve())
 
   useEffect(() => {
     if (screen === 'intro') return
@@ -70,6 +73,10 @@ export function VocationalTestPage() {
       return
     }
     setError('')
+    const run = crypto.randomUUID()
+    setRunId(run)
+    completionRef.current = recordAchievement('voc-complete',run,{ leaders:calculateScores(answers).slice(0,2).map(item => item.area) })
+      .then(() => recordAchievement('voc-chart',run))
     setScreen('result')
   }
 
@@ -173,12 +180,12 @@ export function VocationalTestPage() {
         <div className="container vocational__result">
           <header className="vocational__result-head">
             <p className="vocational__eyebrow">Seu panorama de interesses</p>
-            <h1 tabIndex={-1} ref={headingRef}>Seus dois interesses em destaque</h1>
-            <p>{closeScores ? 'As duas médias ficaram próximas. Explore ambas antes de escolher um caminho.' : 'Estas são as duas atividades que mais combinaram com suas respostas de hoje.'}</p>
+            <h1 tabIndex={-1} ref={headingRef}>Seu mapa de seis interesses</h1>
+            <p>{closeScores ? 'As duas maiores médias ficaram próximas. Explore ambas antes de escolher um caminho.' : 'As seis áreas aparecem abaixo; as duas maiores orientam as sugestões de profissões.'}</p>
           </header>
 
           <section className="vocational__result-card vocational__chart" aria-labelledby="vocational-dimensions">
-            <div className="vocational__chart-head"><h2 id="vocational-dimensions">Suas seis dimensões de interesse</h2><p>As duas maiores médias estão em destaque. As respostas vão de 1 a 5; as barras usam eixo de 0 a 5. Elas representam interesse, não aptidão.</p></div>
+            <div className="vocational__chart-head"><h2 id="vocational-dimensions">As seis áreas no mesmo gráfico</h2><p>Veja todas as seis médias na escala de 0 a 5. As duas maiores estão em destaque. O gráfico mostra interesse, não mede competência ou aptidão.</p></div>
             <ol className="vocational__scores">
               {scores.map((score, index) => (
                 <li key={score.area} className={index < 2 ? 'is-featured' : ''}>
@@ -187,10 +194,9 @@ export function VocationalTestPage() {
                 </li>
               ))}
             </ol>
-            <div className="vocational__chart-axis" aria-hidden="true"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
           </section>
 
-          <CareerRecommendations scores={leaders} />
+          <CareerRecommendations scores={leaders} onExplore={(area) => { void completionRef.current.then(() => recordAchievement('voc-profile',`${runId}:${area}`,{ run:runId, profile:area })) }} />
 
           {priorities.length > 0 && <section className="vocational__priorities" aria-labelledby="vocational-priorities"><h2 id="vocational-priorities">O que importa para você</h2><ul>{priorities.map((item) => <li key={item}>{item}</li>)}</ul><p>Essas prioridades ajudam na pesquisa, mas não alteram as notas do gráfico.</p></section>}
 
@@ -198,7 +204,7 @@ export function VocationalTestPage() {
             <div><p className="vocational__eyebrow">Próximo passo</p><h2 id="vocational-next">Explore um curso de cada área</h2><p>Compare as disciplinas e a rotina profissional antes de decidir.</p></div>
             <Link className="vocational__button" to="/rankings">Explorar áreas de estudo <span aria-hidden="true">→</span></Link>
           </section>
-          <p className="vocational__method">Este questionário original usa as seis dimensões de interesses do modelo RIASEC, mas ainda não passou por validação psicométrica com estudantes brasileiros. Ele não substitui orientação profissional individual nem avaliação psicológica. As respostas não são armazenadas; recarregar a página apaga o resultado. Referência conceitual: <a href="https://www.onetcenter.org/IP.html" target="_blank" rel="noopener noreferrer">O*NET Interest Profiler</a>.</p>
+          <p className="vocational__method">Este questionário original usa as seis dimensões de interesses do modelo RIASEC, mas ainda não passou por validação psicométrica com estudantes brasileiros. Ele não substitui orientação profissional individual nem avaliação psicológica. As respostas não são armazenadas; recarregar a página apaga o resultado. Se você estiver conectado, apenas a conclusão e as áreas que explorar são registradas para conquistas. Referência conceitual: <a href="https://www.onetcenter.org/IP.html" target="_blank" rel="noopener noreferrer">O*NET Interest Profiler</a>.</p>
           <button type="button" className="vocational__restart" onClick={restart}>Refazer o questionário</button>
         </div>
       )}

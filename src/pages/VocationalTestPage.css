@@ -65,7 +65,9 @@
 .vocational__bar { height: 1rem; margin-top: var(--space-3); border-radius: var(--radius-pill); background: var(--color-border); overflow: hidden; }
 .vocational__bar span { display: block; height: 100%; border-radius: inherit; background: var(--color-primary); }
 .vocational__scores li:nth-child(2) .vocational__rank, .vocational__scores li:nth-child(2) .vocational__bar span { background: var(--color-lilac-dark); }
-.vocational__chart-axis { display: flex; justify-content: space-between; margin: var(--space-2) var(--space-4) 0; color: var(--color-ink-muted); font-size: var(--text-xs); }
+@media (min-width: 48em) {
+  .vocational__scores { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 .vocational__insights { display: grid; gap: var(--space-5); margin-top: var(--space-5); }
 .vocational__insights > div { border-top: 2px solid var(--color-border-strong); padding-top: var(--space-3); }
 .vocational__insight-index { color: var(--color-primary-ink); font-weight: var(--weight-bold); }

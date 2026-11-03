@@ -5,6 +5,7 @@ import { JourneyPanel } from '../components/account/JourneyPanel'
 import { SavedGpaEstimates } from '../components/account/SavedGpaEstimates'
 import { MissionsPanel } from '../components/account/MissionsPanel'
 import { DocumentsPanel } from '../components/account/DocumentsPanel'
+import { SavedScholarshipsPanel } from '../components/account/SavedScholarshipsPanel'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
 import { Icon } from '../components/ui/Icon'
 import { COUNTRY_GUIDES } from '../data/countries'
@@ -41,13 +42,14 @@ type ProfileForm = {
 }
 type Mode = 'login' | 'register'
 type Status = 'loading' | 'error' | 'guest' | 'signed-in'
-type AccountTab = 'pessoal' | 'academicos' | 'metas' | 'jornada' | 'documentos' | 'progresso' | 'privacidade'
+type AccountTab = 'pessoal' | 'academicos' | 'metas' | 'jornada' | 'bolsas' | 'documentos' | 'progresso' | 'privacidade'
 
 const accountTabs: { id: AccountTab; label: string }[] = [
   { id: 'pessoal', label: 'Informações pessoais' },
   { id: 'academicos', label: 'Dados acadêmicos' },
   { id: 'metas', label: 'Metas de intercâmbio' },
   { id: 'jornada', label: 'Minha jornada' },
+  { id: 'bolsas', label: 'Bolsas salvas' },
   { id: 'documentos', label: 'Documentos' },
   { id: 'progresso', label: 'Progresso e gamificação' },
   { id: 'privacidade', label: 'Privacidade e dados' },
@@ -388,10 +390,12 @@ export function AccountPage() {
                 </div>}
                 {activeTab === 'progresso' && <MissionsPanel />}
                 {activeTab === 'jornada' && <JourneyPanel />}
+                {activeTab === 'bolsas' && <SavedScholarshipsPanel />}
                 {activeTab === 'documentos' && <DocumentsPanel />}
                 {activeTab === 'privacidade' && <div className="account-v4__section">
                   <div><p className="account-page__eyebrow">Seus dados</p><h2>Privacidade e dados</h2><p>Você escolhe o que informar além do nome de exibição e do e-mail necessários para a conta.</p></div>
-                  <dl className="account-v4__data"><div><dt>Nome e e-mail</dt><dd>Identificam sua conta e permitem o acesso.</dd></div><div><dt>Escola, cidade e dados acadêmicos</dt><dd>São opcionais e ficam no seu perfil.</dd></div><div><dt>Preferências de estudo</dt><dd>Guardam seus destinos, nível, área e ano pretendido.</dd></div><div><dt>Minha jornada</dt><dd>Tarefas marcadas e prazos ficam salvos na sua conta e são excluídos com ela.</dd></div><div><dt>Documentos</dt><dd>Arquivos que você enviar ficam restritos à sua conta e são excluídos junto com ela.</dd></div><div><dt>Missões e XP</dt><dd>Ações verificadas pelo site geram XP na sua conta. Os registros são excluídos com ela.</dd></div><div><dt>Simulados</dt><dd>Respostas dos exames completos não são vinculadas à conta. Um desafio diário concluído pode ser associado à conta para registrar a missão.</dd></div></dl>
+                  <dl className="account-v4__data"><div><dt>Nome e e-mail</dt><dd>Identificam sua conta e permitem o acesso.</dd></div><div><dt>Escola, cidade e dados acadêmicos</dt><dd>São opcionais e ficam no seu perfil.</dd></div><div><dt>Preferências de estudo</dt><dd>Guardam seus destinos, nível, área e ano pretendido.</dd></div><div><dt>Minha jornada</dt><dd>Tarefas marcadas e prazos ficam salvos na sua conta e são excluídos com ela.</dd></div><div><dt>Bolsas salvas</dt><dd>Links de oportunidades que você escolheu guardar ficam na sua conta e são excluídos com ela.</dd></div><div><dt>Documentos</dt><dd>Arquivos que você enviar ficam restritos à sua conta e são excluídos junto com ela.</dd></div><div><dt>Missões e XP</dt><dd>Ações verificadas pelo site geram XP na sua conta. Os registros são excluídos com ela.</dd></div><div><dt>Simulados</dt><dd>Respostas dos exames completos não são vinculadas à conta. Um desafio diário concluído pode ser associado à conta para registrar a missão.</dd></div></dl>
+                  <p>As conquistas registram ações na plataforma, como guias consultados, filtros usados e testes concluídos. Não guardam as respostas dos testes; a conquista de evolução no SAT registra somente as faixas de pontuação das duas áreas. Esses registros são removidos com a conta.</p>
                   <p className="account-v4__privacy-note"><Icon name="lock" size={20} />Você pode alterar a senha ou excluir a conta na seção de segurança ao lado.</p>
                 </div>}
               </div>

@@ -440,6 +440,27 @@ const catalog = `WITH catalog AS (
 
 )`
 
+const itemColumns = `source, source_id, title, description, source_label,
+  source_url, application_url, observed_at, deadline, amount, source_status, brazil_criteria,
+  field_of_study, nationality, destinations, study_level, country_basis`
+
+export async function scholarshipCatalogItem(pool, source, sourceId) {
+  const result = await pool.query(`${catalog} SELECT ${itemColumns} FROM catalog
+    WHERE source=$1 AND source_id=$4 LIMIT 1`, [source, '', '', sourceId])
+  return result.rows[0] || null
+}
+
+export async function savedScholarshipCatalog(pool, userId) {
+  const result = await pool.query(`${catalog} SELECT b.source,b.source_id,
+    coalesce(c.title,b.title) AS title,coalesce(c.source_label,b.source_label) AS source_label,
+    coalesce(c.source_url,b.source_url) AS source_url,b.saved_at,
+    (c.source IS NOT NULL) AS available
+    FROM user_saved_scholarships b LEFT JOIN catalog c
+      ON c.source=b.source AND c.source_id=b.source_id
+    WHERE b.user_id=$1 ORDER BY b.saved_at DESC,b.source,b.source_id`, [userId, '', ''])
+  return result.rows
+}
+
 const levelPatterns = Object.freeze({
   undergraduate: 'bachelor|undergraduate|undergraduates|(^|[^a-z])ug([^a-z]|$)|graduação|graduacao|college freshman|college sophomore|college senior|degree and above',
   postgraduate: 'master|postgraduate|post-graduate|(^|[^a-z])pg([^a-z]|$)|mestrado|pós-graduação|pos-graduacao|mba|graduate student',

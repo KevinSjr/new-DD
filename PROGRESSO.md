@@ -5,6 +5,16 @@ Antes de cada tarefa, consultar `AGENTS.md` e `CLAUDE.md` (na raiz do projeto).
 
 Última atualização: 2026-11-02
 
+## Dias seguidos de prática — 2026-11-02
+
+- O painel de missões agora mostra a sequência atual, o recorde e o total de dias de prática. Um dia conta quando um desafio diário SAT ou MEXT é concluído e associado à conta; concluir os dois no mesmo dia conta uma vez. A sequência de ontem continua visível durante o dia de hoje e zera se não houver prática até o dia seguinte, sem retirar XP ou apagar o recorde.
+- Os testes cobriram dias repetidos, pausas e viradas de mês e ano. `npm run test:streak`, TypeScript, lint e o teste de integração `npm run test:account` passaram; a API ativa em `127.0.0.1:3001` foi reiniciada e testada. O visual autenticado não foi inspecionado no navegador.
+
+## Gráfico vocacional com seis áreas visíveis — 2026-11-02
+
+- O resultado agora apresenta as seis áreas no mesmo gráfico, em duas colunas a partir de 768 px e uma coluna no celular. As duas maiores continuam destacadas; as profissões recomendadas permanecem limitadas a elas.
+- O texto diferencia interesse de competência ou aptidão, que o questionário não mede. TypeScript e lint passaram; a aparência do resultado completo não foi inspecionada no navegador.
+
 ## Biblioteca de documentos da conta — 2026-11-02
 
 - A aba Documentos permite enviar, listar, baixar e excluir arquivos PDF, DOCX, PNG e JPG em categorias de candidatura. A etapa “Reunir documentos” da jornada abre a biblioteca.

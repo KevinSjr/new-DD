@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
 import { Link } from '../router/Link'
+import { recordAchievement } from '../lib/achievementEvents'
 import './RankingPage.css'
 
 type RankingEntry = {
@@ -69,6 +70,15 @@ export function RankingPage() {
   const [sortField, setSortField] = useState<SortField>('rank')
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc')
   const [page, setPage] = useState(1)
+
+  useEffect(() => { if (dataset) recordAchievement('rank-page',`general:${page}`,{ scope:'general' }) }, [dataset,page])
+  useEffect(() => {
+    if (!dataset || (!country && !region && search.trim().length < 2)) return
+    const timer = window.setTimeout(() => recordAchievement('rank-filter',['general',country,region,search.trim().length >= 2 ? 'query' : ''].join('|'),{
+      scope:'general', country, filterCount:Number(Boolean(country)) + Number(Boolean(region)) + Number(search.trim().length >= 2),
+    }),500)
+    return () => window.clearTimeout(timer)
+  }, [dataset,country,region,search])
 
   useEffect(() => {
     const controller = new AbortController()

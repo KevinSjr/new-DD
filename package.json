@@ -14,6 +14,7 @@
     "test:mext:db": "node --env-file=.env.local tests/mext.test.mjs",
     "test:scholarships": "node tests/scholarships.test.mjs",
     "test:account": "node tests/account.test.mjs",
+    "test:streak": "node tests/streak.test.mjs",
     "test:documents": "node tests/documents.test.mjs",
     "test:responsive": "node scripts/check_responsive.mjs",
     "api:dev": "node --env-file=.env.local server/index.mjs",

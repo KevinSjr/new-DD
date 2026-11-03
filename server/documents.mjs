@@ -1,4 +1,5 @@
 import { database } from './db.mjs'
+import { recordAchievementEvent } from './achievements.mjs'
 
 const MAX_FILE_BYTES = 5 * 1024 * 1024
 const MAX_DOCUMENTS = 20
@@ -76,6 +77,7 @@ export async function handleDocumentsRequest(req, res, userId, path, { json }) {
           VALUES ($1,$2,$3,$4,$5,$6) RETURNING id::text,file_name,category,mime_type,size_bytes,uploaded_at`,
         [userId,fileName,category,mime,content.length,content])
         await client.query('COMMIT')
+        await recordAchievementEvent(userId,{ kind:'document-upload', target:result.rows[0].id, details:{} })
         json(res, 201, { document:documentRow(result.rows[0]) })
       } catch (cause) { await client.query('ROLLBACK'); throw cause } finally { client.release() }
       return true

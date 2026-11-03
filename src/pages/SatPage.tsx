@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from '../router/Link'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
+import { recordAchievement } from '../lib/achievementEvents'
 import { claimDailyMission } from '../lib/missionRewards'
 import './SatPage.css'
 
@@ -163,7 +164,7 @@ function SatExamReport({ grade }: { grade: Grade }) {
     <div className="sat-report__method"><h3>Como calculamos</h3>
       <p>Somamos os acertos dos dois módulos de cada seção. Depois, usamos a tabela de conversão indicada abaixo para obter um limite inferior e um superior por seção. A faixa total é a soma dos respectivos limites das duas seções.</p>
       <p>{grade.note} <a href={grade.scoringSource} target="_blank" rel="noopener noreferrer">Consultar o guia oficial de pontuação<span className="sr-only"> (abre em nova aba)</span></a>.</p>
-      <p>As respostas e este relatório não são salvos; recarregar a página apaga o resultado.</p>
+      <p>As respostas e o relatório completo não são salvos; recarregar a página apaga o resultado. Se você estiver conectado, as faixas de pontuação das duas áreas ficam registradas na conta apenas para a conquista de evolução.</p>
     </div>
     <Link className="sat-page__button sat-page__button--secondary" to="/exames/sat">Voltar às opções do SAT</Link>
   </section>
@@ -210,6 +211,7 @@ export function SatExamPage() {
         throw new Error('A API ainda está na versão anterior. Reinicie a API e clique novamente em “Corrigir simulado”.')
       }
       setGrade(result)
+      recordAchievement('sat-report',result.formCode,{ reading:result.sections['reading-writing'].scoreRange, math:result.sections.math.scoreRange })
     }
     catch (cause) { setError(cause instanceof Error ? cause.message : 'Não foi possível corrigir o simulado.') }
   }, [answers, formCode])

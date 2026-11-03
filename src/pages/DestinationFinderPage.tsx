@@ -4,6 +4,7 @@ import { matchDestinations, type DestinationAnswers } from '../lib/destinationMa
 import { InfoBadge } from '../components/ui/InfoBadge'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
 import { Link } from '../router/Link'
+import { recordAchievement } from '../lib/achievementEvents'
 import './DestinationFinderPage.css'
 
 const regionOptions: { value: Region; label: string }[] = [
@@ -65,7 +66,9 @@ export function DestinationFinderPage() {
   const [step, setStep] = useState(-1)
   const [answers, setAnswers] = useState<Partial<DestinationAnswers>>({ regions: [], priorities: [] })
   const [error, setError] = useState('')
+  const [runId, setRunId] = useState('')
   const headingRef = useRef<HTMLHeadingElement>(null)
+  const completionRef = useRef<Promise<void>>(Promise.resolve())
   useEffect(() => { if (step >= 0) { headingRef.current?.focus(); window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior }) } }, [step])
   const complete = step === 3
   const matches = complete ? matchDestinations(answers as DestinationAnswers, DESTINATION_PROFILES) : []
@@ -95,6 +98,14 @@ export function DestinationFinderPage() {
       return
     }
     setError('')
+    if (step === 2) {
+      const run = crypto.randomUUID()
+      setRunId(run)
+      const ranked = matchDestinations(answers as DestinationAnswers, DESTINATION_PROFILES)
+        .filter(item => answers.regions?.includes(item.profile.region))
+      const signature = ([...JSON.stringify(answers)].reduce((hash,char) => Math.imul(hash ^ char.charCodeAt(0),16777619),2166136261) >>> 0).toString(16)
+      completionRef.current = recordAchievement('destination-complete',run,{ signature, top:ranked.slice(0,5).map(item => item.profile.slug) })
+    }
     setStep(step + 1)
   }
   function restart() { setAnswers({ regions: [], priorities: [] }); setError(''); setStep(-1) }
@@ -106,7 +117,7 @@ export function DestinationFinderPage() {
         <p>Responda sobre região, clima, idioma e seus planos de estudo. Ao final, veja destinos para investigar entre os 25 passaportes da home.</p>
         <div className="destination-intro__facts"><span>25 destinos</span><span>3 etapas</span><span>Sem cadastro</span></div>
         <button className="destination-primary" type="button" onClick={() => setStep(0)}>Começar a explorar →</button>
-        <p className="destination-small">Suas respostas ficam apenas nesta página enquanto ela está aberta. Não são enviadas nem salvas.</p></div>
+        <p className="destination-small">As respostas completas ficam nesta página. Se você estiver conectado, a conclusão e um resumo dos destinos apresentados são registrados para as conquistas.</p></div>
       <aside><span aria-hidden="true">✳</span><h2>Uma bússola, não uma decisão pronta</h2>
         <p>Esta versão compara preferências de região, idioma e clima. Orçamento, mensalidade, trabalho e permanência viram pontos de verificação — não afirmações sobre elegibilidade ou custo.</p>
         <p>O resultado não prevê aprovação, bolsa ou visto.</p></aside>
@@ -132,9 +143,9 @@ export function DestinationFinderPage() {
           {index > 0 && match.score === preferredMatches[index - 1].score && <p className="destination-match__tie">Mesmo alinhamento do destino anterior</p>}
           <p className="destination-match__reason"><strong>Por que apareceu:</strong> {match.reasons.slice(1).length ? match.reasons.slice(1).join(' ') : 'Está em uma região escolhida; suas respostas não diferenciam clima ou idioma entre os destinos.'}</p>
           {match.cautions.length > 0 && <p className="destination-match__caution"><strong>Confira:</strong> {match.cautions[0]}</p>}
-          <div className="destination-match__actions"><Link to={`/paises/${match.profile.slug}`}>Conhecer {match.profile.name} →</Link><Link to={`/bolsas?country=${match.profile.slug}`}>Pesquisar bolsas para {match.profile.name} →</Link></div></div></article>)}</div>
+          <div className="destination-match__actions"><Link to={`/paises/${match.profile.slug}`} onClick={() => { void completionRef.current.then(() => recordAchievement('destination-guide',`${runId}:${match.profile.slug}`,{ run:runId, slug:match.profile.slug, rank:index + 1 })) }}>Conhecer {match.profile.name} →</Link><Link to={`/bolsas?country=${match.profile.slug}`}>Pesquisar bolsas para {match.profile.name} →</Link></div></div></article>)}</div>
       <ResearchChecklist answers={answers as DestinationAnswers} />
-      <details className="destination-others"><summary>Ver os 25 destinos, incluindo outras regiões</summary><ol>{matches.map(match => <li key={match.profile.slug}><Link to={`/paises/${match.profile.slug}`}>{match.profile.name}</Link></li>)}</ol></details>
+      <details className="destination-others"><summary>Ver os 25 destinos, incluindo outras regiões</summary><ol>{matches.map((match,index) => <li key={match.profile.slug}><Link to={`/paises/${match.profile.slug}`} onClick={() => { const preferredIndex = preferredMatches.findIndex(item => item.profile.slug === match.profile.slug); void completionRef.current.then(() => recordAchievement('destination-guide',`${runId}:${match.profile.slug}`,{ run:runId, slug:match.profile.slug, rank:preferredIndex >= 0 ? preferredIndex + 1 : Math.min(25,index + 6) })) }}>{match.profile.name}</Link></li>)}</ol></details>
       <div className="destination-method"><h2>Como chegamos a esta lista</h2><p>Primeiro mostramos os destinos das regiões escolhidas. Dentro delas, comparamos clima e idioma do cotidiano. Clima “tanto faz” não diferencia países; aceitar aprender o idioma local também não diferencia países quando você dispõe de tempo para isso. Quando ambos os fatores são comparáveis, sua prioridade altera o peso de um deles. Empates aparecem em ordem alfabética, sem diferença de alinhamento. Clima varia por cidade e idioma de ensino depende da instituição.</p>
         <p>Custo de vida, mensalidade, bolsas, trabalho e regras após o curso <strong>não entram na classificação</strong> sem dados oficiais atualizados para o programa e para sua situação. Eles aparecem no checklist para orientar a próxima pesquisa.</p>
         <p>Referências gerais verificadas em 19/10/2026: <a href={DESTINATION_SOURCES.region} target="_blank" rel="noreferrer">regiões da ONU</a> e <a href={DESTINATION_SOURCES.climate} target="_blank" rel="noreferrer">portal climático do Banco Mundial</a>. As categorias amplas do teste são uma síntese editorial, não classificações oficiais de cursos ou cidades.</p></div>

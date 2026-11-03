@@ -3,6 +3,8 @@ import { promisify } from 'node:util'
 import { database } from './db.mjs'
 import { claimChallenge, getMissions, reconcileUniqueMissions } from './missions.mjs'
 import { handleDocumentsRequest } from './documents.mjs'
+import { handleSavedScholarshipsRequest } from './savedScholarships.mjs'
+import { isPublicAchievementEvent, recordAchievementEvent } from './achievements.mjs'
 
 const scrypt = promisify(scryptCallback)
 const cookieName = 'dd_account'
@@ -231,6 +233,15 @@ export async function handleAccountRequest(req, res, url, { json, body, originAl
   if (!user) throw error(401, 'Entre na sua conta para continuar.')
 
   if (await handleDocumentsRequest(req, res, user.id, path, { json })) return true
+  if (await handleSavedScholarshipsRequest(req, res, user.id, url, { json, body })) return true
+
+  if (method === 'POST' && path === '/api/account/achievements/events') {
+    const input = await body(req)
+    if (!isPublicAchievementEvent(input?.kind)) throw error(400, 'Evento de conquista inválido.')
+    await recordAchievementEvent(user.id, input)
+    json(res, 200, { recorded:true })
+    return true
+  }
 
   if (method === 'GET' && path === '/api/account/missions') {
     json(res, 200, await getMissions(user.id))
@@ -249,6 +260,7 @@ export async function handleAccountRequest(req, res, url, { json, body, originAl
     }
     if (method === 'PUT') {
       const input = await body(req)
+      const previous = await database().query("SELECT (saved_at AT TIME ZONE 'America/Sao_Paulo')::date < (now() AT TIME ZONE 'America/Sao_Paulo')::date AS older FROM user_gpa_estimates WHERE user_id=$1",[user.id])
       const values = [input?.bands, input?.proportional, input?.letters, input?.sourceAverage]
       if (values.some((value, index) => typeof value !== 'number' || !Number.isFinite(value) || value < 0 || value > (index === 3 ? 10 : 4))) throw error(400, 'Envie os três resultados válidos e a média de origem.')
       if (input?.inputMode !== 'average' && input?.inputMode !== 'courses') throw error(400, 'Modo de cálculo inválido.')
@@ -265,6 +277,8 @@ export async function handleAccountRequest(req, res, url, { json, body, originAl
           weighted=EXCLUDED.weighted,passing_grade=EXCLUDED.passing_grade,include_failed=EXCLUDED.include_failed,saved_at=now()
         RETURNING *`, [user.id, ...values, input.inputMode, input.weighted, passingGrade, includeFailed])
       await reconcileUniqueMissions(user.id)
+      await recordAchievementEvent(user.id,{ kind:'gpa-save', target:'saved', details:{} })
+      if (previous.rows[0]?.older) await recordAchievementEvent(user.id,{ kind:'gpa-saved-update', target:'updated', details:{} })
       json(res, 200, { estimate: publicGpaEstimate(result.rows[0]) })
       return true
     }
@@ -278,7 +292,7 @@ export async function handleAccountRequest(req, res, url, { json, body, originAl
   if (method === 'GET' && path === '/api/account/journey') {
     const [tasks, deadlines] = await Promise.all([
       database().query('SELECT task_key AS "key", status, updated_at AS "updatedAt" FROM user_journey_tasks WHERE user_id=$1', [user.id]),
-      database().query('SELECT id::text, title, to_char(due_date, \'YYYY-MM-DD\') AS "dueDate", note FROM user_journey_deadlines WHERE user_id=$1 ORDER BY due_date,id', [user.id]),
+      database().query('SELECT id::text, title, to_char(due_date, \'YYYY-MM-DD\') AS "dueDate", note, saved_source AS "savedSource", saved_source_id AS "savedSourceId" FROM user_journey_deadlines WHERE user_id=$1 ORDER BY due_date,id', [user.id]),
     ])
     json(res, 200, { tasks: tasks.rows, deadlines: deadlines.rows })
     return true
@@ -291,6 +305,7 @@ export async function handleAccountRequest(req, res, url, { json, body, originAl
       if (input?.status !== 'done' && input?.status !== 'skipped') throw error(400, 'Escolha um estado válido para a tarefa.')
       await database().query(`INSERT INTO user_journey_tasks (user_id,task_key,status) VALUES ($1,$2,$3)
         ON CONFLICT (user_id,task_key) DO UPDATE SET status=EXCLUDED.status,updated_at=now()`, [user.id, taskMatch[1], input.status])
+      if (input.status === 'done') await recordAchievementEvent(user.id,{ kind:'journey-task', target:taskMatch[1], details:{} })
       json(res, 200, { key: taskMatch[1], status: input.status })
       return true
     }
@@ -308,6 +323,13 @@ export async function handleAccountRequest(req, res, url, { json, body, originAl
       const title = typeof input?.title === 'string' ? input.title.trim().replace(/\s+/g, ' ') : ''
       const note = typeof input?.note === 'string' ? input.note.trim() : ''
       const dueDate = input?.dueDate
+      const savedSource = input?.savedSource || null
+      const savedSourceId = input?.savedSourceId || null
+      if ((savedSource === null) !== (savedSourceId === null) || (savedSource !== null && (typeof savedSource !== 'string' || typeof savedSourceId !== 'string' || savedSource.length > 80 || savedSourceId.length > 200))) throw error(400, 'Bolsa salva inválida.')
+      if (savedSource) {
+        const saved = await database().query('SELECT 1 FROM user_saved_scholarships WHERE user_id=$1 AND source=$2 AND source_id=$3',[user.id,savedSource,savedSourceId])
+        if (!saved.rowCount) throw error(400, 'Selecione uma bolsa salva na sua conta.')
+      }
       if (title.length < 2 || title.length > 120) throw error(400, 'Informe um título de 2 a 120 caracteres.')
       if (note.length > 500) throw error(400, 'A observação deve ter até 500 caracteres.')
       if (typeof dueDate !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(dueDate) || Number.isNaN(Date.parse(`${dueDate}T00:00:00Z`)) || new Date(`${dueDate}T00:00:00Z`).toISOString().slice(0, 10) !== dueDate) throw error(400, 'Informe uma data válida.')
@@ -316,10 +338,11 @@ export async function handleAccountRequest(req, res, url, { json, body, originAl
         if (count.rows[0].total >= 50) throw error(400, 'O limite é de 50 prazos. Remova um para adicionar outro.')
       }
       const result = method === 'POST'
-        ? await database().query('INSERT INTO user_journey_deadlines (user_id,title,due_date,note) VALUES ($1,$2,$3,$4) RETURNING id::text,title,to_char(due_date, \'YYYY-MM-DD\') AS "dueDate",note', [user.id, title, dueDate, note || null])
-        : await database().query('UPDATE user_journey_deadlines SET title=$1,due_date=$2,note=$3 WHERE id=$4 AND user_id=$5 RETURNING id::text,title,to_char(due_date, \'YYYY-MM-DD\') AS "dueDate",note', [title, dueDate, note || null, deadlineMatch[1], user.id])
+        ? await database().query('INSERT INTO user_journey_deadlines (user_id,title,due_date,note,saved_source,saved_source_id) VALUES ($1,$2,$3,$4,$5,$6) RETURNING id::text,title,to_char(due_date, \'YYYY-MM-DD\') AS "dueDate",note,saved_source AS "savedSource",saved_source_id AS "savedSourceId"', [user.id, title, dueDate, note || null,savedSource,savedSourceId])
+        : await database().query('UPDATE user_journey_deadlines SET title=$1,due_date=$2,note=$3,saved_source=$4,saved_source_id=$5 WHERE id=$6 AND user_id=$7 RETURNING id::text,title,to_char(due_date, \'YYYY-MM-DD\') AS "dueDate",note,saved_source AS "savedSource",saved_source_id AS "savedSourceId"', [title, dueDate, note || null,savedSource,savedSourceId,deadlineMatch[1], user.id])
       if (!result.rowCount) throw error(404, 'Prazo não encontrado.')
       if (method === 'POST') await reconcileUniqueMissions(user.id)
+      await recordAchievementEvent(user.id,{ kind:'deadline-save', target:result.rows[0].id, details:{} })
       json(res, method === 'POST' ? 201 : 200, result.rows[0])
       return true
     }
@@ -354,6 +377,7 @@ export async function handleAccountRequest(req, res, url, { json, body, originAl
       await client.query('COMMIT')
     } catch (cause) { await client.query('ROLLBACK'); throw cause } finally { client.release() }
     await reconcileUniqueMissions(user.id)
+    await recordAchievementEvent(user.id,{ kind:'profile-save', target:'saved', details:{} })
     json(res, 200, { user: { ...publicUser(user), displayName: data.name, studyLevel: data.level, interestArea: data.area,
       destinationSlug: data.destination, destinationSlugs: data.destinations, fullName: data.fullName,
       schoolName: data.schoolName, schoolYear: data.schoolYear, city: data.city, stateCode: data.stateCode,

@@ -3,7 +3,7 @@ import { INTEREST_AREAS, type InterestArea } from '../../data/vocationalQuestion
 
 type AreaScore = { area: InterestArea; mean: number }
 
-function CareerGroup({ score }: { score: AreaScore }) {
+function CareerGroup({ score, onExplore }: { score: AreaScore; onExplore:(area:InterestArea) => void }) {
   const area = INTEREST_AREAS[score.area]
 
   return (
@@ -17,12 +17,12 @@ function CareerGroup({ score }: { score: AreaScore }) {
           </li>
         ))}
       </ul>
-      <details className="vocational__career-more"><summary>Ver mais opções desta área</summary><ul className="vocational__career-list">{CAREERS_BY_AREA[score.area].slice(3).map((career: CareerPath) => <li key={career.title}><strong>{career.title}</strong><span>Formações para pesquisar: {career.courses}</span></li>)}</ul></details>
+      <details className="vocational__career-more" onToggle={(event) => { if (event.currentTarget.open) onExplore(score.area) }}><summary>Ver mais opções desta área</summary><ul className="vocational__career-list">{CAREERS_BY_AREA[score.area].slice(3).map((career: CareerPath) => <li key={career.title}><strong>{career.title}</strong><span>Formações para pesquisar: {career.courses}</span></li>)}</ul></details>
     </section>
   )
 }
 
-export function CareerRecommendations({ scores }: { scores: AreaScore[] }) {
+export function CareerRecommendations({ scores, onExplore }: { scores: AreaScore[]; onExplore:(area:InterestArea) => void }) {
   return (
     <section className="vocational__careers" aria-labelledby="vocational-careers-title">
       <div className="vocational__career-intro">
@@ -32,7 +32,7 @@ export function CareerRecommendations({ scores }: { scores: AreaScore[] }) {
       </div>
 
       <div className="vocational__career-groups">
-        {scores.map((score) => <CareerGroup key={score.area} score={score} />)}
+        {scores.map((score) => <CareerGroup key={score.area} score={score} onExplore={onExplore} />)}
       </div>
       <p className="vocational__career-note">São exemplos para pesquisa, não indicação de profissão ou formação obrigatória. Confira a grade curricular e os requisitos do país onde pretende estudar.</p>
     </section>

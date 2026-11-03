@@ -41,6 +41,9 @@ import { SatHomePage, SatDailyPage, SatExamPage } from './pages/SatPage'
 import { MextHomePage, MextDailyPage, MextExamPage } from './pages/MextPage'
 import { AdminSatPage } from './pages/AdminSatPage'
 import { useLocation } from './router/navigation'
+import { useEffect } from 'react'
+import { recordAchievement } from './lib/achievementEvents'
+import { DESTINATION_PROFILES } from './data/destinationProfiles'
 
 /*
  * Rotas do site:
@@ -62,6 +65,43 @@ import { useLocation } from './router/navigation'
 function Routes() {
   const { pathname, search } = useLocation()
   const path = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname
+
+  useEffect(() => {
+    const slug = path.match(/^\/paises\/([a-z0-9-]+)$/)?.[1]
+    if (slug && DESTINATION_PROFILES.some(item => item.slug === slug)) recordAchievement('guide-view',slug)
+    if (path === '/ranking') recordAchievement('rank-view','general')
+    const areas:Record<string,string> = {
+      '/rankings/artes-humanidades':'arts-humanities', '/rankings/engenharia-tecnologia':'engineering-technology',
+      '/rankings/ciencias-da-vida-medicina':'life-sciences-medicine', '/rankings/ciencias-naturais':'natural-sciences',
+      '/rankings/ciencias-sociais-administracao':'social-sciences-management',
+    }
+    if (areas[path]) recordAchievement('rank-view',areas[path])
+
+    function onClick(event:MouseEvent) {
+      if (!slug) return
+      const element = event.target
+      if (!(element instanceof Element)) return
+      const tab = element.closest<HTMLButtonElement>('[role="tab"]')
+      if (tab) {
+        const id = tab.id.toLowerCase()
+        const label = tab.textContent?.toLowerCase() || ''
+        const topic = id.includes('custos') ? 'costs' : id.includes('cultura') ? 'culture'
+          : id.includes('vida') || id.includes('comunidade') ? 'student'
+          : id.includes('calendario') ? 'calendar'
+          : id.includes('visto') || id.includes('residencia') ? 'visa'
+          : id.includes('trabalho') ? 'work' : null
+        const fallback = label.includes('visto') ? 'visa' : null
+        if (topic || fallback) recordAchievement('guide-section',`${slug}:${topic || fallback}`)
+      }
+      const anchor = element.closest<HTMLAnchorElement>('a[href]')
+      if (!anchor) return
+      const url = new URL(anchor.href)
+      if (url.pathname === '/bolsas' && url.searchParams.get('country') === slug) recordAchievement('guide-bolsas',slug)
+      if (anchor.closest('.germany-block__meta')?.textContent?.includes('Fonte oficial') || anchor.closest('.guide-fact__source')) recordAchievement('guide-source',slug)
+    }
+    document.addEventListener('click',onClick)
+    return () => document.removeEventListener('click',onClick)
+  }, [path])
 
   if (path === '/') return <HomePage />
   if (path === '/conta') return <AccountPage />

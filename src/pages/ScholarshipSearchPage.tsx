@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from '../router/Link'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
+import { recordAchievement } from '../lib/achievementEvents'
 import './ScholarshipSearchPage.css'
 
 type Country = { slug: string; name: string }
@@ -12,6 +13,9 @@ type Scholarship = {
   destinations: string | null; study_level: string | null; country_basis: string;
 }
 type Page = { items: Scholarship[]; total: number; page: number; pageSize: number }
+type SavedItem = { source: string; source_id: string }
+const scholarshipKey = (item: SavedItem) => `${item.source}:${item.source_id}`
+const searchKey = (filters: Filters) => [filters.country,filters.level,filters.area,filters.deadline,filters.criteria,filters.q.trim() ? 'query' : ''].join('|')
 type Filters = { q: string; country: string; level: string; area: string; deadline: string; criteria: string }
 const emptyFilters: Filters = { q: '', country: '', level: '', area: '', deadline: '', criteria: '' }
 const initialFilters = (): Filters => {
@@ -94,7 +98,7 @@ const observedDate = (value: string) => {
   return date.length === 3 ? `${date[2]}/${date[1]}/${date[0]}` : value
 }
 
-function ScholarshipCard({ scholarship }: { scholarship: Scholarship }) {
+function ScholarshipCard({ scholarship, saved, signedIn, busy, onToggle, onSourceOpen }: { scholarship: Scholarship; saved: boolean; signedIn: boolean; busy: boolean; onToggle: (item: Scholarship) => void; onSourceOpen: (item: Scholarship) => void }) {
   const value = scholarship.amount?.trim()
   return <li className={`sch-search__card ${scholarship.source === 'verified' ? '' : 'sch-search__card--lead'}`}>
     <div className="sch-search__card-head"><div><span className="sch-search__status">{sourceName[scholarship.source]}</span><h3>{scholarship.title}</h3></div></div>
@@ -110,8 +114,9 @@ function ScholarshipCard({ scholarship }: { scholarship: Scholarship }) {
       <div><dt>Nível de estudo</dt><dd>{studyLevel(scholarship.study_level)}</dd></div>
     </dl>
     <p className="sch-search__source">{scholarship.country_basis}. Fonte: {scholarship.source_label} · {scholarship.source === 'verified' ? 'verificada' : 'coletada'} em {observedDate(scholarship.observed_at)}. Confirme prazo e elegibilidade na página original.</p>
-    <div className="sch-search__links"><a className="sch-search__action" href={scholarship.source_url} target="_blank" rel="noreferrer">{scholarship.source === 'study_in_sweden' || scholarship.source === 'study_taiwan' || scholarship.source === 'study_hong_kong' ? 'Ver listagem original' : 'Ver página da bolsa'} <span aria-hidden="true">↗</span></a>
-      {scholarship.application_url && <a className="sch-search__action" href={scholarship.application_url} target="_blank" rel="noreferrer">{scholarship.source === 'spain_administration' ? 'Ver publicação oficial' : scholarship.source === 'study_hong_kong' ? 'Ver página do financiador' : scholarship.source === 'studyspy_nz' ? 'Consultar no provedor' : (scholarship.source === 'study_in_sweden' || scholarship.source === 'efg_finland' || scholarship.source === 'efg_denmark' || scholarship.source === 'global_admissions_belgium' || scholarship.source === 'study_taiwan') ? 'Ver página do provedor' : 'Consultar inscrição'} <span aria-hidden="true">↗</span></a>}</div>
+    <div className="sch-search__links"><a className="sch-search__action" href={scholarship.source_url} target="_blank" rel="noreferrer" onClick={() => onSourceOpen(scholarship)}>{scholarship.source === 'study_in_sweden' || scholarship.source === 'study_taiwan' || scholarship.source === 'study_hong_kong' ? 'Ver listagem original' : 'Ver página da bolsa'} <span aria-hidden="true">↗</span></a>
+      {scholarship.application_url && <a className="sch-search__action" href={scholarship.application_url} target="_blank" rel="noreferrer">{scholarship.source === 'spain_administration' ? 'Ver publicação oficial' : scholarship.source === 'study_hong_kong' ? 'Ver página do financiador' : scholarship.source === 'studyspy_nz' ? 'Consultar no provedor' : (scholarship.source === 'study_in_sweden' || scholarship.source === 'efg_finland' || scholarship.source === 'efg_denmark' || scholarship.source === 'global_admissions_belgium' || scholarship.source === 'study_taiwan') ? 'Ver página do provedor' : 'Consultar inscrição'} <span aria-hidden="true">↗</span></a>}
+      {signedIn ? <button className="sch-search__save" type="button" disabled={busy} aria-pressed={saved} onClick={() => onToggle(scholarship)}>{busy ? 'Aguarde…' : saved ? 'Salva · remover' : 'Salvar bolsa'}</button> : <Link className="sch-search__save" to="/conta?tab=bolsas">Entre para salvar</Link>}</div>
   </li>
 }
 
@@ -125,6 +130,41 @@ export function ScholarshipSearchPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [retry, setRetry] = useState(0)
+  const [signedIn, setSignedIn] = useState(false)
+  const [savedKeys, setSavedKeys] = useState<Set<string>>(new Set())
+  const [savingKey, setSavingKey] = useState('')
+  const [saveError, setSaveError] = useState('')
+  const pendingSearch = useRef<string | null>(null)
+
+  useEffect(() => {
+    let active = true
+    fetch('/api/account/me', { credentials: 'same-origin' }).then(response => response.json()).then(async result => {
+      if (!active || !result.user) return
+      setSignedIn(true)
+      const response = await fetch('/api/account/saved-scholarships', { credentials: 'same-origin' })
+      if (!response.ok) throw new Error('Não foi possível carregar as bolsas salvas.')
+      const data = await response.json() as { items: SavedItem[] }
+      if (active) setSavedKeys(new Set(data.items.map(scholarshipKey)))
+    }).catch(() => { if (active) setSaveError('Não foi possível carregar suas bolsas salvas. Tente recarregar a página.') })
+    return () => { active = false }
+  }, [])
+
+  async function toggleSaved(item: Scholarship) {
+    const key = scholarshipKey(item)
+    if (savingKey) return
+    setSavingKey(key); setSaveError('')
+    const saved = savedKeys.has(key)
+    try {
+      const response = await fetch(saved ? `/api/account/saved-scholarships?${new URLSearchParams({ source: item.source, sourceId: item.source_id })}` : '/api/account/saved-scholarships', {
+        method: saved ? 'DELETE' : 'POST', credentials: 'same-origin',
+        ...(!saved ? { headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ source: item.source, sourceId: item.source_id }) } : {}),
+      })
+      const result = await response.json()
+      if (!response.ok) throw new Error(result.error || 'Não foi possível atualizar a bolsa salva.')
+      setSavedKeys(previous => { const next = new Set(previous); if (saved) next.delete(key); else next.add(key); return next })
+    } catch (cause) { setSaveError(cause instanceof Error ? cause.message : 'Não foi possível atualizar a bolsa salva.') }
+    finally { setSavingKey('') }
+  }
 
   useEffect(() => {
     const controller = new AbortController()
@@ -143,6 +183,11 @@ export function ScholarshipSearchPage() {
         const body = await response.json()
         if (!response.ok) throw new Error(body.error || 'Não foi possível consultar as bolsas.')
         setData(body)
+        const key = searchKey(activeFilters)
+        if (pendingSearch.current === key) {
+          recordAchievement('sch-search',key || 'all',{ country:activeFilters.country, level:activeFilters.level, area:activeFilters.area, deadline:activeFilters.deadline, criteria:activeFilters.criteria, query:Boolean(activeFilters.q) })
+          pendingSearch.current = null
+        }
       })
       .catch(cause => { if (cause.name !== 'AbortError') { setData(null); setError('A busca não pôde carregar. Confira se a API e o PostgreSQL estão em execução e tente novamente.') } })
       .finally(() => { if (!controller.signal.aborted) setLoading(false) })
@@ -154,10 +199,12 @@ export function ScholarshipSearchPage() {
   }
   function applyFilters(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    pendingSearch.current = searchKey(draftFilters)
     setData(null); setError(''); setLoading(true); setPage(1)
     setActiveFilters({ ...draftFilters, q: draftFilters.q.trim() })
   }
   function clearFilters() {
+    pendingSearch.current = null
     setDraftFilters(emptyFilters)
     setData(null); setError(''); setLoading(true); setPage(1)
     setActiveFilters({ ...emptyFilters })
@@ -204,9 +251,11 @@ export function ScholarshipSearchPage() {
       <section className="sch-search__results" aria-labelledby="sch-search-results-title">
         <div className="sch-search__heading"><div><p className="sch-search__eyebrow">Resultados</p><h2 id="sch-search-results-title">Bolsas para explorar</h2></div>
           {!loading && !error && data && <span aria-live="polite">{data.total} {data.total === 1 ? 'resultado' : 'resultados'}</span>}</div>
+        {signedIn && <p><Link to="/conta?tab=bolsas">Ver minhas bolsas salvas ({savedKeys.size})</Link></p>}
+        {saveError && <p className="sch-search__save-error" role="alert">{saveError}</p>}
         {loading ? <p className="sch-search__state" role="status">Carregando resultados…</p> : error ? <div className="sch-search__state" role="alert"><p>{error}</p><button type="button" onClick={tryAgain}>Tentar novamente</button></div>
           : data?.total === 0 ? <div className="sch-search__state"><h3>Nenhum registro com estes filtros</h3><p>Amplie o nível, a área ou o prazo e confira novamente. A ausência de dados na fonte também pode impedir uma correspondência.</p><button type="button" onClick={clearFilters}>Limpar filtros</button></div>
-            : <><ul className="sch-search__list">{data?.items.map(item => <ScholarshipCard key={`${item.source}-${item.source_id}`} scholarship={item} />)}</ul>
+            : <><ul className="sch-search__list">{data?.items.map(item => <ScholarshipCard key={`${item.source}-${item.source_id}`} scholarship={item} saved={savedKeys.has(scholarshipKey(item))} signedIn={signedIn} busy={savingKey === scholarshipKey(item)} onToggle={(scholarship) => void toggleSaved(scholarship)} onSourceOpen={(scholarship) => recordAchievement('sch-source',`${scholarshipKey(scholarship)}|${activeFilters.criteria}|${activeFilters.deadline}`,{ scholarship:scholarshipKey(scholarship), criteria:activeFilters.criteria, deadlineFilter:activeFilters.deadline, hasDate:Boolean(scholarship.deadline && /(\d{1,2}\/\d{1,2}\/\d{4}|\d{4}-\d{2}-\d{2})/.test(scholarship.deadline)) })} />)}</ul>
               {totalPages > 1 && <nav className="sch-search__pages" aria-label="Páginas de resultados"><button type="button" disabled={page <= 1} onClick={() => changePage(page - 1)}>Anterior</button><span>Página {page} de {totalPages}</span><button type="button" disabled={page >= totalPages} onClick={() => changePage(page + 1)}>Próxima</button></nav>}</>}
       </section>
     </div>

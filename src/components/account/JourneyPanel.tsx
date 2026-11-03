@@ -1,10 +1,12 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { Link } from '../../router/Link'
+import { recordAchievement } from '../../lib/achievementEvents'
 import { JOURNEY_STAGES, JOURNEY_TASK_COUNT } from '../../data/journey'
 import './JourneyPanel.css'
 
 type TaskState = { key: string; status: 'done' | 'skipped' }
-type Deadline = { id: string; title: string; dueDate: string; note: string | null }
+type Deadline = { id: string; title: string; dueDate: string; note: string | null; savedSource:string | null; savedSourceId:string | null }
+type SavedScholarship = { source:string; source_id:string; title:string }
 type Journey = { tasks: TaskState[]; deadlines: Deadline[] }
 
 async function request<T>(path: string, method = 'GET', data?: unknown): Promise<T> {
@@ -32,10 +34,13 @@ export function JourneyPanel() {
   const [dueDate, setDueDate] = useState('')
   const [note, setNote] = useState('')
   const [editingId, setEditingId] = useState<string | null>(null)
+  const [savedScholarships, setSavedScholarships] = useState<SavedScholarship[]>([])
+  const [selectedScholarship, setSelectedScholarship] = useState('')
 
   useEffect(() => {
     let active = true
-    request<Journey>('/api/account/journey').then((data) => { if (active) setJourney(data) }).catch((cause) => { if (active) setError(cause instanceof Error ? cause.message : 'Não foi possível carregar a jornada.') })
+    request<Journey>('/api/account/journey').then((data) => { if (active) { setJourney(data); const hasFutureDeadline = data.deadlines.some(item => item.dueDate >= new Date().toLocaleDateString('en-CA')); recordAchievement('journey-view',hasFutureDeadline ? 'future' : 'opened',{ hasFutureDeadline }) } }).catch((cause) => { if (active) setError(cause instanceof Error ? cause.message : 'Não foi possível carregar a jornada.') })
+    request<{ items:SavedScholarship[] }>('/api/account/saved-scholarships').then(data => { if (active) setSavedScholarships(data.items) }).catch(() => {})
     return () => { active = false }
   }, [])
 
@@ -56,14 +61,15 @@ export function JourneyPanel() {
     finally { setBusyKey('') }
   }
 
-  function resetForm() { setTitle(''); setDueDate(''); setNote(''); setEditingId(null) }
+  function resetForm() { setTitle(''); setDueDate(''); setNote(''); setSelectedScholarship(''); setEditingId(null) }
 
   async function saveDeadline(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (!journey) return
     setBusyKey('deadline'); setError(''); setNotice('')
     try {
-      const result = await request<Deadline>(editingId ? `/api/account/journey/deadlines/${editingId}` : '/api/account/journey/deadlines', editingId ? 'PUT' : 'POST', { title, dueDate, note })
+      const chosen = savedScholarships.find(item => `${item.source}:${item.source_id}` === selectedScholarship)
+      const result = await request<Deadline>(editingId ? `/api/account/journey/deadlines/${editingId}` : '/api/account/journey/deadlines', editingId ? 'PUT' : 'POST', { title, dueDate, note, savedSource:chosen?.source || null, savedSourceId:chosen?.source_id || null })
       setJourney({ ...journey, deadlines: [...journey.deadlines.filter((item) => item.id !== result.id), result].sort((a, b) => a.dueDate.localeCompare(b.dueDate) || a.title.localeCompare(b.title)) })
       setNotice(editingId ? 'Prazo atualizado.' : 'Prazo salvo na sua conta.')
       resetForm()
@@ -92,8 +98,8 @@ export function JourneyPanel() {
     {journey && <>
       <div className="journey__overview"><div><strong>{done} de {JOURNEY_TASK_COUNT}</strong><span>tarefas concluídas{skipped ? ` · ${skipped} puladas` : ''}</span></div><div className="journey__progress" role="progressbar" aria-label="Progresso da jornada" aria-valuemin={0} aria-valuemax={JOURNEY_TASK_COUNT} aria-valuenow={done}><span style={{ width: `${progress}%` }} /></div><p>{progress}% da jornada concluída. As tarefas puladas não entram no cálculo.</p></div>
       <section className="journey__deadlines" aria-labelledby="journey-deadlines-title"><div><h3 id="journey-deadlines-title">Meus prazos</h3><p>Registre datas das oportunidades que você está acompanhando. Confira sempre o ano e o fuso horário no edital.</p></div>
-        <form className="journey__deadline-form" onSubmit={saveDeadline}><label>O que vence?<input required minLength={2} maxLength={120} value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Ex.: candidatura ao curso" /></label><label>Data<input required type="date" value={dueDate} onChange={(event) => setDueDate(event.target.value)} /></label><label className="journey__note">Observação (opcional)<input maxLength={500} value={note} onChange={(event) => setNote(event.target.value)} placeholder="Ex.: confira o horário no site oficial" /></label><div><button className="account-page__primary" type="submit" disabled={Boolean(busyKey)}>{editingId ? 'Salvar alteração' : 'Adicionar prazo'}</button>{editingId && <button className="journey__button" type="button" onClick={resetForm}>Cancelar edição</button>}</div></form>
-        {journey.deadlines.length === 0 ? <p className="journey__empty">Nenhum prazo registrado ainda.</p> : <ul className="journey__deadline-list">{journey.deadlines.map((item) => <li key={item.id}><div><strong>{item.title}</strong><span>{dateLabel(item.dueDate)}{item.dueDate < today ? ' · prazo passado' : item.dueDate === today ? ' · hoje' : ''}</span>{item.note && <p>{item.note}</p>}</div><div><button type="button" disabled={Boolean(busyKey)} onClick={() => { setEditingId(item.id); setTitle(item.title); setDueDate(item.dueDate); setNote(item.note || ''); document.querySelector('.journey__deadline-form')?.scrollIntoView({ block: 'center' }) }}>Editar</button><button type="button" disabled={Boolean(busyKey)} onClick={() => void removeDeadline(item.id)}>Remover</button></div></li>)}</ul>}
+        <form className="journey__deadline-form" onSubmit={saveDeadline}><label>O que vence?<input required minLength={2} maxLength={120} value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Ex.: candidatura ao curso" /></label><label>Data<input required type="date" value={dueDate} onChange={(event) => setDueDate(event.target.value)} /></label>{savedScholarships.length > 0 && <label>Bolsa salva (opcional)<select value={selectedScholarship} onChange={event => setSelectedScholarship(event.target.value)}><option value="">Sem bolsa associada</option>{savedScholarships.map(item => <option key={`${item.source}:${item.source_id}`} value={`${item.source}:${item.source_id}`}>{item.title}</option>)}</select></label>}<label className="journey__note">Observação (opcional)<input maxLength={500} value={note} onChange={(event) => setNote(event.target.value)} placeholder="Ex.: confira o horário no site oficial" /></label><div><button className="account-page__primary" type="submit" disabled={Boolean(busyKey)}>{editingId ? 'Salvar alteração' : 'Adicionar prazo'}</button>{editingId && <button className="journey__button" type="button" onClick={resetForm}>Cancelar edição</button>}</div></form>
+        {journey.deadlines.length === 0 ? <p className="journey__empty">Nenhum prazo registrado ainda.</p> : <ul className="journey__deadline-list">{journey.deadlines.map((item) => <li key={item.id}><div><strong>{item.title}</strong><span>{dateLabel(item.dueDate)}{item.dueDate < today ? ' · prazo passado' : item.dueDate === today ? ' · hoje' : ''}</span>{item.savedSource && <p>Bolsa associada: {savedScholarships.find(saved => saved.source === item.savedSource && saved.source_id === item.savedSourceId)?.title || 'Bolsa salva'}</p>}{item.note && <p>{item.note}</p>}</div><div><button type="button" disabled={Boolean(busyKey)} onClick={() => { setEditingId(item.id); setTitle(item.title); setDueDate(item.dueDate); setNote(item.note || ''); setSelectedScholarship(item.savedSource ? `${item.savedSource}:${item.savedSourceId}` : ''); document.querySelector('.journey__deadline-form')?.scrollIntoView({ block: 'center' }) }}>Editar</button><button type="button" disabled={Boolean(busyKey)} onClick={() => void removeDeadline(item.id)}>Remover</button></div></li>)}</ul>}
       </section>
       <ol className="journey__stages">{JOURNEY_STAGES.map((stage, index) => {
         const stageDone = stage.tasks.filter((task) => taskStatus.get(task.key) === 'done').length

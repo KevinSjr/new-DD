@@ -1,4 +1,6 @@
 import { database } from './db.mjs'
+import { streakFromDays } from './streak.mjs'
+import { reconcileAchievements } from './achievements.mjs'
 
 const fail = (status, message) => { throw Object.assign(new Error(message), { status }) }
 
@@ -58,8 +60,9 @@ async function practiceCounts(client, userId, day) {
   const start = weekStart(day)
   const week = await client.query('SELECT count(DISTINCT day)::int AS total FROM user_mission_challenge_claims WHERE user_id=$1 AND day >= $2::date AND day < $3::date', [userId,start,nextWeek(start)])
   const month = await client.query('SELECT count(DISTINCT day)::int AS total FROM user_mission_challenge_claims WHERE user_id=$1 AND to_char(day, \'YYYY-MM\')=$2', [userId,day.slice(0,7)])
-  const total = await client.query('SELECT count(DISTINCT day)::int AS total FROM user_mission_challenge_claims WHERE user_id=$1', [userId])
-  return { week:week.rows[0].total, month:month.rows[0].total, total:total.rows[0].total, weekKey:start, monthKey:day.slice(0,7) }
+  const days = await client.query("SELECT DISTINCT to_char(day, 'YYYY-MM-DD') AS day FROM user_mission_challenge_claims WHERE user_id=$1 ORDER BY day DESC", [userId])
+  const practiceDays = days.rows.map(row => row.day)
+  return { week:week.rows[0].total, month:month.rows[0].total, total:practiceDays.length, streak:streakFromDays(practiceDays, day), weekKey:start, monthKey:day.slice(0,7) }
 }
 
 async function reconcilePracticeMissions(client, userId, day) {
@@ -76,6 +79,7 @@ export async function getMissions(userId) {
     const day = today()
     await reconcileUniqueMissions(userId,client)
     const { counts } = await reconcilePracticeMissions(client,userId,day)
+    const achievementState = await reconcileAchievements(userId,client)
     const awards = await client.query('SELECT mission_key,period_key,xp,awarded_at FROM user_mission_awards WHERE user_id=$1 ORDER BY awarded_at DESC', [userId])
     const earned = new Set(awards.rows.map(row => `${row.mission_key}:${row.period_key}`))
     const xp = awards.rows.reduce((sum,row) => sum + row.xp, 0)
@@ -84,8 +88,9 @@ export async function getMissions(userId) {
       const progress = mission.key === 'practice-two-days' ? counts.week : mission.key === 'practice-four-days' ? counts.month : earned.has(`${mission.key}:${periodKey}`) ? 1 : 0
       return { ...mission, periodKey, progress:Math.min(progress,mission.target), completed:earned.has(`${mission.key}:${periodKey}`) }
     })
-    return { xp, level:Math.floor(xp / 100) + 1, nextLevelXp:100 - xp % 100, practiceDays:counts.total,
+    return { xp, level:Math.floor(xp / 100) + 1, nextLevelXp:100 - xp % 100, practiceDays:counts.total, streak:achievementState.streak,
       completedCurrent:missions.filter(mission => mission.completed).length, missions,
+      achievements:achievementState.achievements.map(({ progress, ...item }) => ({ ...item, progress, completed:earned.has(`achievement-${item.key}:once`) })),
       recentAwards:awards.rows.slice(0,5).map(row => ({ key:row.mission_key, xp:row.xp, awardedAt:row.awarded_at })) }
   } finally { client.release() }
 }

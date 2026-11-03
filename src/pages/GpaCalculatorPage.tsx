@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { GPA_METHODS } from '../data/gpaMethods'
 import { calculateGpa, GpaInputError, type CourseInput, type GpaInput, type GpaResult } from '../lib/gpa'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
+import { recordAchievement } from '../lib/achievementEvents'
 import { InfoBadge } from '../components/ui/InfoBadge'
 import { Link } from '../router/Link'
 import './GpaCalculatorPage.css'
@@ -45,7 +46,12 @@ export function GpaCalculatorPage() {
       ? { mode, average }
       : { mode, courses, passingGrade: passingPreset === 'custom' ? customPassing : passingPreset, includeFailed }
     try {
-      setCalculated({ input, results: GPA_METHODS.map(item => calculateGpa(input, item)) })
+      const results = GPA_METHODS.map(item => calculateGpa(input, item))
+      setCalculated({ input, results })
+      if (results.every(item => item.gpa !== null)) {
+        recordAchievement('gpa-calculate',`${mode}:${mode === 'courses' && results[0].weighted ? 'weighted' : 'simple'}`,{ mode, weighted:mode === 'courses' && results[0].weighted })
+        recordAchievement('gpa-compare','three-methods')
+      }
       setError('')
       setSaveState('idle'); setSaveError('')
     } catch (cause) {
@@ -95,7 +101,7 @@ export function GpaCalculatorPage() {
       <div className="gpa-page__layout">
         <section className="gpa-panel" aria-labelledby="gpa-input-title">
           <h2 id="gpa-input-title">Suas notas</h2>
-          <p className="gpa-panel__intro">Escolha como deseja informar seu histórico. O cálculo acontece no navegador; somente as três estimativas são enviadas se você optar por salvá-las no perfil.</p>
+          <p className="gpa-panel__intro">Escolha como deseja informar seu histórico. O cálculo acontece no navegador. Se você estiver conectado, o modo de cálculo é registrado para conquistas; as notas só são salvas quando você optar por guardar as estimativas no perfil.</p>
           <fieldset className="gpa-mode"><legend>Modo de entrada</legend>
             <label><input type="radio" name="gpa-mode" checked={mode === 'average'} onChange={() => { setMode('average'); invalidate() }} /> Tenho só a média geral (CR)</label>
             <label><input type="radio" name="gpa-mode" checked={mode === 'courses'} onChange={() => { setMode('courses'); invalidate() }} /> Quero informar disciplina por disciplina</label>
@@ -131,7 +137,7 @@ export function GpaCalculatorPage() {
           <p>Não existe conversão oficial única entre as escalas. Cada universidade e cada avaliadora de credenciais, como WES e ECE, pode usar sua própria metodologia. O GPA calculado aqui não substitui uma avaliação oficial.</p>
           <p>Confira o método e os documentos exigidos pela universidade de destino antes de informar um GPA na candidatura.</p>
           <p>A fonte do método escolhido aparece no resultado. Os valores são referências a validar, não uma previsão de admissão.</p>
-          <p><strong>Privacidade:</strong> o cálculo roda no seu navegador. Notas por disciplina não são enviadas. Se você escolher salvar, as três estimativas e os parâmetros do cálculo ficam na sua conta; os campos preenchidos desaparecem ao recarregar.</p>
+          <p><strong>Privacidade:</strong> o cálculo roda no seu navegador. Notas por disciplina não são enviadas. Se você estiver conectado, o modo de cálculo e o uso de créditos são registrados para conquistas. Se escolher salvar, as três estimativas e os parâmetros do cálculo ficam na sua conta; os campos preenchidos desaparecem ao recarregar.</p>
         </aside>
       </div>
       <section className="gpa-results" aria-live="polite" aria-atomic="true" aria-labelledby="gpa-result-title">
