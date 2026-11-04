@@ -32,30 +32,18 @@
   min-width:0;
 }
 .missions-panel__item-copy { min-width:0; }
-.missions-panel__groups .missions-panel__item-icon,
-.missions-panel__achievements .missions-panel__item-icon {
-  display:grid;
-  place-items:center;
-  flex:0 0 2.9rem;
-  width:2.9rem;
-  height:2.9rem;
-  border-radius:.85rem;
-  background:#dff2fc;
-  color:var(--color-primary-ink);
-}
-.missions-panel__groups .is-complete .missions-panel__item-icon,
-.missions-panel__achievements .is-complete .missions-panel__item-icon {
-  background:#d4f1e6;
-  color:var(--color-success-ink);
-}
-.missions-panel__achievements .is-unavailable .missions-panel__item-icon {
-  background:var(--color-border);
-  color:var(--color-ink-muted);
-}
+.progress-badge { display:block; flex:0 0 4rem; width:4rem; height:4.3125rem; opacity:.78; filter:saturate(.72); }
+.progress-badge svg { display:block; width:100%; height:100%; }
+.progress-badge--earned { opacity:1; filter:none; }
+.progress-badge--unavailable { opacity:.48; filter:grayscale(1); }
+.missions-panel__achievements li { align-items:center; }
+.missions-panel__groups li > .missions-panel__item-main,
+.missions-panel__achievements li > .missions-panel__item-main { align-items:center; }
+.progress-badge { align-self:center; }
 @media (max-width:40em) {
   .missions-panel__groups li > .missions-panel__item-actions,
   .missions-panel__achievements li > .missions-panel__item-actions {
-    margin-left:3.75rem;
+    margin-left:4.85rem;
     justify-items:start;
   }
 }
