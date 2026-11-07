@@ -12,7 +12,9 @@ const EDITION = 2025
 const publicFields = 'id,edition,track,subject,section,item_code,position,prompt,transcript,asset_paths,answer_type,choices,points,source_url,source_page'
 const fail = (message, status = 400) => { throw Object.assign(new Error(message), { status }) }
 const today = () => new Intl.DateTimeFormat('en-CA', { timeZone:'America/Sao_Paulo', year:'numeric', month:'2-digit', day:'2-digit' }).format(new Date())
-const tokenFromCookie = req => (req.headers.cookie || '').match(/(?:^|;\s*)dd_mext_daily=([a-f0-9]{64})(?:;|$)/)?.[1]
+const mobileClient = req => !req.headers.origin && req.headers['x-daydreaming-client'] === 'mobile'
+const tokenFromRequest = req => (mobileClient(req) && /^[a-f0-9]{64}$/.test(req.headers['x-daydreaming-daily-token'] || '') ? req.headers['x-daydreaming-daily-token'] : null)
+  || (req.headers.cookie || '').match(/(?:^|;\s*)dd_mext_daily=([a-f0-9]{64})(?:;|$)/)?.[1]
 const tokenHash = token => createHash('sha256').update(token).digest('hex')
 const trackOrFail = value => {
   if (!['A', 'B'].includes(value)) fail('Modalidade inválida.')
@@ -126,25 +128,29 @@ export async function getMextDaily(req, res, track, subject) {
   await database().query('DELETE FROM mext_daily_runs WHERE day < $1::date', [day])
   const count = await database().query("SELECT count(*)::integer AS total FROM mext_questions WHERE edition=$1 AND track=$2 AND subject=$3 AND status='published'", [EDITION,track,subject])
   if (count.rows[0].total < MEXT_DAILY_COUNT) return { available:false, track, subject, needed:MEXT_DAILY_COUNT, published:count.rows[0].total }
-  let token = tokenFromCookie(req)
+  let token = tokenFromRequest(req)
   if (!token) {
     token = randomBytes(32).toString('hex')
-    res.setHeader('Set-Cookie', `dd_mext_daily=${token}; Path=/api/mext; HttpOnly; SameSite=Lax; Max-Age=2592000${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`)
+    if (!mobileClient(req)) res.setHeader('Set-Cookie', `dd_mext_daily=${token}; Path=/api/mext; HttpOnly; SameSite=Lax; Max-Age=2592000${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`)
   }
   const hash = tokenHash(token)
   const client = await database().connect()
   try {
     const existing = await client.query('SELECT * FROM mext_daily_runs WHERE token_hash=$1 AND day=$2 AND track=$3 AND subject=$4', [hash,day,track,subject])
-    if (existing.rowCount) return dailyState(client, existing.rows[0])
+    if (existing.rowCount) {
+      const state = await dailyState(client, existing.rows[0])
+      return mobileClient(req) ? { ...state, dailyToken:token } : state
+    }
     const selected = await client.query("SELECT id FROM mext_questions WHERE edition=$3 AND track=$4 AND subject=$5 AND status='published' ORDER BY md5(id::text || $1 || $4 || $5) LIMIT $2", [day,MEXT_DAILY_COUNT,EDITION,track,subject])
     const ids = selected.rows.map(row => row.id)
     const inserted = await client.query('INSERT INTO mext_daily_runs (token_hash,day,track,subject,question_ids) VALUES ($1,$2,$3,$4,$5) ON CONFLICT (token_hash,day,track,subject) DO UPDATE SET token_hash=EXCLUDED.token_hash RETURNING *', [hash,day,track,subject,ids])
-    return dailyState(client, inserted.rows[0])
+    const state = await dailyState(client, inserted.rows[0])
+    return mobileClient(req) ? { ...state, dailyToken:token } : state
   } finally { client.release() }
 }
 
 export async function answerMextDaily(req, input) {
-  const token = tokenFromCookie(req)
+  const token = tokenFromRequest(req)
   if (!token) fail('Abra o desafio diário antes de responder.', 401)
   const track = trackOrFail(input?.track || 'A')
   const subject = subjectOrFail(track, input?.subject)

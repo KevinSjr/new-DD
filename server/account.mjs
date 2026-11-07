@@ -98,6 +98,18 @@ function cookieToken(req) {
   return match?.[1] || null
 }
 
+function mobileClient(req) {
+  return !req.headers.origin && req.headers['x-daydreaming-client'] === 'mobile'
+}
+
+function sessionToken(req) {
+  if (mobileClient(req)) {
+    const match = /^Bearer ([a-f0-9]{64})$/.exec(req.headers.authorization || '')
+    if (match) return match[1]
+  }
+  return cookieToken(req)
+}
+
 function setCookie(res, token, production) {
   const secure = production ? '; Secure' : ''
   const value = token
@@ -106,15 +118,16 @@ function setCookie(res, token, production) {
   res.setHeader('Set-Cookie', value)
 }
 
-async function createSession(res, userId, production) {
+async function createSession(req, res, userId, production) {
   const token = randomBytes(32).toString('hex')
   await database().query('DELETE FROM user_sessions WHERE expires_at <= now()')
   await database().query('INSERT INTO user_sessions (token_hash,user_id,expires_at) VALUES ($1,$2,now() + interval \'30 days\')', [tokenHash(token), userId])
-  setCookie(res, token, production)
+  if (!mobileClient(req)) setCookie(res, token, production)
+  return mobileClient(req) ? { sessionToken: token, expiresInDays: sessionDays } : {}
 }
 
 async function currentUser(req) {
-  const token = cookieToken(req)
+  const token = sessionToken(req)
   if (!token) return null
   const result = await database().query(`SELECT a.id,a.email,a.display_name,a.created_at,
     p.*, ARRAY(SELECT d.country_slug FROM user_profile_destinations d WHERE d.user_id=a.id ORDER BY d.position) AS destination_slugs
@@ -196,9 +209,9 @@ export async function handleAccountRequest(req, res, url, { json, body, originAl
       if (cause.code === '23505') throw error(409, 'Este e-mail já está cadastrado.')
       throw cause
     } finally { client.release() }
-    await createSession(res, row.id, production)
+    const session = await createSession(req, res, row.id, production)
     loginAttempts.delete(key)
-    json(res, 201, { user: publicUser({ ...row, study_level: null, interest_area: null, destination_slug: null }) })
+    json(res, 201, { user: publicUser({ ...row, study_level: null, interest_area: null, destination_slug: null }), ...session })
     return true
   }
 
@@ -212,19 +225,19 @@ export async function handleAccountRequest(req, res, url, { json, body, originAl
     const row = found.rows[0]
     const valid = row && await verifyPassword(password, row.password_hash)
     if (!valid) { failedLogin(key); throw error(401, 'E-mail ou senha incorretos.') }
-    await createSession(res, row.id, production)
+    const session = await createSession(req, res, row.id, production)
     loginAttempts.delete(key)
     const loaded = await database().query(`SELECT a.id,a.email,a.display_name,a.created_at,p.*,
       ARRAY(SELECT d.country_slug FROM user_profile_destinations d WHERE d.user_id=a.id ORDER BY d.position) AS destination_slugs
       FROM user_accounts a JOIN user_profiles p ON p.user_id=a.id WHERE a.id=$1`, [row.id])
-    json(res, 200, { user: publicUser(loaded.rows[0]) })
+    json(res, 200, { user: publicUser(loaded.rows[0]), ...session })
     return true
   }
 
   if (method === 'POST' && path === '/api/account/logout') {
-    const token = cookieToken(req)
+    const token = sessionToken(req)
     if (token) await database().query('DELETE FROM user_sessions WHERE token_hash=$1', [tokenHash(token)])
-    setCookie(res, null, production)
+    if (!mobileClient(req)) setCookie(res, null, production)
     json(res, 200, { ok: true })
     return true
   }
@@ -400,8 +413,8 @@ export async function handleAccountRequest(req, res, url, { json, body, originAl
       await client.query('DELETE FROM user_sessions WHERE user_id=$1', [user.id])
       await client.query('COMMIT')
     } catch (cause) { await client.query('ROLLBACK'); throw cause } finally { client.release() }
-    await createSession(res, user.id, production)
-    json(res, 200, { ok: true })
+    const session = await createSession(req, res, user.id, production)
+    json(res, 200, { ok: true, ...session })
     return true
   }
 
@@ -410,7 +423,7 @@ export async function handleAccountRequest(req, res, url, { json, body, originAl
     const stored = await database().query('SELECT password_hash FROM user_accounts WHERE id=$1', [user.id])
     if (typeof data?.password !== 'string' || !(await verifyPassword(data.password, stored.rows[0]?.password_hash))) throw error(401, 'Senha incorreta.')
     await database().query('DELETE FROM user_accounts WHERE id=$1', [user.id])
-    setCookie(res, null, production)
+    if (!mobileClient(req)) setCookie(res, null, production)
     json(res, 200, { deleted: true })
     return true
   }

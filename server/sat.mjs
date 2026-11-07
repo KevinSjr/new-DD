@@ -77,7 +77,9 @@ export async function archiveSatQuestion(id) {
 }
 
 const today = () => new Intl.DateTimeFormat('en-CA', { timeZone:'America/Sao_Paulo', year:'numeric', month:'2-digit', day:'2-digit' }).format(new Date())
-const tokenFromCookie = req => (req.headers.cookie || '').match(/(?:^|;\s*)dd_sat_daily=([a-f0-9]{64})(?:;|$)/)?.[1]
+const mobileClient = req => !req.headers.origin && req.headers['x-daydreaming-client'] === 'mobile'
+const tokenFromRequest = req => (mobileClient(req) && /^[a-f0-9]{64}$/.test(req.headers['x-daydreaming-daily-token'] || '') ? req.headers['x-daydreaming-daily-token'] : null)
+  || (req.headers.cookie || '').match(/(?:^|;\s*)dd_sat_daily=([a-f0-9]{64})(?:;|$)/)?.[1]
 const tokenHash = token => createHash('sha256').update(token).digest('hex')
 const normalize = value => String(value ?? '').trim().toLowerCase().replace(',', '.')
 const publicQuestion = row => row && Object.fromEntries(publicFields.split(',').map(key => [key, row[key]]))
@@ -100,27 +102,31 @@ export async function getDaily(req, res, section = 'reading-writing') {
   const day = today()
   // O desafio não usa histórico: descarte respostas de dias anteriores.
   await database().query('DELETE FROM sat_daily_runs WHERE day < $1::date', [day])
-  let token = tokenFromCookie(req)
+  let token = tokenFromRequest(req)
   const count = await database().query("SELECT count(*)::integer AS total FROM sat_questions WHERE form_code=ANY($1) AND section=$2 AND status='published' AND deleted_at IS NULL", [SAT_FORMS,section])
   if (count.rows[0].total < DAILY_COUNT) return { available:false, needed:DAILY_COUNT, published:count.rows[0].total }
   if (!token) {
     token = randomBytes(32).toString('hex')
-    res.setHeader('Set-Cookie', `dd_sat_daily=${token}; Path=/api/sat; HttpOnly; SameSite=Lax; Max-Age=2592000${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`)
+    if (!mobileClient(req)) res.setHeader('Set-Cookie', `dd_sat_daily=${token}; Path=/api/sat; HttpOnly; SameSite=Lax; Max-Age=2592000${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`)
   }
   const hash = tokenHash(token)
   const client = await database().connect()
   try {
     const existing = await client.query('SELECT * FROM sat_daily_runs WHERE token_hash=$1 AND day=$2 AND section=$3', [hash,day,section])
-    if (existing.rowCount) return dailyState(client, existing.rows[0])
+    if (existing.rowCount) {
+      const state = await dailyState(client, existing.rows[0])
+      return mobileClient(req) ? { ...state, dailyToken:token } : state
+    }
     const selected = await client.query("SELECT id FROM sat_questions WHERE form_code=ANY($3) AND section=$4 AND status='published' AND deleted_at IS NULL ORDER BY md5(id::text || $1 || $4) LIMIT $2", [day,DAILY_COUNT,SAT_FORMS,section])
     const ids = selected.rows.map(row => row.id)
     const inserted = await client.query('INSERT INTO sat_daily_runs (token_hash,day,section,question_ids) VALUES ($1,$2,$3,$4) ON CONFLICT (token_hash,day,section) DO UPDATE SET token_hash=EXCLUDED.token_hash RETURNING *', [hash,day,section,ids])
-    return dailyState(client, inserted.rows[0])
+    const state = await dailyState(client, inserted.rows[0])
+    return mobileClient(req) ? { ...state, dailyToken:token } : state
   } finally { client.release() }
 }
 
 export async function answerDaily(req, input) {
-  const token = tokenFromCookie(req)
+  const token = tokenFromRequest(req)
   if (!token) fail('Abra o desafio diário antes de responder.', 401)
   const id = Number(input?.questionId)
   const answer = clean(input?.answer, 80)

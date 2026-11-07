@@ -1,0 +1,71 @@
+export type NewZealandSource = { label: string; url: string; verifiedAt: string }
+export type NewZealandBlock = { title: string; text: string; note?: string; source?: NewZealandSource; link?: { label: string; url: string } }
+export type NewZealandSection = { id: string; tab: string; kicker: string; title: string; intro: string; blocks: readonly NewZealandBlock[] }
+
+const verifiedAt = '2026-10-30'
+
+export const NEW_ZEALAND_SOURCES = {
+  population: { label: 'Stats NZ · Estimativa populacional de junho de 2026', url: 'https://www.stats.govt.nz/information-releases/national-population-estimates-at-30-june-2026/', verifiedAt },
+  hdi: { label: 'PNUD · Relatório de Desenvolvimento Humano 2025', url: 'https://hdr.undp.org/data-center/country-insights', verifiedAt },
+  tuition: { label: 'University of Auckland · Mensalidades internacionais de 2027', url: 'https://www.auckland.ac.nz/en/study/fees-and-money-matters/tuition-fees/international-student-fees/undergraduate-international-fees.html', verifiedAt },
+  living: { label: 'University of Auckland · Custo de vida em Auckland', url: 'https://www.auckland.ac.nz/en/on-campus/life-on-campus/living-in-auckland/cost-of-living-auckland.html', verifiedAt },
+  funds: { label: 'Immigration New Zealand · Comprovação de recursos', url: 'https://www.immigration.govt.nz/process-to-apply/applying-for-a-visa/providing-evidence-and-documents-to-support-your-visa-application/student-fund-requirements/', verifiedAt },
+  manaakiTertiary: { label: 'Manaaki · Países elegíveis para bolsas universitárias', url: 'https://www.nzscholarships.govt.nz/check-eligible-countries/', verifiedAt },
+  manaakiShort: { label: 'Manaaki · Bolsas temáticas de formação curta', url: 'https://www.nzscholarships.govt.nz/thematic-short-term-training-scholarships/', verifiedAt },
+  universities: { label: 'Universities New Zealand · Oito universidades', url: 'https://www.universitiesnz.ac.nz/universities', verifiedAt },
+  enrolments: { label: 'Education New Zealand · Matrículas internacionais em 2025', url: 'https://www.enz.govt.nz/news-and-research/ed-news/latest-data-shows-continued-growth-in-international-enrolments', verifiedAt },
+  calendar: { label: 'University of Auckland · Calendário acadêmico de 2027', url: 'https://www.auckland.ac.nz/en/about-us/about-the-university/the-university/official-publications/university-calendar/current-calendar/key-university-dates/academic-dates/semester-teaching-days-charts-2027.html', verifiedAt },
+  visa: { label: 'Immigration New Zealand · Isenção de visto e NZeTA', url: 'https://www.immigration.govt.nz/visit/what-you-need-to-visit-new-zealand/visa-waiver-countries-and-territories/', verifiedAt },
+  studyVisa: { label: 'Immigration New Zealand · Vistos para estudos', url: 'https://www.immigration.govt.nz/study/study-visas/visas-for-studying-in-new-zealand/', verifiedAt },
+  work: { label: 'Immigration New Zealand · Trabalho com visto de estudante', url: 'https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/', verifiedAt },
+  workChange: { label: 'Immigration New Zealand · Mudança para 25 horas semanais', url: 'https://www.immigration.govt.nz/about-us/news-centre/upcoming-changes-to-student-visa-work-rights/', verifiedAt },
+  postStudy: { label: 'Immigration New Zealand · Regras anunciadas para 16/11/2026', url: 'https://www.immigration.govt.nz/about-us/news-centre/post-study-work-visa-eligibility-extended-from-16-november-2026/', verifiedAt },
+  wage: { label: 'Employment New Zealand · Salário mínimo desde abril de 2026', url: 'https://www.employment.govt.nz/pay-and-hours/pay-and-wages/minimum-wage/minimum-wage-rates-and-types', verifiedAt },
+  consular: { label: 'Itamaraty · Portal e-Consular', url: 'https://econsular.itamaraty.gov.br/', verifiedAt },
+} satisfies Record<string, NewZealandSource>
+
+export const NEW_ZEALAND_SECTIONS: readonly NewZealandSection[] = [
+  { id: 'idioma', tab: 'Idioma', kicker: '01 · Comunicação', title: 'Confira o idioma de cada curso', intro: 'O inglês é predominante, mas cada programa estabelece seus requisitos.', blocks: [
+    { title: 'Idiomas no cotidiano', text: 'O inglês é amplamente usado. Te reo Māori e a Língua de Sinais da Nova Zelândia (NZSL) fazem parte da vida e da identidade do país. Ao planejar a adaptação, conheça também a cultura māori.' },
+    { title: 'Prova de proficiência', text: 'Consulte o programa escolhido para verificar idioma de ensino, exames aceitos, nota mínima e prazo de validade. Não use uma exigência de outra universidade como regra geral.' },
+  ] },
+  { id: 'clima', tab: 'Clima', kicker: '02 · Vida cotidiana', title: 'Compare o clima das duas ilhas', intro: 'A região e a época do ano mudam bastante a experiência.', blocks: [
+    { title: 'Estações e localização', text: 'De modo geral, o clima é temperado; a Ilha Norte tende a ser mais amena e a Ilha Sul pode ter invernos mais frios. As estações seguem o hemisfério sul. Consulte o clima da cidade do seu campus antes de planejar roupas e moradia.' },
+  ] },
+  { id: 'custos', tab: 'Custos', kicker: '03 · Orçamento', title: 'Some curso, moradia e comprovação financeira', intro: 'Os valores variam conforme instituição, curso e cidade.', blocks: [
+    { title: 'Exemplo de mensalidade anual em 2027', text: 'Na University of Auckland, as estimativas para estudante internacional em tempo integral (120 créditos) são NZ$ 42.236,40 em Artes, NZ$ 60.909,60 em Engenharia (Honours) e NZ$ 72.158,40 em Optometria. A taxa de serviços estudantis estimada é NZ$ 1.158 por ano, além da mensalidade. Esses valores não representam todas as universidades.', source: NEW_ZEALAND_SOURCES.tuition, note: 'A tabela da universidade contém possíveis erros de digitação em outros cursos. Confirme o valor final diretamente com a instituição.', link: { label: 'Consultar mensalidades por curso', url: NEW_ZEALAND_SOURCES.tuition.url } },
+    { title: 'Custo de vida', text: 'Peça à universidade estimativas atualizadas de acomodação e despesas na cidade do campus. Uma média nacional pode esconder diferenças grandes de aluguel.', source: NEW_ZEALAND_SOURCES.living, link: { label: 'Ver exemplo de Auckland', url: NEW_ZEALAND_SOURCES.living.url } },
+    { title: 'Recursos para o visto', text: 'A imigração informa NZ$ 20.000 para cada ano de estudo superior, de idiomas ou outro estudo não obrigatório; para curso com menos de um ano, NZ$ 1.667 por mês. Mensalidades e recursos para sair do país são considerados separadamente. Verifique as formas de comprovação aceitas para o seu caso.', source: NEW_ZEALAND_SOURCES.funds, link: { label: 'Conferir comprovação de recursos', url: NEW_ZEALAND_SOURCES.funds.url } },
+  ] },
+  { id: 'bolsas', tab: 'Bolsas', kicker: '04 · Financiamento', title: 'Confira modalidade e nacionalidade antes de aplicar', intro: 'O nome de um programa pode reunir chamadas com critérios diferentes.', blocks: [
+    { title: 'Manaaki para graduação e pós-graduação', text: 'A modalidade universitária financia estudos de cidadãos dos países listados pelo programa. Na lista oficial consultada em 30/10/2026, o Brasil não aparece entre os países elegíveis. A chamada de 2026 já está encerrada; não conte com essa modalidade sem uma mudança publicada pelo programa.', source: NEW_ZEALAND_SOURCES.manaakiTertiary, link: { label: 'Ver países elegíveis', url: NEW_ZEALAND_SOURCES.manaakiTertiary.url } },
+    { title: 'Manaaki para formação curta', text: 'Uma modalidade temática de treinamento curto lista o Brasil entre os países possíveis. São cursos de duas a quatro semanas, presenciais ou online, e nem todos ficam disponíveis em todas as regiões. Confira tema, seleção e critérios próprios antes de se candidatar.', source: NEW_ZEALAND_SOURCES.manaakiShort, link: { label: 'Ver formação curta', url: NEW_ZEALAND_SOURCES.manaakiShort.url } },
+    { title: 'Bolsas das universidades', text: 'Pesquise diretamente na página do curso e no catálogo da universidade. Compare cobertura, requisitos de nacionalidade, vínculo prévio e prazo. Estar listado em um buscador não confirma inscrição aberta.' },
+  ] },
+  { id: 'universidades', tab: 'Universidades', kicker: '05 · Instituições', title: 'Pesquise entre as oito universidades', intro: 'A escolha começa pelo curso, sem pressupor uma ordem de ranking.', blocks: [
+    { title: 'Onde procurar', text: 'Universities New Zealand lista oito universidades, entre elas a University of Auckland e a University of Otago. Compare currículo, idioma, campus, custo e apoio ao estudante internacional nas páginas de cada instituição.', source: NEW_ZEALAND_SOURCES.universities, link: { label: 'Ver as universidades', url: NEW_ZEALAND_SOURCES.universities.url } },
+    { title: 'Estudantes internacionais', text: 'A Education New Zealand registrou 92.580 estudantes internacionais matriculados em 2025, aumento de 11% sobre 2024; 38.025 estavam em universidades. O Brasil não aparece entre as principais origens destacadas nessa publicação.', source: NEW_ZEALAND_SOURCES.enrolments },
+  ] },
+  { id: 'vida', tab: 'Vida no país', kicker: '06 · Adaptação', title: 'Planeje a chegada e a rotina', intro: 'Moradia, comunidade e apoio local importam tanto quanto o curso.', blocks: [
+    { title: 'Cultura e cidade', text: 'A cultura māori é central para a identidade neozelandesa. Informe-se sobre a cidade, transporte, serviços de saúde e atividades da universidade. Vida ao ar livre é uma possibilidade, mas depende do clima e da região.' },
+    { title: 'Brasileiros e apoio consular', text: 'Não há aqui um número verificado de brasileiros residentes. Para atendimento consular, confirme no Itamaraty a representação e o serviço apropriados antes da viagem.', source: NEW_ZEALAND_SOURCES.consular, link: { label: 'Acessar o e-Consular', url: NEW_ZEALAND_SOURCES.consular.url } },
+  ] },
+  { id: 'calendario', tab: 'Calendário', kicker: '07 · Datas', title: 'Monte um calendário por curso e universidade', intro: 'Admissão, bolsa, visto e início das aulas podem ter prazos diferentes.', blocks: [
+    { title: 'Exemplo de ano letivo', text: 'Na University of Auckland, o primeiro semestre de 2027 está previsto para começar em 1º de março e o segundo em 19 de julho. Essas datas não valem automaticamente para outras instituições ou programas.', source: NEW_ZEALAND_SOURCES.calendar, link: { label: 'Consultar o calendário de Auckland', url: NEW_ZEALAND_SOURCES.calendar.url } },
+    { title: 'Planeje com antecedência', text: 'Anote separadamente prazo de candidatura ao curso, pedido de bolsa, provas de idioma, matrícula e solicitação de visto. Use sempre a página da edição em que pretende ingressar.' },
+  ] },
+  { id: 'candidatura', tab: 'Candidatura', kicker: '08 · Plano de ação', title: 'Organize uma candidatura possível de acompanhar', intro: 'Comece pelos requisitos publicados pela instituição.', blocks: [
+    { title: '1. Escolha o programa', text: 'Compare conteúdo, nível, idioma, custo anual e apoio a estudantes internacionais em mais de uma universidade.', source: NEW_ZEALAND_SOURCES.universities },
+    { title: '2. Confirme o financiamento', text: 'Verifique bolsas institucionais e condições de cada edital. A Manaaki universitária não lista o Brasil na página oficial consultada; não confunda com a modalidade de formação curta.', source: NEW_ZEALAND_SOURCES.manaakiTertiary },
+    { title: '3. Prepare o visto', text: 'Separe a oferta de estudo e os comprovantes exigidos pela imigração para o tipo de visto adequado. O prazo de análise e as exigências individuais devem ser conferidos antes da viagem.', source: NEW_ZEALAND_SOURCES.studyVisa },
+  ] },
+  { id: 'residencia', tab: 'Visto', kicker: '09 · Entrada e permanência', title: 'Distinga visita curta de estudo prolongado', intro: 'A NZeTA não substitui o visto de estudante.', blocks: [
+    { title: 'Passaporte brasileiro e NZeTA', text: 'O Brasil está na lista de isenção para visita. Quem viaja nessa condição precisa obter a NZeTA antes de embarcar e pode receber autorização para visita de até três meses. Essa condição permite apenas cursos curtos dentro do limite informado pela imigração.', source: NEW_ZEALAND_SOURCES.visa, link: { label: 'Ler regras para visitantes', url: NEW_ZEALAND_SOURCES.visa.url } },
+    { title: 'Estudos acima de três meses', text: 'Para estudar por mais de três meses, solicite um visto de estudante adequado ao programa. Confira documentos, recursos, taxas e condições na Immigration New Zealand.', source: NEW_ZEALAND_SOURCES.studyVisa, link: { label: 'Consultar vistos de estudante', url: NEW_ZEALAND_SOURCES.studyVisa.url } },
+    { title: 'Depois da formatura', text: 'A imigração anunciou mudanças para 16/11/2026 no Post-Study Work Visa: certas qualificações de mestrado podem dar até três anos, e diplomas de pós-graduação ou graduate diplomas elegíveis, até um ano. Há requisitos de duração de estudo e formação anterior; a autorização só pode ser concedida uma vez. Como a mudança ainda não entrou em vigor nesta consulta, confirme a regra aplicável na data do pedido.', source: NEW_ZEALAND_SOURCES.postStudy, link: { label: 'Ver mudanças anunciadas', url: NEW_ZEALAND_SOURCES.postStudy.url } },
+  ] },
+  { id: 'trabalho', tab: 'Trabalho', kicker: '10 · Durante os estudos', title: 'Leia as condições do seu visto antes de trabalhar', intro: 'Horas permitidas dependem do visto e do curso.', blocks: [
+    { title: 'Até 25 horas durante as aulas', text: 'Desde 3/11/2025, vistos novos de estudantes elegíveis podem permitir até 25 horas semanais durante o período letivo. Quem possui visto antigo com limite de 20 horas precisa obter alteração das condições ou novo visto para usar o limite maior. Verifique a condição escrita no seu próprio visto.', source: NEW_ZEALAND_SOURCES.workChange, link: { label: 'Ver direitos de trabalho', url: NEW_ZEALAND_SOURCES.work.url } },
+    { title: 'Férias e salário mínimo', text: 'Muitos vistos permitem trabalho em tempo integral nas férias previstas, conforme as condições individuais. Desde 1º/4/2026, o salário mínimo adulto é NZ$ 23,95 por hora; as categorias de início e treinamento têm mínimo de NZ$ 19,16. Os valores são antes de impostos e não garantem emprego nem cobertura dos custos do curso.', source: NEW_ZEALAND_SOURCES.wage },
+  ] },
+]

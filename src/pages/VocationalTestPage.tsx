@@ -2,14 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
 import { Link } from '../router/Link'
 import { recordAchievement } from '../lib/achievementEvents'
-import { INTEREST_AREAS, QUESTION_STEPS, VALUES, type InterestArea } from '../data/vocationalQuestions'
+import { INTEREST_AREAS, QUESTION_STEPS, VALUES } from '../data/vocationalQuestions'
+import { calculateVocationalScores, type VocationalAnswer } from '../lib/vocational'
 import { CareerRecommendations } from '../components/vocational/CareerRecommendations'
 import './VocationalTestPage.css'
 
-type Answer = 1 | 2 | 3 | 4 | 5
-type Scores = { area: InterestArea; mean: number }[]
-
-const SCALE: { value: Answer; label: string }[] = [
+const SCALE: { value: VocationalAnswer; label: string }[] = [
   { value: 1, label: 'Não gostaria' },
   { value: 2, label: 'Gostaria pouco' },
   { value: 3, label: 'Não sei / indiferente' },
@@ -17,22 +15,11 @@ const SCALE: { value: Answer; label: string }[] = [
   { value: 5, label: 'Gostaria muito' },
 ]
 
-const areaKeys = Object.keys(INTEREST_AREAS) as InterestArea[]
-
-function calculateScores(answers: Record<string, Answer>): Scores {
-  return areaKeys.map((area) => {
-    const values = QUESTION_STEPS.flat().filter((question) => question.area === area)
-      .map((question) => answers[question.id])
-      .filter((answer): answer is Answer => answer !== undefined)
-    return { area, mean: values.reduce((sum, value) => sum + value, 0) / values.length }
-  }).sort((a, b) => b.mean - a.mean)
-}
-
 export function VocationalTestPage() {
   useDocumentTitle('Explore seus interesses | Daydreaming')
   const [screen, setScreen] = useState<'intro' | 'questions' | 'values' | 'result'>('intro')
   const [step, setStep] = useState(0)
-  const [answers, setAnswers] = useState<Record<string, Answer>>({})
+  const [answers, setAnswers] = useState<Record<string, VocationalAnswer>>({})
   const [priorities, setPriorities] = useState<string[]>([])
   const [error, setError] = useState('')
   const [runId, setRunId] = useState('')
@@ -47,7 +34,7 @@ export function VocationalTestPage() {
 
   const currentQuestions = QUESTION_STEPS[step]
   const answeredCount = Object.keys(answers).length
-  const scores = screen === 'result' ? calculateScores(answers) : []
+  const scores = screen === 'result' ? calculateVocationalScores(answers) : []
   const leaders = scores.slice(0, 2)
   const closeScores = leaders.length > 1 && leaders[0].mean - leaders[1].mean <= 0.3
 
@@ -75,7 +62,7 @@ export function VocationalTestPage() {
     setError('')
     const run = crypto.randomUUID()
     setRunId(run)
-    completionRef.current = recordAchievement('voc-complete',run,{ leaders:calculateScores(answers).slice(0,2).map(item => item.area) })
+    completionRef.current = recordAchievement('voc-complete',run,{ leaders:calculateVocationalScores(answers).slice(0,2).map(item => item.area) })
       .then(() => recordAchievement('voc-chart',run))
     setScreen('result')
   }
@@ -204,7 +191,7 @@ export function VocationalTestPage() {
             <div><p className="vocational__eyebrow">Próximo passo</p><h2 id="vocational-next">Explore um curso de cada área</h2><p>Compare as disciplinas e a rotina profissional antes de decidir.</p></div>
             <Link className="vocational__button" to="/rankings">Explorar áreas de estudo <span aria-hidden="true">→</span></Link>
           </section>
-          <p className="vocational__method">Este questionário original usa as seis dimensões de interesses do modelo RIASEC, mas ainda não passou por validação psicométrica com estudantes brasileiros. Ele não substitui orientação profissional individual nem avaliação psicológica. As respostas não são armazenadas; recarregar a página apaga o resultado. Se você estiver conectado, apenas a conclusão e as áreas que explorar são registradas para conquistas. Referência conceitual: <a href="https://www.onetcenter.org/IP.html" target="_blank" rel="noopener noreferrer">O*NET Interest Profiler</a>.</p>
+          <p className="vocational__method">Este questionário original usa as seis dimensões de interesses do modelo RIASEC, mas ainda não passou por validação psicométrica com estudantes brasileiros. Ele não substitui orientação profissional individual nem avaliação psicológica. As respostas não são armazenadas; recarregar a página apaga o resultado. Se você estiver conectado, a conclusão, as duas áreas mais altas e as áreas que explorar são registradas para conquistas. Referência conceitual: <a href="https://www.onetcenter.org/IP.html" target="_blank" rel="noopener noreferrer">O*NET Interest Profiler</a>.</p>
           <button type="button" className="vocational__restart" onClick={restart}>Refazer o questionário</button>
         </div>
       )}

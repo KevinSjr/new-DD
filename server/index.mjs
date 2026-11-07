@@ -54,7 +54,7 @@ const originAllowed = req => {
   if (process.env.PUBLIC_ORIGIN) return origin === process.env.PUBLIC_ORIGIN
   if (origin === `http://${req.headers.host}`) return true
   // O proxy do Vite mantém a Origin do navegador, mas encaminha Host como API.
-  return !production && (host === '127.0.0.1' || host === 'localhost')
+  return !production && (host === '127.0.0.1' || host === 'localhost' || host === '0.0.0.0')
     && /^http:\/\/(localhost|127\.0\.0\.1):51(?:7[3-9]|8\d|9\d)$/.test(origin)
 }
 async function body(req) {
@@ -167,7 +167,18 @@ async function save(id, data) {
   } catch (error) { await client.query('ROLLBACK'); throw error } finally { client.release() }
 }
 
-const mime = { '.html':'text/html', '.js':'text/javascript', '.css':'text/css', '.svg':'image/svg+xml', '.json':'application/json', '.png':'image/png', '.webp':'image/webp', '.ico':'image/x-icon' }
+const mime = { '.html':'text/html', '.js':'text/javascript', '.css':'text/css', '.svg':'image/svg+xml', '.json':'application/json', '.png':'image/png', '.jpg':'image/jpeg', '.jpeg':'image/jpeg', '.webp':'image/webp', '.ico':'image/x-icon' }
+async function serveExamAsset(req, res, pathname) {
+  if (!/^\/(sat-assets|mext-assets)\/[a-zA-Z0-9._/-]+\.(png|jpg|jpeg)$/.test(pathname) || pathname.includes('..')) return json(res, 404, { error:'Imagem não encontrada.' })
+  const root = resolve(production ? 'dist' : 'public')
+  const file = resolve(root, `.${pathname}`)
+  if (!file.startsWith(root + sep)) return json(res, 404, { error:'Imagem não encontrada.' })
+  try {
+    const data = await readFile(file)
+    res.writeHead(200, { 'Content-Type':mime[extname(file)], 'X-Content-Type-Options':'nosniff', 'Cache-Control':'public, max-age=86400' })
+    res.end(data)
+  } catch { json(res, 404, { error:'Imagem não encontrada.' }) }
+}
 async function serveStatic(req, res) {
   if (!production) return json(res, 404, { error: 'Rota não encontrada.' })
   const pathname = new URL(req.url, 'http://localhost').pathname
@@ -185,6 +196,7 @@ async function serveStatic(req, res) {
 const server = createServer(async (req, res) => {
   try {
     const url = new URL(req.url, 'http://localhost')
+    if (url.pathname.startsWith('/sat-assets/') || url.pathname.startsWith('/mext-assets/')) return serveExamAsset(req, res, url.pathname)
     if (!url.pathname.startsWith('/api/')) return serveStatic(req, res)
     if (req.method === 'GET' && url.pathname === '/api/health') {
       await database().query('SELECT 1')

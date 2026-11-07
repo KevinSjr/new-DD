@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "Daydreaming",
+    "slug": "daydreaming",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/daydreaming-icon.png",
+    "scheme": "daydreaming",
+    "userInterfaceStyle": "light",
+    "ios": {},
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FB",
+        "foregroundImage": "./assets/images/daydreaming-icon.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/daydreaming-icon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#F5FBFF",
+          "image": "./assets/images/daydreaming-icon.png",
+          "imageWidth": 112
+        }
+      ],
+      "expo-secure-store",
+      "expo-sharing"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}

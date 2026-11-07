@@ -13,6 +13,8 @@ npm run build
 
 Configure `.env.local` a partir de `.env.example` antes de iniciar. `npm run dev` inicia a API Node e o Vite no mesmo terminal; o PostgreSQL precisa estar ativo.
 
+O início do aplicativo React Native fica em [mobile/](mobile/README.md). Execute o Expo dentro dessa pasta; o comando acima continua sendo apenas para o site e sua API.
+
 `npm run build` gera a pasta `dist/` e verifica se os seis arquivos de rankings estão presentes, completos e atualizados em `dist/data/`. Se algum dado estiver faltando, o build falha em vez de gerar um site com rankings quebrados. Para conferir o build localmente, execute `npm run preview`.
 
 Os arquivos-fonte do site, `package.json`, `package-lock.json` e os seis JSONs em `public/data/` devem entrar no repositório. `node_modules/` e `dist/` são gerados e continuam ignorados pelo Git. O Vite copia os JSONs de `public/data/` para `dist/data/` durante o build. O arquivo `backup-unused-2026-10-18.tar.gz` não faz parte do site.
@@ -33,6 +35,8 @@ O painel mantém as credenciais apenas na memória da aba; recarregar exige novo
 ## Contas e perfis de estudantes
 
 A migração `046_user_accounts.sql` cria contas, perfis e sessões. O cadastro fica em `/conta` e usa a mesma API Node e o mesmo PostgreSQL do buscador. Cada pessoa pode entrar, editar nome e preferências (nível, área e destino), trocar a senha, sair e excluir a própria conta. As senhas usam scrypt com salt individual; a sessão usa um token aleatório cujo hash é guardado no banco e um cookie `HttpOnly`, `SameSite=Strict` e `Secure` em produção. Sessões expiram em 30 dias. O painel administrativo continua separado das contas de estudantes.
+
+O cliente móvel pode usar a mesma API com autenticação Bearer, sem receber cookie. O contrato de sessão, as rotas da primeira versão do app e as pendências de conteúdo estão em [docs/mobile-api.md](docs/mobile-api.md).
 
 Para ativar localmente, execute `npm run db:migrate` e `npm run dev`. Abra `/conta` no endereço do Vite. Execute `npm run test:account` para verificar hash e validações. Não há recuperação de senha por e-mail nem verificação de endereço nesta versão. As preferências ficam no perfil; o usuário aplica os filtros do buscador de bolsas manualmente. As respostas dos exames completos não são vinculadas à conta; desafios diários concluídos podem registrar missões na conta. Antes de abrir o cadastro ao público, publique uma política de privacidade completa com responsável, contato e prazos de retenção.
 
