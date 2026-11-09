@@ -57,6 +57,20 @@ export default function Home() {
     {progress?.streak.current ? <View style={styles.streak}><AppIcon name="star" color="#b67a0b" size={16} />
       <Text style={styles.streakText}>{progress.streak.current} {progress.streak.current === 1 ? 'dia seguido' : 'dias seguidos'}</Text></View> : null}
 
+    <Pressable accessibilityRole="button" accessibilityLabel="Abrir ligas semanais SAT e MEXT" onPress={()=>router.push('/ligas' as Href)}
+      style={({pressed})=>[styles.leagues,pressed&&{opacity:.85}]}>
+      <View style={styles.leagueCopy}>
+        <View style={styles.leagueEyebrow}><AppIcon name="star" color="#c88600" size={15} />
+          <Text style={styles.leagueEyebrowText}>DESAFIO DA SEMANA</Text></View>
+        <Text style={styles.leagueTitle}>Entre na sua liga</Text>
+        <Text style={styles.leagueText}>Pratique SAT ou MEXT e avance no ranking.</Text>
+        <View style={styles.leagueAction}><Text style={styles.leagueActionText}>Ver ligas</Text>
+          <AppIcon name="chevron" color={theme.white} size={17} /></View>
+      </View>
+      <Image source={require('../../../assets/images/leagues/trophy.png')} resizeMode="contain"
+        style={styles.leagueTrophy} accessibilityElementsHidden />
+    </Pressable>
+
     <Text style={styles.sectionTitle}>Comece sua jornada</Text>
     <Pressable accessibilityRole="button" accessibilityLabel="Explorar oportunidades" onPress={() => router.push('/bolsas')}
       style={({pressed})=>[styles.explore,pressed && {opacity:.75}]}>
@@ -97,6 +111,18 @@ const styles=StyleSheet.create({
   progressFoot:{color:'#eef4ff',fontSize:11,marginTop:7,fontWeight:'700'},
   streak:{alignSelf:'flex-start',flexDirection:'row',alignItems:'center',gap:5,backgroundColor:'#fff0c8',borderRadius:99,paddingHorizontal:12,paddingVertical:6,marginBottom:8},
   streakText:{color:'#76500a',fontSize:11,fontWeight:'800'},
+  leagues:{minHeight:176,flexDirection:'row',alignItems:'center',backgroundColor:'#e9e8ff',borderColor:'#d5d6ff',borderWidth:1.5,
+    borderRadius:22,padding:16,marginBottom:13,overflow:'hidden',shadowColor:theme.shadow,shadowOpacity:.1,shadowRadius:10,elevation:2},
+  leagueCopy:{width:'61%',zIndex:1},
+  leagueEyebrow:{alignSelf:'flex-start',flexDirection:'row',alignItems:'center',gap:4,backgroundColor:'#fff0ba',
+    borderRadius:99,paddingHorizontal:9,paddingVertical:5,marginBottom:9},
+  leagueEyebrowText:{color:theme.navy,fontSize:9,fontWeight:'900',letterSpacing:.2},
+  leagueTitle:{color:theme.navy,fontSize:20,lineHeight:24,fontWeight:'900'},
+  leagueText:{color:theme.ink,fontSize:11,lineHeight:16,marginTop:4,marginBottom:12},
+  leagueAction:{alignSelf:'flex-start',flexDirection:'row',alignItems:'center',gap:7,backgroundColor:theme.blue,
+    borderRadius:99,paddingHorizontal:16,minHeight:35},
+  leagueActionText:{color:theme.white,fontSize:12,fontWeight:'800'},
+  leagueTrophy:{position:'absolute',right:-14,bottom:-14,width:'47%',height:169},
   sectionTitle:{color:theme.navy,fontSize:18,fontWeight:'800',marginTop:6,marginBottom:10},
   smallTitle:{color:theme.navy,fontSize:15,fontWeight:'800',marginTop:15,marginBottom:9},
   explore:{backgroundColor:theme.white,borderColor:theme.border,borderWidth:1.5,borderRadius:17,padding:11,flexDirection:'row',alignItems:'center',gap:10,shadowColor:theme.shadow,shadowOpacity:.06,shadowRadius:8,elevation:2},

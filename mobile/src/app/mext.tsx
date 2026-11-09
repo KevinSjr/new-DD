@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { router, type Href } from 'expo-router'
 import { Linking, StyleSheet, Text, View } from 'react-native'
 import { api } from '../api'
 import { Action, Notice, Panel, Pill } from '../components/Controls'
@@ -96,7 +97,8 @@ export default function MextPage() {
         {feedback&&<Notice>{feedback.correct?'Resposta correta!':'Resposta incorreta. Resposta aceita: '+feedback.acceptedAnswers.join(', ')}</Notice>}
         {daily.finished?<><Text style={styles.heading}>Desafio concluído</Text><Text style={styles.body}>{daily.correct} acertos em {daily.answered} itens.</Text>
           {token?<Action label={claimedProof===daily.completionProof?'Progresso registrado':'Registrar XP no perfil'} disabled={!daily.completionProof||claimedProof===daily.completionProof||busy} onPress={()=>{void claimDaily()}} />:<Notice>Entre na sua conta para registrar XP. O desafio pode ser retomado hoje neste aparelho.</Notice>}
-          {!!claimMessage&&<Notice>{claimMessage}</Notice>}</>
+          {!!claimMessage&&<Notice>{claimMessage}</Notice>}
+          <Action label="Ver liga semanal MEXT" secondary onPress={()=>router.push('/ligas?source=mext' as Href)} /></>
         :feedback?<Action label="Próximo item" onPress={()=>{setFeedback(undefined);setDailyAnswer('')}} />
         :daily.question?<><MextQuestionView key={daily.question.id} question={daily.question} answer={dailyAnswer} onAnswer={setDailyAnswer} />
           <Action label={busy?'Enviando…':'Responder'} disabled={busy||!dailyAnswer.trim()} onPress={()=>{void submitDaily()}} /></>:null}</Panel>}

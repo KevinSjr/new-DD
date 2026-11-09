@@ -5,6 +5,8 @@ import { claimChallenge, getMissions, reconcileUniqueMissions } from './missions
 import { handleDocumentsRequest } from './documents.mjs'
 import { handleSavedScholarshipsRequest } from './savedScholarships.mjs'
 import { isPublicAchievementEvent, recordAchievementEvent } from './achievements.mjs'
+import { getLeague, joinLeague, leaveLeague } from './leagues.mjs'
+import { avatarFromRow, saveAvatar } from './avatar.mjs'
 
 const scrypt = promisify(scryptCallback)
 const cookieName = 'dd_account'
@@ -148,7 +150,7 @@ function publicUser(row) {
     satScore: row.sat_score, toeflScore: row.toefl_score,
     ieltsScore: row.ielts_score === null || row.ielts_score === undefined ? null : Number(row.ielts_score),
     languages: row.languages || [], plannedExams: row.planned_exams || [],
-    targetYear: row.target_year, createdAt: row.created_at,
+    targetYear: row.target_year, avatar:avatarFromRow(row), createdAt: row.created_at,
   }
 }
 
@@ -248,6 +250,11 @@ export async function handleAccountRequest(req, res, url, { json, body, originAl
   if (await handleDocumentsRequest(req, res, user.id, path, { json })) return true
   if (await handleSavedScholarshipsRequest(req, res, user.id, url, { json, body })) return true
 
+  if (method === 'PUT' && path === '/api/account/avatar') {
+    json(res, 200, await saveAvatar(user.id, await body(req)))
+    return true
+  }
+
   if (method === 'POST' && path === '/api/account/achievements/events') {
     const input = await body(req)
     if (!isPublicAchievementEvent(input?.kind)) throw error(400, 'Evento de conquista inválido.')
@@ -262,6 +269,16 @@ export async function handleAccountRequest(req, res, url, { json, body, originAl
   }
   if (method === 'POST' && path === '/api/account/missions/claim') {
     json(res, 200, await claimChallenge(user.id, await body(req)))
+    return true
+  }
+
+  const leagueMatch = /^\/api\/account\/leagues\/(sat-reading-writing|sat-math|mext)$/.exec(path)
+  if (leagueMatch) {
+    const source = leagueMatch[1]
+    if (method === 'GET') json(res, 200, await getLeague(user.id, source))
+    else if (method === 'POST') json(res, 200, await joinLeague(user.id, source))
+    else if (method === 'DELETE') json(res, 200, await leaveLeague(user.id, source))
+    else throw error(405, 'Método não permitido.')
     return true
   }
 

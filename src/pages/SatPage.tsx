@@ -71,6 +71,7 @@ export function SatHomePage() {
         <p className="sat-page__availability" aria-live="polite">{error || (availability ? availability.map(item => `Teste ${testNumber(item.formCode)}: ${item.ready ? 'pronto' : `${item.modules.reduce((sum, module) => sum + module.published, 0)}/120 publicadas`}`).join(' · ') : 'Conferindo questões…')}</p>
         <Link className="sat-page__button sat-page__button--secondary" to="/exames/sat/simulado">Escolher teste completo</Link></section>
     </div>
+    <p className="sat-page__note">Quer acompanhar seus acertos da semana? <Link to="/ligas?source=sat-reading-writing">Ver as ligas de Leitura e escrita e Matemática</Link>. Cada área tem seu próprio ranking.</p>
     <p className="sat-page__note">O SAT digital atual tem 54 questões de Reading and Writing em 64 minutos e 44 de Math em 70 minutos, divididas em dois módulos por seção. O segundo módulo é adaptativo; esta plataforma ainda não reproduz essa adaptação. <a href="https://satsuite.collegeboard.org/sat/whats-on-the-test/structure" target="_blank" rel="noopener noreferrer">Confira o formato no College Board<span className="sr-only"> (abre em nova aba)</span></a>.</p>
   </main>
 }

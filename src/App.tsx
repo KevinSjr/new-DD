@@ -37,9 +37,12 @@ import { DestinationFinderPage } from './pages/DestinationFinderPage'
 import { AdminScholarshipsPage } from './pages/AdminScholarshipsPage'
 import { ScholarshipSearchPage } from './pages/ScholarshipSearchPage'
 import { ExamCatalogPage } from './pages/ExamCatalogPage'
+import { ToeflPage } from './pages/ToeflPage'
+import { ToeflDailyPage } from './pages/ToeflDailyPage'
 import { SatHomePage, SatDailyPage, SatExamPage } from './pages/SatPage'
 import { MextHomePage, MextDailyPage, MextExamPage } from './pages/MextPage'
 import { AdminSatPage } from './pages/AdminSatPage'
+import { LeaguesPage } from './pages/LeaguesPage'
 import { useLocation } from './router/navigation'
 import { useEffect } from 'react'
 import { recordAchievement } from './lib/achievementEvents'
@@ -105,6 +108,7 @@ function Routes() {
 
   if (path === '/') return <HomePage />
   if (path === '/conta') return <AccountPage />
+  if (path === '/ligas') return <LeaguesPage />
   if (path === '/rankings') return <RankingsHubPage />
   if (path === '/ranking') return <RankingPage />
   if (path === '/teste-vocacional') return <VocationalTestPage />
@@ -112,6 +116,8 @@ function Routes() {
   if (path === '/descobridor-de-destinos') return <DestinationFinderPage />
   if (path === '/bolsas') return <ScholarshipSearchPage />
   if (path === '/exames') return <ExamCatalogPage />
+  if (path === '/exames/toefl') return <ToeflPage />
+  if (path === '/exames/toefl/desafio-diario') return <ToeflDailyPage />
   if (path === '/exames/sat') return <SatHomePage />
   if (path === '/exames/sat/desafio-diario') return <SatDailyPage />
   if (path === '/exames/sat/simulado') return <SatExamPage />

@@ -92,6 +92,7 @@ export function MextHomePage() {
         <p className="mext-page__availability" aria-live="polite">{error || (availability ? availability[1].ready && availability[2].ready ? 'Exatas prontas: Física e Biologia disponíveis' : 'Conferindo itens da modalidade B…' : 'Conferindo questões…')}</p>
         <Link className="mext-page__button mext-page__button--secondary" to="/exames/mext/exame?track=B">Abrir exame B</Link></section>
     </div>
+    <p className="mext-page__note">Os acertos do desafio diário podem contar para a liga semanal. <Link to="/ligas?source=mext">Ver a liga MEXT</Link>.</p>
     <p className="mext-page__note">Antes de se candidatar, confira o edital e as exigências da representação japonesa responsável pela sua inscrição. <a href="https://www.studyinjapan.go.jp/en/planning/scholarships/mext-scholarships/examination.html" target="_blank" rel="noopener noreferrer">Ver as provas oficiais de 2025<span className="sr-only"> (abre em nova aba)</span></a>.</p>
   </main>
 }

@@ -21,6 +21,12 @@ O contrato da API móvel está em `../docs/mobile-api.md`.
 
 Em **Perfil → Editar meu perfil**, é possível salvar informações pessoais, dados acadêmicos e metas de estudo na mesma conta usada no site.
 
+Em **Início → Ligas semanais**, é possível entrar nas ligas separadas de SAT e MEXT. Depois de registrar um desafio diário na conta, o ranking recebe os pontos da atividade. A API precisa estar atualizada e a migração `055_weekly_exam_leagues.sql` aplicada.
+
+Em **Perfil → Meu avatar**, é possível escolher personagem, roupa, acessório e uma bandeira de país para o fundo. A seleção é salva na conta pelo endpoint `PUT /api/account/avatar` e aparece no perfil móvel. A primeira personalização concede 50 XP uma única vez. As migrações `056_user_avatars.sql` e `057_avatar_flag_backgrounds.sql` são necessárias.
+
+Os oito retratos principais seguem a referência visual enviada para o app e estão em `assets/images/avatars/`. Roupas e acessórios agora também são imagens 3D transparentes. O registro dos prompts está em `../docs/avatar-asset-prompts.md`.
+
 ## Calculadora de GPA
 
 Na tela inicial, abra **Calculadora de GPA**. É possível converter uma média geral ou informar disciplinas e créditos, comparar três métodos e, com uma conta conectada, salvar as três estimativas. Os valores salvos também aparecem em **Conta**. O cálculo é local; o salvamento usa a API e o PostgreSQL do site.

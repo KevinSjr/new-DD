@@ -1,0 +1,25 @@
+.leagues-spotlight { padding: var(--space-6) 0 var(--space-8); }
+.leagues-spotlight__inner { position: relative; display: grid; grid-template-columns: minmax(0,1.35fr) minmax(15rem,.65fr); align-items: center; gap: var(--space-4); min-height: 21rem; overflow: hidden; padding: clamp(1.6rem,4vw,3.2rem); border: 2px solid #315eab; border-radius: var(--radius-lg); background: radial-gradient(circle at 85% 20%,#30599e 0,#17366b 38%,#142e57 80%); box-shadow: 0 10px 0 #dce7fc, var(--shadow-lift); color: #fff; }
+.leagues-spotlight__inner::before, .leagues-spotlight__inner::after { position: absolute; width: 13rem; height: 5rem; border-radius: 50%; background: #ffffff0d; content: ''; pointer-events: none; }
+.leagues-spotlight__inner::before { right: 8%; top: -3rem; }
+.leagues-spotlight__inner::after { right: -5rem; bottom: -2.5rem; }
+.leagues-spotlight__copy { position: relative; z-index: 1; min-width: 0; }
+.leagues-spotlight__eyebrow { display: inline-flex; align-items: center; gap: .45rem; margin: 0 0 1rem; padding: .45rem .8rem; border: 1px solid #ffe39a75; border-radius: var(--radius-pill); background: #ffe6aa1e; color: #ffdf80; font-size: var(--text-sm); font-weight: 700; }
+.leagues-spotlight h2 { max-width: 17ch; margin: 0; color: #fff; font-size: clamp(2rem,3.7vw,3.1rem); line-height: 1.12; }
+.leagues-spotlight__copy > p:last-of-type { max-width: 39rem; margin: 1rem 0 1.5rem; color: #e1eaff; line-height: 1.6; }
+.leagues-spotlight__footer { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem 1.3rem; }
+.leagues-spotlight__link { display: inline-flex; align-items: center; justify-content: center; gap: .7rem; min-height: 3.15rem; padding: .8rem 1.25rem; border-radius: .85rem; background: var(--color-accent); box-shadow: var(--shadow-press-accent); color: var(--color-ink); text-decoration: none; font-weight: 700; transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out); }
+.leagues-spotlight__link:hover { transform: translateY(2px); box-shadow: 0 3px 0 var(--color-accent-dark); }
+.leagues-spotlight__link:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+.leagues-spotlight__hint { color: #d5e5ff; font-size: var(--text-sm); }
+.leagues-spotlight__art { position: relative; display: grid; place-items: center; min-width: 0; min-height: 17rem; }
+.leagues-spotlight__halo { position: absolute; width: min(100%,17rem); aspect-ratio: 1; border: 2px solid #9baeff65; border-radius: 50%; background: radial-gradient(circle,#d3c1ff55 0,#7884e123 60%,transparent 72%); box-shadow: 0 0 0 1rem #b3bcff12,0 0 0 2.2rem #b3bcff0a; }
+.leagues-spotlight__art img { position: relative; z-index: 1; display: block; width: min(100%,17rem); height: auto; filter: drop-shadow(0 16px 16px #081b4480); }
+.leagues-spotlight__spark { position: absolute; z-index: 2; display: grid; place-items: center; color: var(--color-accent); }
+.leagues-spotlight__spark--one { top: 1rem; right: 1rem; transform: rotate(18deg); }
+.leagues-spotlight__spark--two { left: .2rem; top: 6rem; transform: rotate(-12deg); }
+.leagues-spotlight__art-label { position: absolute; z-index: 2; right: 0; bottom: .4rem; padding: .35rem .7rem; border: 1px solid #ffffff5c; border-radius: var(--radius-pill); background: #fff; color: var(--color-primary-ink); font-size: .82rem; font-weight: 700; box-shadow: var(--shadow-soft); }
+.leagues-spotlight__art-label span { color: var(--color-lilac-dark); }
+@media (max-width: 48em) { .leagues-spotlight__inner { grid-template-columns: 1fr; } .leagues-spotlight__art { grid-row: 1; min-height: 11rem; } .leagues-spotlight__art img { width: 10rem; } .leagues-spotlight__halo { width: 11rem; } .leagues-spotlight__spark--one { right: calc(50% - 7rem); } .leagues-spotlight__spark--two { left: calc(50% - 7rem); top: 3rem; } .leagues-spotlight__art-label { right: calc(50% - 8rem); bottom: 0; } }
+@media (max-width: 32em) { .leagues-spotlight__inner { padding: 1.35rem; } .leagues-spotlight h2 { font-size: clamp(1.8rem,9vw,2.35rem); } .leagues-spotlight__link { width: 100%; } .leagues-spotlight__hint { text-align: center; width: 100%; } }
+@media (prefers-reduced-motion: reduce) { .leagues-spotlight__link { transition: none; } }

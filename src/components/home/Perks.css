@@ -29,6 +29,9 @@
 .perk__title {
   font-size: 1.05rem;
 }
+.perk__title a { color: inherit; text-decoration: none; }
+.perk__title a:hover { color: var(--color-primary-ink); text-decoration: underline; }
+.perk a:focus-visible { outline: 3px solid var(--color-primary-dark); outline-offset: 3px; }
 
 .perk__text {
   margin-top: var(--space-1);
@@ -81,6 +84,7 @@
   --tile-depth: var(--color-mint-dark);
   --tile-fg: var(--color-ink);
 }
+.perk__tile--lilac { --tile-bg: var(--color-lilac); --tile-depth: var(--color-lilac-dark); --tile-fg: #fff; }
 
 @media (min-width: 32.5em) {
   .perks__grid {
@@ -90,6 +94,6 @@
 
 @media (min-width: 56.25em) {
   .perks__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

@@ -3,6 +3,7 @@ import { router, useFocusEffect, type Href } from 'expo-router'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { api } from '../../api'
 import { AppIcon } from '../../components/AppIcon'
+import { AvatarPortrait } from '../../components/AvatarPortrait'
 import { Action, Field, Notice, Panel } from '../../components/Controls'
 import { Screen } from '../../components/Screen'
 import { useSession } from '../../session'
@@ -46,7 +47,9 @@ export default function Account(){
     description={user?'Seu plano, seus favoritos e suas conquistas em um só lugar.':'Entre para guardar bolsas, prazos e documentos na sua conta.'}>
     {loading?<Notice>Carregando sua conta…</Notice>:sessionError?<Panel><Notice error>{sessionError}</Notice>
       <Action label="Tentar novamente" onPress={()=>{void refresh()}} /></Panel>:user?<View>
-      <View style={styles.identity}><View style={styles.avatar}><Text style={styles.initials}>{initials}</Text></View>
+      <View style={styles.identity}><Pressable accessibilityRole="button" accessibilityLabel="Personalizar meu avatar" onPress={()=>router.push('/avatar' as Href)}
+        style={styles.avatar}>{user.avatar?<AvatarPortrait avatar={user.avatar} size={72} />:<Text style={styles.initials}>{initials}</Text>}
+        <View style={styles.editAvatar}><AppIcon name="edit" color={theme.white} size={13} /></View></Pressable>
         <Text style={styles.name}>{user.displayName}</Text><Text style={styles.email}>{user.email}</Text></View>
       <Pressable accessibilityRole="button" onPress={()=>router.push('/progresso')} style={styles.progress}>
         <View style={styles.progressIcon}><AppIcon name="star" color={theme.yellow} size={26} /></View>
@@ -56,6 +59,7 @@ export default function Account(){
       </Pressable>
       <Text style={styles.sectionTitle}>Minha jornada</Text>
       <View style={styles.menu}>
+        <MenuItem icon="person" title="Meu avatar" detail="Personalize seu personagem" onPress={()=>router.push('/avatar' as Href)} />
         <MenuItem icon="person" title="Editar meu perfil" detail="Dados pessoais, acadêmicos e metas" onPress={()=>router.push('/perfil' as Href)} />
         <MenuItem icon="journey" title="Meu plano" detail="Prazos e próximos passos" onPress={()=>router.push('/jornada')} />
         <MenuItem icon="bookmark" title="Bolsas salvas" detail="Oportunidades que você guardou" onPress={()=>router.push({pathname:'/bolsas',params:{view:'saved'}})} />
@@ -81,6 +85,8 @@ const styles=StyleSheet.create({
   identity:{alignItems:'center',paddingVertical:9,marginBottom:16},
   avatar:{width:75,height:75,borderRadius:38,backgroundColor:'#d7ecff',borderWidth:3,borderColor:theme.white,
     shadowColor:theme.shadow,shadowOpacity:.12,shadowRadius:8,elevation:3,alignItems:'center',justifyContent:'center'},
+  editAvatar:{position:'absolute',right:-5,bottom:0,width:25,height:25,borderRadius:13,backgroundColor:theme.blue,
+    borderWidth:2,borderColor:theme.white,alignItems:'center',justifyContent:'center'},
   initials:{color:theme.blue,fontWeight:'800',fontSize:27},name:{color:theme.navy,fontSize:17,fontWeight:'800',marginTop:8},
   email:{color:theme.muted,fontSize:11,marginTop:3},
   progress:{flexDirection:'row',alignItems:'center',gap:10,backgroundColor:'#e4edff',borderColor:'#c9dbfc',borderWidth:1.5,

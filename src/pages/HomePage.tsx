@@ -5,6 +5,7 @@ import { Passports } from '../components/home/Passports'
 import { Tools } from '../components/home/Tools'
 import { Trail } from '../components/home/Trail'
 import { Trust } from '../components/home/Trust'
+import { LeaguesSpotlight } from '../components/home/LeaguesSpotlight'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 /*
@@ -20,6 +21,7 @@ export function HomePage() {
       <Perks />
       <Trail />
       <Tools />
+      <LeaguesSpotlight />
       <Passports />
       <Trust />
       <Final />

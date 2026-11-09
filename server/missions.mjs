@@ -1,6 +1,7 @@
 import { database } from './db.mjs'
 import { streakFromDays } from './streak.mjs'
 import { reconcileAchievements } from './achievements.mjs'
+import { recordLeagueActivity, reconcileLeagueRewards } from './leagues.mjs'
 
 const fail = (status, message) => { throw Object.assign(new Error(message), { status }) }
 
@@ -79,6 +80,7 @@ export async function getMissions(userId) {
     const day = today()
     await reconcileUniqueMissions(userId,client)
     const { counts } = await reconcilePracticeMissions(client,userId,day)
+    await reconcileLeagueRewards(userId,client)
     const achievementState = await reconcileAchievements(userId,client)
     const awards = await client.query('SELECT mission_key,period_key,xp,awarded_at FROM user_mission_awards WHERE user_id=$1 ORDER BY awarded_at DESC', [userId])
     const earned = new Set(awards.rows.map(row => `${row.mission_key}:${row.period_key}`))
@@ -122,6 +124,7 @@ export async function claimChallenge(userId, input) {
     }
     let earnedXp = 0
     if (inserted.rowCount) earnedXp += await award(client,userId,source === 'sat' ? 'sat-daily' : 'mext-daily',day)
+    await recordLeagueActivity(client,userId,source === 'sat' ? `sat-${section}` : 'mext',day,state.answers)
     earnedXp += await reconcileUniqueMissions(userId,client)
     earnedXp += (await reconcilePracticeMissions(client,userId,day)).gained
     await client.query('COMMIT')

@@ -1,5 +1,6 @@
 import Constants from 'expo-constants'
 import { Platform } from 'react-native'
+import type { AvatarChoice } from './components/AvatarPortrait'
 
 export type Country = { slug:string; name:string }
 export type User = {
@@ -8,6 +9,7 @@ export type User = {
   destinationSlug:string|null; destinationSlugs:string[]; targetYear:string|null
   gpa:number|null; satScore:number|null; toeflScore:number|null; ieltsScore:number|null
   languages:string[]; plannedExams:string[]
+  avatar:AvatarChoice|null
 }
 export type Scholarship = { source:string; source_id:string; title:string; description:string | null; source_label:string; source_url:string; application_url:string | null; observed_at:string | null; deadline:string | null; amount:string | null; source_status:string; brazil_criteria:string; field_of_study:string | null; nationality:string | null; destinations:string | null; study_level:string | null; country_basis:string }
 export type SavedScholarship = Pick<Scholarship,'source'|'source_id'|'title'|'source_label'|'source_url'> & { saved_at:string; available:boolean }

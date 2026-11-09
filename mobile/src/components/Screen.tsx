@@ -8,16 +8,17 @@ import { theme } from '../theme'
 type Props = {
   title:string; description:string; children?:ReactNode; eyebrow?:string
   navTitle?:string; brandHeader?:boolean; hideHeading?:boolean
+  onBack?:()=>void
 }
 
-export function Screen({ title, description, children, eyebrow, navTitle, brandHeader = false, hideHeading = false }: Props) {
+export function Screen({ title, description, children, eyebrow, navTitle, brandHeader = false, hideHeading = false, onBack }: Props) {
   return <SafeAreaView style={styles.safe} edges={['top']}>
     <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
       {brandHeader ? <View style={styles.brandRow}>
         <Image source={require('../../assets/images/daydreaming-horizontal.png')} style={styles.logo} resizeMode="contain" accessibilityLabel="Daydreaming" />
         <View style={styles.brandStar} accessibilityElementsHidden><AppIcon name="star" color={theme.yellow} size={19} /></View>
       </View> : <View style={styles.navRow}>
-        <Pressable accessibilityRole="button" accessibilityLabel="Voltar" onPress={() => router.canGoBack() ? router.back() : router.push('/')}
+        <Pressable accessibilityRole="button" accessibilityLabel="Voltar" onPress={() => onBack ? onBack() : router.canGoBack() ? router.back() : router.push('/')}
           style={({pressed})=>[styles.back,pressed && {opacity:.65}]}><AppIcon name="back" color={theme.navy} size={22} /></Pressable>
         <Text style={styles.navTitle} numberOfLines={1}>{navTitle || title}</Text>
         <View style={styles.navSpacer} />

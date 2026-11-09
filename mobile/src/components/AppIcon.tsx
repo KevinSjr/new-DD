@@ -20,6 +20,7 @@ const names = {
   trophy:{ ios:'trophy.fill',android:'emoji_events',web:'emoji_events' },
   check:{ ios:'checkmark.circle.fill',android:'check_circle',web:'check_circle' },
   settings:{ ios:'gearshape.fill',android:'settings',web:'settings' },
+  edit:{ ios:'pencil',android:'edit',web:'edit' },
 } satisfies Record<string,Name>
 
 export function AppIcon({ name, size = 22, color }: { name:keyof typeof names; size?:number; color:string }) {
