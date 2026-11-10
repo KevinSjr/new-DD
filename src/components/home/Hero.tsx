@@ -99,6 +99,15 @@ export function Hero() {
               </span>
               <b>Dias seguidos</b>
             </div>
+            <div className="hero__chip hero__chip--league">
+              <span className="hero__chip-ico hero__chip-ico--lilac">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+                  <path d="M7 4h10v5a5 5 0 0 1-10 0V4Z" fill="currentColor" />
+                  <path d="M7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3M12 14v5M8 21h8" />
+                </svg>
+              </span>
+              <b>Ligas semanais</b>
+            </div>
           </div>
           <figcaption className="hero__caption">
             Ilustração de exemplo. Metas e sequências ainda não existem no site.

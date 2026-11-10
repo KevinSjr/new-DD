@@ -39,6 +39,10 @@ import { ScholarshipSearchPage } from './pages/ScholarshipSearchPage'
 import { ExamCatalogPage } from './pages/ExamCatalogPage'
 import { ToeflPage } from './pages/ToeflPage'
 import { ToeflDailyPage } from './pages/ToeflDailyPage'
+import { GoethePage, GoetheExamPage } from './pages/GoethePage'
+import { JlptPage, JlptExamPage } from './pages/JlptPage'
+import { IeltsPage } from './pages/IeltsPage'
+import { DelfDalfPage, DelfDalfExamPage } from './pages/DelfDalfPage'
 import { SatHomePage, SatDailyPage, SatExamPage } from './pages/SatPage'
 import { MextHomePage, MextDailyPage, MextExamPage } from './pages/MextPage'
 import { AdminSatPage } from './pages/AdminSatPage'
@@ -116,8 +120,15 @@ function Routes() {
   if (path === '/descobridor-de-destinos') return <DestinationFinderPage />
   if (path === '/bolsas') return <ScholarshipSearchPage />
   if (path === '/exames') return <ExamCatalogPage />
+  if (path === '/exames/goethe-zertifikat') return <GoethePage />
+  if (/^\/exames\/goethe-zertifikat\/(a1|a2|b1|b2|c1|c2)$/.test(path)) return <GoetheExamPage level={path.split('/').pop()!} />
+  if (path === '/exames/jlpt') return <JlptPage />
+  if (/^\/exames\/jlpt\/(n5|n4|n3|n2|n1)$/.test(path)) return <JlptExamPage level={path.split('/').pop()!} />
   if (path === '/exames/toefl') return <ToeflPage />
   if (path === '/exames/toefl/desafio-diario') return <ToeflDailyPage />
+  if (path === '/exames/ielts') return <IeltsPage />
+  if (path === '/exames/delf-dalf') return <DelfDalfPage />
+  if (/^\/exames\/delf-dalf\/(delf-(a1|a2|b1|b2)-1|dalf-(c1|c2)-1)$/.test(path)) return <DelfDalfExamPage examId={path.split('/').pop()!} />
   if (path === '/exames/sat') return <SatHomePage />
   if (path === '/exames/sat/desafio-diario') return <SatDailyPage />
   if (path === '/exames/sat/simulado') return <SatExamPage />
