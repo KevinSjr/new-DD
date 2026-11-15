@@ -41,8 +41,11 @@ import { ToeflPage } from './pages/ToeflPage'
 import { ToeflDailyPage } from './pages/ToeflDailyPage'
 import { GoethePage, GoetheExamPage } from './pages/GoethePage'
 import { JlptPage, JlptExamPage } from './pages/JlptPage'
+import { TopikPage, TopikExamPage } from './pages/TopikPage'
+import { HskPage, HskExamPage } from './pages/HskPage'
 import { IeltsPage } from './pages/IeltsPage'
 import { DelfDalfPage, DelfDalfExamPage } from './pages/DelfDalfPage'
+import { DelePage, DeleExamPage } from './pages/DelePage'
 import { SatHomePage, SatDailyPage, SatExamPage } from './pages/SatPage'
 import { MextHomePage, MextDailyPage, MextExamPage } from './pages/MextPage'
 import { AdminSatPage } from './pages/AdminSatPage'
@@ -124,11 +127,17 @@ function Routes() {
   if (/^\/exames\/goethe-zertifikat\/(a1|a2|b1|b2|c1|c2)$/.test(path)) return <GoetheExamPage level={path.split('/').pop()!} />
   if (path === '/exames/jlpt') return <JlptPage />
   if (/^\/exames\/jlpt\/(n5|n4|n3|n2|n1)$/.test(path)) return <JlptExamPage level={path.split('/').pop()!} />
+  if (path === '/exames/topik') return <TopikPage />
+  if (/^\/exames\/topik\/(i|ii)$/.test(path)) return <TopikExamPage level={path.split('/').pop()!} />
+  if (path === '/exames/hsk') return <HskPage />
+  if (/^\/exames\/hsk\/[1-6]$/.test(path)) return <HskExamPage level={path.split('/').pop()!} />
   if (path === '/exames/toefl') return <ToeflPage />
   if (path === '/exames/toefl/desafio-diario') return <ToeflDailyPage />
   if (path === '/exames/ielts') return <IeltsPage />
   if (path === '/exames/delf-dalf') return <DelfDalfPage />
   if (/^\/exames\/delf-dalf\/(delf-(a1|a2|b1|b2)-1|dalf-(c1|c2)-1)$/.test(path)) return <DelfDalfExamPage examId={path.split('/').pop()!} />
+  if (path === '/exames/dele') return <DelePage />
+  if (/^\/exames\/dele\/(a1|a2|b1|b2|c1|c2)$/.test(path)) return <DeleExamPage level={path.split('/').pop()!} />
   if (path === '/exames/sat') return <SatHomePage />
   if (path === '/exames/sat/desafio-diario') return <SatDailyPage />
   if (path === '/exames/sat/simulado') return <SatExamPage />

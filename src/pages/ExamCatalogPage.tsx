@@ -30,7 +30,7 @@ function ExamRow({ exam, index }: { exam: Exam; index: number }) {
             <span className="exam-catalog__context">{exam.context}</span>
             <h3>{exam.name}</h3>
           </div>
-          <span className="exam-catalog__status">{exam.id === 'sat' || exam.id === 'mext' || exam.id === 'toefl' || exam.id === 'ielts' || exam.id === 'goethe-zertifikat' || exam.id === 'delf-dalf' || exam.id === 'jlpt' ? 'Prática disponível' : 'Em preparação'}</span>
+          <span className="exam-catalog__status">{exam.id === 'sat' || exam.id === 'mext' || exam.id === 'toefl' || exam.id === 'ielts' || exam.id === 'goethe-zertifikat' || exam.id === 'delf-dalf' || exam.id === 'jlpt' || exam.id === 'topik' || exam.id === 'hsk' || exam.id === 'dele' ? 'Prática disponível' : 'Em preparação'}</span>
         </div>
         <p>{exam.description}</p>
         {exam.id === 'sat' && <Link className="exam-catalog__open" to="/exames/sat">Escolher modo de prática <span aria-hidden="true">→</span></Link>}
@@ -39,7 +39,10 @@ function ExamRow({ exam, index }: { exam: Exam; index: number }) {
         {exam.id === 'ielts' && <Link className="exam-catalog__open" to="/exames/ielts">Abrir simulado IELTS Academic <span aria-hidden="true">→</span></Link>}
         {exam.id === 'goethe-zertifikat' && <Link className="exam-catalog__open" to="/exames/goethe-zertifikat">Escolher nível A1–C2 <span aria-hidden="true">→</span></Link>}
         {exam.id === 'jlpt' && <Link className="exam-catalog__open" to="/exames/jlpt">Escolher nível N5–N1 <span aria-hidden="true">→</span></Link>}
+        {exam.id === 'topik' && <Link className="exam-catalog__open" to="/exames/topik">Escolher TOPIK I ou II <span aria-hidden="true">→</span></Link>}
+        {exam.id === 'hsk' && <Link className="exam-catalog__open" to="/exames/hsk">Escolher nível HSK 1–6 <span aria-hidden="true">→</span></Link>}
         {exam.id === 'delf-dalf' && <Link className="exam-catalog__open" to="/exames/delf-dalf">Escolher simulado de A1 a C2 <span aria-hidden="true">→</span></Link>}
+        {exam.id === 'dele' && <Link className="exam-catalog__open" to="/exames/dele">Escolher simulado de A1 a C2 <span aria-hidden="true">→</span></Link>}
       </div>
     </li>
   )
@@ -61,7 +64,7 @@ export function ExamCatalogPage() {
           <div>
             <p className="exam-catalog__eyebrow">Prepare o próximo passo</p>
             <h1>Encontre o exame certo para sua candidatura</h1>
-            <p>Escolha uma prova para praticar dentro do Daydreaming. Há exercícios de SAT e MEXT 2025 e simulados autorais inspirados em TOEFL, IELTS Academic, Goethe-Zertifikat, DELF / DALF e JLPT.</p>
+            <p>Escolha uma prova para praticar dentro do Daydreaming. Há exercícios de SAT e MEXT 2025 e simulados autorais inspirados em TOEFL, IELTS Academic, Goethe-Zertifikat, DELF / DALF, JLPT, TOPIK, HSK e DELE.</p>
             <a className="exam-catalog__jump" href="#admissao">Explorar exames <span aria-hidden="true">↓</span></a>
           </div>
           <aside className="exam-catalog__hero-note" aria-label="Como usar o catálogo">
