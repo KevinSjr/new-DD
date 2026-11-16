@@ -5,9 +5,10 @@ import { QuickToolIcon } from '../components/QuickToolIcon'
 import { Notice } from '../components/Controls'
 import { Screen } from '../components/Screen'
 import { EXAMS, type Exam } from '../data/exams'
+import { findPracticeExam, practiceExams } from '../exams/practiceCatalog'
 import { theme } from '../theme'
 
-const active=new Set(['sat','mext'])
+const active=new Set(['sat','mext',...practiceExams.map(exam=>exam.id)])
 const preparations=EXAMS.filter(exam=>!active.has(exam.id))
 
 function ReadyCard({exam}:{exam:Exam}){
@@ -36,6 +37,17 @@ function ComingRow({exam}:{exam:Exam}){
   </View>
 }
 
+function PracticeRow({exam}:{exam:Exam}){
+  const practice=findPracticeExam(exam.id)!
+  return <Pressable accessibilityRole="button" accessibilityLabel={'Abrir simulado '+exam.name}
+    onPress={()=>router.push(('/pratica/'+exam.id) as Href)} style={({pressed})=>[styles.practiceRow,pressed&&styles.pressed]}>
+    <View style={styles.practiceIcon}><Text style={styles.practiceInitial}>{exam.context.slice(0,2).toUpperCase()}</Text></View>
+    <View style={styles.practiceBody}><Text style={styles.comingName}>{exam.name}</Text>
+      <Text style={styles.comingContext}>{practice.variants.length} {practice.variants.length===1?'simulado disponível':'níveis disponíveis'} · {exam.context}</Text></View>
+    <AppIcon name="chevron" color={theme.blue} size={19}/>
+  </Pressable>
+}
+
 export default function ExamCatalog(){return <Screen navTitle="Exames" title="Exames" description="" hideHeading>
   <View style={styles.hero}>
     <View style={styles.heroStar}><AppIcon name="star" color={theme.yellow} size={18} /></View>
@@ -47,16 +59,17 @@ export default function ExamCatalog(){return <Screen navTitle="Exames" title="Ex
   </View>
 
   <View style={styles.headingRow}><View><Text style={styles.sectionEyebrow}>COMECE AGORA</Text><Text style={styles.sectionTitle}>Provas disponíveis</Text></View>
-    <View style={styles.count}><Text style={styles.countText}>2 provas</Text></View></View>
-  <Text style={styles.sectionLead}>Escolha o desafio diário ou faça um exame completo.</Text>
-  {EXAMS.filter(exam=>active.has(exam.id)).map(exam=><ReadyCard key={exam.id} exam={exam} />)}
+    <View style={styles.count}><Text style={styles.countText}>{active.size} exames</Text></View></View>
+  <Text style={styles.sectionLead}>SAT e MEXT têm desafio diário e modo exame. Os simulados de idiomas têm provas por nível ou modalidade.</Text>
+  {EXAMS.filter(exam=>exam.id==='sat'||exam.id==='mext').map(exam=><ReadyCard key={exam.id} exam={exam} />)}
 
-  <View style={styles.comingHeader}><Text style={styles.sectionEyebrow}>PRÓXIMOS EXAMES</Text>
+  <View style={styles.comingHeader}><Text style={styles.sectionEyebrow}>IDIOMAS</Text><Text style={styles.sectionTitle}>Simulados no aplicativo</Text>
+    <Text style={styles.sectionLead}>Conteúdo autoral inspirado nos exames. Escolha uma prova e pratique no seu ritmo.</Text></View>
+  {EXAMS.filter(exam=>practiceExams.some(item=>item.id===exam.id)).map(exam=><PracticeRow key={exam.id} exam={exam}/>)}
+
+  {preparations.length>0&&<><View style={styles.comingHeader}><Text style={styles.sectionEyebrow}>PRÓXIMOS EXAMES</Text>
     <Text style={styles.sectionTitle}>No catálogo</Text><Text style={styles.sectionLead}>Estas provas ainda não têm questões no aplicativo.</Text></View>
-  <Text style={styles.groupTitle}>Admissão e seleção</Text>
-  {preparations.filter(exam=>exam.category==='admission').map(exam=><ComingRow key={exam.id} exam={exam} />)}
-  <Text style={styles.groupTitle}>Proficiência em idiomas</Text>
-  {preparations.filter(exam=>exam.category==='language').map(exam=><ComingRow key={exam.id} exam={exam} />)}
+    {preparations.map(exam=><ComingRow key={exam.id} exam={exam}/>)}</>}
   <Notice>Confira no edital da instituição qual exame, versão e nível são exigidos. Os resultados dos simulados não substituem uma avaliação oficial.</Notice>
 </Screen>}
 
@@ -85,4 +98,6 @@ const styles=StyleSheet.create({
   comingRow:{backgroundColor:theme.white,borderColor:theme.border,borderWidth:1,borderRadius:14,padding:10,marginBottom:7,flexDirection:'row',alignItems:'center',gap:9},
   comingIcon:{width:35,height:35,borderRadius:11,backgroundColor:'#edf2fb',alignItems:'center',justifyContent:'center'},comingInitial:{color:theme.muted,fontSize:11,fontWeight:'800'},
   comingName:{color:theme.navy,fontSize:13,fontWeight:'800'},comingContext:{color:theme.muted,fontSize:10,marginTop:2},comingStatus:{color:theme.muted,fontSize:9,fontWeight:'800'},
+  practiceRow:{backgroundColor:theme.white,borderColor:theme.border,borderWidth:1.5,borderRadius:16,padding:13,marginBottom:8,flexDirection:'row',alignItems:'center',gap:11},
+  practiceIcon:{width:42,height:42,borderRadius:13,backgroundColor:'#e7f2ff',alignItems:'center',justifyContent:'center'},practiceInitial:{color:theme.blue,fontSize:13,fontWeight:'800'},practiceBody:{flex:1},
 })

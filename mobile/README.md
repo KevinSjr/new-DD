@@ -10,6 +10,19 @@ O site e a API continuam sendo executados na raiz do repositório com `npm run d
 
 Para testar a integração na mesma rede Wi-Fi, use `API_HOST=0.0.0.0` no `.env.local` da raiz e execute `npm run dev` na raiz, além de `npm start` nesta pasta. O app descobre o endereço do computador a partir do Expo Go e chama a API na porta 3001. Em produção, configure `EXPO_PUBLIC_API_URL` com a URL HTTPS pública antes de gerar o app. Se a API não carregar no celular, confira o firewall do Windows e se os dois dispositivos estão na mesma rede.
 
+## Gerar APK de prévia para outros celulares Android
+
+O perfil `preview` em `eas.json` gera um APK instalável, com o JavaScript incluído. O APK não precisa do Expo Go nem do Metro. O comando `npm run export:android` apenas valida e exporta o bundle; ele não gera um APK.
+
+1. Na pasta `mobile`, execute `npm install` e `npm run export:android` para sincronizar os dados do site e conferir a compilação.
+2. Instale a CLI com `npm install -g eas-cli`, entre com `eas login` e vincule o projeto à sua conta com `eas init`.
+3. Execute `eas build --platform android --profile preview`. **Não é necessário ter domínio nem configurar uma URL de API para gerar ou instalar o APK.** Na primeira execução, defina um identificador Android (`android.package`) e permita que o EAS gere a chave de assinatura se ainda não existir.
+4. Ao concluir, abra o link do build no celular Android, baixe o APK e autorize a instalação pelo navegador. Compartilhe esse link ou o arquivo com os outros testadores.
+
+Sem `EXPO_PUBLIC_API_URL`, o APK permite avaliar telas e ferramentas locais, mas as funções que usam o servidor não conseguem acessar a API em outros celulares. Quando houver uma API pública, configure antes de gerar um novo APK: `eas env:set --name EXPO_PUBLIC_API_URL --value https://SEU-DOMINIO --environment preview --visibility plaintext`. Use a origem, sem `/api` no final. Confirme que `https://SEU-DOMINIO/api/health` responde fora da sua rede. Um endereço DuckDNS também pode servir, desde que a API esteja publicada nele com HTTPS. Um endereço `http://192.168...` da rede local não substitui uma API pública para testadores em outras redes; além disso, builds Android recentes bloqueiam HTTP sem configuração adicional.
+
+Não coloque senhas ou tokens em variáveis `EXPO_PUBLIC_`: elas ficam incluídas no aplicativo. Funcionalidades como conta, bolsas, SAT, MEXT e ligas dependem da API e do PostgreSQL no servidor. As práticas autorais de idiomas incluídas no app podem abrir sem essa API. Para cada nova versão do APK, repita o build e distribua o novo arquivo.
+
 ## Estrutura
 
 - `src/app/(tabs)`: telas e navegação principal com Expo Router.
